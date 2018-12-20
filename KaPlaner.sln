@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaPlaner", "KaPlaner\KaPlaner.csproj", "{9277826B-D8C6-44F3-BAD3-813E439BE2FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calendar", "GUI\Calendar\Calendar.csproj", "{2224E3B9-7541-4E53-B1D6-B1B799C5022E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9277826B-D8C6-44F3-BAD3-813E439BE2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9277826B-D8C6-44F3-BAD3-813E439BE2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9277826B-D8C6-44F3-BAD3-813E439BE2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2224E3B9-7541-4E53-B1D6-B1B799C5022E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2224E3B9-7541-4E53-B1D6-B1B799C5022E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2224E3B9-7541-4E53-B1D6-B1B799C5022E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2224E3B9-7541-4E53-B1D6-B1B799C5022E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
