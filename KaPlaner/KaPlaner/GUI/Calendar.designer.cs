@@ -61,6 +61,9 @@
             this.tb_Der_Fuenfte = new System.Windows.Forms.RichTextBox();
             this.tb_Der_Sechste = new System.Windows.Forms.RichTextBox();
             this.tb_Der_Siebte = new System.Windows.Forms.RichTextBox();
+            this.btn_month = new System.Windows.Forms.Button();
+            this.btn_prev = new System.Windows.Forms.Button();
+            this.btn_next = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tb_Der_Achte
@@ -425,11 +428,45 @@
             this.tb_Der_Siebte.Text = "7";
             this.tb_Der_Siebte.Click += new System.EventHandler(this.tb_open_date);
             // 
+            // btn_month
+            // 
+            this.btn_month.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_month.Location = new System.Drawing.Point(121, 136);
+            this.btn_month.Name = "btn_month";
+            this.btn_month.Size = new System.Drawing.Size(75, 30);
+            this.btn_month.TabIndex = 37;
+            this.btn_month.Text = "Monat";
+            this.btn_month.UseVisualStyleBackColor = true;
+            // 
+            // btn_prev
+            // 
+            this.btn_prev.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_prev.Location = new System.Drawing.Point(39, 136);
+            this.btn_prev.Name = "btn_prev";
+            this.btn_prev.Size = new System.Drawing.Size(75, 30);
+            this.btn_prev.TabIndex = 38;
+            this.btn_prev.Text = "Prev";
+            this.btn_prev.UseVisualStyleBackColor = true;
+            this.btn_prev.Visible = false;
+            // 
+            // btn_next
+            // 
+            this.btn_next.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_next.Location = new System.Drawing.Point(202, 136);
+            this.btn_next.Name = "btn_next";
+            this.btn_next.Size = new System.Drawing.Size(75, 30);
+            this.btn_next.TabIndex = 39;
+            this.btn_next.Text = "Next";
+            this.btn_next.UseVisualStyleBackColor = true;
+            // 
             // wdw_calendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 671);
+            this.Controls.Add(this.btn_next);
+            this.Controls.Add(this.btn_prev);
+            this.Controls.Add(this.btn_month);
             this.Controls.Add(this.tb_Der_Siebte);
             this.Controls.Add(this.tb_Der_Sechste);
             this.Controls.Add(this.tb_Der_Fuenfte);
@@ -506,6 +543,9 @@
         private System.Windows.Forms.RichTextBox tb_Der_Fuenfte;
         private System.Windows.Forms.RichTextBox tb_Der_Sechste;
         private System.Windows.Forms.RichTextBox tb_Der_Siebte;
+        private System.Windows.Forms.Button btn_month;
+        private System.Windows.Forms.Button btn_prev;
+        private System.Windows.Forms.Button btn_next;
     }
 }
 
