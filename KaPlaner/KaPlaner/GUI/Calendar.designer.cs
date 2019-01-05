@@ -61,9 +61,11 @@
             this.tb_Der_Fuenfte = new System.Windows.Forms.RichTextBox();
             this.tb_Der_Sechste = new System.Windows.Forms.RichTextBox();
             this.tb_Der_Siebte = new System.Windows.Forms.RichTextBox();
-            this.btn_month = new System.Windows.Forms.Button();
             this.btn_prev = new System.Windows.Forms.Button();
+            this.btn_month = new System.Windows.Forms.Button();
             this.btn_next = new System.Windows.Forms.Button();
+            this.lbl_year = new System.Windows.Forms.Label();
+            this.tb_checkbox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // tb_Der_Achte
@@ -299,6 +301,7 @@
             // 
             // tb_Der_Einunddreißigste
             // 
+            this.tb_Der_Einunddreißigste.Enabled = false;
             this.tb_Der_Einunddreißigste.Font = new System.Drawing.Font("Arial", 14.25F);
             this.tb_Der_Einunddreißigste.Location = new System.Drawing.Point(530, 538);
             this.tb_Der_Einunddreißigste.Name = "tb_Der_Einunddreißigste";
@@ -306,10 +309,12 @@
             this.tb_Der_Einunddreißigste.Size = new System.Drawing.Size(100, 103);
             this.tb_Der_Einunddreißigste.TabIndex = 23;
             this.tb_Der_Einunddreißigste.Text = "31";
+            this.tb_Der_Einunddreißigste.Visible = false;
             this.tb_Der_Einunddreißigste.Click += new System.EventHandler(this.tb_open_date);
             // 
             // tb_Der_Dreißigste
             // 
+            this.tb_Der_Dreißigste.Enabled = false;
             this.tb_Der_Dreißigste.Font = new System.Drawing.Font("Arial", 14.25F);
             this.tb_Der_Dreißigste.Location = new System.Drawing.Point(424, 538);
             this.tb_Der_Dreißigste.Name = "tb_Der_Dreißigste";
@@ -317,10 +322,12 @@
             this.tb_Der_Dreißigste.Size = new System.Drawing.Size(100, 103);
             this.tb_Der_Dreißigste.TabIndex = 22;
             this.tb_Der_Dreißigste.Text = "30";
+            this.tb_Der_Dreißigste.Visible = false;
             this.tb_Der_Dreißigste.Click += new System.EventHandler(this.tb_open_date);
             // 
             // tb_Der_Neunundzwanzigste
             // 
+            this.tb_Der_Neunundzwanzigste.Enabled = false;
             this.tb_Der_Neunundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
             this.tb_Der_Neunundzwanzigste.Location = new System.Drawing.Point(318, 538);
             this.tb_Der_Neunundzwanzigste.Name = "tb_Der_Neunundzwanzigste";
@@ -328,6 +335,7 @@
             this.tb_Der_Neunundzwanzigste.Size = new System.Drawing.Size(100, 103);
             this.tb_Der_Neunundzwanzigste.TabIndex = 21;
             this.tb_Der_Neunundzwanzigste.Text = "29";
+            this.tb_Der_Neunundzwanzigste.Visible = false;
             this.tb_Der_Neunundzwanzigste.Click += new System.EventHandler(this.tb_open_date);
             // 
             // lbl_calendar
@@ -338,7 +346,7 @@
             this.lbl_calendar.Name = "lbl_calendar";
             this.lbl_calendar.Size = new System.Drawing.Size(206, 51);
             this.lbl_calendar.TabIndex = 28;
-            this.lbl_calendar.Text = "Calendar";
+            this.lbl_calendar.Text = "Kalender";
             // 
             // btn_quit_calendar
             // 
@@ -347,7 +355,7 @@
             this.btn_quit_calendar.Name = "btn_quit_calendar";
             this.btn_quit_calendar.Size = new System.Drawing.Size(90, 38);
             this.btn_quit_calendar.TabIndex = 29;
-            this.btn_quit_calendar.Text = "Quit";
+            this.btn_quit_calendar.Text = "Beenden";
             this.btn_quit_calendar.UseVisualStyleBackColor = true;
             this.btn_quit_calendar.Click += new System.EventHandler(this.btn_quit_calendar_Click);
             // 
@@ -428,45 +436,66 @@
             this.tb_Der_Siebte.Text = "7";
             this.tb_Der_Siebte.Click += new System.EventHandler(this.tb_open_date);
             // 
-            // btn_month
-            // 
-            this.btn_month.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_month.Location = new System.Drawing.Point(121, 136);
-            this.btn_month.Name = "btn_month";
-            this.btn_month.Size = new System.Drawing.Size(75, 30);
-            this.btn_month.TabIndex = 37;
-            this.btn_month.Text = "Monat";
-            this.btn_month.UseVisualStyleBackColor = true;
-            // 
             // btn_prev
             // 
             this.btn_prev.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_prev.Location = new System.Drawing.Point(39, 136);
+            this.btn_prev.Location = new System.Drawing.Point(12, 99);
             this.btn_prev.Name = "btn_prev";
             this.btn_prev.Size = new System.Drawing.Size(75, 30);
-            this.btn_prev.TabIndex = 38;
+            this.btn_prev.TabIndex = 37;
             this.btn_prev.Text = "Prev";
             this.btn_prev.UseVisualStyleBackColor = true;
-            this.btn_prev.Visible = false;
+            this.btn_prev.Click += new System.EventHandler(this.btn_prev_Click);
+            // 
+            // btn_month
+            // 
+            this.btn_month.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_month.Location = new System.Drawing.Point(93, 99);
+            this.btn_month.Name = "btn_month";
+            this.btn_month.Size = new System.Drawing.Size(109, 30);
+            this.btn_month.TabIndex = 38;
+            this.btn_month.Text = "Monat";
+            this.btn_month.UseVisualStyleBackColor = true;
             // 
             // btn_next
             // 
             this.btn_next.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_next.Location = new System.Drawing.Point(202, 136);
+            this.btn_next.Location = new System.Drawing.Point(208, 99);
             this.btn_next.Name = "btn_next";
             this.btn_next.Size = new System.Drawing.Size(75, 30);
             this.btn_next.TabIndex = 39;
             this.btn_next.Text = "Next";
             this.btn_next.UseVisualStyleBackColor = true;
+            this.btn_next.Click += new System.EventHandler(this.btn_next_Click);
+            // 
+            // lbl_year
+            // 
+            this.lbl_year.AutoSize = true;
+            this.lbl_year.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Bold);
+            this.lbl_year.Location = new System.Drawing.Point(274, 33);
+            this.lbl_year.Name = "lbl_year";
+            this.lbl_year.Size = new System.Drawing.Size(113, 51);
+            this.lbl_year.TabIndex = 41;
+            this.lbl_year.Text = "Jahr";
+            // 
+            // tb_checkbox
+            // 
+            this.tb_checkbox.Location = new System.Drawing.Point(12, 177);
+            this.tb_checkbox.Name = "tb_checkbox";
+            this.tb_checkbox.Size = new System.Drawing.Size(271, 96);
+            this.tb_checkbox.TabIndex = 42;
+            this.tb_checkbox.Text = "";
             // 
             // wdw_calendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 671);
+            this.Controls.Add(this.tb_checkbox);
+            this.Controls.Add(this.lbl_year);
             this.Controls.Add(this.btn_next);
-            this.Controls.Add(this.btn_prev);
             this.Controls.Add(this.btn_month);
+            this.Controls.Add(this.btn_prev);
             this.Controls.Add(this.tb_Der_Siebte);
             this.Controls.Add(this.tb_Der_Sechste);
             this.Controls.Add(this.tb_Der_Fuenfte);
@@ -543,9 +572,11 @@
         private System.Windows.Forms.RichTextBox tb_Der_Fuenfte;
         private System.Windows.Forms.RichTextBox tb_Der_Sechste;
         private System.Windows.Forms.RichTextBox tb_Der_Siebte;
-        private System.Windows.Forms.Button btn_month;
         private System.Windows.Forms.Button btn_prev;
+        private System.Windows.Forms.Button btn_month;
         private System.Windows.Forms.Button btn_next;
+        private System.Windows.Forms.Label lbl_year;
+        private System.Windows.Forms.RichTextBox tb_checkbox;
     }
 }
 

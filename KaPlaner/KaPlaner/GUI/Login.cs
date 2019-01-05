@@ -75,6 +75,7 @@ namespace WindowsFormsApp1
             this.lbl_log_username.Size = new System.Drawing.Size(96, 23);
             this.lbl_log_username.TabIndex = 3;
             this.lbl_log_username.Text = "username";
+            this.lbl_log_username.Click += new System.EventHandler(this.label1_Click);
             // 
             // lbl_log_password
             // 
