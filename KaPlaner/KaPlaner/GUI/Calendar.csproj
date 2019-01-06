@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C3C7D987-91F9-46DA-8F7C-855A8F809C71}</ProjectGuid>
+    <ProjectGuid>{2224E3B9-7541-4E53-B1D6-B1B799C5022E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KaPlaner</RootNamespace>
-    <AssemblyName>KaPlaner</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>WindowsFormsApp1</RootNamespace>
+    <AssemblyName>WindowsFormsApp1</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,6 +24,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -61,46 +61,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="GUI\Calendar.cs">
+    <Compile Include="Date.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Calendar.designer.cs">
+    <Compile Include="Calendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calendar.Designer.cs">
       <DependentUpon>Calendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Date.cs">
+    <Compile Include="Registry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Date.designer.cs">
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Date.Designer.cs">
       <DependentUpon>Date.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Date_List.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Date_List.Designer.cs">
-      <DependentUpon>Date_List.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Registry.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Networking\INetworking.cs" />
-    <Compile Include="Networking\Networking.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\Calendar.resx">
-      <DependentUpon>Calendar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Date.resx">
+    <EmbeddedResource Include="Date.resx">
       <DependentUpon>Date.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="Calendar.resx">
+      <DependentUpon>Calendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Registry.resx">
-      <DependentUpon>Registry.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,6 +99,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Registry.resx">
+      <DependentUpon>Registry.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Calendar.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,11 +117,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+    <Content Include="Auslagerung Check-Methode.txt" />
+    <Content Include="VS_GUI_Klassendiagramme\Calendar.jpg" />
+    <Content Include="VS_GUI_Klassendiagramme\wdw_calendar.jpg" />
+    <Content Include="VS_GUI_Klassendiagramme\wdw_date.jpg" />
+    <Content Include="VS_GUI_Klassendiagramme\wdw_login.jpg" />
+    <Content Include="VS_GUI_Klassendiagramme\wdw_registry.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 und x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 und x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -136,16 +136,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\KaPlanerDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\KaPlanerDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>KaPlanerDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="Data\TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
