@@ -87,6 +87,7 @@
     <Compile Include="GUI\Registry.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Logic\Interface.cs" />
     <Compile Include="Networking\IClientConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
     <Compile Include="Objects\KaEvent.cs" />
