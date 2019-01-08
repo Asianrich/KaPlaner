@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Runtime.Remoting;
-
-
-namespace KaPlaner.Networking
+namespace KaPlaner.Objects
 {
-    class Networking
+    class User
     {
     }
 }

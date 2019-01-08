@@ -4,15 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KaPlaner.Networking
+namespace KaPlaner.Objects
 {
-    interface INetworking
+    class KaEvent
     {
-
-
-
-
-
-
     }
 }

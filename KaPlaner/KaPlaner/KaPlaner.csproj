@@ -86,8 +86,10 @@
     <Compile Include="GUI\Registry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Networking\INetworking.cs" />
-    <Compile Include="Networking\Networking.cs" />
+    <Compile Include="Networking\IClientConnection.cs" />
+    <Compile Include="Networking\ClientConnection.cs" />
+    <Compile Include="Objects\KaEvent.cs" />
+    <Compile Include="Objects\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Calendar.resx">
