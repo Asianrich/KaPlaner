@@ -9,4 +9,4 @@
     [Reccurance] CHAR(10) NOT NULL, 
     [Allday] CHAR(10) NOT NULL, 
     CONSTRAINT [PK_Table] PRIMARY KEY ([UserID]) 
-)
+);
