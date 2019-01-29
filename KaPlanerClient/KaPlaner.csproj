@@ -129,19 +129,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\calendar 2.mdf">
+    <Content Include="Data\User_Calendar.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\calendar 2_log.ldf">
+    <Content Include="Data\User_Calendar_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>calendar 2.mdf</DependentUpon>
-    </Content>
-    <Content Include="Data\Calendar.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Calendar_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Calendar.mdf</DependentUpon>
+      <DependentUpon>User_Calendar.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
