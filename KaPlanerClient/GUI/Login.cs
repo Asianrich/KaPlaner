@@ -12,14 +12,14 @@ namespace WindowsFormsApp1
 {
     public partial class wdw_login : Form
     {
-        private Label lbl_Login;
-        private RichTextBox tb_log_username;
-        private RichTextBox tb_log_password;
-        private Label lbl_log_username;
-        private Button btn_log_send;
-        private Button btn_log_quit;
-        private Button wdw_registry;
-        private Label lbl_log_password;
+        private Label lbl_login;
+        private RichTextBox tb_log_benutzername;
+        private RichTextBox tb_log_passwort;
+        private Label lbl_log_benutzername;
+        private Button btn_log_senden;
+        private Button btn_log_schließen;
+        private Button wdw_registrierung;
+        private Label lbl_log_passwort;
 
         public wdw_login()
         {
@@ -28,121 +28,115 @@ namespace WindowsFormsApp1
 
         private void InitializeComponent()
         {
-            this.lbl_Login = new System.Windows.Forms.Label();
-            this.tb_log_username = new System.Windows.Forms.RichTextBox();
-            this.tb_log_password = new System.Windows.Forms.RichTextBox();
-            this.lbl_log_username = new System.Windows.Forms.Label();
-            this.lbl_log_password = new System.Windows.Forms.Label();
-            this.btn_log_send = new System.Windows.Forms.Button();
-            this.btn_log_quit = new System.Windows.Forms.Button();
-            this.wdw_registry = new System.Windows.Forms.Button();
+            this.lbl_login = new System.Windows.Forms.Label();
+            this.tb_log_benutzername = new System.Windows.Forms.RichTextBox();
+            this.tb_log_passwort = new System.Windows.Forms.RichTextBox();
+            this.lbl_log_benutzername = new System.Windows.Forms.Label();
+            this.lbl_log_passwort = new System.Windows.Forms.Label();
+            this.btn_log_senden = new System.Windows.Forms.Button();
+            this.btn_log_schließen = new System.Windows.Forms.Button();
+            this.wdw_registrierung = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lbl_Login
+            // lbl_login
             // 
-            this.lbl_Login.AutoSize = true;
-            this.lbl_Login.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Login.Location = new System.Drawing.Point(132, 56);
-            this.lbl_Login.Name = "lbl_Login";
-            this.lbl_Login.Size = new System.Drawing.Size(128, 49);
-            this.lbl_Login.TabIndex = 0;
-            this.lbl_Login.Text = "Login";
+            this.lbl_login.AutoSize = true;
+            this.lbl_login.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_login.Location = new System.Drawing.Point(183, 64);
+            this.lbl_login.Name = "lbl_login";
+            this.lbl_login.Size = new System.Drawing.Size(128, 49);
+            this.lbl_login.TabIndex = 0;
+            this.lbl_login.Text = "Login";
             // 
-            // tb_log_username
+            // tb_log_benutzername
             // 
-            this.tb_log_username.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_log_username.Location = new System.Drawing.Point(141, 183);
-            this.tb_log_username.Name = "tb_log_username";
-            this.tb_log_username.Size = new System.Drawing.Size(230, 40);
-            this.tb_log_username.TabIndex = 1;
-            this.tb_log_username.Text = "";
+            this.tb_log_benutzername.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_log_benutzername.Location = new System.Drawing.Point(192, 183);
+            this.tb_log_benutzername.Name = "tb_log_benutzername";
+            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
+            this.tb_log_benutzername.TabIndex = 1;
+            this.tb_log_benutzername.Text = "";
             // 
-            // tb_log_password
+            // tb_log_passwort
             // 
-            this.tb_log_password.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_log_password.Location = new System.Drawing.Point(141, 229);
-            this.tb_log_password.Name = "tb_log_password";
-            this.tb_log_password.Size = new System.Drawing.Size(230, 40);
-            this.tb_log_password.TabIndex = 2;
-            this.tb_log_password.Text = "";
+            this.tb_log_passwort.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_log_passwort.Location = new System.Drawing.Point(192, 229);
+            this.tb_log_passwort.Name = "tb_log_passwort";
+            this.tb_log_passwort.Size = new System.Drawing.Size(230, 40);
+            this.tb_log_passwort.TabIndex = 2;
+            this.tb_log_passwort.Text = "";
             // 
-            // lbl_log_username
+            // lbl_log_benutzername
             // 
-            this.lbl_log_username.AutoSize = true;
-            this.lbl_log_username.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_log_username.Location = new System.Drawing.Point(36, 200);
-            this.lbl_log_username.Name = "lbl_log_username";
-            this.lbl_log_username.Size = new System.Drawing.Size(96, 23);
-            this.lbl_log_username.TabIndex = 3;
-            this.lbl_log_username.Text = "username";
-            this.lbl_log_username.Click += new System.EventHandler(this.label1_Click);
+            this.lbl_log_benutzername.AutoSize = true;
+            this.lbl_log_benutzername.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_log_benutzername.Location = new System.Drawing.Point(36, 200);
+            this.lbl_log_benutzername.Name = "lbl_log_benutzername";
+            this.lbl_log_benutzername.Size = new System.Drawing.Size(135, 23);
+            this.lbl_log_benutzername.TabIndex = 3;
+            this.lbl_log_benutzername.Text = "Benutzername";
             // 
-            // lbl_log_password
+            // lbl_log_passwort
             // 
-            this.lbl_log_password.AutoSize = true;
-            this.lbl_log_password.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_log_password.Location = new System.Drawing.Point(37, 246);
-            this.lbl_log_password.Name = "lbl_log_password";
-            this.lbl_log_password.Size = new System.Drawing.Size(96, 23);
-            this.lbl_log_password.TabIndex = 4;
-            this.lbl_log_password.Text = "password";
+            this.lbl_log_passwort.AutoSize = true;
+            this.lbl_log_passwort.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_log_passwort.Location = new System.Drawing.Point(37, 246);
+            this.lbl_log_passwort.Name = "lbl_log_passwort";
+            this.lbl_log_passwort.Size = new System.Drawing.Size(93, 23);
+            this.lbl_log_passwort.TabIndex = 4;
+            this.lbl_log_passwort.Text = "Passwort";
             // 
-            // btn_log_send
+            // btn_log_senden
             // 
-            this.btn_log_send.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_log_send.Location = new System.Drawing.Point(40, 321);
-            this.btn_log_send.Name = "btn_log_send";
-            this.btn_log_send.Size = new System.Drawing.Size(90, 30);
-            this.btn_log_send.TabIndex = 5;
-            this.btn_log_send.Text = "Send";
-            this.btn_log_send.UseVisualStyleBackColor = true;
-            this.btn_log_send.Click += new System.EventHandler(this.btn_log_send_Click);
+            this.btn_log_senden.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_log_senden.Location = new System.Drawing.Point(40, 321);
+            this.btn_log_senden.Name = "btn_log_senden";
+            this.btn_log_senden.Size = new System.Drawing.Size(90, 30);
+            this.btn_log_senden.TabIndex = 5;
+            this.btn_log_senden.Text = "Senden";
+            this.btn_log_senden.UseVisualStyleBackColor = true;
+            this.btn_log_senden.Click += new System.EventHandler(this.btn_log_send_Click);
             // 
-            // btn_log_quit
+            // btn_log_schließen
             // 
-            this.btn_log_quit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_log_quit.Location = new System.Drawing.Point(281, 321);
-            this.btn_log_quit.Name = "btn_log_quit";
-            this.btn_log_quit.Size = new System.Drawing.Size(90, 30);
-            this.btn_log_quit.TabIndex = 6;
-            this.btn_log_quit.Text = "Quit";
-            this.btn_log_quit.UseVisualStyleBackColor = true;
-            this.btn_log_quit.Click += new System.EventHandler(this.btn_log_quit_Click);
+            this.btn_log_schließen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_log_schließen.Location = new System.Drawing.Point(332, 321);
+            this.btn_log_schließen.Name = "btn_log_schließen";
+            this.btn_log_schließen.Size = new System.Drawing.Size(90, 30);
+            this.btn_log_schließen.TabIndex = 6;
+            this.btn_log_schließen.Text = "Schließen";
+            this.btn_log_schließen.UseVisualStyleBackColor = true;
+            this.btn_log_schließen.Click += new System.EventHandler(this.btn_log_quit_Click);
             // 
-            // wdw_registry
+            // wdw_registrierung
             // 
-            this.wdw_registry.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wdw_registry.Location = new System.Drawing.Point(161, 321);
-            this.wdw_registry.Name = "wdw_registry";
-            this.wdw_registry.Size = new System.Drawing.Size(90, 30);
-            this.wdw_registry.TabIndex = 7;
-            this.wdw_registry.Text = "Registry";
-            this.wdw_registry.UseVisualStyleBackColor = true;
-            this.wdw_registry.Click += new System.EventHandler(this.wdw_registry_Click);
+            this.wdw_registrierung.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wdw_registrierung.Location = new System.Drawing.Point(183, 321);
+            this.wdw_registrierung.Name = "wdw_registrierung";
+            this.wdw_registrierung.Size = new System.Drawing.Size(113, 30);
+            this.wdw_registrierung.TabIndex = 7;
+            this.wdw_registrierung.Text = "Registrierung";
+            this.wdw_registrierung.UseVisualStyleBackColor = true;
+            this.wdw_registrierung.Click += new System.EventHandler(this.wdw_registry_Click);
             // 
             // wdw_login
             // 
-            this.ClientSize = new System.Drawing.Size(409, 386);
-            this.Controls.Add(this.wdw_registry);
-            this.Controls.Add(this.btn_log_quit);
-            this.Controls.Add(this.btn_log_send);
-            this.Controls.Add(this.lbl_log_password);
-            this.Controls.Add(this.lbl_log_username);
-            this.Controls.Add(this.tb_log_password);
-            this.Controls.Add(this.tb_log_username);
-            this.Controls.Add(this.lbl_Login);
+            this.ClientSize = new System.Drawing.Size(459, 386);
+            this.Controls.Add(this.wdw_registrierung);
+            this.Controls.Add(this.btn_log_schließen);
+            this.Controls.Add(this.btn_log_senden);
+            this.Controls.Add(this.lbl_log_passwort);
+            this.Controls.Add(this.lbl_log_benutzername);
+            this.Controls.Add(this.tb_log_passwort);
+            this.Controls.Add(this.tb_log_benutzername);
+            this.Controls.Add(this.lbl_login);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaximumSize = new System.Drawing.Size(425, 425);
-            this.MinimumSize = new System.Drawing.Size(425, 425);
+            this.MaximumSize = new System.Drawing.Size(475, 425);
+            this.MinimumSize = new System.Drawing.Size(475, 425);
             this.Name = "wdw_login";
             this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -159,7 +153,7 @@ namespace WindowsFormsApp1
 
         private void wdw_registry_Click(object sender, EventArgs e)
         {
-            Form open_registry = new wdw_registry();
+            Form open_registry = new wdw_registrierung();
             open_registry.Show();
         }
     }
