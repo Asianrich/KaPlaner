@@ -19,8 +19,10 @@ namespace KaPlaner.Database
         {
             //Syntaxe
 
-            
-            //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+
+
+            //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Swathi_Su\Source\Repos\Asianrich\KaPlaner\KaPlanerClient\Data\User_Calendar.mdf;Integrated Security=True"].ConnectionString);
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
             con.Open();
             string insert = "insert into Table (username,password) values(@username, @password)";
             SqlCommand cmd = new SqlCommand(insert, con);
