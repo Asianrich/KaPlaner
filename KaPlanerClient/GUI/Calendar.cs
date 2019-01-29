@@ -44,7 +44,7 @@ namespace WindowsFormsApp1
 
         private void tb_open_date(object sender, EventArgs e)
         {
-            Form tb_open_date = new wdw_date();
+            Form tb_open_date = new wdw_Ereignis();
             tb_open_date.Show();
         }
 
@@ -62,6 +62,7 @@ namespace WindowsFormsApp1
                 monthcounter--;
             }
             btn_month.Text = month[monthcounter];
+            tb_checkbox.Text = monthcounter.ToString();
             check();
         }
 
@@ -79,6 +80,7 @@ namespace WindowsFormsApp1
                 monthcounter++;
             }
             btn_month.Text = month[monthcounter];
+            tb_checkbox.Text = monthcounter.ToString();
             check();
         }
 

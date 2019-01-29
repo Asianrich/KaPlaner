@@ -1,0 +1,58 @@
+﻿        private void check()
+        {
+            //Check 30 or 31 days
+            bool monthcheck = ((monthcounter+1) % 2 == 0);
+
+            if (btn_month.Text == "August")
+            {
+                tb_Der_Einunddreißigste.Enabled = true;
+                tb_Der_Einunddreißigste.Visible = true;
+            }
+            else if ((btn_month.Text == "Dezember"))
+            {
+                tb_Der_Einunddreißigste.Enabled = true;
+                tb_Der_Einunddreißigste.Visible = true;
+            }
+            else if (monthcheck == true)
+            {
+                tb_Der_Einunddreißigste.Enabled = false;
+                tb_Der_Einunddreißigste.Visible = false;
+            }
+            else
+            {
+                tb_Der_Einunddreißigste.Enabled = true;
+                tb_Der_Einunddreißigste.Visible = true;
+            }
+
+            //Check February
+            if (btn_month.Text == "Februar")
+            {
+                tb_Der_Neunundzwanzigste.Enabled = false;
+                tb_Der_Neunundzwanzigste.Visible = false;
+
+                tb_Der_Dreißigste.Enabled = false;
+                tb_Der_Dreißigste.Visible = false;
+
+                //Check leap year
+                if (!(DateTime.IsLeapYear(year)))
+                {
+                    tb_Der_Neunundzwanzigste.Enabled = false;
+                    tb_Der_Neunundzwanzigste.Visible = false;
+                }
+                else
+                {
+                    tb_Der_Neunundzwanzigste.Enabled = true;
+                    tb_Der_Neunundzwanzigste.Visible = true;
+                }
+            }
+            else if (!(btn_month.Text == "Februar"))
+            {
+                tb_Der_Neunundzwanzigste.Enabled = true;
+                tb_Der_Neunundzwanzigste.Visible = true;
+
+                tb_Der_Dreißigste.Enabled = true;
+                tb_Der_Dreißigste.Visible = true;
+            }
+
+            tb_checkbox.Text = monthcounter.ToString();
+        }

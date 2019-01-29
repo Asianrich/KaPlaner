@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class wdw_date : Form
+    public partial class wdw_Ereignis : Form
     {
-        public wdw_date()
+        public wdw_Ereignis()
         {
             InitializeComponent();
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void lbl_Titel_Click(object sender, EventArgs e)
@@ -28,11 +23,6 @@ namespace WindowsFormsApp1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void wdw_Eintrag_Load(object sender, EventArgs e)
         {
 
         }
@@ -47,11 +37,6 @@ namespace WindowsFormsApp1
 
         }
 
-        private void lbl_termine_mit_aktionen_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             //PUSH-Test
@@ -60,11 +45,6 @@ namespace WindowsFormsApp1
         private void btn_close_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void btn_save_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

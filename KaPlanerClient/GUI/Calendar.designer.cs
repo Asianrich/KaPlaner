@@ -480,6 +480,7 @@
             // 
             // tb_checkbox
             // 
+            this.tb_checkbox.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_checkbox.Location = new System.Drawing.Point(12, 177);
             this.tb_checkbox.Name = "tb_checkbox";
             this.tb_checkbox.Size = new System.Drawing.Size(271, 96);
