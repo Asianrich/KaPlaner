@@ -7,12 +7,13 @@ using KaPlaner.Objects;
 
 namespace KaPlaner.Networking
 {
-    interface IClientConnection
+    public interface IClientConnection
     {
         User user { get; set; }
         int port { get; set; }
 
         void connectServer();
+        void logging();
         void sendUser();
         void sendEvents();
         User receiveUser();

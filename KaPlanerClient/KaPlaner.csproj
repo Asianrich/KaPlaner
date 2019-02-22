@@ -48,6 +48,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -84,6 +86,7 @@
     <Compile Include="Logic\Interface.cs" />
     <Compile Include="Networking\IClientConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
+    <Compile Include="Networking\NetworkTest.cs" />
     <Compile Include="Objects\KaEvent.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Program.cs" />
