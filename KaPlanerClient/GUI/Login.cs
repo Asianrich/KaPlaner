@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KaPlaner.Database;
 
 namespace WindowsFormsApp1
 {
@@ -50,7 +51,7 @@ namespace WindowsFormsApp1
             // 
             // tb_log_benutzername
             // 
-            this.tb_log_benutzername.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_log_benutzername.Font = new System.Drawing.Font("Arial", 14.25F);
             this.tb_log_benutzername.Location = new System.Drawing.Point(192, 183);
             this.tb_log_benutzername.Name = "tb_log_benutzername";
             this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
@@ -59,7 +60,7 @@ namespace WindowsFormsApp1
             // 
             // tb_log_passwort
             // 
-            this.tb_log_passwort.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_log_passwort.Font = new System.Drawing.Font("Arial", 14.25F);
             this.tb_log_passwort.Location = new System.Drawing.Point(192, 229);
             this.tb_log_passwort.Name = "tb_log_passwort";
             this.tb_log_passwort.Size = new System.Drawing.Size(230, 40);
@@ -147,6 +148,9 @@ namespace WindowsFormsApp1
 
         private void btn_log_send_Click(object sender, EventArgs e)
         {
+            KaPlaner.Database.Database reg = new Database();
+            reg.login(tb_log_benutzername.Text, tb_log_passwort.Text);
+
             Form open_calendar = new wdw_calendar();
             open_calendar.Show();
         }
