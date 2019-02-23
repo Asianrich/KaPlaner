@@ -9,7 +9,9 @@ namespace KaPlaner.Database
     interface IDatabase
     {
 
-        void registerUser(string username, string password, string password_bestaetigen);
+        bool registerUser(string username, string password, string password_bestaetigen);
+
+        bool login(string username, string password);
 
 
 

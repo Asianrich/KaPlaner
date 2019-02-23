@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace KaPlaner.Objects
 {
-    class User
+    [Serializable]
+    public class User
     {
+        string name;
+        string password;
+
+
     }
 }

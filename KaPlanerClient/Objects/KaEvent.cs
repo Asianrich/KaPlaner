@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace KaPlaner.Objects
 {
-    class KaEvent
+    [Serializable]
+    public class KaEvent
     {
+        User owner;
+        DateTime date;
+        string[] members;
+
     }
 }
