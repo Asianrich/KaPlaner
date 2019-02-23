@@ -56,6 +56,7 @@ namespace WindowsFormsApp1
             this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
             this.tb_log_benutzername.TabIndex = 1;
             this.tb_log_benutzername.Text = "";
+            this.tb_log_benutzername.TextChanged += new System.EventHandler(this.tb_log_benutzername_TextChanged);
             // 
             // tb_log_passwort
             // 
@@ -155,6 +156,11 @@ namespace WindowsFormsApp1
         {
             Form open_registry = new wdw_registrierung();
             open_registry.Show();
+        }
+
+        private void tb_log_benutzername_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
