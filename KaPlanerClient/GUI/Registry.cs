@@ -156,10 +156,20 @@ namespace WindowsFormsApp1
 
         private void btn_reg_send_Click(object sender, EventArgs e)
         {
-            reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text);
-            Form open_calendar = new wdw_calendar();
-            open_calendar.Show();
-            Close();
+            KaPlaner.Database.Database reg = new Database();
+            if (reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
+            {
+                Form open_calendar = new wdw_calendar();
+                open_calendar.Show();
+                Close();
+            }
+            else
+            {
+                rTB_passwort.Text = "";
+                rTB_passwort_bestaetigen.Text = "";
+            }
+            
+            
         }
 
         private void btn_reg_quit_Click(object sender, EventArgs e)
@@ -169,7 +179,7 @@ namespace WindowsFormsApp1
 
         private void richTextBox3_TextChanged(object sender, EventArgs e)
         {
-            //Test Push2
+            
         }
     }
 }
