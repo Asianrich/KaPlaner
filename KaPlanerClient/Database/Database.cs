@@ -42,7 +42,7 @@ namespace KaPlaner.Database
                 return false;
             }
         }
-
+        /*
         public bool login(string username, string password)
         {
             //Login
@@ -63,6 +63,6 @@ namespace KaPlaner.Database
                 //con.Close();
                 //return true;
             }
-        }
+        }*/
     }
 }
