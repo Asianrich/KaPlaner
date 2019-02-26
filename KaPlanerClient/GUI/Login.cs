@@ -150,7 +150,7 @@ namespace WindowsFormsApp1
         private void btn_log_send_Click(object sender, EventArgs e)
         {
             KaPlaner.Database.Database reg = new Database();
-            //reg.login(tb_log_benutzername.Text, tb_log_passwort.Text);
+            reg.login(tb_log_benutzername.Text, tb_log_passwort.Text);
 
             Form open_calendar = new wdw_calendar();
             open_calendar.Show();

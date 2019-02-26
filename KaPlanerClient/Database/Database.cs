@@ -42,7 +42,7 @@ namespace KaPlaner.Database
                 return false;
             }
         }
-        /*
+        
         public bool login(string username, string password)
         {
             //Login
@@ -53,16 +53,22 @@ namespace KaPlaner.Database
             }
             else
             {
-                //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
-                //con.Open();
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                con.Open();
 
                 //Pruefen ob Benutzerdaten existieren
-                //string exist = "SELECT Benutzername, Passwort FROM Registry WHERE EXISTS (SELECT * FROM Registry WHERE Benutzername=@username AND Passwort=@password)";
-                //SqlCommand cmd = new SqlCommand(exist, con);
-                //cmd.ExecuteNonQuery();
-                //con.Close();
-                //return true;
+                string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = @username);";
+
+                SqlCommand cmd = new SqlCommand(exist, con);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                MessageBox.Show(String.Format("{0}", reader[0]));
+
+                con.Close();
+                return true;
             }
-        }*/
+        }
     }
 }
