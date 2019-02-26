@@ -42,10 +42,10 @@ namespace KaPlaner.Database
                 return false;
             }
         }
-        /*
+
+        //Login
         public bool login(string username, string password)
         {
-            //Login
             if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(username))
             {
                 MessageBox.Show("Die Felder fuer Passwort und Benutzername duerfen nicht leer sein.");
@@ -53,16 +53,27 @@ namespace KaPlaner.Database
             }
             else
             {
-                //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
-                //con.Open();
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                con.Open();
 
-                //Pruefen ob Benutzerdaten existieren
-                //string exist = "SELECT Benutzername, Passwort FROM Registry WHERE EXISTS (SELECT * FROM Registry WHERE Benutzername=@username AND Passwort=@password)";
-                //SqlCommand cmd = new SqlCommand(exist, con);
-                //cmd.ExecuteNonQuery();
-                //con.Close();
-                //return true;
+                //Pruefen ob der Benutzer existiert
+                string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = @username);";
+
+                SqlCommand cmd = new SqlCommand(exist, con);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    con.Close();
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("Der Benutzer {0} existiert nicht!", username));
+                    return false;
+                }
             }
-        }*/
+        }
     }
 }
