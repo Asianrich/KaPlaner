@@ -43,7 +43,6 @@ namespace WindowsFormsApp1
             // 
             // rTB_passwort_bestaetigen
             // 
-            this.rTB_passwort_bestaetigen.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort_bestaetigen.Location = new System.Drawing.Point(256, 273);
             this.rTB_passwort_bestaetigen.Name = "rTB_passwort_bestaetigen";
             this.rTB_passwort_bestaetigen.Size = new System.Drawing.Size(230, 40);
@@ -62,7 +61,6 @@ namespace WindowsFormsApp1
             // 
             // rTB_passwort
             // 
-            this.rTB_passwort.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort.Location = new System.Drawing.Point(256, 227);
             this.rTB_passwort.Name = "rTB_passwort";
             this.rTB_passwort.Size = new System.Drawing.Size(230, 40);
@@ -71,7 +69,6 @@ namespace WindowsFormsApp1
             // 
             // rTB_benutzername
             // 
-            this.rTB_benutzername.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rTB_benutzername.Location = new System.Drawing.Point(256, 181);
             this.rTB_benutzername.Name = "rTB_benutzername";
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
@@ -159,18 +156,10 @@ namespace WindowsFormsApp1
 
         private void btn_reg_send_Click(object sender, EventArgs e)
         {
-            KaPlaner.Database.Database reg = new Database();
-            if(reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
-            {
-                Form open_calendar = new wdw_calendar();
-                open_calendar.Show();
-                Close();
-            }
-            else
-            {
-                rTB_passwort.Text = "";
-                rTB_passwort_bestaetigen.Text = "";
-            }
+            reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text);
+            Form open_calendar = new wdw_calendar();
+            open_calendar.Show();
+            Close();
         }
 
         private void btn_reg_quit_Click(object sender, EventArgs e)
@@ -180,7 +169,7 @@ namespace WindowsFormsApp1
 
         private void richTextBox3_TextChanged(object sender, EventArgs e)
         {
-            
+            //Test Push2
         }
     }
 }
