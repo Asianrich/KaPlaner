@@ -42,10 +42,10 @@ namespace KaPlaner.Database
                 return false;
             }
         }
-        
+
+        //Login
         public bool login(string username, string password)
         {
-            //Login
             if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(username))
             {
                 MessageBox.Show("Die Felder fuer Passwort und Benutzername duerfen nicht leer sein.");
@@ -56,7 +56,7 @@ namespace KaPlaner.Database
                 SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
-                //Pruefen ob Benutzerdaten existieren
+                //Pruefen ob der Benutzer existiert
                 string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = @username);";
 
                 SqlCommand cmd = new SqlCommand(exist, con);
@@ -64,10 +64,15 @@ namespace KaPlaner.Database
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 if(reader.Read())
-                MessageBox.Show(String.Format("{0}", reader[0]));
-
-                con.Close();
-                return true;
+                {
+                    con.Close();
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("Der Benutzer {0} existiert nicht!", username));
+                    return false;
+                }
             }
         }
     }

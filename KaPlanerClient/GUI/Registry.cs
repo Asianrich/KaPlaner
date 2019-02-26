@@ -43,6 +43,7 @@ namespace WindowsFormsApp1
             // 
             // rTB_passwort_bestaetigen
             // 
+            this.rTB_passwort_bestaetigen.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort_bestaetigen.Location = new System.Drawing.Point(256, 273);
             this.rTB_passwort_bestaetigen.Name = "rTB_passwort_bestaetigen";
             this.rTB_passwort_bestaetigen.Size = new System.Drawing.Size(230, 40);
@@ -61,6 +62,7 @@ namespace WindowsFormsApp1
             // 
             // rTB_passwort
             // 
+            this.rTB_passwort.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort.Location = new System.Drawing.Point(256, 227);
             this.rTB_passwort.Name = "rTB_passwort";
             this.rTB_passwort.Size = new System.Drawing.Size(230, 40);
@@ -69,6 +71,7 @@ namespace WindowsFormsApp1
             // 
             // rTB_benutzername
             // 
+            this.rTB_benutzername.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_benutzername.Location = new System.Drawing.Point(256, 181);
             this.rTB_benutzername.Name = "rTB_benutzername";
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
@@ -167,9 +170,7 @@ namespace WindowsFormsApp1
             {
                 rTB_passwort.Text = "";
                 rTB_passwort_bestaetigen.Text = "";
-            }
-            
-            
+            }   
         }
 
         private void btn_reg_quit_Click(object sender, EventArgs e)
