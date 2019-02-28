@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KaPlaner.Networking;
-
+using KaPlaner.Objects;
 
 
 namespace UnitTest
@@ -12,13 +12,48 @@ namespace UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            ClientConnection client = new ClientConnection();
-            client.connectServer();
+            int a = 2;
+            int b = 2;
 
-            Assert.AreEqual(1, 1);
+            User user = new User();
+
+
+
+            Assert.AreEqual(a, b);
             
         }
 
+        [TestMethod]
+        public void serialization()
+        {
+            User user = new User("Manfred", "asd");
+
+
+            byte [] serializeObj = user.Serialize();
+
+
+
+
+            Assert.AreEqual(User.Deserialize(serializeObj), user);
+
+
+
+        }
+
+        [TestMethod]
+        public void sendObjects()
+        {
+            ClientConnection client = new ClientConnection();
+
+            client.connectServer();
+            User user = new User("Richard", "test");
+
+            
+
+            Assert.IsTrue(client.logging(user));
+
+
+        }
         
     }
 }

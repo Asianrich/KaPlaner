@@ -13,9 +13,9 @@ namespace KaPlaner.Networking
         int port { get; set; }
 
         void connectServer();
-        void logging();
-        void sendUser();
-        void sendEvents();
+        bool logging(User user);
+        void sendUser(User user);
+        void sendEvents(KaEvent kaEvent);
         User receiveUser();
         KaEvent receiveEvent();
 
