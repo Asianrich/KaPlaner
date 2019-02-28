@@ -22,11 +22,6 @@ namespace WindowsFormsApp1
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void rb_Aufgabe_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -45,6 +40,16 @@ namespace WindowsFormsApp1
         private void btn_close_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void nUD_beginn_stunden_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_beginn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

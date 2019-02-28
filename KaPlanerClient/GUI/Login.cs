@@ -154,6 +154,8 @@ namespace WindowsFormsApp1
             {
                 Form open_calendar = new wdw_calendar();
                 open_calendar.Show();
+                tb_log_benutzername.Text = "";
+                tb_log_passwort.Text = "";
             }
             else
             {
