@@ -146,5 +146,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KaObjects\KaObjects.csproj">
+      <Project>{b5deb1ff-0ceb-4d12-a3e2-65ad037a5938}</Project>
+      <Name>KaObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
