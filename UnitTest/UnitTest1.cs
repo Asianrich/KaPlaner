@@ -77,7 +77,83 @@ namespace UnitTest
 
         }
 
+        [TestMethod]
+        public void writer()
+        {
 
+
+            User user = new User("Man", "123");
+
+            string msg;
+            using (var writer = new StringWriter())
+            {
+
+
+                using (var xmlwriter = XmlWriter.Create(writer))
+                {
+
+                    XmlSerializer xml = new XmlSerializer(typeof(User));
+                    xml.Serialize(xmlwriter, user);
+
+
+
+
+                }
+
+                msg = writer.ToString();
+
+
+            }
+
+
+            User isUser;
+            using (var reader = new StringReader(msg))
+            {
+
+
+                using (var xmlreader = XmlReader.Create(reader))
+                {
+                    XmlSerializer xml = new XmlSerializer(typeof(User));
+                    var tObjects = xml.Deserialize(xmlreader);
+
+                    isUser = (User)tObjects;
+
+
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+                Assert.IsTrue(true);
+
+
+
+        }
+
+
+
+        [TestMethod]
+        public void readandwrite()
+        {
+            ClientConnection cc = new ClientConnection();
+
+            User user = new User("aaa", "sss");
+
+            string test = cc.Serialize(user);
+
+
+            User aso = cc.DeSerialize<User>(test);
+
+            Assert.IsTrue(true);
+        }
 
         
     }

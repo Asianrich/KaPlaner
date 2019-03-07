@@ -101,29 +101,64 @@ namespace KaPlaner.Networking
             try
             {
                 //byte[] msg = user.Serialize();
-                SendRq("Login");
 
 
-                using (var stream = new NetworkStream(client))
-                {
+                string msg = Serialize(user);
 
+                //byte[] msg = Encoding.ASCII.GetBytes(check);
+                SendRq("Login", msg);
 
-
-
-                    XmlDocument myXml = new XmlDocument();
-                    
-
-
-                    XmlSerializer xml = new XmlSerializer(typeof(User));
-                    xml.Serialize(stream, user);
-
-
-                }
 
 
                 //client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
                 //sendDone.WaitOne();
-                int a = 1 + 1;
+
+                int a = 0;
+                for (int i = 0; i < 1000; i++)
+                {
+                    a++;
+                }
+
+
+
+
+                //using (var stream = new NetworkStream(client))
+                //{
+
+
+
+
+                //    XmlDocument myXml = new XmlDocument();
+
+                //    string msg;
+                //    using (var writer = new StringWriter())
+                //    {
+
+
+                //        using (var xmlwriter = XmlWriter.Create(writer))
+                //        {
+
+                //            XmlSerializer xml = new XmlSerializer(typeof(User));
+                //            xml.Serialize(xmlwriter, user);
+
+
+
+
+                //        }
+
+                //        msg = writer.ToString();
+
+
+                //    }
+
+
+
+
+                //}
+
+
+
+                
 
 
 
@@ -148,7 +183,7 @@ namespace KaPlaner.Networking
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = socket.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+                ;
 
                 // Signal that all bytes have been sent.  
                 sendDone.Set();
@@ -201,22 +236,69 @@ namespace KaPlaner.Networking
             }
         }
 
-        private void SendRq(string request)
+        private void SendRq(string request, string asd)
         {
 
-            using (var stream = new NetworkStream(client))
-            {
-                byte[] msg = Encoding.ASCII.GetBytes(String.Format(request)+ '-');
-                stream.BeginWrite(msg, 0, msg.Length, new AsyncCallback(SendCallback), client);
-                sendDone.WaitOne();
-            }
-
+            //using (var stream = new NetworkStream(client))
+            //{
                 
-            //client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-            
+            //    stream.BeginWrite(msg, 0, msg.Length, new AsyncCallback(SendCallback), client);
+                
+            //}
+
+            byte[] msg = Encoding.ASCII.GetBytes(String.Format(request) + ";;;;" + asd + ";;;;");
+            client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+            sendDone.WaitOne();
         }
 
-        
+
+        public void Disconnect()
+        {
+
+        }
+
+
+
+        public string Serialize<T>(T myObject)
+        {
+            string msg;
+            using (var sw = new StringWriter())
+            {
+                using (var xw = XmlWriter.Create(sw))
+                {
+                    XmlSerializer xs = new XmlSerializer(myObject.GetType());
+                    xs.Serialize(xw, myObject);
+
+
+                }
+                msg = sw.ToString();
+            }
+
+
+            return msg;
+
+        }
+
+        public T DeSerialize<T>(string msg)
+        {
+            T myObject;
+            using (var sr = new StringReader(msg))
+            {
+                using (var xr = XmlReader.Create(sr))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(T));
+                    myObject = (T)xs.Deserialize(xr);
+
+
+                }
+            }
+
+
+            return myObject;
+
+        }
+
+
 
 
 

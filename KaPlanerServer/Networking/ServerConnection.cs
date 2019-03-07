@@ -87,24 +87,33 @@ namespace KaPlanerServer.Networking
                 StateObject state = new StateObject
                 {
                     socket = handler,
-                    buffer = new byte[100]
+                    buffer = new byte[8192]
                 };
+                string[] delimiter = { ";;;;" };
+                string[] msg;
                 while (true)
                 {
-                    using (var stream = new NetworkStream(handler))
+                    
+
+
+                    //using (var stream = new NetworkStream(handler))
+                    //{
+
+                    //    stream.BeginRead(state.buffer, 0, 100, new AsyncCallback(ReceiveCallback),state.socket);
+                    //    receiveDone.WaitOne();
+
+                    //}
+
+                    handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+                    receiveDone.WaitOne();
+
+                    
+
+                    msg = Encoding.ASCII.GetString(state.buffer).Split(delimiter, StringSplitOptions.None);
+                    foreach (string satz in msg)
                     {
-                        
-                        stream.BeginRead(state.buffer, 0, 100, new AsyncCallback(ReceiveCallback),state.socket);
-                        receiveDone.WaitOne();
-
+                        Console.WriteLine(satz);
                     }
-
-                    //    handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
-                    //receiveDone.WaitOne();
-                    char[] delimiter = { '-' };
-
-                    string[] msg = Encoding.ASCII.GetString(state.buffer).Split(delimiter);
-
                     //state.buffer = new byte[Convert.ToInt32(msg[1])];
 
 
@@ -114,36 +123,38 @@ namespace KaPlanerServer.Networking
                         case "Login":
 
                             User test;
-                            using (var stream = new NetworkStream(handler))
-                            {
+                            //using (var stream = new NetworkStream(handler))
+                            //{
 
-                                //using (XmlReader reader = stream)
-                                //{
+                            //    //using (XmlReader reader = stream)
+                            //    //{
 
-                                //}
-                                StreamReader streamReader = new StreamReader(stream);
-                                string mesg = streamReader.ReadToEnd();
-                                
-
-                                
-                                XmlSerializer serializer = new XmlSerializer(typeof(User));
-                                //stream.Seek(0, 0);
-                                
-                                
-
-                                var save = (User)serializer.Deserialize(streamReader.BaseStream);
-                                test = (User)save;
+                            //    //}
+                            //    StreamReader streamReader = new StreamReader(stream);
+                            //    string mesg = streamReader.ReadToEnd();
 
 
 
-                            }
+                            //    XmlSerializer serializer = new XmlSerializer(typeof(User));
+                            //    //stream.Seek(0, 0);
 
-                            //handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+
+
+                            //    var save = (User)serializer.Deserialize(streamReader.BaseStream);
+                            //    test = (User)save;
+
+
+
+                            //}
+                            
+                            //handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state.socket);
                             //receiveDone.WaitOne();
-                            //User user = User.Deserialize(state.buffer);
-                            //Console.WriteLine(user);
-                            //Console.WriteLine(user.name);
-                            //Console.WriteLine(user.password);
+                            string asd = msg[1];
+                            Console.WriteLine(asd);
+                            User user = DeSerialize<User>(asd);
+                            Console.WriteLine(user);
+                            Console.WriteLine(user.name);
+                            Console.WriteLine(user.password);
 
                             User sendUser = new User("Jan", "Swathi");
 
@@ -202,7 +213,7 @@ namespace KaPlanerServer.Networking
 
                 // Complete sending the data to the remote device.  
                 int bytesReceive = socket.EndReceive(ar);
-
+                Console.WriteLine("Receives : " + bytesReceive);
                 // Signal that all bytes have been sent.  
                 receiveDone.Set();
             }
@@ -215,7 +226,44 @@ namespace KaPlanerServer.Networking
 
 
 
+        public static string Serialize<T>(T myObject)
+        {
+            string msg;
+            using (var sw = new StringWriter())
+            {
+                using (var xw = XmlWriter.Create(sw))
+                {
+                    XmlSerializer xs = new XmlSerializer(myObject.GetType());
+                    xs.Serialize(xw, myObject);
 
+
+                }
+                msg = sw.ToString();
+            }
+
+
+            return msg;
+
+        }
+
+        public static T DeSerialize<T>(string msg)
+        {
+            T myObject;
+            using (var sr = new StringReader(msg))
+            {
+                using (var xr = XmlReader.Create(sr))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(T));
+                    myObject = (T)xs.Deserialize(xr);
+
+
+                }
+            }
+
+
+            return myObject;
+
+        }
 
     }
 }
