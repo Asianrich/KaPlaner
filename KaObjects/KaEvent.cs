@@ -12,28 +12,9 @@ namespace KaObjects
     [Serializable]
     public class KaEvent
     {
-        User owner;
-        DateTime date;
-        string[] members;
-
-
-        public byte[] Serialize()
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            bin.Serialize(mem, this);
-            return mem.GetBuffer();
-        }
-
-        public KaEvent Deserialize(byte[] dataBuffer)
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            mem.Write(dataBuffer, 0, dataBuffer.Length);
-            mem.Seek(0, 0);
-            return (KaEvent)bin.Deserialize(mem);
-
-        }
+        public User owner { get; set; }
+        public DateTime date { get; set; }
+        public string[] members { get; set; }
 
     }
 }

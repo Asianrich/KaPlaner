@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+
 
 namespace KaObjects
 {
-    [Serializable]
+    [Serializable, XmlRoot("User")]
     public class User
     {
-        public string name;
-        public string password;
+
+        [XmlAttribute]
+        public string name { get; set; }
+        [XmlAttribute]
+        public string password { get; set; }
+
+
+
+
 
         public User()
         {
@@ -25,44 +35,6 @@ namespace KaObjects
             this.name = name;
             this.password = password;
         }
-
-
-
-
-
-
-
-
-        //Joshua bitte das da unten nicht abändern
-
-        /// <summary>
-        /// Serialize the Object
-        /// </summary>
-        /// <returns></returns>
-        public byte[] Serialize()
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            bin.Serialize(mem, this);
-            return mem.GetBuffer();
-        }
-
-
-        /// <summary>
-        /// Deserialize the Buffer
-        /// </summary>
-        /// <param name="dataBuffer">The Byterbuffer</param>
-        /// <returns></returns>
-        public static User Deserialize(byte[] dataBuffer)
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            mem.Write(dataBuffer, 0, dataBuffer.Length);
-            mem.Seek(0, 0);
-            return (User)bin.Deserialize(mem);
-
-        }
-
 
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KaPlaner.Networking;
-using KaPlaner.Objects;
-
+using KaObjects;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Threading;
+using System.Runtime;
+using System.IO;
 
 namespace UnitTest
 {
@@ -26,17 +30,34 @@ namespace UnitTest
         [TestMethod]
         public void serialization()
         {
+
+
+            //Binary Serialization. Who knows when i need this
             User user = new User("Manfred", "asd");
+            //byte [] serializeObj = user.Serialize();
+            //Assert.AreEqual(User.Deserialize(serializeObj), user);
+
+            User test;
+
+            //XML-Serialization
+            using (var stream = new MemoryStream())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(User));
+
+                serializer.Serialize(stream, user);
 
 
-            byte [] serializeObj = user.Serialize();
+                stream.Seek(0, 0);
+                var asd = serializer.Deserialize(stream);
+
+                test = (User)asd;
+                
 
 
 
+            }
 
-            Assert.AreEqual(User.Deserialize(serializeObj), user);
-
-
+            Assert.AreEqual(test, user);
 
         }
 
@@ -49,11 +70,15 @@ namespace UnitTest
             User user = new User("Richard", "test");
 
             
+            
 
             Assert.IsTrue(client.logging(user));
 
 
         }
+
+
+
         
     }
 }

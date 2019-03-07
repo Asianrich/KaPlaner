@@ -7,6 +7,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using KaObjects;
+using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
+
 
 namespace KaPlanerServer.Networking
 {
@@ -71,66 +75,104 @@ namespace KaPlanerServer.Networking
 
         public static void AcceptCallback(IAsyncResult ar)
         {
-            // Signal the main thread to continue.  
-            allDone.Set();
-            Console.Write("Someone joined the Hell");
-
-            // Get the socket that handles the client request.  
-            Socket listener = (Socket)ar.AsyncState;
-            Socket handler = listener.EndAccept(ar);
-            StateObject state = new StateObject
+            try
             {
-                socket = handler,
-                buffer = new byte[100]
-            };
-            while (true)
-            {
-                handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
-                receiveDone.WaitOne();
-                char[] delimiter = { '-' };
+                // Signal the main thread to continue.  
+                allDone.Set();
+                Console.Write("Someone joined the Hell");
 
-                string[] msg = Encoding.ASCII.GetString(state.buffer).Split(delimiter);
-
-                state.buffer = new byte[Convert.ToInt32(msg[1])];
-
-
-
-                switch (msg[0])
+                // Get the socket that handles the client request.  
+                Socket listener = (Socket)ar.AsyncState;
+                Socket handler = listener.EndAccept(ar);
+                StateObject state = new StateObject
                 {
-                    case "Login":
-
-
-
-                        handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+                    socket = handler,
+                    buffer = new byte[100]
+                };
+                while (true)
+                {
+                    using (var stream = new NetworkStream(handler))
+                    {
+                        
+                        stream.BeginRead(state.buffer, 0, 100, new AsyncCallback(ReceiveCallback),state.socket);
                         receiveDone.WaitOne();
-                        User user = User.Deserialize(state.buffer);
-                        Console.WriteLine(user);
-                        Console.WriteLine(user.name);
-                        Console.WriteLine(user.password);
 
-                        User sendUser = new User("Jan", "Swathi");
+                    }
 
-                        state.buffer = sendUser.Serialize();
+                    //    handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+                    //receiveDone.WaitOne();
+                    char[] delimiter = { '-' };
 
-                        handler.BeginSend(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(SendCallback), handler);
-                        sendDone.WaitOne();
+                    string[] msg = Encoding.ASCII.GetString(state.buffer).Split(delimiter);
 
+                    //state.buffer = new byte[Convert.ToInt32(msg[1])];
 
 
-                        break;
 
-                    default:
-                        break;
+                    switch (msg[0])
+                    {
+                        case "Login":
+
+                            User test;
+                            using (var stream = new NetworkStream(handler))
+                            {
+
+                                //using (XmlReader reader = stream)
+                                //{
+
+                                //}
+                                StreamReader streamReader = new StreamReader(stream);
+                                string mesg = streamReader.ReadToEnd();
+                                
+
+                                
+                                XmlSerializer serializer = new XmlSerializer(typeof(User));
+                                //stream.Seek(0, 0);
+                                
+                                
+
+                                var save = (User)serializer.Deserialize(streamReader.BaseStream);
+                                test = (User)save;
+
+
+
+                            }
+
+                            //handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+                            //receiveDone.WaitOne();
+                            //User user = User.Deserialize(state.buffer);
+                            //Console.WriteLine(user);
+                            //Console.WriteLine(user.name);
+                            //Console.WriteLine(user.password);
+
+                            User sendUser = new User("Jan", "Swathi");
+
+                            //state.buffer = sendUser.Serialize();
+
+                            //handler.BeginSend(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(SendCallback), handler);
+                            //sendDone.WaitOne();
+
+
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+
+
+
+
                 }
 
 
-
-
-
             }
-
-
-
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+                return;
+            }
         }
         private static void SendCallback(IAsyncResult ar)
         {

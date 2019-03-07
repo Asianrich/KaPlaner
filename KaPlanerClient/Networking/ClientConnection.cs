@@ -8,8 +8,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Remoting;
 using KaObjects;
-
-
+using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
 
 namespace KaPlaner.Networking
 {
@@ -62,8 +63,8 @@ namespace KaPlaner.Networking
                 
                 client.BeginReceive(buffer, 0, buffer.Length, 0, new AsyncCallback(ReceiveCallback), client);
                 receiveDone.WaitOne();
-                                                          
-                return User.Deserialize(buffer);
+
+                return null; //User.Deserialize(buffer);
 
 
             }
@@ -83,7 +84,7 @@ namespace KaPlaner.Networking
             try
             {
 
-                SendRq("User", user.Serialize().Length);
+                //SendRq("User", user.Serialize().Length);
                 
 
 
@@ -99,21 +100,36 @@ namespace KaPlaner.Networking
         {
             try
             {
-                byte[] msg = user.Serialize();
-                SendRq("Login-", msg.Length);
+                //byte[] msg = user.Serialize();
+                SendRq("Login");
+
+
+                using (var stream = new NetworkStream(client))
+                {
 
 
 
 
-                client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-                sendDone.WaitOne();
+                    XmlDocument myXml = new XmlDocument();
+                    
+
+
+                    XmlSerializer xml = new XmlSerializer(typeof(User));
+                    xml.Serialize(stream, user);
+
+
+                }
+
+
+                //client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+                //sendDone.WaitOne();
+                int a = 1 + 1;
 
 
 
 
 
-
-                receiveUser();
+                //receiveUser();
 
 
                 return true;
@@ -185,11 +201,19 @@ namespace KaPlaner.Networking
             }
         }
 
-        private void SendRq(string request, int size)
+        private void SendRq(string request)
         {
-            byte[] msg = Encoding.ASCII.GetBytes(String.Format(request+"{0}",size));
-            client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-            sendDone.WaitOne();
+
+            using (var stream = new NetworkStream(client))
+            {
+                byte[] msg = Encoding.ASCII.GetBytes(String.Format(request)+ '-');
+                stream.BeginWrite(msg, 0, msg.Length, new AsyncCallback(SendCallback), client);
+                sendDone.WaitOne();
+            }
+
+                
+            //client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+            
         }
 
         
