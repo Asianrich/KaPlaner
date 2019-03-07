@@ -17,7 +17,7 @@ namespace KaPlaner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new wdw_login());
+            Application.Run(new Wdw_login());
         }
     }
 }

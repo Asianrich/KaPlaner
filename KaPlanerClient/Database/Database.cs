@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Windows.Forms;
+using WindowsFormsApp1;
 
 namespace KaPlaner.Database
 {
@@ -16,9 +17,12 @@ namespace KaPlaner.Database
 
         }
 
+        /// <summary>
+        /// Registry
+        /// create a new user
+        /// </summary>
         public bool registerUser(string username, string password, string password_bestaetigen)
         {
-            //Registrierung
             if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(password_bestaetigen))
             {
                 MessageBox.Show("Die Felder fuer das Passwort duerfen nicht leer sein.");
@@ -59,7 +63,10 @@ namespace KaPlaner.Database
             }
         }
 
-        //Login
+        /// <summary>
+        /// Login
+        /// login with your login details
+        /// </summary>
         public bool login(string username, string password)
         {
             if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(username))

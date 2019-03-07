@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using KaPlaner.Objects;
 
 namespace WindowsFormsApp1
 {
@@ -42,10 +42,26 @@ namespace WindowsFormsApp1
             Application.Exit();
         }
 
+        public KaEvent Ereignis;
         private void tb_open_date(object sender, EventArgs e)
         {
-            Form tb_open_date = new wdw_Ereignis();
-            tb_open_date.Show();
+            //Form tb_open_date = new Wdw_Ereignis();
+            //tb_open_date.Show();
+
+            using (var form = new Wdw_Ereignis())
+            {
+                var result = form.ShowDialog();
+                if(result == DialogResult.OK)
+                {
+                    Ereignis = form.returnValue;
+                    MessageBox.Show(Ereignis.Title);
+                }
+                else
+                {
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
+                }
+            }
+
         }
 
         /// <summary> check end of old year </summary>

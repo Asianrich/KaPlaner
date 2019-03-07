@@ -11,7 +11,7 @@ using KaPlaner.Database;
 
 namespace WindowsFormsApp1
 {
-    public partial class wdw_registrierung : Form
+    public partial class Wdw_registrierung : Form
     {
         private RichTextBox rTB_passwort_bestaetigen;
         private Label lbl_registrierung;
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         private Button btn_reg_schließen;
         private RichTextBox rTB_benutzername;
 
-        public wdw_registrierung()
+        public Wdw_registrierung()
         {
             InitializeComponent();
         }
@@ -77,7 +77,7 @@ namespace WindowsFormsApp1
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
             this.rTB_benutzername.TabIndex = 3;
             this.rTB_benutzername.Text = "";
-            this.rTB_benutzername.TextChanged += new System.EventHandler(this.richTextBox3_TextChanged);
+            this.rTB_benutzername.TextChanged += new System.EventHandler(this.RichTextBox3_TextChanged);
             // 
             // lbl_reg_benutzername
             // 
@@ -118,7 +118,7 @@ namespace WindowsFormsApp1
             this.btn_reg_senden.TabIndex = 7;
             this.btn_reg_senden.Text = "Senden";
             this.btn_reg_senden.UseVisualStyleBackColor = true;
-            this.btn_reg_senden.Click += new System.EventHandler(this.btn_reg_send_Click);
+            this.btn_reg_senden.Click += new System.EventHandler(this.Btn_reg_send_Click);
             // 
             // btn_reg_schließen
             // 
@@ -129,7 +129,7 @@ namespace WindowsFormsApp1
             this.btn_reg_schließen.TabIndex = 8;
             this.btn_reg_schließen.Text = "Schließen";
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
-            this.btn_reg_schließen.Click += new System.EventHandler(this.btn_reg_quit_Click);
+            this.btn_reg_schließen.Click += new System.EventHandler(this.Btn_reg_quit_Click);
             // 
             // wdw_registrierung
             // 
@@ -157,7 +157,7 @@ namespace WindowsFormsApp1
 
         }
 
-        private void btn_reg_send_Click(object sender, EventArgs e)
+        private void Btn_reg_send_Click(object sender, EventArgs e)
         {
             KaPlaner.Database.Database reg = new Database();
             if (reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
@@ -174,12 +174,12 @@ namespace WindowsFormsApp1
             }   
         }
 
-        private void btn_reg_quit_Click(object sender, EventArgs e)
+        private void Btn_reg_quit_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        private void RichTextBox3_TextChanged(object sender, EventArgs e)
         {
             
         }

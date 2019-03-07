@@ -11,7 +11,7 @@ namespace KaPlaner.Database
 
         bool registerUser(string username, string password, string password_bestaetigen);
 
-        //bool login(string username, string password);
+        bool login(string username, string password);
 
 
 

@@ -16,6 +16,13 @@ namespace KaPlaner.Objects
         DateTime date;
         string[] members;
 
+        public string Title;
+        public string Ort;
+
+        public KaEvent(string Title)
+        {
+            this.Title = Title;
+        }
 
         public byte[] Serialize()
         {

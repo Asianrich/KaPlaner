@@ -11,7 +11,7 @@ using KaPlaner.Database;
 
 namespace WindowsFormsApp1
 {
-    public partial class wdw_login : Form
+    public partial class Wdw_login : Form
     {
         private Label lbl_login;
         private RichTextBox tb_log_benutzername;
@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
         private Button wdw_registrierung;
         private Label lbl_log_passwort;
 
-        public wdw_login()
+        public Wdw_login()
         {
             InitializeComponent();
         }
@@ -57,7 +57,7 @@ namespace WindowsFormsApp1
             this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
             this.tb_log_benutzername.TabIndex = 1;
             this.tb_log_benutzername.Text = "";
-            this.tb_log_benutzername.TextChanged += new System.EventHandler(this.tb_log_benutzername_TextChanged);
+            this.tb_log_benutzername.TextChanged += new System.EventHandler(this.Tb_log_benutzername_TextChanged);
             // 
             // tb_log_passwort
             // 
@@ -97,7 +97,7 @@ namespace WindowsFormsApp1
             this.btn_log_senden.TabIndex = 5;
             this.btn_log_senden.Text = "Senden";
             this.btn_log_senden.UseVisualStyleBackColor = true;
-            this.btn_log_senden.Click += new System.EventHandler(this.btn_log_send_Click);
+            this.btn_log_senden.Click += new System.EventHandler(this.Btn_log_send_Click);
             // 
             // btn_log_schließen
             // 
@@ -108,7 +108,7 @@ namespace WindowsFormsApp1
             this.btn_log_schließen.TabIndex = 6;
             this.btn_log_schließen.Text = "Schließen";
             this.btn_log_schließen.UseVisualStyleBackColor = true;
-            this.btn_log_schließen.Click += new System.EventHandler(this.btn_log_quit_Click);
+            this.btn_log_schließen.Click += new System.EventHandler(this.Btn_log_quit_Click);
             // 
             // wdw_registrierung
             // 
@@ -119,7 +119,7 @@ namespace WindowsFormsApp1
             this.wdw_registrierung.TabIndex = 7;
             this.wdw_registrierung.Text = "Registrierung";
             this.wdw_registrierung.UseVisualStyleBackColor = true;
-            this.wdw_registrierung.Click += new System.EventHandler(this.wdw_registry_Click);
+            this.wdw_registrierung.Click += new System.EventHandler(this.Wdw_registry_Click);
             // 
             // wdw_login
             // 
@@ -142,12 +142,12 @@ namespace WindowsFormsApp1
 
         }
 
-        private void btn_log_quit_Click(object sender, EventArgs e)
+        private void Btn_log_quit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void btn_log_send_Click(object sender, EventArgs e)
+        private void Btn_log_send_Click(object sender, EventArgs e)
         {
             KaPlaner.Database.Database reg = new Database();
             if(reg.login(tb_log_benutzername.Text, tb_log_passwort.Text))
@@ -164,13 +164,13 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void wdw_registry_Click(object sender, EventArgs e)
+        private void Wdw_registry_Click(object sender, EventArgs e)
         {
-            Form open_registry = new wdw_registrierung();
+            Form open_registry = new Wdw_registrierung();
             open_registry.Show();
         }
 
-        private void tb_log_benutzername_TextChanged(object sender, EventArgs e)
+        private void Tb_log_benutzername_TextChanged(object sender, EventArgs e)
         {
 
         }
