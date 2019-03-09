@@ -23,16 +23,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void Lbl_Titel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBox2_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void Btn_close_Click(object sender, EventArgs e)
         {
             Close();
@@ -48,9 +38,17 @@ namespace WindowsFormsApp1
                 TB_hour_beginn.Enabled = false;
                 TB_minute_beginn.Enabled = false;
 
+                TB_minute_beginn.Text = "00";
+                TB_hour_beginn.Text = "08";
+
+                LBL_hour_end.Enabled = false;
+                LBL_minute_end.Enabled = false;
+
                 TB_minute_end.Enabled = false;
                 TB_hour_end.Enabled = false;
 
+                TB_minute_end.Text = "00";
+                TB_hour_end.Text = "20";
             }
             else if(cb_ganztägige_verantstaltung.Checked == false)
             {
@@ -60,48 +58,59 @@ namespace WindowsFormsApp1
                 TB_hour_beginn.Enabled = true;
                 TB_minute_beginn.Enabled = true;
 
+                TB_minute_beginn.Text = "";
+                TB_hour_beginn.Text = "";
+
+                LBL_hour_end.Enabled = true;
+                LBL_minute_end.Enabled = true;
+
                 TB_minute_end.Enabled = true;
                 TB_hour_end.Enabled = true;
+
+                TB_minute_end.Text = "";
+                TB_hour_end.Text = "";
             }
-        }
-
-        
-
-        private void textBox12_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox8_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tab_allgemein_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_speichern_Click(object sender, EventArgs e)
         {
-            this.returnValue = new KaEvent(TB_Title.Text);
+            this.returnValue = new KaEvent();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void CB_always_repeat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CB_always_repeat.Checked == true)
+            {
+                TB_times_repeat.Enabled = false;
+                LBL_times_repeat.Enabled = false;
+                CB_always_repeat_until.Enabled = false;
+                TB_repeat_until.Enabled = false;
+
+                TB_times_repeat.Text = "0";
+            }
+            else if (CB_always_repeat.Checked == false)
+            {
+                TB_times_repeat.Enabled = true;
+                LBL_times_repeat.Enabled = true;
+                CB_always_repeat_until.Enabled = true;
+                TB_repeat_until.Enabled = true;
+
+                TB_times_repeat.Text = "1";
+            }
+        }
+
+        private void CB_always_repeat_until_CheckedChanged(object sender, EventArgs e)
+        {
+            if(CB_always_repeat_until.Checked == true)
+            {
+                TB_repeat_until.Enabled = true;
+            }
+            else if (CB_always_repeat_until.Checked == false)
+            {
+                TB_repeat_until.Enabled = false;
+            }
+        } 
     }
 }
