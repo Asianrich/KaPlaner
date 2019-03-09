@@ -19,9 +19,9 @@ namespace KaPlaner.Objects
         public string Title;
         public string Ort;
 
-        public KaEvent(string Title)
+        public KaEvent()
         {
-            this.Title = Title;
+           
         }
 
         public byte[] Serialize()

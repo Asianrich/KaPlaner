@@ -34,7 +34,7 @@
             this.LBL_minute_beginn = new System.Windows.Forms.Label();
             this.TB_minute_end = new System.Windows.Forms.TextBox();
             this.TB_minute_beginn = new System.Windows.Forms.TextBox();
-            this.LBL_hour_ende = new System.Windows.Forms.Label();
+            this.LBL_hour_end = new System.Windows.Forms.Label();
             this.LBL_hour_beginn = new System.Windows.Forms.Label();
             this.TB_hour_end = new System.Windows.Forms.TextBox();
             this.TB_hour_beginn = new System.Windows.Forms.TextBox();
@@ -59,18 +59,22 @@
             this.cb_ganztägige_verantstaltung = new System.Windows.Forms.CheckBox();
             this.lbl_ort = new System.Windows.Forms.Label();
             this.lbl_titel = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.TB_Place = new System.Windows.Forms.TextBox();
             this.TB_Title = new System.Windows.Forms.TextBox();
             this.tab_wiederholung = new System.Windows.Forms.TabPage();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.nUD_son = new System.Windows.Forms.NumericUpDown();
-            this.nUD_sam = new System.Windows.Forms.NumericUpDown();
-            this.nUD_fre = new System.Windows.Forms.NumericUpDown();
-            this.nUD_don = new System.Windows.Forms.NumericUpDown();
-            this.nUD_mit = new System.Windows.Forms.NumericUpDown();
-            this.nUD_die = new System.Windows.Forms.NumericUpDown();
-            this.nUD_mon = new System.Windows.Forms.NumericUpDown();
-            this.lbl_mal_wiederholen = new System.Windows.Forms.Label();
+            this.TB_repeat_until = new System.Windows.Forms.TextBox();
+            this.TB_number_repetitions = new System.Windows.Forms.TextBox();
+            this.TB_times_repeat = new System.Windows.Forms.TextBox();
+            this.CB_always_repeat_until = new System.Windows.Forms.CheckBox();
+            this.CB_always_repeat = new System.Windows.Forms.CheckBox();
+            this.nUD_sun = new System.Windows.Forms.NumericUpDown();
+            this.nUD_sat = new System.Windows.Forms.NumericUpDown();
+            this.nUD_fri = new System.Windows.Forms.NumericUpDown();
+            this.nUD_thu = new System.Windows.Forms.NumericUpDown();
+            this.nUD_wen = new System.Windows.Forms.NumericUpDown();
+            this.NUD_tue = new System.Windows.Forms.NumericUpDown();
+            this.NUD_mon = new System.Windows.Forms.NumericUpDown();
+            this.LBL_times_repeat = new System.Windows.Forms.Label();
             this.cb_son = new System.Windows.Forms.CheckBox();
             this.cb_sam = new System.Windows.Forms.CheckBox();
             this.cb_fre = new System.Windows.Forms.CheckBox();
@@ -78,13 +82,7 @@
             this.cb_mit = new System.Windows.Forms.CheckBox();
             this.cb_die = new System.Windows.Forms.CheckBox();
             this.cb_Mon = new System.Windows.Forms.CheckBox();
-            this.rb_wiederholen_bis = new System.Windows.Forms.RadioButton();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.btn_wiederholen_bis = new System.Windows.Forms.Button();
-            this.rb_immer_wiederholen = new System.Windows.Forms.RadioButton();
             this.lbl_mal_pro = new System.Windows.Forms.Label();
-            this.nUD_anzahl_wiederholungen = new System.Windows.Forms.NumericUpDown();
-            this.cb_haeufigkeit = new System.Windows.Forms.ComboBox();
             this.mC_terminübersicht = new System.Windows.Forms.MonthCalendar();
             this.lbl_termine_mit_aktionen = new System.Windows.Forms.Label();
             this.lbl_welcher_tag = new System.Windows.Forms.Label();
@@ -97,15 +95,13 @@
             this.tab_allgemein.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             this.tab_wiederholung.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_son)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sam)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_fre)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_don)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_mit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_die)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_mon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_anzahl_wiederholungen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_sat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_fri)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_thu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).BeginInit();
             this.SuspendLayout();
             // 
             // eingabe
@@ -125,7 +121,7 @@
             this.tab_allgemein.Controls.Add(this.LBL_minute_beginn);
             this.tab_allgemein.Controls.Add(this.TB_minute_end);
             this.tab_allgemein.Controls.Add(this.TB_minute_beginn);
-            this.tab_allgemein.Controls.Add(this.LBL_hour_ende);
+            this.tab_allgemein.Controls.Add(this.LBL_hour_end);
             this.tab_allgemein.Controls.Add(this.LBL_hour_beginn);
             this.tab_allgemein.Controls.Add(this.TB_hour_end);
             this.tab_allgemein.Controls.Add(this.TB_hour_beginn);
@@ -150,7 +146,7 @@
             this.tab_allgemein.Controls.Add(this.cb_ganztägige_verantstaltung);
             this.tab_allgemein.Controls.Add(this.lbl_ort);
             this.tab_allgemein.Controls.Add(this.lbl_titel);
-            this.tab_allgemein.Controls.Add(this.textBox2);
+            this.tab_allgemein.Controls.Add(this.TB_Place);
             this.tab_allgemein.Controls.Add(this.TB_Title);
             this.tab_allgemein.Location = new System.Drawing.Point(4, 27);
             this.tab_allgemein.Name = "tab_allgemein";
@@ -159,7 +155,6 @@
             this.tab_allgemein.TabIndex = 0;
             this.tab_allgemein.Text = "Allgemein";
             this.tab_allgemein.UseVisualStyleBackColor = true;
-            this.tab_allgemein.Click += new System.EventHandler(this.tab_allgemein_Click);
             // 
             // LBL_minute_end
             // 
@@ -169,7 +164,6 @@
             this.LBL_minute_end.Size = new System.Drawing.Size(54, 18);
             this.LBL_minute_end.TabIndex = 56;
             this.LBL_minute_end.Text = "Minute";
-            this.LBL_minute_end.Click += new System.EventHandler(this.label9_Click);
             // 
             // LBL_minute_beginn
             // 
@@ -179,7 +173,6 @@
             this.LBL_minute_beginn.Size = new System.Drawing.Size(54, 18);
             this.LBL_minute_beginn.TabIndex = 55;
             this.LBL_minute_beginn.Text = "Minute";
-            this.LBL_minute_beginn.Click += new System.EventHandler(this.label10_Click);
             // 
             // TB_minute_end
             // 
@@ -187,7 +180,6 @@
             this.TB_minute_end.Name = "TB_minute_end";
             this.TB_minute_end.Size = new System.Drawing.Size(30, 26);
             this.TB_minute_end.TabIndex = 54;
-            this.TB_minute_end.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             // 
             // TB_minute_beginn
             // 
@@ -195,16 +187,15 @@
             this.TB_minute_beginn.Name = "TB_minute_beginn";
             this.TB_minute_beginn.Size = new System.Drawing.Size(30, 26);
             this.TB_minute_beginn.TabIndex = 53;
-            this.TB_minute_beginn.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
             // 
-            // LBL_hour_ende
+            // LBL_hour_end
             // 
-            this.LBL_hour_ende.AutoSize = true;
-            this.LBL_hour_ende.Location = new System.Drawing.Point(509, 224);
-            this.LBL_hour_ende.Name = "LBL_hour_ende";
-            this.LBL_hour_ende.Size = new System.Drawing.Size(57, 18);
-            this.LBL_hour_ende.TabIndex = 52;
-            this.LBL_hour_ende.Text = "Stunde";
+            this.LBL_hour_end.AutoSize = true;
+            this.LBL_hour_end.Location = new System.Drawing.Point(509, 224);
+            this.LBL_hour_end.Name = "LBL_hour_end";
+            this.LBL_hour_end.Size = new System.Drawing.Size(57, 18);
+            this.LBL_hour_end.TabIndex = 52;
+            this.LBL_hour_end.Text = "Stunde";
             // 
             // LBL_hour_beginn
             // 
@@ -260,7 +251,6 @@
             this.TB_year_beginn.Name = "TB_year_beginn";
             this.TB_year_beginn.Size = new System.Drawing.Size(30, 26);
             this.TB_year_beginn.TabIndex = 45;
-            this.TB_year_beginn.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
             // 
             // LBL_month_end
             // 
@@ -405,15 +395,13 @@
             this.lbl_titel.Size = new System.Drawing.Size(36, 18);
             this.lbl_titel.TabIndex = 6;
             this.lbl_titel.Text = "Titel";
-            this.lbl_titel.Click += new System.EventHandler(this.Lbl_Titel_Click);
             // 
-            // textBox2
+            // TB_Place
             // 
-            this.textBox2.Location = new System.Drawing.Point(177, 55);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(422, 26);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            this.TB_Place.Location = new System.Drawing.Point(177, 55);
+            this.TB_Place.Name = "TB_Place";
+            this.TB_Place.Size = new System.Drawing.Size(422, 26);
+            this.TB_Place.TabIndex = 4;
             // 
             // TB_Title
             // 
@@ -424,15 +412,19 @@
             // 
             // tab_wiederholung
             // 
-            this.tab_wiederholung.Controls.Add(this.dateTimePicker1);
-            this.tab_wiederholung.Controls.Add(this.nUD_son);
-            this.tab_wiederholung.Controls.Add(this.nUD_sam);
-            this.tab_wiederholung.Controls.Add(this.nUD_fre);
-            this.tab_wiederholung.Controls.Add(this.nUD_don);
-            this.tab_wiederholung.Controls.Add(this.nUD_mit);
-            this.tab_wiederholung.Controls.Add(this.nUD_die);
-            this.tab_wiederholung.Controls.Add(this.nUD_mon);
-            this.tab_wiederholung.Controls.Add(this.lbl_mal_wiederholen);
+            this.tab_wiederholung.Controls.Add(this.TB_repeat_until);
+            this.tab_wiederholung.Controls.Add(this.TB_number_repetitions);
+            this.tab_wiederholung.Controls.Add(this.TB_times_repeat);
+            this.tab_wiederholung.Controls.Add(this.CB_always_repeat_until);
+            this.tab_wiederholung.Controls.Add(this.CB_always_repeat);
+            this.tab_wiederholung.Controls.Add(this.nUD_sun);
+            this.tab_wiederholung.Controls.Add(this.nUD_sat);
+            this.tab_wiederholung.Controls.Add(this.nUD_fri);
+            this.tab_wiederholung.Controls.Add(this.nUD_thu);
+            this.tab_wiederholung.Controls.Add(this.nUD_wen);
+            this.tab_wiederholung.Controls.Add(this.NUD_tue);
+            this.tab_wiederholung.Controls.Add(this.NUD_mon);
+            this.tab_wiederholung.Controls.Add(this.LBL_times_repeat);
             this.tab_wiederholung.Controls.Add(this.cb_son);
             this.tab_wiederholung.Controls.Add(this.cb_sam);
             this.tab_wiederholung.Controls.Add(this.cb_fre);
@@ -440,13 +432,7 @@
             this.tab_wiederholung.Controls.Add(this.cb_mit);
             this.tab_wiederholung.Controls.Add(this.cb_die);
             this.tab_wiederholung.Controls.Add(this.cb_Mon);
-            this.tab_wiederholung.Controls.Add(this.rb_wiederholen_bis);
-            this.tab_wiederholung.Controls.Add(this.numericUpDown2);
-            this.tab_wiederholung.Controls.Add(this.btn_wiederholen_bis);
-            this.tab_wiederholung.Controls.Add(this.rb_immer_wiederholen);
             this.tab_wiederholung.Controls.Add(this.lbl_mal_pro);
-            this.tab_wiederholung.Controls.Add(this.nUD_anzahl_wiederholungen);
-            this.tab_wiederholung.Controls.Add(this.cb_haeufigkeit);
             this.tab_wiederholung.Controls.Add(this.mC_terminübersicht);
             this.tab_wiederholung.Controls.Add(this.lbl_termine_mit_aktionen);
             this.tab_wiederholung.Controls.Add(this.lbl_welcher_tag);
@@ -461,70 +447,108 @@
             this.tab_wiederholung.Text = "Wiederholung";
             this.tab_wiederholung.UseVisualStyleBackColor = true;
             // 
-            // dateTimePicker1
+            // TB_repeat_until
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(360, 354);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 34;
+            this.TB_repeat_until.Enabled = false;
+            this.TB_repeat_until.Location = new System.Drawing.Point(734, 85);
+            this.TB_repeat_until.Name = "TB_repeat_until";
+            this.TB_repeat_until.Size = new System.Drawing.Size(120, 26);
+            this.TB_repeat_until.TabIndex = 40;
             // 
-            // nUD_son
+            // TB_number_repetitions
             // 
-            this.nUD_son.Location = new System.Drawing.Point(556, 167);
-            this.nUD_son.Name = "nUD_son";
-            this.nUD_son.Size = new System.Drawing.Size(50, 26);
-            this.nUD_son.TabIndex = 33;
+            this.TB_number_repetitions.Location = new System.Drawing.Point(210, 46);
+            this.TB_number_repetitions.Name = "TB_number_repetitions";
+            this.TB_number_repetitions.Size = new System.Drawing.Size(50, 26);
+            this.TB_number_repetitions.TabIndex = 39;
+            this.TB_number_repetitions.Text = "0";
             // 
-            // nUD_sam
+            // TB_times_repeat
             // 
-            this.nUD_sam.Location = new System.Drawing.Point(500, 167);
-            this.nUD_sam.Name = "nUD_sam";
-            this.nUD_sam.Size = new System.Drawing.Size(50, 26);
-            this.nUD_sam.TabIndex = 32;
+            this.TB_times_repeat.Location = new System.Drawing.Point(375, 85);
+            this.TB_times_repeat.Name = "TB_times_repeat";
+            this.TB_times_repeat.Size = new System.Drawing.Size(50, 26);
+            this.TB_times_repeat.TabIndex = 38;
             // 
-            // nUD_fre
+            // CB_always_repeat_until
             // 
-            this.nUD_fre.Location = new System.Drawing.Point(444, 167);
-            this.nUD_fre.Name = "nUD_fre";
-            this.nUD_fre.Size = new System.Drawing.Size(50, 26);
-            this.nUD_fre.TabIndex = 31;
+            this.CB_always_repeat_until.AutoSize = true;
+            this.CB_always_repeat_until.Location = new System.Drawing.Point(556, 88);
+            this.CB_always_repeat_until.Name = "CB_always_repeat_until";
+            this.CB_always_repeat_until.Size = new System.Drawing.Size(172, 22);
+            this.CB_always_repeat_until.TabIndex = 36;
+            this.CB_always_repeat_until.Text = "Wiederholen bis zum";
+            this.CB_always_repeat_until.UseVisualStyleBackColor = true;
+            this.CB_always_repeat_until.CheckedChanged += new System.EventHandler(this.CB_always_repeat_until_CheckedChanged);
             // 
-            // nUD_don
+            // CB_always_repeat
             // 
-            this.nUD_don.Location = new System.Drawing.Point(387, 167);
-            this.nUD_don.Name = "nUD_don";
-            this.nUD_don.Size = new System.Drawing.Size(50, 26);
-            this.nUD_don.TabIndex = 30;
+            this.CB_always_repeat.AutoSize = true;
+            this.CB_always_repeat.Location = new System.Drawing.Point(211, 87);
+            this.CB_always_repeat.Name = "CB_always_repeat";
+            this.CB_always_repeat.Size = new System.Drawing.Size(158, 22);
+            this.CB_always_repeat.TabIndex = 35;
+            this.CB_always_repeat.Text = "Immer wiederholen";
+            this.CB_always_repeat.UseVisualStyleBackColor = true;
+            this.CB_always_repeat.CheckedChanged += new System.EventHandler(this.CB_always_repeat_CheckedChanged);
             // 
-            // nUD_mit
+            // nUD_sun
             // 
-            this.nUD_mit.Location = new System.Drawing.Point(331, 167);
-            this.nUD_mit.Name = "nUD_mit";
-            this.nUD_mit.Size = new System.Drawing.Size(50, 26);
-            this.nUD_mit.TabIndex = 29;
+            this.nUD_sun.Location = new System.Drawing.Point(556, 167);
+            this.nUD_sun.Name = "nUD_sun";
+            this.nUD_sun.Size = new System.Drawing.Size(50, 26);
+            this.nUD_sun.TabIndex = 33;
             // 
-            // nUD_die
+            // nUD_sat
             // 
-            this.nUD_die.Location = new System.Drawing.Point(273, 167);
-            this.nUD_die.Name = "nUD_die";
-            this.nUD_die.Size = new System.Drawing.Size(50, 26);
-            this.nUD_die.TabIndex = 28;
+            this.nUD_sat.Location = new System.Drawing.Point(500, 167);
+            this.nUD_sat.Name = "nUD_sat";
+            this.nUD_sat.Size = new System.Drawing.Size(50, 26);
+            this.nUD_sat.TabIndex = 32;
             // 
-            // nUD_mon
+            // nUD_fri
             // 
-            this.nUD_mon.Location = new System.Drawing.Point(210, 167);
-            this.nUD_mon.Name = "nUD_mon";
-            this.nUD_mon.Size = new System.Drawing.Size(50, 26);
-            this.nUD_mon.TabIndex = 27;
+            this.nUD_fri.Location = new System.Drawing.Point(444, 167);
+            this.nUD_fri.Name = "nUD_fri";
+            this.nUD_fri.Size = new System.Drawing.Size(50, 26);
+            this.nUD_fri.TabIndex = 31;
             // 
-            // lbl_mal_wiederholen
+            // nUD_thu
             // 
-            this.lbl_mal_wiederholen.AutoSize = true;
-            this.lbl_mal_wiederholen.Location = new System.Drawing.Point(431, 87);
-            this.lbl_mal_wiederholen.Name = "lbl_mal_wiederholen";
-            this.lbl_mal_wiederholen.Size = new System.Drawing.Size(121, 18);
-            this.lbl_mal_wiederholen.TabIndex = 26;
-            this.lbl_mal_wiederholen.Text = "mal wiederholen";
+            this.nUD_thu.Location = new System.Drawing.Point(387, 167);
+            this.nUD_thu.Name = "nUD_thu";
+            this.nUD_thu.Size = new System.Drawing.Size(50, 26);
+            this.nUD_thu.TabIndex = 30;
+            // 
+            // nUD_wen
+            // 
+            this.nUD_wen.Location = new System.Drawing.Point(331, 167);
+            this.nUD_wen.Name = "nUD_wen";
+            this.nUD_wen.Size = new System.Drawing.Size(50, 26);
+            this.nUD_wen.TabIndex = 29;
+            // 
+            // NUD_tue
+            // 
+            this.NUD_tue.Location = new System.Drawing.Point(273, 167);
+            this.NUD_tue.Name = "NUD_tue";
+            this.NUD_tue.Size = new System.Drawing.Size(50, 26);
+            this.NUD_tue.TabIndex = 28;
+            // 
+            // NUD_mon
+            // 
+            this.NUD_mon.Location = new System.Drawing.Point(210, 167);
+            this.NUD_mon.Name = "NUD_mon";
+            this.NUD_mon.Size = new System.Drawing.Size(50, 26);
+            this.NUD_mon.TabIndex = 27;
+            // 
+            // LBL_times_repeat
+            // 
+            this.LBL_times_repeat.AutoSize = true;
+            this.LBL_times_repeat.Location = new System.Drawing.Point(431, 88);
+            this.LBL_times_repeat.Name = "LBL_times_repeat";
+            this.LBL_times_repeat.Size = new System.Drawing.Size(121, 18);
+            this.LBL_times_repeat.TabIndex = 26;
+            this.LBL_times_repeat.Text = "mal wiederholen";
             // 
             // cb_son
             // 
@@ -598,67 +622,14 @@
             this.cb_Mon.Text = "Mon";
             this.cb_Mon.UseVisualStyleBackColor = true;
             // 
-            // rb_wiederholen_bis
-            // 
-            this.rb_wiederholen_bis.AutoSize = true;
-            this.rb_wiederholen_bis.Location = new System.Drawing.Point(558, 85);
-            this.rb_wiederholen_bis.Name = "rb_wiederholen_bis";
-            this.rb_wiederholen_bis.Size = new System.Drawing.Size(171, 22);
-            this.rb_wiederholen_bis.TabIndex = 18;
-            this.rb_wiederholen_bis.TabStop = true;
-            this.rb_wiederholen_bis.Text = "Wiederholen bis zum";
-            this.rb_wiederholen_bis.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Location = new System.Drawing.Point(375, 85);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(50, 26);
-            this.numericUpDown2.TabIndex = 16;
-            // 
-            // btn_wiederholen_bis
-            // 
-            this.btn_wiederholen_bis.Location = new System.Drawing.Point(735, 83);
-            this.btn_wiederholen_bis.Name = "btn_wiederholen_bis";
-            this.btn_wiederholen_bis.Size = new System.Drawing.Size(120, 26);
-            this.btn_wiederholen_bis.TabIndex = 14;
-            this.btn_wiederholen_bis.Text = "Wiederholen bis";
-            this.btn_wiederholen_bis.UseVisualStyleBackColor = true;
-            // 
-            // rb_immer_wiederholen
-            // 
-            this.rb_immer_wiederholen.AutoSize = true;
-            this.rb_immer_wiederholen.Location = new System.Drawing.Point(210, 85);
-            this.rb_immer_wiederholen.Name = "rb_immer_wiederholen";
-            this.rb_immer_wiederholen.Size = new System.Drawing.Size(157, 22);
-            this.rb_immer_wiederholen.TabIndex = 12;
-            this.rb_immer_wiederholen.TabStop = true;
-            this.rb_immer_wiederholen.Text = "Immer wiederholen";
-            this.rb_immer_wiederholen.UseVisualStyleBackColor = true;
-            // 
             // lbl_mal_pro
             // 
             this.lbl_mal_pro.AutoSize = true;
-            this.lbl_mal_pro.Location = new System.Drawing.Point(336, 43);
+            this.lbl_mal_pro.Location = new System.Drawing.Point(266, 49);
             this.lbl_mal_pro.Name = "lbl_mal_pro";
             this.lbl_mal_pro.Size = new System.Drawing.Size(33, 18);
             this.lbl_mal_pro.TabIndex = 11;
             this.lbl_mal_pro.Text = "mal";
-            // 
-            // nUD_anzahl_wiederholungen
-            // 
-            this.nUD_anzahl_wiederholungen.Location = new System.Drawing.Point(210, 41);
-            this.nUD_anzahl_wiederholungen.Name = "nUD_anzahl_wiederholungen";
-            this.nUD_anzahl_wiederholungen.Size = new System.Drawing.Size(120, 26);
-            this.nUD_anzahl_wiederholungen.TabIndex = 10;
-            // 
-            // cb_haeufigkeit
-            // 
-            this.cb_haeufigkeit.FormattingEnabled = true;
-            this.cb_haeufigkeit.Location = new System.Drawing.Point(375, 40);
-            this.cb_haeufigkeit.Name = "cb_haeufigkeit";
-            this.cb_haeufigkeit.Size = new System.Drawing.Size(121, 26);
-            this.cb_haeufigkeit.TabIndex = 8;
             // 
             // mC_terminübersicht
             // 
@@ -697,7 +668,7 @@
             // lbl_beschraenkung
             // 
             this.lbl_beschraenkung.AutoSize = true;
-            this.lbl_beschraenkung.Location = new System.Drawing.Point(50, 87);
+            this.lbl_beschraenkung.Location = new System.Drawing.Point(50, 89);
             this.lbl_beschraenkung.Name = "lbl_beschraenkung";
             this.lbl_beschraenkung.Size = new System.Drawing.Size(116, 18);
             this.lbl_beschraenkung.TabIndex = 2;
@@ -752,15 +723,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             this.tab_wiederholung.ResumeLayout(false);
             this.tab_wiederholung.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_son)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sam)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_fre)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_don)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_mit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_die)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_mon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_anzahl_wiederholungen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_sat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_fri)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_thu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -770,7 +739,7 @@
         private System.Windows.Forms.TabControl eingabe;
         private System.Windows.Forms.TabPage tab_allgemein;
         private System.Windows.Forms.TabPage tab_wiederholung;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox TB_Place;
         private System.Windows.Forms.TextBox TB_Title;
         private System.Windows.Forms.Label lbl_ort;
         private System.Windows.Forms.Label lbl_titel;
@@ -781,7 +750,6 @@
         private System.Windows.Forms.Label lbl_end;
         private System.Windows.Forms.RichTextBox rTB_beschreibung;
         private System.Windows.Forms.Label lbl_prioritaet;
-        private System.Windows.Forms.ComboBox cb_haeufigkeit;
         private System.Windows.Forms.MonthCalendar mC_terminübersicht;
         private System.Windows.Forms.Label lbl_termine_mit_aktionen;
         private System.Windows.Forms.Label lbl_welcher_tag;
@@ -795,28 +763,22 @@
         private System.Windows.Forms.CheckBox cb_mit;
         private System.Windows.Forms.CheckBox cb_die;
         private System.Windows.Forms.CheckBox cb_Mon;
-        private System.Windows.Forms.RadioButton rb_wiederholen_bis;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.Button btn_wiederholen_bis;
-        private System.Windows.Forms.RadioButton rb_immer_wiederholen;
         private System.Windows.Forms.Label lbl_mal_pro;
-        private System.Windows.Forms.NumericUpDown nUD_anzahl_wiederholungen;
         private System.Windows.Forms.Button btn_speichern;
         private System.Windows.Forms.Button btn_schließen;
-        private System.Windows.Forms.Label lbl_mal_wiederholen;
-        private System.Windows.Forms.NumericUpDown nUD_don;
-        private System.Windows.Forms.NumericUpDown nUD_mit;
-        private System.Windows.Forms.NumericUpDown nUD_die;
-        private System.Windows.Forms.NumericUpDown nUD_mon;
-        private System.Windows.Forms.NumericUpDown nUD_son;
-        private System.Windows.Forms.NumericUpDown nUD_sam;
-        private System.Windows.Forms.NumericUpDown nUD_fre;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label LBL_times_repeat;
+        private System.Windows.Forms.NumericUpDown nUD_thu;
+        private System.Windows.Forms.NumericUpDown nUD_wen;
+        private System.Windows.Forms.NumericUpDown NUD_tue;
+        private System.Windows.Forms.NumericUpDown NUD_mon;
+        private System.Windows.Forms.NumericUpDown nUD_sun;
+        private System.Windows.Forms.NumericUpDown nUD_sat;
+        private System.Windows.Forms.NumericUpDown nUD_fri;
         private System.Windows.Forms.Label LBL_minute_end;
         private System.Windows.Forms.Label LBL_minute_beginn;
         private System.Windows.Forms.TextBox TB_minute_end;
         private System.Windows.Forms.TextBox TB_minute_beginn;
-        private System.Windows.Forms.Label LBL_hour_ende;
+        private System.Windows.Forms.Label LBL_hour_end;
         private System.Windows.Forms.Label LBL_hour_beginn;
         private System.Windows.Forms.TextBox TB_hour_end;
         private System.Windows.Forms.TextBox TB_hour_beginn;
@@ -832,6 +794,11 @@
         private System.Windows.Forms.Label LBL_day_beginn;
         private System.Windows.Forms.TextBox TB_day_end;
         private System.Windows.Forms.TextBox TB_day_beginn;
+        private System.Windows.Forms.CheckBox CB_always_repeat;
+        private System.Windows.Forms.CheckBox CB_always_repeat_until;
+        private System.Windows.Forms.TextBox TB_times_repeat;
+        private System.Windows.Forms.TextBox TB_number_repetitions;
+        private System.Windows.Forms.TextBox TB_repeat_until;
     }
 }
 
