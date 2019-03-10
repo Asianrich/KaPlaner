@@ -28,6 +28,7 @@ namespace WindowsFormsApp1
             Close();
         }
 
+        
         private void Cb_ganztägige_verantstaltung_CheckedChanged(object sender, EventArgs e)
         {
             if(cb_ganztägige_verantstaltung.Checked == true)
@@ -72,6 +73,7 @@ namespace WindowsFormsApp1
             }
         }
 
+
         private void btn_speichern_Click(object sender, EventArgs e)
         {
             this.returnValue = new KaEvent();
@@ -79,6 +81,7 @@ namespace WindowsFormsApp1
             this.Close();
         }
 
+        //always repeat
         private void CB_always_repeat_CheckedChanged(object sender, EventArgs e)
         {
             if (CB_always_repeat.Checked == true)
@@ -101,6 +104,7 @@ namespace WindowsFormsApp1
             }
         }
 
+        //repeat until
         private void CB_always_repeat_until_CheckedChanged(object sender, EventArgs e)
         {
             if(CB_always_repeat_until.Checked == true)
@@ -111,6 +115,129 @@ namespace WindowsFormsApp1
             {
                 TB_repeat_until.Enabled = false;
             }
-        } 
+        }
+
+        //none
+        private void CB_none_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CB_none.Checked == true)
+            {
+                pan_frequency.Enabled = false;
+                pan_constraint.Enabled = false;
+                pan_which_day.Enabled = false;
+                pan_weekday.Enabled = false;
+                lbl_dates_with_actions.Enabled = false;
+                MC_date_summery.Enabled = false;
+            }
+            else if (CB_none.Checked == false)
+            {
+                pan_frequency.Enabled = true;
+                pan_constraint.Enabled = true;
+                pan_which_day.Enabled = true;
+                pan_weekday.Enabled = true;
+                lbl_dates_with_actions.Enabled = true;
+                MC_date_summery.Enabled = true;
+            }
+        }
+
+        //dayli
+        private void CB_dayli_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (CB_dayli.Checked == true)
+            {
+                CB_none.Enabled = false;
+                CB_weekly.Enabled = false;
+                CB_monthly.Enabled = false;
+                CB_yearly.Enabled = false;
+                TB_number_repetitions.Enabled = false;
+                pan_constraint.Enabled = false;
+            }
+            else if (CB_dayli.Checked == false)
+            {
+                CB_none.Enabled = true;
+                CB_weekly.Enabled = true;
+                CB_monthly.Enabled = true;
+                CB_yearly.Enabled = true;
+                TB_number_repetitions.Enabled = true;
+                pan_constraint.Enabled = true;
+            }
+        }
+
+        //weekly
+        private void CB_weekly_CheckedChanged(object sender, EventArgs e)
+        {    
+            if (CB_weekly.Checked == true)
+            {
+                CB_none.Enabled = false;
+                CB_dayli.Enabled = false;
+                CB_monthly.Enabled = false;
+                CB_yearly.Enabled = false;
+                TB_number_repetitions.Enabled = false;
+                lbl_times_per.Enabled = false;
+                pan_constraint.Enabled = false;
+            }
+            else if (CB_weekly.Checked == false)
+            {
+                CB_none.Enabled = true;
+                CB_dayli.Enabled = true;
+                CB_monthly.Enabled = true;
+                CB_yearly.Enabled = true;
+                TB_number_repetitions.Enabled = true;
+                lbl_times_per.Enabled = true;
+                pan_constraint.Enabled = true;
+            }
+        }
+        
+        //monthly
+        private void CB_monthly_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (CB_monthly.Checked == true)
+            {
+                CB_none.Enabled = false;
+                CB_dayli.Enabled = false;
+                CB_weekly.Enabled = false;
+                CB_yearly.Enabled = false;
+                TB_number_repetitions.Enabled = false;
+                lbl_times_per.Enabled = false;
+                pan_constraint.Enabled = false;
+            }
+            else if (CB_monthly.Checked == false)
+            {
+                CB_none.Enabled = true;
+                CB_dayli.Enabled = true;
+                CB_weekly.Enabled = true;
+                CB_yearly.Enabled = true;
+                TB_number_repetitions.Enabled = true;
+                lbl_times_per.Enabled = true;
+                pan_constraint.Enabled = true;
+            }
+        }
+
+        //yearly
+        private void CB_yearly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CB_yearly.Checked == true)
+            {
+                CB_none.Enabled = false;
+                CB_dayli.Enabled = false;
+                CB_weekly.Enabled = false;
+                CB_monthly.Enabled = false;
+                TB_number_repetitions.Enabled = false;
+                lbl_times_per.Enabled = false;
+                pan_constraint.Enabled = false;
+            }
+            else if (CB_yearly.Checked == false)
+            {
+                CB_none.Enabled = true;
+                CB_dayli.Enabled = true;
+                CB_weekly.Enabled = true;
+                CB_monthly.Enabled = true;
+                TB_number_repetitions.Enabled = true;
+                lbl_times_per.Enabled = true;
+                pan_constraint.Enabled = true;
+            }
+        }
     }
 }
