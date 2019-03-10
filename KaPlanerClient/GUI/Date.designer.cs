@@ -62,6 +62,33 @@
             this.TB_Place = new System.Windows.Forms.TextBox();
             this.TB_Title = new System.Windows.Forms.TextBox();
             this.tab_wiederholung = new System.Windows.Forms.TabPage();
+            this.pan_frequency = new System.Windows.Forms.Panel();
+            this.TB_number_repetitions = new System.Windows.Forms.TextBox();
+            this.lbl_times_per = new System.Windows.Forms.Label();
+            this.CB_yearly = new System.Windows.Forms.CheckBox();
+            this.CB_monthly = new System.Windows.Forms.CheckBox();
+            this.CB_weekly = new System.Windows.Forms.CheckBox();
+            this.CB_dayli = new System.Windows.Forms.CheckBox();
+            this.pan_weekday = new System.Windows.Forms.Panel();
+            this.cb_son = new System.Windows.Forms.CheckBox();
+            this.cb_sam = new System.Windows.Forms.CheckBox();
+            this.cb_fre = new System.Windows.Forms.CheckBox();
+            this.cb_don = new System.Windows.Forms.CheckBox();
+            this.cb_mit = new System.Windows.Forms.CheckBox();
+            this.cb_die = new System.Windows.Forms.CheckBox();
+            this.cb_Mon = new System.Windows.Forms.CheckBox();
+            this.lbl_wochentag = new System.Windows.Forms.Label();
+            this.pan_which_day = new System.Windows.Forms.Panel();
+            this.nUD_sun = new System.Windows.Forms.NumericUpDown();
+            this.nUD_sat = new System.Windows.Forms.NumericUpDown();
+            this.nUD_fri = new System.Windows.Forms.NumericUpDown();
+            this.nUD_thu = new System.Windows.Forms.NumericUpDown();
+            this.nUD_wen = new System.Windows.Forms.NumericUpDown();
+            this.NUD_tue = new System.Windows.Forms.NumericUpDown();
+            this.NUD_mon = new System.Windows.Forms.NumericUpDown();
+            this.lbl_welcher_tag = new System.Windows.Forms.Label();
+            this.MC_date_summery = new System.Windows.Forms.MonthCalendar();
+            this.lbl_dates_with_actions = new System.Windows.Forms.Label();
             this.pan_constraint = new System.Windows.Forms.Panel();
             this.TB_repeat_until = new System.Windows.Forms.TextBox();
             this.TB_times_repeat = new System.Windows.Forms.TextBox();
@@ -73,38 +100,12 @@
             this.lbl_haeufigkeit = new System.Windows.Forms.Label();
             this.btn_speichern = new System.Windows.Forms.Button();
             this.btn_schließen = new System.Windows.Forms.Button();
-            this.MC_date_summery = new System.Windows.Forms.MonthCalendar();
-            this.lbl_dates_with_actions = new System.Windows.Forms.Label();
-            this.pan_which_day = new System.Windows.Forms.Panel();
-            this.nUD_sun = new System.Windows.Forms.NumericUpDown();
-            this.nUD_sat = new System.Windows.Forms.NumericUpDown();
-            this.nUD_fri = new System.Windows.Forms.NumericUpDown();
-            this.nUD_thu = new System.Windows.Forms.NumericUpDown();
-            this.nUD_wen = new System.Windows.Forms.NumericUpDown();
-            this.NUD_tue = new System.Windows.Forms.NumericUpDown();
-            this.NUD_mon = new System.Windows.Forms.NumericUpDown();
-            this.lbl_welcher_tag = new System.Windows.Forms.Label();
-            this.pan_weekday = new System.Windows.Forms.Panel();
-            this.cb_son = new System.Windows.Forms.CheckBox();
-            this.cb_sam = new System.Windows.Forms.CheckBox();
-            this.cb_fre = new System.Windows.Forms.CheckBox();
-            this.cb_don = new System.Windows.Forms.CheckBox();
-            this.cb_mit = new System.Windows.Forms.CheckBox();
-            this.cb_die = new System.Windows.Forms.CheckBox();
-            this.cb_Mon = new System.Windows.Forms.CheckBox();
-            this.lbl_wochentag = new System.Windows.Forms.Label();
-            this.pan_frequency = new System.Windows.Forms.Panel();
-            this.TB_number_repetitions = new System.Windows.Forms.TextBox();
-            this.lbl_times_per = new System.Windows.Forms.Label();
-            this.CB_yearly = new System.Windows.Forms.CheckBox();
-            this.CB_monthly = new System.Windows.Forms.CheckBox();
-            this.CB_weekly = new System.Windows.Forms.CheckBox();
-            this.CB_dayli = new System.Windows.Forms.CheckBox();
             this.eingabe.SuspendLayout();
             this.tab_allgemein.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             this.tab_wiederholung.SuspendLayout();
-            this.pan_constraint.SuspendLayout();
+            this.pan_frequency.SuspendLayout();
+            this.pan_weekday.SuspendLayout();
             this.pan_which_day.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_sat)).BeginInit();
@@ -113,8 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).BeginInit();
-            this.pan_weekday.SuspendLayout();
-            this.pan_frequency.SuspendLayout();
+            this.pan_constraint.SuspendLayout();
             this.SuspendLayout();
             // 
             // eingabe
@@ -441,6 +441,283 @@
             this.tab_wiederholung.Text = "Wiederholung";
             this.tab_wiederholung.UseVisualStyleBackColor = true;
             // 
+            // pan_frequency
+            // 
+            this.pan_frequency.Controls.Add(this.TB_number_repetitions);
+            this.pan_frequency.Controls.Add(this.lbl_times_per);
+            this.pan_frequency.Controls.Add(this.CB_yearly);
+            this.pan_frequency.Controls.Add(this.CB_monthly);
+            this.pan_frequency.Controls.Add(this.CB_weekly);
+            this.pan_frequency.Controls.Add(this.CB_dayli);
+            this.pan_frequency.Location = new System.Drawing.Point(278, 185);
+            this.pan_frequency.Name = "pan_frequency";
+            this.pan_frequency.Size = new System.Drawing.Size(495, 32);
+            this.pan_frequency.TabIndex = 71;
+            // 
+            // TB_number_repetitions
+            // 
+            this.TB_number_repetitions.Location = new System.Drawing.Point(399, 3);
+            this.TB_number_repetitions.Name = "TB_number_repetitions";
+            this.TB_number_repetitions.Size = new System.Drawing.Size(50, 26);
+            this.TB_number_repetitions.TabIndex = 68;
+            this.TB_number_repetitions.Text = "0";
+            // 
+            // lbl_times_per
+            // 
+            this.lbl_times_per.AutoSize = true;
+            this.lbl_times_per.Location = new System.Drawing.Point(455, 7);
+            this.lbl_times_per.Name = "lbl_times_per";
+            this.lbl_times_per.Size = new System.Drawing.Size(33, 18);
+            this.lbl_times_per.TabIndex = 67;
+            this.lbl_times_per.Text = "mal";
+            // 
+            // CB_yearly
+            // 
+            this.CB_yearly.AutoSize = true;
+            this.CB_yearly.Location = new System.Drawing.Point(313, 6);
+            this.CB_yearly.Name = "CB_yearly";
+            this.CB_yearly.Size = new System.Drawing.Size(80, 22);
+            this.CB_yearly.TabIndex = 66;
+            this.CB_yearly.Text = "Jährlich";
+            this.CB_yearly.UseVisualStyleBackColor = true;
+            this.CB_yearly.CheckedChanged += new System.EventHandler(this.CB_yearly_CheckedChanged);
+            // 
+            // CB_monthly
+            // 
+            this.CB_monthly.AutoSize = true;
+            this.CB_monthly.Location = new System.Drawing.Point(214, 6);
+            this.CB_monthly.Name = "CB_monthly";
+            this.CB_monthly.Size = new System.Drawing.Size(93, 22);
+            this.CB_monthly.TabIndex = 65;
+            this.CB_monthly.Text = "Monatlich";
+            this.CB_monthly.UseVisualStyleBackColor = true;
+            this.CB_monthly.CheckedChanged += new System.EventHandler(this.CB_monthly_CheckedChanged);
+            // 
+            // CB_weekly
+            // 
+            this.CB_weekly.AutoSize = true;
+            this.CB_weekly.Location = new System.Drawing.Point(97, 6);
+            this.CB_weekly.Name = "CB_weekly";
+            this.CB_weekly.Size = new System.Drawing.Size(111, 22);
+            this.CB_weekly.TabIndex = 64;
+            this.CB_weekly.Text = "Wöchentlich";
+            this.CB_weekly.UseVisualStyleBackColor = true;
+            this.CB_weekly.CheckedChanged += new System.EventHandler(this.CB_weekly_CheckedChanged);
+            // 
+            // CB_dayli
+            // 
+            this.CB_dayli.AutoSize = true;
+            this.CB_dayli.Location = new System.Drawing.Point(7, 6);
+            this.CB_dayli.Name = "CB_dayli";
+            this.CB_dayli.Size = new System.Drawing.Size(84, 22);
+            this.CB_dayli.TabIndex = 63;
+            this.CB_dayli.Text = "Taeglich";
+            this.CB_dayli.UseVisualStyleBackColor = true;
+            this.CB_dayli.CheckedChanged += new System.EventHandler(this.CB_dayli_CheckedChanged);
+            // 
+            // pan_weekday
+            // 
+            this.pan_weekday.Controls.Add(this.cb_son);
+            this.pan_weekday.Controls.Add(this.cb_sam);
+            this.pan_weekday.Controls.Add(this.cb_fre);
+            this.pan_weekday.Controls.Add(this.cb_don);
+            this.pan_weekday.Controls.Add(this.cb_mit);
+            this.pan_weekday.Controls.Add(this.cb_die);
+            this.pan_weekday.Controls.Add(this.cb_Mon);
+            this.pan_weekday.Controls.Add(this.lbl_wochentag);
+            this.pan_weekday.Enabled = false;
+            this.pan_weekday.Location = new System.Drawing.Point(25, 305);
+            this.pan_weekday.Name = "pan_weekday";
+            this.pan_weekday.Size = new System.Drawing.Size(831, 32);
+            this.pan_weekday.TabIndex = 70;
+            // 
+            // cb_son
+            // 
+            this.cb_son.AutoSize = true;
+            this.cb_son.Checked = true;
+            this.cb_son.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_son.Location = new System.Drawing.Point(525, 9);
+            this.cb_son.Name = "cb_son";
+            this.cb_son.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cb_son.Size = new System.Drawing.Size(55, 22);
+            this.cb_son.TabIndex = 60;
+            this.cb_son.Text = "Son";
+            this.cb_son.UseVisualStyleBackColor = true;
+            // 
+            // cb_sam
+            // 
+            this.cb_sam.AutoSize = true;
+            this.cb_sam.Checked = true;
+            this.cb_sam.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_sam.Location = new System.Drawing.Point(459, 9);
+            this.cb_sam.Name = "cb_sam";
+            this.cb_sam.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cb_sam.Size = new System.Drawing.Size(60, 22);
+            this.cb_sam.TabIndex = 59;
+            this.cb_sam.Text = "Sam";
+            this.cb_sam.UseVisualStyleBackColor = true;
+            // 
+            // cb_fre
+            // 
+            this.cb_fre.AutoSize = true;
+            this.cb_fre.Checked = true;
+            this.cb_fre.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_fre.Location = new System.Drawing.Point(402, 9);
+            this.cb_fre.Name = "cb_fre";
+            this.cb_fre.Size = new System.Drawing.Size(51, 22);
+            this.cb_fre.TabIndex = 58;
+            this.cb_fre.Text = "Fre";
+            this.cb_fre.UseVisualStyleBackColor = true;
+            // 
+            // cb_don
+            // 
+            this.cb_don.AutoSize = true;
+            this.cb_don.Checked = true;
+            this.cb_don.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_don.Location = new System.Drawing.Point(340, 9);
+            this.cb_don.Name = "cb_don";
+            this.cb_don.Size = new System.Drawing.Size(56, 22);
+            this.cb_don.TabIndex = 57;
+            this.cb_don.Text = "Don";
+            this.cb_don.UseVisualStyleBackColor = true;
+            // 
+            // cb_mit
+            // 
+            this.cb_mit.AutoSize = true;
+            this.cb_mit.Checked = true;
+            this.cb_mit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_mit.Location = new System.Drawing.Point(286, 9);
+            this.cb_mit.Name = "cb_mit";
+            this.cb_mit.Size = new System.Drawing.Size(48, 22);
+            this.cb_mit.TabIndex = 56;
+            this.cb_mit.Text = "Mit";
+            this.cb_mit.UseVisualStyleBackColor = true;
+            // 
+            // cb_die
+            // 
+            this.cb_die.AutoSize = true;
+            this.cb_die.Checked = true;
+            this.cb_die.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_die.Location = new System.Drawing.Point(228, 9);
+            this.cb_die.Name = "cb_die";
+            this.cb_die.Size = new System.Drawing.Size(52, 22);
+            this.cb_die.TabIndex = 55;
+            this.cb_die.Text = "Die";
+            this.cb_die.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mon
+            // 
+            this.cb_Mon.AutoSize = true;
+            this.cb_Mon.Checked = true;
+            this.cb_Mon.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_Mon.Location = new System.Drawing.Point(165, 9);
+            this.cb_Mon.Name = "cb_Mon";
+            this.cb_Mon.Size = new System.Drawing.Size(57, 22);
+            this.cb_Mon.TabIndex = 54;
+            this.cb_Mon.Text = "Mon";
+            this.cb_Mon.UseVisualStyleBackColor = true;
+            // 
+            // lbl_wochentag
+            // 
+            this.lbl_wochentag.AutoSize = true;
+            this.lbl_wochentag.Location = new System.Drawing.Point(14, 8);
+            this.lbl_wochentag.Name = "lbl_wochentag";
+            this.lbl_wochentag.Size = new System.Drawing.Size(87, 18);
+            this.lbl_wochentag.TabIndex = 53;
+            this.lbl_wochentag.Text = "Wochentag";
+            // 
+            // pan_which_day
+            // 
+            this.pan_which_day.AutoSize = true;
+            this.pan_which_day.Controls.Add(this.nUD_sun);
+            this.pan_which_day.Controls.Add(this.nUD_sat);
+            this.pan_which_day.Controls.Add(this.nUD_fri);
+            this.pan_which_day.Controls.Add(this.nUD_thu);
+            this.pan_which_day.Controls.Add(this.nUD_wen);
+            this.pan_which_day.Controls.Add(this.NUD_tue);
+            this.pan_which_day.Controls.Add(this.NUD_mon);
+            this.pan_which_day.Controls.Add(this.lbl_welcher_tag);
+            this.pan_which_day.Enabled = false;
+            this.pan_which_day.Location = new System.Drawing.Point(25, 343);
+            this.pan_which_day.Name = "pan_which_day";
+            this.pan_which_day.Size = new System.Drawing.Size(831, 33);
+            this.pan_which_day.TabIndex = 69;
+            // 
+            // nUD_sun
+            // 
+            this.nUD_sun.Location = new System.Drawing.Point(511, 3);
+            this.nUD_sun.Name = "nUD_sun";
+            this.nUD_sun.Size = new System.Drawing.Size(50, 26);
+            this.nUD_sun.TabIndex = 76;
+            // 
+            // nUD_sat
+            // 
+            this.nUD_sat.Location = new System.Drawing.Point(455, 3);
+            this.nUD_sat.Name = "nUD_sat";
+            this.nUD_sat.Size = new System.Drawing.Size(50, 26);
+            this.nUD_sat.TabIndex = 75;
+            // 
+            // nUD_fri
+            // 
+            this.nUD_fri.Location = new System.Drawing.Point(399, 3);
+            this.nUD_fri.Name = "nUD_fri";
+            this.nUD_fri.Size = new System.Drawing.Size(50, 26);
+            this.nUD_fri.TabIndex = 74;
+            // 
+            // nUD_thu
+            // 
+            this.nUD_thu.Location = new System.Drawing.Point(342, 3);
+            this.nUD_thu.Name = "nUD_thu";
+            this.nUD_thu.Size = new System.Drawing.Size(50, 26);
+            this.nUD_thu.TabIndex = 73;
+            // 
+            // nUD_wen
+            // 
+            this.nUD_wen.Location = new System.Drawing.Point(286, 3);
+            this.nUD_wen.Name = "nUD_wen";
+            this.nUD_wen.Size = new System.Drawing.Size(50, 26);
+            this.nUD_wen.TabIndex = 72;
+            // 
+            // NUD_tue
+            // 
+            this.NUD_tue.Location = new System.Drawing.Point(228, 3);
+            this.NUD_tue.Name = "NUD_tue";
+            this.NUD_tue.Size = new System.Drawing.Size(50, 26);
+            this.NUD_tue.TabIndex = 71;
+            // 
+            // NUD_mon
+            // 
+            this.NUD_mon.Location = new System.Drawing.Point(165, 3);
+            this.NUD_mon.Name = "NUD_mon";
+            this.NUD_mon.Size = new System.Drawing.Size(50, 26);
+            this.NUD_mon.TabIndex = 70;
+            // 
+            // lbl_welcher_tag
+            // 
+            this.lbl_welcher_tag.AutoSize = true;
+            this.lbl_welcher_tag.Location = new System.Drawing.Point(14, 5);
+            this.lbl_welcher_tag.Name = "lbl_welcher_tag";
+            this.lbl_welcher_tag.Size = new System.Drawing.Size(94, 18);
+            this.lbl_welcher_tag.TabIndex = 69;
+            this.lbl_welcher_tag.Text = "Welcher Tag";
+            // 
+            // MC_date_summery
+            // 
+            this.MC_date_summery.CalendarDimensions = new System.Drawing.Size(4, 1);
+            this.MC_date_summery.Location = new System.Drawing.Point(25, 439);
+            this.MC_date_summery.Name = "MC_date_summery";
+            this.MC_date_summery.TabIndex = 58;
+            this.MC_date_summery.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.MC_date_summery_DateChanged);
+            // 
+            // lbl_dates_with_actions
+            // 
+            this.lbl_dates_with_actions.AutoSize = true;
+            this.lbl_dates_with_actions.Location = new System.Drawing.Point(39, 412);
+            this.lbl_dates_with_actions.Name = "lbl_dates_with_actions";
+            this.lbl_dates_with_actions.Size = new System.Drawing.Size(152, 18);
+            this.lbl_dates_with_actions.TabIndex = 57;
+            this.lbl_dates_with_actions.Text = "Termine mit Aktionen";
+            // 
             // pan_constraint
             // 
             this.pan_constraint.Controls.Add(this.TB_repeat_until);
@@ -554,292 +831,16 @@
             this.btn_schließen.UseVisualStyleBackColor = true;
             this.btn_schließen.Click += new System.EventHandler(this.Btn_close_Click);
             // 
-            // MC_date_summery
-            // 
-            this.MC_date_summery.CalendarDimensions = new System.Drawing.Size(4, 1);
-            this.MC_date_summery.Location = new System.Drawing.Point(25, 439);
-            this.MC_date_summery.Name = "MC_date_summery";
-            this.MC_date_summery.TabIndex = 58;
-            // 
-            // lbl_dates_with_actions
-            // 
-            this.lbl_dates_with_actions.AutoSize = true;
-            this.lbl_dates_with_actions.Location = new System.Drawing.Point(39, 412);
-            this.lbl_dates_with_actions.Name = "lbl_dates_with_actions";
-            this.lbl_dates_with_actions.Size = new System.Drawing.Size(152, 18);
-            this.lbl_dates_with_actions.TabIndex = 57;
-            this.lbl_dates_with_actions.Text = "Termine mit Aktionen";
-            // 
-            // pan_which_day
-            // 
-            this.pan_which_day.AutoSize = true;
-            this.pan_which_day.Controls.Add(this.nUD_sun);
-            this.pan_which_day.Controls.Add(this.nUD_sat);
-            this.pan_which_day.Controls.Add(this.nUD_fri);
-            this.pan_which_day.Controls.Add(this.nUD_thu);
-            this.pan_which_day.Controls.Add(this.nUD_wen);
-            this.pan_which_day.Controls.Add(this.NUD_tue);
-            this.pan_which_day.Controls.Add(this.NUD_mon);
-            this.pan_which_day.Controls.Add(this.lbl_welcher_tag);
-            this.pan_which_day.Enabled = false;
-            this.pan_which_day.Location = new System.Drawing.Point(25, 343);
-            this.pan_which_day.Name = "pan_which_day";
-            this.pan_which_day.Size = new System.Drawing.Size(831, 33);
-            this.pan_which_day.TabIndex = 69;
-            // 
-            // nUD_sun
-            // 
-            this.nUD_sun.Location = new System.Drawing.Point(511, 3);
-            this.nUD_sun.Name = "nUD_sun";
-            this.nUD_sun.Size = new System.Drawing.Size(50, 26);
-            this.nUD_sun.TabIndex = 76;
-            // 
-            // nUD_sat
-            // 
-            this.nUD_sat.Location = new System.Drawing.Point(455, 3);
-            this.nUD_sat.Name = "nUD_sat";
-            this.nUD_sat.Size = new System.Drawing.Size(50, 26);
-            this.nUD_sat.TabIndex = 75;
-            // 
-            // nUD_fri
-            // 
-            this.nUD_fri.Location = new System.Drawing.Point(399, 3);
-            this.nUD_fri.Name = "nUD_fri";
-            this.nUD_fri.Size = new System.Drawing.Size(50, 26);
-            this.nUD_fri.TabIndex = 74;
-            // 
-            // nUD_thu
-            // 
-            this.nUD_thu.Location = new System.Drawing.Point(342, 3);
-            this.nUD_thu.Name = "nUD_thu";
-            this.nUD_thu.Size = new System.Drawing.Size(50, 26);
-            this.nUD_thu.TabIndex = 73;
-            // 
-            // nUD_wen
-            // 
-            this.nUD_wen.Location = new System.Drawing.Point(286, 3);
-            this.nUD_wen.Name = "nUD_wen";
-            this.nUD_wen.Size = new System.Drawing.Size(50, 26);
-            this.nUD_wen.TabIndex = 72;
-            // 
-            // NUD_tue
-            // 
-            this.NUD_tue.Location = new System.Drawing.Point(228, 3);
-            this.NUD_tue.Name = "NUD_tue";
-            this.NUD_tue.Size = new System.Drawing.Size(50, 26);
-            this.NUD_tue.TabIndex = 71;
-            // 
-            // NUD_mon
-            // 
-            this.NUD_mon.Location = new System.Drawing.Point(165, 3);
-            this.NUD_mon.Name = "NUD_mon";
-            this.NUD_mon.Size = new System.Drawing.Size(50, 26);
-            this.NUD_mon.TabIndex = 70;
-            // 
-            // lbl_welcher_tag
-            // 
-            this.lbl_welcher_tag.AutoSize = true;
-            this.lbl_welcher_tag.Location = new System.Drawing.Point(14, 5);
-            this.lbl_welcher_tag.Name = "lbl_welcher_tag";
-            this.lbl_welcher_tag.Size = new System.Drawing.Size(94, 18);
-            this.lbl_welcher_tag.TabIndex = 69;
-            this.lbl_welcher_tag.Text = "Welcher Tag";
-            // 
-            // pan_weekday
-            // 
-            this.pan_weekday.Controls.Add(this.cb_son);
-            this.pan_weekday.Controls.Add(this.cb_sam);
-            this.pan_weekday.Controls.Add(this.cb_fre);
-            this.pan_weekday.Controls.Add(this.cb_don);
-            this.pan_weekday.Controls.Add(this.cb_mit);
-            this.pan_weekday.Controls.Add(this.cb_die);
-            this.pan_weekday.Controls.Add(this.cb_Mon);
-            this.pan_weekday.Controls.Add(this.lbl_wochentag);
-            this.pan_weekday.Enabled = false;
-            this.pan_weekday.Location = new System.Drawing.Point(25, 305);
-            this.pan_weekday.Name = "pan_weekday";
-            this.pan_weekday.Size = new System.Drawing.Size(831, 32);
-            this.pan_weekday.TabIndex = 70;
-            // 
-            // cb_son
-            // 
-            this.cb_son.AutoSize = true;
-            this.cb_son.Checked = true;
-            this.cb_son.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_son.Location = new System.Drawing.Point(525, 9);
-            this.cb_son.Name = "cb_son";
-            this.cb_son.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cb_son.Size = new System.Drawing.Size(55, 22);
-            this.cb_son.TabIndex = 60;
-            this.cb_son.Text = "Son";
-            this.cb_son.UseVisualStyleBackColor = true;
-            // 
-            // cb_sam
-            // 
-            this.cb_sam.AutoSize = true;
-            this.cb_sam.Checked = true;
-            this.cb_sam.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_sam.Location = new System.Drawing.Point(459, 9);
-            this.cb_sam.Name = "cb_sam";
-            this.cb_sam.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cb_sam.Size = new System.Drawing.Size(60, 22);
-            this.cb_sam.TabIndex = 59;
-            this.cb_sam.Text = "Sam";
-            this.cb_sam.UseVisualStyleBackColor = true;
-            // 
-            // cb_fre
-            // 
-            this.cb_fre.AutoSize = true;
-            this.cb_fre.Checked = true;
-            this.cb_fre.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_fre.Location = new System.Drawing.Point(402, 9);
-            this.cb_fre.Name = "cb_fre";
-            this.cb_fre.Size = new System.Drawing.Size(51, 22);
-            this.cb_fre.TabIndex = 58;
-            this.cb_fre.Text = "Fre";
-            this.cb_fre.UseVisualStyleBackColor = true;
-            // 
-            // cb_don
-            // 
-            this.cb_don.AutoSize = true;
-            this.cb_don.Checked = true;
-            this.cb_don.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_don.Location = new System.Drawing.Point(340, 9);
-            this.cb_don.Name = "cb_don";
-            this.cb_don.Size = new System.Drawing.Size(56, 22);
-            this.cb_don.TabIndex = 57;
-            this.cb_don.Text = "Don";
-            this.cb_don.UseVisualStyleBackColor = true;
-            // 
-            // cb_mit
-            // 
-            this.cb_mit.AutoSize = true;
-            this.cb_mit.Checked = true;
-            this.cb_mit.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_mit.Location = new System.Drawing.Point(286, 9);
-            this.cb_mit.Name = "cb_mit";
-            this.cb_mit.Size = new System.Drawing.Size(48, 22);
-            this.cb_mit.TabIndex = 56;
-            this.cb_mit.Text = "Mit";
-            this.cb_mit.UseVisualStyleBackColor = true;
-            // 
-            // cb_die
-            // 
-            this.cb_die.AutoSize = true;
-            this.cb_die.Checked = true;
-            this.cb_die.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_die.Location = new System.Drawing.Point(228, 9);
-            this.cb_die.Name = "cb_die";
-            this.cb_die.Size = new System.Drawing.Size(52, 22);
-            this.cb_die.TabIndex = 55;
-            this.cb_die.Text = "Die";
-            this.cb_die.UseVisualStyleBackColor = true;
-            // 
-            // cb_Mon
-            // 
-            this.cb_Mon.AutoSize = true;
-            this.cb_Mon.Checked = true;
-            this.cb_Mon.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_Mon.Location = new System.Drawing.Point(165, 9);
-            this.cb_Mon.Name = "cb_Mon";
-            this.cb_Mon.Size = new System.Drawing.Size(57, 22);
-            this.cb_Mon.TabIndex = 54;
-            this.cb_Mon.Text = "Mon";
-            this.cb_Mon.UseVisualStyleBackColor = true;
-            // 
-            // lbl_wochentag
-            // 
-            this.lbl_wochentag.AutoSize = true;
-            this.lbl_wochentag.Location = new System.Drawing.Point(14, 8);
-            this.lbl_wochentag.Name = "lbl_wochentag";
-            this.lbl_wochentag.Size = new System.Drawing.Size(87, 18);
-            this.lbl_wochentag.TabIndex = 53;
-            this.lbl_wochentag.Text = "Wochentag";
-            // 
-            // pan_frequency
-            // 
-            this.pan_frequency.Controls.Add(this.TB_number_repetitions);
-            this.pan_frequency.Controls.Add(this.lbl_times_per);
-            this.pan_frequency.Controls.Add(this.CB_yearly);
-            this.pan_frequency.Controls.Add(this.CB_monthly);
-            this.pan_frequency.Controls.Add(this.CB_weekly);
-            this.pan_frequency.Controls.Add(this.CB_dayli);
-            this.pan_frequency.Location = new System.Drawing.Point(278, 185);
-            this.pan_frequency.Name = "pan_frequency";
-            this.pan_frequency.Size = new System.Drawing.Size(495, 32);
-            this.pan_frequency.TabIndex = 71;
-            // 
-            // TB_number_repetitions
-            // 
-            this.TB_number_repetitions.Location = new System.Drawing.Point(399, 3);
-            this.TB_number_repetitions.Name = "TB_number_repetitions";
-            this.TB_number_repetitions.Size = new System.Drawing.Size(50, 26);
-            this.TB_number_repetitions.TabIndex = 68;
-            this.TB_number_repetitions.Text = "0";
-            // 
-            // lbl_times_per
-            // 
-            this.lbl_times_per.AutoSize = true;
-            this.lbl_times_per.Location = new System.Drawing.Point(455, 7);
-            this.lbl_times_per.Name = "lbl_times_per";
-            this.lbl_times_per.Size = new System.Drawing.Size(33, 18);
-            this.lbl_times_per.TabIndex = 67;
-            this.lbl_times_per.Text = "mal";
-            // 
-            // CB_yearly
-            // 
-            this.CB_yearly.AutoSize = true;
-            this.CB_yearly.Location = new System.Drawing.Point(313, 6);
-            this.CB_yearly.Name = "CB_yearly";
-            this.CB_yearly.Size = new System.Drawing.Size(80, 22);
-            this.CB_yearly.TabIndex = 66;
-            this.CB_yearly.Text = "Jährlich";
-            this.CB_yearly.UseVisualStyleBackColor = true;
-            this.CB_yearly.CheckedChanged += new System.EventHandler(this.CB_yearly_CheckedChanged);
-            // 
-            // CB_monthly
-            // 
-            this.CB_monthly.AutoSize = true;
-            this.CB_monthly.Location = new System.Drawing.Point(214, 6);
-            this.CB_monthly.Name = "CB_monthly";
-            this.CB_monthly.Size = new System.Drawing.Size(93, 22);
-            this.CB_monthly.TabIndex = 65;
-            this.CB_monthly.Text = "Monatlich";
-            this.CB_monthly.UseVisualStyleBackColor = true;
-            this.CB_monthly.CheckedChanged += new System.EventHandler(this.CB_monthly_CheckedChanged);
-            // 
-            // CB_weekly
-            // 
-            this.CB_weekly.AutoSize = true;
-            this.CB_weekly.Location = new System.Drawing.Point(97, 6);
-            this.CB_weekly.Name = "CB_weekly";
-            this.CB_weekly.Size = new System.Drawing.Size(111, 22);
-            this.CB_weekly.TabIndex = 64;
-            this.CB_weekly.Text = "Wöchentlich";
-            this.CB_weekly.UseVisualStyleBackColor = true;
-            this.CB_weekly.CheckedChanged += new System.EventHandler(this.CB_weekly_CheckedChanged);
-            // 
-            // CB_dayli
-            // 
-            this.CB_dayli.AutoSize = true;
-            this.CB_dayli.Location = new System.Drawing.Point(7, 6);
-            this.CB_dayli.Name = "CB_dayli";
-            this.CB_dayli.Size = new System.Drawing.Size(84, 22);
-            this.CB_dayli.TabIndex = 63;
-            this.CB_dayli.Text = "Taeglich";
-            this.CB_dayli.UseVisualStyleBackColor = true;
-            this.CB_dayli.CheckedChanged += new System.EventHandler(this.CB_dayli_CheckedChanged);
-            // 
             // Wdw_Ereignis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 761);
+            this.ClientSize = new System.Drawing.Size(934, 749);
             this.Controls.Add(this.btn_schließen);
             this.Controls.Add(this.btn_speichern);
             this.Controls.Add(this.eingabe);
             this.MaximumSize = new System.Drawing.Size(950, 800);
-            this.MinimumSize = new System.Drawing.Size(950, 800);
+            this.MinimumSize = new System.Drawing.Size(950, 726);
             this.Name = "Wdw_Ereignis";
             this.Text = "Date";
             this.eingabe.ResumeLayout(false);
@@ -848,8 +849,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             this.tab_wiederholung.ResumeLayout(false);
             this.tab_wiederholung.PerformLayout();
-            this.pan_constraint.ResumeLayout(false);
-            this.pan_constraint.PerformLayout();
+            this.pan_frequency.ResumeLayout(false);
+            this.pan_frequency.PerformLayout();
+            this.pan_weekday.ResumeLayout(false);
+            this.pan_weekday.PerformLayout();
             this.pan_which_day.ResumeLayout(false);
             this.pan_which_day.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).EndInit();
@@ -859,10 +862,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).EndInit();
-            this.pan_weekday.ResumeLayout(false);
-            this.pan_weekday.PerformLayout();
-            this.pan_frequency.ResumeLayout(false);
-            this.pan_frequency.PerformLayout();
+            this.pan_constraint.ResumeLayout(false);
+            this.pan_constraint.PerformLayout();
             this.ResumeLayout(false);
 
         }

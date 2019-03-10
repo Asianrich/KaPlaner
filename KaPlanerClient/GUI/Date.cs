@@ -239,5 +239,10 @@ namespace WindowsFormsApp1
                 pan_constraint.Enabled = true;
             }
         }
+
+        private void MC_date_summery_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
     }
 }
