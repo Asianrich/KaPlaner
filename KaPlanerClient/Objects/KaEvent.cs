@@ -18,6 +18,18 @@ namespace KaPlaner.Objects
 
         public string Title;
         public string Ort;
+        public int ganztaegig;
+        public DateTime Beginn;
+        public DateTime Ende;
+        public int Prioritaet;
+        public string Beschreibung;
+        public string Haeufigkeit;
+        public int Haeufigkeit_Anzahl;
+        public int Immer_Wiederholen;
+        public int Wiederholungen;
+        public DateTime Wiederholen_bis;
+        public string Wochentag;
+        public int welcher_tag;
 
         public KaEvent()
         {
