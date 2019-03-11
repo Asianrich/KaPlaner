@@ -20,6 +20,7 @@ namespace WindowsFormsApp1
         private Button btn_log_senden;
         private Button btn_log_schließen;
         private Button wdw_registrierung;
+        private Button BTN_offline;
         private Label lbl_log_passwort;
 
         public Wdw_login()
@@ -37,6 +38,7 @@ namespace WindowsFormsApp1
             this.btn_log_senden = new System.Windows.Forms.Button();
             this.btn_log_schließen = new System.Windows.Forms.Button();
             this.wdw_registrierung = new System.Windows.Forms.Button();
+            this.BTN_offline = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_login
@@ -57,7 +59,6 @@ namespace WindowsFormsApp1
             this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
             this.tb_log_benutzername.TabIndex = 1;
             this.tb_log_benutzername.Text = "";
-            this.tb_log_benutzername.TextChanged += new System.EventHandler(this.Tb_log_benutzername_TextChanged);
             // 
             // tb_log_passwort
             // 
@@ -121,9 +122,21 @@ namespace WindowsFormsApp1
             this.wdw_registrierung.UseVisualStyleBackColor = true;
             this.wdw_registrierung.Click += new System.EventHandler(this.Wdw_registry_Click);
             // 
-            // wdw_login
+            // BTN_offline
             // 
-            this.ClientSize = new System.Drawing.Size(459, 386);
+            this.BTN_offline.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_offline.Location = new System.Drawing.Point(40, 372);
+            this.BTN_offline.Name = "BTN_offline";
+            this.BTN_offline.Size = new System.Drawing.Size(382, 30);
+            this.BTN_offline.TabIndex = 8;
+            this.BTN_offline.Text = "OFFLINE";
+            this.BTN_offline.UseVisualStyleBackColor = true;
+            this.BTN_offline.Click += new System.EventHandler(this.BTN_offline_Click);
+            // 
+            // Wdw_login
+            // 
+            this.ClientSize = new System.Drawing.Size(459, 421);
+            this.Controls.Add(this.BTN_offline);
             this.Controls.Add(this.wdw_registrierung);
             this.Controls.Add(this.btn_log_schließen);
             this.Controls.Add(this.btn_log_senden);
@@ -133,9 +146,9 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.tb_log_benutzername);
             this.Controls.Add(this.lbl_login);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaximumSize = new System.Drawing.Size(475, 425);
-            this.MinimumSize = new System.Drawing.Size(475, 425);
-            this.Name = "wdw_login";
+            this.MaximumSize = new System.Drawing.Size(475, 460);
+            this.MinimumSize = new System.Drawing.Size(475, 460);
+            this.Name = "Wdw_login";
             this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -170,9 +183,10 @@ namespace WindowsFormsApp1
             open_registry.Show();
         }
 
-        private void Tb_log_benutzername_TextChanged(object sender, EventArgs e)
+        private void BTN_offline_Click(object sender, EventArgs e)
         {
-
+            Form open_calendar = new wdw_calendar();
+            open_calendar.Show();
         }
     }
 }
