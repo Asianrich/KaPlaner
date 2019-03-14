@@ -9,21 +9,7 @@ namespace KaPlaner.Networking
 {
     public interface IClientConnection
     {
-        User user { get; set; }
-        int port { get; set; }
-
-        void connectServer();
-        bool logging(User user);
-        void sendUser(User user);
-        void sendEvents(KaEvent kaEvent);
-        User receiveUser();
-        KaEvent receiveEvent();
-
-
-
-
-
-
+        StateObject Start(StateObject state);
 
     }
 }

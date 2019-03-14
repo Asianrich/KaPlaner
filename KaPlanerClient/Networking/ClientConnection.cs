@@ -34,7 +34,7 @@ namespace KaPlaner.Networking
 
 
 
-        public void connectServer()
+        private void connectServer()
         {
             try
             {
@@ -51,11 +51,7 @@ namespace KaPlaner.Networking
             }
         }
 
-        public KaEvent receiveEvent()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public User receiveUser()
         {
             try
@@ -71,28 +67,6 @@ namespace KaPlaner.Networking
             catch (Exception ex)
             {
                 return null;
-            }
-        }
-
-        public void sendEvents(KaEvent kaEvent)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void sendUser(User user)
-        {
-            try
-            {
-
-                //SendRq("User", user.Serialize().Length);
-                
-
-
-
-            }
-            catch ( Exception ex)
-            {
-
             }
         }
 
@@ -268,8 +242,6 @@ namespace KaPlaner.Networking
                 {
                     XmlSerializer xs = new XmlSerializer(myObject.GetType());
                     xs.Serialize(xw, myObject);
-
-
                 }
                 msg = sw.ToString();
             }
@@ -298,11 +270,30 @@ namespace KaPlaner.Networking
 
         }
 
+        public T update<T>(User user, KaEvent[] kaEvents)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void disconnect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public StateObject Start(StateObject state)
+        {
+            connectServer();
+            StateObject receive;
 
 
 
 
 
 
+
+            receive = new StateObject();
+
+            return receive;
+        }
     }
 }
