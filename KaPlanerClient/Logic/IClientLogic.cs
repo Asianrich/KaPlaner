@@ -10,7 +10,7 @@ namespace KaPlaner.Logic
     /// Interface, dass von der ClientLogic implementiert werden muss
     /// Es entspricht den Anforderungen der GUI an die Logik
     /// </summary>
-    internal interface IClientLogic
+    public interface IClientLogic
     {
 
     }

@@ -16,6 +16,11 @@ namespace KaPlaner.Logic
     /// </summary>
     class ClientLogic : IClientLogic
     {
-        
+        IDatabase database = new Database();
+
+        ClientLogic()
+        {
+            bool test = database.login("Aragorn", "123");
+        }
     }
 }
