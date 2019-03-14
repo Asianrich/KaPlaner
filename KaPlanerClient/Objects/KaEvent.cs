@@ -28,8 +28,7 @@ namespace KaPlaner.Objects
         public int Immer_Wiederholen;
         public int Wiederholungen;
         public DateTime Wiederholen_bis;
-        public string Wochentag;
-        public int Welcher_tag;
+        public int[] XWochentag;
 
         public KaEvent()
         {

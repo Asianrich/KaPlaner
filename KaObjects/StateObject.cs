@@ -15,10 +15,5 @@ namespace KaObjects
         public string results { get; set; }
         User user;
         KaEvent[] kaEvents;
-
-
-
-
-
     }
 }

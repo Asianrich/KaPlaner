@@ -56,7 +56,7 @@
             this.lbl_beschreibung = new System.Windows.Forms.Label();
             this.NUD_Priority = new System.Windows.Forms.NumericUpDown();
             this.lbl_beginn = new System.Windows.Forms.Label();
-            this.cb_ganztägige_verantstaltung = new System.Windows.Forms.CheckBox();
+            this.CB_ganztägige_verantstaltung = new System.Windows.Forms.CheckBox();
             this.lbl_ort = new System.Windows.Forms.Label();
             this.lbl_titel = new System.Windows.Forms.Label();
             this.TB_Place = new System.Windows.Forms.TextBox();
@@ -79,17 +79,20 @@
             this.CB_mon = new System.Windows.Forms.CheckBox();
             this.lbl_wochentag = new System.Windows.Forms.Label();
             this.pan_which_day = new System.Windows.Forms.Panel();
-            this.nUD_sun = new System.Windows.Forms.NumericUpDown();
-            this.nUD_sat = new System.Windows.Forms.NumericUpDown();
-            this.nUD_fri = new System.Windows.Forms.NumericUpDown();
-            this.nUD_thu = new System.Windows.Forms.NumericUpDown();
-            this.nUD_wen = new System.Windows.Forms.NumericUpDown();
+            this.NUD_sun = new System.Windows.Forms.NumericUpDown();
+            this.NUD_sat = new System.Windows.Forms.NumericUpDown();
+            this.NUD_fri = new System.Windows.Forms.NumericUpDown();
+            this.NUD_thu = new System.Windows.Forms.NumericUpDown();
+            this.NUD_wen = new System.Windows.Forms.NumericUpDown();
             this.NUD_tue = new System.Windows.Forms.NumericUpDown();
             this.NUD_mon = new System.Windows.Forms.NumericUpDown();
             this.lbl_welcher_tag = new System.Windows.Forms.Label();
             this.MC_date_summery = new System.Windows.Forms.MonthCalendar();
             this.lbl_dates_with_actions = new System.Windows.Forms.Label();
             this.pan_constraint = new System.Windows.Forms.Panel();
+            this.TB_repeat_until_year = new System.Windows.Forms.TextBox();
+            this.TB_repeat_until_month = new System.Windows.Forms.TextBox();
+            this.LBL_always_repeat_until = new System.Windows.Forms.Label();
             this.TB_repeat_until_day = new System.Windows.Forms.TextBox();
             this.TB_times_repeat = new System.Windows.Forms.TextBox();
             this.CB_always_repeat = new System.Windows.Forms.CheckBox();
@@ -99,9 +102,6 @@
             this.lbl_haeufigkeit = new System.Windows.Forms.Label();
             this.btn_speichern = new System.Windows.Forms.Button();
             this.btn_schließen = new System.Windows.Forms.Button();
-            this.LBL_always_repeat_until = new System.Windows.Forms.Label();
-            this.TB_repeat_until_month = new System.Windows.Forms.TextBox();
-            this.TB_repeat_until_year = new System.Windows.Forms.TextBox();
             this.eingabe.SuspendLayout();
             this.tab_allgemein.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Priority)).BeginInit();
@@ -109,11 +109,11 @@
             this.pan_frequency.SuspendLayout();
             this.pan_weekday.SuspendLayout();
             this.pan_which_day.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_fri)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_thu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_sun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_sat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_fri)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_thu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_wen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).BeginInit();
             this.pan_constraint.SuspendLayout();
@@ -158,7 +158,7 @@
             this.tab_allgemein.Controls.Add(this.lbl_beschreibung);
             this.tab_allgemein.Controls.Add(this.NUD_Priority);
             this.tab_allgemein.Controls.Add(this.lbl_beginn);
-            this.tab_allgemein.Controls.Add(this.cb_ganztägige_verantstaltung);
+            this.tab_allgemein.Controls.Add(this.CB_ganztägige_verantstaltung);
             this.tab_allgemein.Controls.Add(this.lbl_ort);
             this.tab_allgemein.Controls.Add(this.lbl_titel);
             this.tab_allgemein.Controls.Add(this.TB_Place);
@@ -193,14 +193,14 @@
             // 
             this.TB_minute_end.Location = new System.Drawing.Point(569, 253);
             this.TB_minute_end.Name = "TB_minute_end";
-            this.TB_minute_end.Size = new System.Drawing.Size(30, 26);
+            this.TB_minute_end.Size = new System.Drawing.Size(50, 26);
             this.TB_minute_end.TabIndex = 54;
             // 
             // TB_minute_beginn
             // 
             this.TB_minute_beginn.Location = new System.Drawing.Point(246, 253);
             this.TB_minute_beginn.Name = "TB_minute_beginn";
-            this.TB_minute_beginn.Size = new System.Drawing.Size(30, 26);
+            this.TB_minute_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_minute_beginn.TabIndex = 53;
             // 
             // LBL_hour_end
@@ -225,14 +225,14 @@
             // 
             this.TB_hour_end.Location = new System.Drawing.Point(569, 221);
             this.TB_hour_end.Name = "TB_hour_end";
-            this.TB_hour_end.Size = new System.Drawing.Size(30, 26);
+            this.TB_hour_end.Size = new System.Drawing.Size(50, 26);
             this.TB_hour_end.TabIndex = 50;
             // 
             // TB_hour_beginn
             // 
             this.TB_hour_beginn.Location = new System.Drawing.Point(246, 221);
             this.TB_hour_beginn.Name = "TB_hour_beginn";
-            this.TB_hour_beginn.Size = new System.Drawing.Size(30, 26);
+            this.TB_hour_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_hour_beginn.TabIndex = 49;
             // 
             // LBL_year_end
@@ -257,14 +257,14 @@
             // 
             this.TB_year_end.Location = new System.Drawing.Point(569, 189);
             this.TB_year_end.Name = "TB_year_end";
-            this.TB_year_end.Size = new System.Drawing.Size(30, 26);
+            this.TB_year_end.Size = new System.Drawing.Size(50, 26);
             this.TB_year_end.TabIndex = 46;
             // 
             // TB_year_beginn
             // 
             this.TB_year_beginn.Location = new System.Drawing.Point(246, 189);
             this.TB_year_beginn.Name = "TB_year_beginn";
-            this.TB_year_beginn.Size = new System.Drawing.Size(30, 26);
+            this.TB_year_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_year_beginn.TabIndex = 45;
             // 
             // LBL_month_end
@@ -289,14 +289,14 @@
             // 
             this.TB_month_end.Location = new System.Drawing.Point(569, 157);
             this.TB_month_end.Name = "TB_month_end";
-            this.TB_month_end.Size = new System.Drawing.Size(30, 26);
+            this.TB_month_end.Size = new System.Drawing.Size(50, 26);
             this.TB_month_end.TabIndex = 42;
             // 
             // TB_month_beginn
             // 
             this.TB_month_beginn.Location = new System.Drawing.Point(246, 157);
             this.TB_month_beginn.Name = "TB_month_beginn";
-            this.TB_month_beginn.Size = new System.Drawing.Size(30, 26);
+            this.TB_month_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_month_beginn.TabIndex = 41;
             // 
             // LBL_day_end
@@ -321,14 +321,14 @@
             // 
             this.TB_day_end.Location = new System.Drawing.Point(569, 125);
             this.TB_day_end.Name = "TB_day_end";
-            this.TB_day_end.Size = new System.Drawing.Size(30, 26);
+            this.TB_day_end.Size = new System.Drawing.Size(50, 26);
             this.TB_day_end.TabIndex = 32;
             // 
             // TB_day_beginn
             // 
             this.TB_day_beginn.Location = new System.Drawing.Point(246, 125);
             this.TB_day_beginn.Name = "TB_day_beginn";
-            this.TB_day_beginn.Size = new System.Drawing.Size(30, 26);
+            this.TB_day_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_day_beginn.TabIndex = 31;
             // 
             // RTB_description
@@ -338,6 +338,7 @@
             this.RTB_description.Size = new System.Drawing.Size(558, 240);
             this.RTB_description.TabIndex = 30;
             this.RTB_description.Text = "";
+            this.RTB_description.TextChanged += new System.EventHandler(this.RTB_description_TextChanged);
             // 
             // lbl_prioritaet
             // 
@@ -372,6 +373,7 @@
             this.NUD_Priority.Name = "NUD_Priority";
             this.NUD_Priority.Size = new System.Drawing.Size(50, 26);
             this.NUD_Priority.TabIndex = 26;
+            this.NUD_Priority.ValueChanged += new System.EventHandler(this.NUD_Priority_ValueChanged);
             // 
             // lbl_beginn
             // 
@@ -382,16 +384,16 @@
             this.lbl_beginn.TabIndex = 9;
             this.lbl_beginn.Text = "Beginn";
             // 
-            // cb_ganztägige_verantstaltung
+            // CB_ganztägige_verantstaltung
             // 
-            this.cb_ganztägige_verantstaltung.AutoSize = true;
-            this.cb_ganztägige_verantstaltung.Location = new System.Drawing.Point(177, 87);
-            this.cb_ganztägige_verantstaltung.Name = "cb_ganztägige_verantstaltung";
-            this.cb_ganztägige_verantstaltung.Size = new System.Drawing.Size(205, 22);
-            this.cb_ganztägige_verantstaltung.TabIndex = 8;
-            this.cb_ganztägige_verantstaltung.Text = "Ganztägige Veranstaltung";
-            this.cb_ganztägige_verantstaltung.UseVisualStyleBackColor = true;
-            this.cb_ganztägige_verantstaltung.CheckedChanged += new System.EventHandler(this.Cb_ganztägige_verantstaltung_CheckedChanged);
+            this.CB_ganztägige_verantstaltung.AutoSize = true;
+            this.CB_ganztägige_verantstaltung.Location = new System.Drawing.Point(177, 87);
+            this.CB_ganztägige_verantstaltung.Name = "CB_ganztägige_verantstaltung";
+            this.CB_ganztägige_verantstaltung.Size = new System.Drawing.Size(205, 22);
+            this.CB_ganztägige_verantstaltung.TabIndex = 8;
+            this.CB_ganztägige_verantstaltung.Text = "Ganztägige Veranstaltung";
+            this.CB_ganztägige_verantstaltung.UseVisualStyleBackColor = true;
+            this.CB_ganztägige_verantstaltung.CheckedChanged += new System.EventHandler(this.CB_ganztaegige_verantstaltung_CheckedChanged);
             // 
             // lbl_ort
             // 
@@ -417,6 +419,7 @@
             this.TB_Place.Name = "TB_Place";
             this.TB_Place.Size = new System.Drawing.Size(422, 26);
             this.TB_Place.TabIndex = 4;
+            this.TB_Place.TextChanged += new System.EventHandler(this.TB_Place_TextChanged);
             // 
             // TB_Title
             // 
@@ -424,6 +427,7 @@
             this.TB_Title.Name = "TB_Title";
             this.TB_Title.Size = new System.Drawing.Size(422, 26);
             this.TB_Title.TabIndex = 3;
+            this.TB_Title.TextChanged += new System.EventHandler(this.TB_Title_TextChanged);
             // 
             // tab_wiederholung
             // 
@@ -463,6 +467,7 @@
             this.TB_number_repetitions.Size = new System.Drawing.Size(50, 26);
             this.TB_number_repetitions.TabIndex = 68;
             this.TB_number_repetitions.Text = "0";
+            this.TB_number_repetitions.TextChanged += new System.EventHandler(this.TB_number_repetitions_TextChanged);
             // 
             // lbl_times_per
             // 
@@ -545,6 +550,7 @@
             this.CB_son.TabIndex = 60;
             this.CB_son.Text = "Son";
             this.CB_son.UseVisualStyleBackColor = true;
+            this.CB_son.CheckedChanged += new System.EventHandler(this.CB_son_CheckedChanged);
             // 
             // CB_sam
             // 
@@ -558,6 +564,7 @@
             this.CB_sam.TabIndex = 59;
             this.CB_sam.Text = "Sam";
             this.CB_sam.UseVisualStyleBackColor = true;
+            this.CB_sam.CheckedChanged += new System.EventHandler(this.CB_sam_CheckedChanged);
             // 
             // CB_fre
             // 
@@ -570,6 +577,7 @@
             this.CB_fre.TabIndex = 58;
             this.CB_fre.Text = "Fre";
             this.CB_fre.UseVisualStyleBackColor = true;
+            this.CB_fre.CheckedChanged += new System.EventHandler(this.CB_fre_CheckedChanged);
             // 
             // CB_don
             // 
@@ -582,6 +590,7 @@
             this.CB_don.TabIndex = 57;
             this.CB_don.Text = "Don";
             this.CB_don.UseVisualStyleBackColor = true;
+            this.CB_don.CheckedChanged += new System.EventHandler(this.CB_don_CheckedChanged);
             // 
             // CB_mit
             // 
@@ -594,6 +603,7 @@
             this.CB_mit.TabIndex = 56;
             this.CB_mit.Text = "Mit";
             this.CB_mit.UseVisualStyleBackColor = true;
+            this.CB_mit.CheckedChanged += new System.EventHandler(this.CB_mit_CheckedChanged);
             // 
             // CB_die
             // 
@@ -606,6 +616,7 @@
             this.CB_die.TabIndex = 55;
             this.CB_die.Text = "Die";
             this.CB_die.UseVisualStyleBackColor = true;
+            this.CB_die.CheckedChanged += new System.EventHandler(this.CB_die_CheckedChanged);
             // 
             // CB_mon
             // 
@@ -618,6 +629,7 @@
             this.CB_mon.TabIndex = 54;
             this.CB_mon.Text = "Mon";
             this.CB_mon.UseVisualStyleBackColor = true;
+            this.CB_mon.CheckedChanged += new System.EventHandler(this.CB_mon_CheckedChanged);
             // 
             // lbl_wochentag
             // 
@@ -631,11 +643,11 @@
             // pan_which_day
             // 
             this.pan_which_day.AutoSize = true;
-            this.pan_which_day.Controls.Add(this.nUD_sun);
-            this.pan_which_day.Controls.Add(this.nUD_sat);
-            this.pan_which_day.Controls.Add(this.nUD_fri);
-            this.pan_which_day.Controls.Add(this.nUD_thu);
-            this.pan_which_day.Controls.Add(this.nUD_wen);
+            this.pan_which_day.Controls.Add(this.NUD_sun);
+            this.pan_which_day.Controls.Add(this.NUD_sat);
+            this.pan_which_day.Controls.Add(this.NUD_fri);
+            this.pan_which_day.Controls.Add(this.NUD_thu);
+            this.pan_which_day.Controls.Add(this.NUD_wen);
             this.pan_which_day.Controls.Add(this.NUD_tue);
             this.pan_which_day.Controls.Add(this.NUD_mon);
             this.pan_which_day.Controls.Add(this.lbl_welcher_tag);
@@ -645,40 +657,45 @@
             this.pan_which_day.Size = new System.Drawing.Size(831, 33);
             this.pan_which_day.TabIndex = 69;
             // 
-            // nUD_sun
+            // NUD_sun
             // 
-            this.nUD_sun.Location = new System.Drawing.Point(511, 3);
-            this.nUD_sun.Name = "nUD_sun";
-            this.nUD_sun.Size = new System.Drawing.Size(50, 26);
-            this.nUD_sun.TabIndex = 76;
+            this.NUD_sun.Location = new System.Drawing.Point(511, 3);
+            this.NUD_sun.Name = "NUD_sun";
+            this.NUD_sun.Size = new System.Drawing.Size(50, 26);
+            this.NUD_sun.TabIndex = 76;
+            this.NUD_sun.ValueChanged += new System.EventHandler(this.NUD_sun_ValueChanged);
             // 
-            // nUD_sat
+            // NUD_sat
             // 
-            this.nUD_sat.Location = new System.Drawing.Point(455, 3);
-            this.nUD_sat.Name = "nUD_sat";
-            this.nUD_sat.Size = new System.Drawing.Size(50, 26);
-            this.nUD_sat.TabIndex = 75;
+            this.NUD_sat.Location = new System.Drawing.Point(455, 3);
+            this.NUD_sat.Name = "NUD_sat";
+            this.NUD_sat.Size = new System.Drawing.Size(50, 26);
+            this.NUD_sat.TabIndex = 75;
+            this.NUD_sat.ValueChanged += new System.EventHandler(this.NUD_sat_ValueChanged);
             // 
-            // nUD_fri
+            // NUD_fri
             // 
-            this.nUD_fri.Location = new System.Drawing.Point(399, 3);
-            this.nUD_fri.Name = "nUD_fri";
-            this.nUD_fri.Size = new System.Drawing.Size(50, 26);
-            this.nUD_fri.TabIndex = 74;
+            this.NUD_fri.Location = new System.Drawing.Point(399, 3);
+            this.NUD_fri.Name = "NUD_fri";
+            this.NUD_fri.Size = new System.Drawing.Size(50, 26);
+            this.NUD_fri.TabIndex = 74;
+            this.NUD_fri.ValueChanged += new System.EventHandler(this.NUD_fri_ValueChanged);
             // 
-            // nUD_thu
+            // NUD_thu
             // 
-            this.nUD_thu.Location = new System.Drawing.Point(342, 3);
-            this.nUD_thu.Name = "nUD_thu";
-            this.nUD_thu.Size = new System.Drawing.Size(50, 26);
-            this.nUD_thu.TabIndex = 73;
+            this.NUD_thu.Location = new System.Drawing.Point(342, 3);
+            this.NUD_thu.Name = "NUD_thu";
+            this.NUD_thu.Size = new System.Drawing.Size(50, 26);
+            this.NUD_thu.TabIndex = 73;
+            this.NUD_thu.ValueChanged += new System.EventHandler(this.NUD_thu_ValueChanged);
             // 
-            // nUD_wen
+            // NUD_wen
             // 
-            this.nUD_wen.Location = new System.Drawing.Point(286, 3);
-            this.nUD_wen.Name = "nUD_wen";
-            this.nUD_wen.Size = new System.Drawing.Size(50, 26);
-            this.nUD_wen.TabIndex = 72;
+            this.NUD_wen.Location = new System.Drawing.Point(286, 3);
+            this.NUD_wen.Name = "NUD_wen";
+            this.NUD_wen.Size = new System.Drawing.Size(50, 26);
+            this.NUD_wen.TabIndex = 72;
+            this.NUD_wen.ValueChanged += new System.EventHandler(this.NUD_wen_ValueChanged);
             // 
             // NUD_tue
             // 
@@ -686,6 +703,7 @@
             this.NUD_tue.Name = "NUD_tue";
             this.NUD_tue.Size = new System.Drawing.Size(50, 26);
             this.NUD_tue.TabIndex = 71;
+            this.NUD_tue.ValueChanged += new System.EventHandler(this.NUD_tue_ValueChanged);
             // 
             // NUD_mon
             // 
@@ -693,6 +711,7 @@
             this.NUD_mon.Name = "NUD_mon";
             this.NUD_mon.Size = new System.Drawing.Size(50, 26);
             this.NUD_mon.TabIndex = 70;
+            this.NUD_mon.ValueChanged += new System.EventHandler(this.NUD_mon_ValueChanged);
             // 
             // lbl_welcher_tag
             // 
@@ -736,6 +755,33 @@
             this.pan_constraint.Size = new System.Drawing.Size(831, 56);
             this.pan_constraint.TabIndex = 47;
             // 
+            // TB_repeat_until_year
+            // 
+            this.TB_repeat_until_year.Enabled = false;
+            this.TB_repeat_until_year.Location = new System.Drawing.Point(739, 15);
+            this.TB_repeat_until_year.Name = "TB_repeat_until_year";
+            this.TB_repeat_until_year.Size = new System.Drawing.Size(50, 26);
+            this.TB_repeat_until_year.TabIndex = 74;
+            this.TB_repeat_until_year.Text = "YYYY";
+            // 
+            // TB_repeat_until_month
+            // 
+            this.TB_repeat_until_month.Enabled = false;
+            this.TB_repeat_until_month.Location = new System.Drawing.Point(707, 15);
+            this.TB_repeat_until_month.Name = "TB_repeat_until_month";
+            this.TB_repeat_until_month.Size = new System.Drawing.Size(26, 26);
+            this.TB_repeat_until_month.TabIndex = 73;
+            this.TB_repeat_until_month.Text = "M";
+            // 
+            // LBL_always_repeat_until
+            // 
+            this.LBL_always_repeat_until.AutoSize = true;
+            this.LBL_always_repeat_until.Location = new System.Drawing.Point(516, 18);
+            this.LBL_always_repeat_until.Name = "LBL_always_repeat_until";
+            this.LBL_always_repeat_until.Size = new System.Drawing.Size(153, 18);
+            this.LBL_always_repeat_until.TabIndex = 72;
+            this.LBL_always_repeat_until.Text = "Wiederholen bis zum";
+            // 
             // TB_repeat_until_day
             // 
             this.TB_repeat_until_day.Enabled = false;
@@ -752,6 +798,7 @@
             this.TB_times_repeat.Size = new System.Drawing.Size(25, 26);
             this.TB_times_repeat.TabIndex = 63;
             this.TB_times_repeat.Text = "0";
+            this.TB_times_repeat.TextChanged += new System.EventHandler(this.TB_times_repeat_TextChanged);
             // 
             // CB_always_repeat
             // 
@@ -764,6 +811,7 @@
             this.CB_always_repeat.TabIndex = 61;
             this.CB_always_repeat.Text = "Immer wiederholen";
             this.CB_always_repeat.UseVisualStyleBackColor = true;
+            this.CB_always_repeat.CheckedChanged += new System.EventHandler(this.CB_always_repeat_CheckedChanged);
             // 
             // LBL_times_repeat
             // 
@@ -827,33 +875,6 @@
             this.btn_schließen.UseVisualStyleBackColor = true;
             this.btn_schließen.Click += new System.EventHandler(this.Btn_close_Click);
             // 
-            // LBL_always_repeat_until
-            // 
-            this.LBL_always_repeat_until.AutoSize = true;
-            this.LBL_always_repeat_until.Location = new System.Drawing.Point(516, 18);
-            this.LBL_always_repeat_until.Name = "LBL_always_repeat_until";
-            this.LBL_always_repeat_until.Size = new System.Drawing.Size(153, 18);
-            this.LBL_always_repeat_until.TabIndex = 72;
-            this.LBL_always_repeat_until.Text = "Wiederholen bis zum";
-            // 
-            // TB_repeat_until_month
-            // 
-            this.TB_repeat_until_month.Enabled = false;
-            this.TB_repeat_until_month.Location = new System.Drawing.Point(707, 15);
-            this.TB_repeat_until_month.Name = "TB_repeat_until_month";
-            this.TB_repeat_until_month.Size = new System.Drawing.Size(26, 26);
-            this.TB_repeat_until_month.TabIndex = 73;
-            this.TB_repeat_until_month.Text = "M";
-            // 
-            // TB_repeat_until_year
-            // 
-            this.TB_repeat_until_year.Enabled = false;
-            this.TB_repeat_until_year.Location = new System.Drawing.Point(739, 15);
-            this.TB_repeat_until_year.Name = "TB_repeat_until_year";
-            this.TB_repeat_until_year.Size = new System.Drawing.Size(50, 26);
-            this.TB_repeat_until_year.TabIndex = 74;
-            this.TB_repeat_until_year.Text = "YYYY";
-            // 
             // Wdw_KaEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -878,11 +899,11 @@
             this.pan_weekday.PerformLayout();
             this.pan_which_day.ResumeLayout(false);
             this.pan_which_day.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sun)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_sat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_fri)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_thu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUD_wen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_sun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_sat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_fri)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_thu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_wen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_tue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_mon)).EndInit();
             this.pan_constraint.ResumeLayout(false);
@@ -901,7 +922,7 @@
         private System.Windows.Forms.Label lbl_ort;
         private System.Windows.Forms.Label lbl_titel;
         private System.Windows.Forms.Label lbl_beginn;
-        private System.Windows.Forms.CheckBox cb_ganztägige_verantstaltung;
+        private System.Windows.Forms.CheckBox CB_ganztägige_verantstaltung;
         private System.Windows.Forms.NumericUpDown NUD_Priority;
         private System.Windows.Forms.Label lbl_beschreibung;
         private System.Windows.Forms.Label lbl_end;
@@ -956,11 +977,11 @@
         private System.Windows.Forms.CheckBox CB_mon;
         private System.Windows.Forms.Label lbl_wochentag;
         private System.Windows.Forms.Panel pan_which_day;
-        private System.Windows.Forms.NumericUpDown nUD_sun;
-        private System.Windows.Forms.NumericUpDown nUD_sat;
-        private System.Windows.Forms.NumericUpDown nUD_fri;
-        private System.Windows.Forms.NumericUpDown nUD_thu;
-        private System.Windows.Forms.NumericUpDown nUD_wen;
+        private System.Windows.Forms.NumericUpDown NUD_sun;
+        private System.Windows.Forms.NumericUpDown NUD_sat;
+        private System.Windows.Forms.NumericUpDown NUD_fri;
+        private System.Windows.Forms.NumericUpDown NUD_thu;
+        private System.Windows.Forms.NumericUpDown NUD_wen;
         private System.Windows.Forms.NumericUpDown NUD_tue;
         private System.Windows.Forms.NumericUpDown NUD_mon;
         private System.Windows.Forms.Label lbl_welcher_tag;
