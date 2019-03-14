@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Database;
+using KaPlaner.Storage;
 using KaPlaner.Objects;
 
 namespace WindowsFormsApp1

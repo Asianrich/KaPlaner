@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Database;
+using KaPlaner.Storage;
 
 namespace WindowsFormsApp1
 {
@@ -159,7 +159,7 @@ namespace WindowsFormsApp1
 
         private void Btn_reg_send_Click(object sender, EventArgs e)
         {
-            KaPlaner.Database.Database reg = new Database();
+            KaPlaner.Storage.Database reg = new Database();
             if (reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
             {
                 Form open_calendar = new wdw_calendar();
