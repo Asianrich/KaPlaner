@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Windows.Forms;
+using KaPlaner.Objects;
 using WindowsFormsApp1;
 
 namespace KaPlaner.Database
@@ -76,7 +77,7 @@ namespace KaPlaner.Database
             }
             else
             {
-                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Revan\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
                 //Pruefen ob der Benutzer existiert
@@ -99,5 +100,6 @@ namespace KaPlaner.Database
                 }
             }
         }
+
     }
 }

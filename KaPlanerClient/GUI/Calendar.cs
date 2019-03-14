@@ -45,10 +45,7 @@ namespace WindowsFormsApp1
         public KaEvent Ereignis;
         private void tb_open_date(object sender, EventArgs e)
         {
-            //Form tb_open_date = new Wdw_Ereignis();
-            //tb_open_date.Show();
-
-            using (var form = new Wdw_Ereignis())
+            using (var form = new Wdw_KaEvent())
             {
                 var result = form.ShowDialog();
                 if(result == DialogResult.OK)
@@ -61,7 +58,6 @@ namespace WindowsFormsApp1
                     MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
-
         }
 
         /// <summary> check end of old year </summary>
