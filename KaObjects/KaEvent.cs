@@ -12,9 +12,23 @@ namespace KaObjects
     [Serializable]
     public class KaEvent
     {
-        public User owner { get; set; }
-        public DateTime date { get; set; }
-        public string[] members { get; set; }
+        User owner { get; set; }
+        DateTime date { get; set; }
+        string[] members { get; set; }
 
+        public string Title { get; set; }
+        public string Ort { get; set; }
+        public int ganztaegig { get; set; }
+        public DateTime Beginn { get; set; }
+        public DateTime Ende { get; set; }
+        public int Prioritaet { get; set; }
+        public string Beschreibung { get; set; }
+        public string Haeufigkeit { get; set; }
+        public int Haeufigkeit_Anzahl { get; set; }
+        public int Immer_Wiederholen { get; set; }
+        public int Wiederholungen { get; set; }
+        public DateTime Wiederholen_bis { get; set; }
+        public string Wochentag { get; set; }
+        public int welcher_tag { get; set; }
     }
 }

@@ -66,7 +66,7 @@ namespace UnitTest
         {
             ClientConnection client = new ClientConnection();
 
-            client.connectServer();
+           // client.connectServer();
             User user = new User("Richard", "test");
 
             
@@ -156,5 +156,20 @@ namespace UnitTest
         }
 
         
+        [TestMethod]
+        public void myTest()
+        {
+
+            int a = 1;
+            int b = 2;
+
+
+
+
+            Assert.AreEqual(a,b);
+        }
+
+
+
     }
 }

@@ -36,23 +36,7 @@ namespace KaPlaner.Objects
            
         }
 
-        public byte[] Serialize()
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            bin.Serialize(mem, this);
-            return mem.GetBuffer();
-        }
 
-        public KaEvent Deserialize(byte[] dataBuffer)
-        {
-            BinaryFormatter bin = new BinaryFormatter();
-            MemoryStream mem = new MemoryStream();
-            mem.Write(dataBuffer, 0, dataBuffer.Length);
-            mem.Seek(0, 0);
-            return (KaEvent)bin.Deserialize(mem);
-
-        }
 
     }
 }
