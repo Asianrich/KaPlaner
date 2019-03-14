@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Objects;
+using KaObjects;
 
 namespace WindowsFormsApp1
 {
@@ -55,7 +55,7 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
         }

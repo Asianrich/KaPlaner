@@ -28,7 +28,6 @@ namespace KaObjects
         public int Immer_Wiederholen { get; set; }
         public int Wiederholungen { get; set; }
         public DateTime Wiederholen_bis { get; set; }
-        public string Wochentag { get; set; }
-        public int welcher_tag { get; set; }
+        public int[] XWochentag { get; set; }
     }
 }
