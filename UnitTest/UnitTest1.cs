@@ -8,6 +8,8 @@ using System.Threading;
 using System.Runtime;
 using System.IO;
 
+using KaPlaner.Logic;
+
 namespace UnitTest
 {
     [TestClass]
@@ -160,13 +162,9 @@ namespace UnitTest
         public void myTest()
         {
 
-            int a = 1;
-            int b = 2;
+            ClientLogic client = new ClientLogic();
 
-
-
-
-            Assert.AreEqual(a,b);
+            Assert.IsTrue(client.GetTest());
         }
 
 
