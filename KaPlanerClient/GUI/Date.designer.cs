@@ -102,6 +102,8 @@
             this.lbl_haeufigkeit = new System.Windows.Forms.Label();
             this.btn_speichern = new System.Windows.Forms.Button();
             this.btn_schließen = new System.Windows.Forms.Button();
+            this.BTN_load = new System.Windows.Forms.Button();
+            this.BTN_delete = new System.Windows.Forms.Button();
             this.eingabe.SuspendLayout();
             this.tab_allgemein.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Priority)).BeginInit();
@@ -455,7 +457,8 @@
             this.pan_frequency.Controls.Add(this.CB_monthly);
             this.pan_frequency.Controls.Add(this.CB_weekly);
             this.pan_frequency.Controls.Add(this.CB_dayli);
-            this.pan_frequency.Location = new System.Drawing.Point(278, 185);
+            this.pan_frequency.Enabled = false;
+            this.pan_frequency.Location = new System.Drawing.Point(278, 189);
             this.pan_frequency.Name = "pan_frequency";
             this.pan_frequency.Size = new System.Drawing.Size(495, 32);
             this.pan_frequency.TabIndex = 71;
@@ -776,6 +779,7 @@
             // LBL_always_repeat_until
             // 
             this.LBL_always_repeat_until.AutoSize = true;
+            this.LBL_always_repeat_until.Enabled = false;
             this.LBL_always_repeat_until.Location = new System.Drawing.Point(516, 18);
             this.LBL_always_repeat_until.Name = "LBL_always_repeat_until";
             this.LBL_always_repeat_until.Size = new System.Drawing.Size(153, 18);
@@ -793,11 +797,12 @@
             // 
             // TB_times_repeat
             // 
-            this.TB_times_repeat.Location = new System.Drawing.Point(346, 12);
+            this.TB_times_repeat.Enabled = false;
+            this.TB_times_repeat.Location = new System.Drawing.Point(358, 15);
             this.TB_times_repeat.Name = "TB_times_repeat";
             this.TB_times_repeat.Size = new System.Drawing.Size(25, 26);
             this.TB_times_repeat.TabIndex = 63;
-            this.TB_times_repeat.Text = "0";
+            this.TB_times_repeat.Text = "1";
             this.TB_times_repeat.TextChanged += new System.EventHandler(this.TB_times_repeat_TextChanged);
             // 
             // CB_always_repeat
@@ -816,7 +821,8 @@
             // LBL_times_repeat
             // 
             this.LBL_times_repeat.AutoSize = true;
-            this.LBL_times_repeat.Location = new System.Drawing.Point(370, 18);
+            this.LBL_times_repeat.Enabled = false;
+            this.LBL_times_repeat.Location = new System.Drawing.Point(389, 18);
             this.LBL_times_repeat.Name = "LBL_times_repeat";
             this.LBL_times_repeat.Size = new System.Drawing.Size(121, 18);
             this.LBL_times_repeat.TabIndex = 53;
@@ -867,7 +873,7 @@
             // btn_schließen
             // 
             this.btn_schließen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_schließen.Location = new System.Drawing.Point(113, 711);
+            this.btn_schließen.Location = new System.Drawing.Point(315, 711);
             this.btn_schließen.Name = "btn_schließen";
             this.btn_schließen.Size = new System.Drawing.Size(95, 30);
             this.btn_schließen.TabIndex = 2;
@@ -875,11 +881,33 @@
             this.btn_schließen.UseVisualStyleBackColor = true;
             this.btn_schließen.Click += new System.EventHandler(this.Btn_close_Click);
             // 
+            // BTN_load
+            // 
+            this.BTN_load.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_load.Location = new System.Drawing.Point(113, 711);
+            this.BTN_load.Name = "BTN_load";
+            this.BTN_load.Size = new System.Drawing.Size(95, 30);
+            this.BTN_load.TabIndex = 3;
+            this.BTN_load.Text = "Laden";
+            this.BTN_load.UseVisualStyleBackColor = true;
+            // 
+            // BTN_delete
+            // 
+            this.BTN_delete.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_delete.Location = new System.Drawing.Point(214, 711);
+            this.BTN_delete.Name = "BTN_delete";
+            this.BTN_delete.Size = new System.Drawing.Size(95, 30);
+            this.BTN_delete.TabIndex = 72;
+            this.BTN_delete.Text = "Löschen";
+            this.BTN_delete.UseVisualStyleBackColor = true;
+            // 
             // Wdw_KaEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 749);
+            this.Controls.Add(this.BTN_delete);
+            this.Controls.Add(this.BTN_load);
             this.Controls.Add(this.btn_schließen);
             this.Controls.Add(this.btn_speichern);
             this.Controls.Add(this.eingabe);
@@ -988,6 +1016,8 @@
         private System.Windows.Forms.Label LBL_always_repeat_until;
         private System.Windows.Forms.TextBox TB_repeat_until_year;
         private System.Windows.Forms.TextBox TB_repeat_until_month;
+        private System.Windows.Forms.Button BTN_load;
+        private System.Windows.Forms.Button BTN_delete;
     }
 }
 

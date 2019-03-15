@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Storage;
-using KaPlaner.Objects;
+using KaPlaner.Database;
+//using KaPlaner.Objects;
+using KaObjects;
 
 namespace WindowsFormsApp1
 {
@@ -23,6 +24,11 @@ namespace WindowsFormsApp1
             returnValue = new KaEvent();
 
             returnValue.XWochentag = new int[7];
+
+            DateTime localDate = DateTime.Now;
+            TB_repeat_until_day.Text = DateTime.Now.ToString("dd");
+            TB_repeat_until_month.Text = DateTime.Now.ToString("MM");
+            TB_repeat_until_year.Text = DateTime.Now.ToString("yyyy");
         }
 
         private void Btn_close_Click(object sender, EventArgs e)
@@ -109,30 +115,26 @@ namespace WindowsFormsApp1
         // write the date from the GUI in the object
         public void Save()
         {
+            int year = Convert.ToInt32(TB_year_beginn.Text);
+            int month = Convert.ToInt32(TB_month_beginn.Text);
+            int day = Convert.ToInt32(TB_day_beginn.Text);
+            int hour = Convert.ToInt32(TB_hour_beginn.Text);
+            int minute = Convert.ToInt32(TB_minute_beginn.Text);
             int sec = 0;
-            returnValue.Beginn = new DateTime(
+            returnValue.Beginn = new DateTime(year, month, day, hour, minute, sec);
 
-                Convert.ToInt32(TB_year_beginn.Text),
-                Convert.ToInt32(TB_month_beginn.Text),
-                Convert.ToInt32(TB_day_beginn.Text),
-                Convert.ToInt32(TB_hour_beginn.Text),
-                Convert.ToInt32(TB_minute_beginn.Text),
-                sec);
+            year = Convert.ToInt32(TB_year_end.Text);
+            month = Convert.ToInt32(TB_month_end.Text);
+            day = Convert.ToInt32(TB_day_end.Text);
+            hour = Convert.ToInt32(TB_hour_end.Text);
+            minute = Convert.ToInt32(TB_minute_end.Text);
+            returnValue.Ende = new DateTime(year, month, day, hour, minute, sec);
 
-            returnValue.Ende = new DateTime(
-                Convert.ToInt32(TB_year_end.Text),
-                Convert.ToInt32(TB_month_end.Text),
-                Convert.ToInt32(TB_day_end.Text),
-                Convert.ToInt32(TB_hour_end.Text),
-                Convert.ToInt32(TB_minute_end.Text),
-                sec);
-
-            //Values Tab2
-            returnValue.Wiederholen_bis = new DateTime(
-                Convert.ToInt32(TB_repeat_until_day.Text),
-                Convert.ToInt32(TB_repeat_until_month.Text),
-                Convert.ToInt32(TB_repeat_until_year.Text)
-            );
+            year = Convert.ToInt32(TB_repeat_until_day.Text);
+            month = Convert.ToInt32(TB_repeat_until_month.Text);
+            day = Convert.ToInt32(TB_repeat_until_year.Text);
+            minute = 0;
+            returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
         }
 
         //NUD_Priority
@@ -153,16 +155,15 @@ namespace WindowsFormsApp1
         /// values from tab2
         /// </summary>
 
-
         //none
         private void CB_none_CheckedChanged(object sender, EventArgs e)
         {
             if (CB_none.Checked == true)
             {
                 pan_frequency.Enabled = false;
-                pan_constraint.Enabled = false;
-                pan_which_day.Enabled = false;
+                pan_constraint.Enabled = false;   
                 pan_weekday.Enabled = false;
+                pan_which_day.Enabled = false;
                 lbl_dates_with_actions.Enabled = false;
                 MC_date_summery.Enabled = false;
 
@@ -190,10 +191,13 @@ namespace WindowsFormsApp1
                 CB_weekly.Enabled = false;
                 CB_monthly.Enabled = false;
                 CB_yearly.Enabled = false;
-                TB_number_repetitions.Enabled = false;
-                pan_constraint.Enabled = false;
+                TB_number_repetitions.Enabled = true;
+                pan_constraint.Enabled = true;
+                pan_weekday.Enabled = true;
+                pan_which_day.Enabled = false;
 
                 returnValue.Haeufigkeit = "taeglich";
+                TB_number_repetitions.Text = "1";
             }
             else if (CB_dayli.Checked == false)
             {
@@ -202,9 +206,11 @@ namespace WindowsFormsApp1
                 CB_monthly.Enabled = true;
                 CB_yearly.Enabled = true;
                 TB_number_repetitions.Enabled = true;
-                pan_constraint.Enabled = true;
+                pan_frequency.Enabled = true;
+                pan_which_day.Enabled = true;
 
                 returnValue.Haeufigkeit = "";
+                TB_number_repetitions.Text = "0";
             }
         }
 
@@ -217,10 +223,9 @@ namespace WindowsFormsApp1
                 CB_dayli.Enabled = false;
                 CB_monthly.Enabled = false;
                 CB_yearly.Enabled = false;
-                TB_number_repetitions.Enabled = false;
+                TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = false;
-                pan_constraint.Enabled = false;
-
+                pan_which_day.Enabled = false;
                 returnValue.Haeufigkeit = "woechentlich";
                 
             }
@@ -232,7 +237,8 @@ namespace WindowsFormsApp1
                 CB_yearly.Enabled = true;
                 TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = true;
-                pan_constraint.Enabled = true;
+                TB_times_repeat.Enabled = true;
+                pan_which_day.Enabled = true;
 
                 returnValue.Haeufigkeit = "";
             }
@@ -240,17 +246,15 @@ namespace WindowsFormsApp1
         
         //monthly
         private void CB_monthly_CheckedChanged(object sender, EventArgs e)
-        {
-            
+        {       
             if (CB_monthly.Checked == true)
             {
                 CB_none.Enabled = false;
                 CB_dayli.Enabled = false;
                 CB_weekly.Enabled = false;
                 CB_yearly.Enabled = false;
-                TB_number_repetitions.Enabled = false;
-                lbl_times_per.Enabled = false;
-                pan_constraint.Enabled = false;
+                TB_number_repetitions.Enabled = true;
+                lbl_times_per.Enabled = true;        
 
                 returnValue.Haeufigkeit = "monatlich";
             }
@@ -259,10 +263,7 @@ namespace WindowsFormsApp1
                 CB_none.Enabled = true;
                 CB_dayli.Enabled = true;
                 CB_weekly.Enabled = true;
-                CB_yearly.Enabled = true;
-                TB_number_repetitions.Enabled = true;
-                lbl_times_per.Enabled = true;
-                pan_constraint.Enabled = true;
+                CB_yearly.Enabled = true;               
 
                 returnValue.Haeufigkeit = "";
             }
@@ -277,9 +278,6 @@ namespace WindowsFormsApp1
                 CB_dayli.Enabled = false;
                 CB_weekly.Enabled = false;
                 CB_monthly.Enabled = false;
-                TB_number_repetitions.Enabled = false;
-                lbl_times_per.Enabled = false;
-                pan_constraint.Enabled = false;
 
                 returnValue.Haeufigkeit = "jaehrlich";
             }
@@ -291,7 +289,6 @@ namespace WindowsFormsApp1
                 CB_monthly.Enabled = true;
                 TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = true;
-                pan_constraint.Enabled = true;
 
                 returnValue.Haeufigkeit = "";
             }
