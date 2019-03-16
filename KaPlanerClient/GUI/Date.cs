@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Database;
+//using KaPlaner.Database;
 using KaPlaner.Objects;
 
 namespace WindowsFormsApp1
@@ -47,6 +47,7 @@ namespace WindowsFormsApp1
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+         
 
 
         /// #######################################

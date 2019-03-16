@@ -50,8 +50,8 @@ namespace WindowsFormsApp1
                 var result = form.ShowDialog();
                 if(result == DialogResult.OK)
                 {
-                    Ereignis = form.returnValue;
-                    MessageBox.Show(Ereignis.Title);
+                    //Ereignis = form.returnValue;
+                    //MessageBox.Show(Ereignis.Title);
                 }
                 else
                 {
