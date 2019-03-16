@@ -13,7 +13,7 @@ namespace KaObjects
     public class StateObject
     {
         public string results { get; set; }
-        User user;
-        KaEvent[] kaEvents;
+        public User user;
+        public KaEvent[] kaEvents;
     }
 }

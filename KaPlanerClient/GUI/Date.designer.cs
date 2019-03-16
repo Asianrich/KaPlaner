@@ -900,6 +900,7 @@
             this.BTN_delete.TabIndex = 72;
             this.BTN_delete.Text = "Löschen";
             this.BTN_delete.UseVisualStyleBackColor = true;
+            this.BTN_delete.Click += new System.EventHandler(this.BTN_delete_Click);
             // 
             // Wdw_KaEvent
             // 

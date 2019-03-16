@@ -14,13 +14,18 @@ namespace KaPlaner.Logic
     /// Client Logic, die Eingaben der GUI annimmt und überprüft, and die DB weitergibt und
     /// die Verbindung zum Server verwaltet.
     /// </summary>
-    class ClientLogic : IClientLogic
+    public class ClientLogic : IClientLogic
     {
         IDatabase database = new Database();
+        bool test = false;
 
-        ClientLogic()
+        public ClientLogic()
         {
-            bool test = database.login("Aragorn", "123");
+          this.test = database.login("Aragorn", "123");
+
         }
+
+        public bool GetTest() { return test; }
     }
 }
+

@@ -12,6 +12,8 @@ namespace KaPlaner.Database
 
         bool login(string username, string password);
 
+        bool Date(string titel, string ort, string tag, string monat, string jahr, string stunde, string minute, string prioritaet, string beschreibung, string haeufigkeit, string beschraenkung, string wochentag, string welcher_tag);
+
 
 
 

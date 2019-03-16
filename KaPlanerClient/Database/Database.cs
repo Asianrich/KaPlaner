@@ -11,8 +11,7 @@ using WindowsFormsApp1;
 
 namespace KaPlaner.Storage
 {
-    class Database : IDatabase
-    {
+    class Database : IDatabase    {
         public Database()
         {
 
@@ -31,7 +30,7 @@ namespace KaPlaner.Storage
             }
             else if (String.Equals(password, password_bestaetigen))
             {
-                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
                 //Pruefen ob der Benutzer schon existiert
@@ -77,7 +76,7 @@ namespace KaPlaner.Storage
             }
             else
             {
-                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\Source\\Repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
                 //Pruefen ob der Benutzer existiert
@@ -88,7 +87,7 @@ namespace KaPlaner.Storage
                 cmd.Parameters.AddWithValue("@password", password);
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                if(reader.Read())
+                if (reader.Read())
                 {
                     con.Close();
                     return true;
@@ -101,5 +100,71 @@ namespace KaPlaner.Storage
             }
         }
 
+        public void Date(string titel, string ort, string tag, string monat, string jahr, string stunde, string minute, string prioritaet, string beschreibung, string haeufigkeit, string beschraenkung, string wochentag, string welcher_tag)
+        {
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+
+            string insert = "insert into Calendar (Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
+            SqlCommand cmd_insert = new SqlCommand(insert, con);
+       
+
+            cmd_insert.Parameters.AddWithValue("@titel", titel);
+            cmd_insert.Parameters.AddWithValue("@ort", ort);
+            cmd_insert.Parameters.AddWithValue("@tag", tag);
+            cmd_insert.Parameters.AddWithValue("@monat", monat);
+            cmd_insert.Parameters.AddWithValue("@jahr", jahr);
+            cmd_insert.Parameters.AddWithValue("@stunde", stunde);
+            cmd_insert.Parameters.AddWithValue("@minute", minute);
+            cmd_insert.Parameters.AddWithValue("@prioritaet", prioritaet);
+            cmd_insert.Parameters.AddWithValue("@beschreibung", beschreibung);
+            cmd_insert.Parameters.AddWithValue("@haeufigkeit", haeufigkeit);
+            cmd_insert.Parameters.AddWithValue("@beschraenkung", beschraenkung);
+            cmd_insert.Parameters.AddWithValue("@wochentag", wochentag);
+            cmd_insert.Parameters.AddWithValue("@welcher_tag", welcher_tag);
+
+            cmd_insert.ExecuteNonQuery();
+            con.Close();
+            return;
+            
+            
+            
+            
+           
+            
+
+
+
+
+
+
+
+
+
+        }
+
+       // public bool Wiederholung(string haeufigkeit,string beschraenkung, string wochentag, string welcher_tag)
+        //{
+
+        //} 
+
+
+
+
+
+
+
+
     }
+
 }
+
+            
+
+
+
+
+
+
+
+            
+

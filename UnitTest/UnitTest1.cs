@@ -8,6 +8,8 @@ using System.Threading;
 using System.Runtime;
 using System.IO;
 
+using KaPlaner.Logic;
+
 namespace UnitTest
 {
     [TestClass]
@@ -66,13 +68,15 @@ namespace UnitTest
         {
             ClientConnection client = new ClientConnection();
 
-           // client.connectServer();
-            User user = new User("Richard", "test");
+            StateObject state = new StateObject
+            {
+                user = new User("Richard", "test"),
+                results = "TEST"
+            };
 
-            
-            
+            client.Start(state);
 
-            Assert.IsTrue(client.logging(user));
+            Assert.IsTrue(true);
 
 
         }
@@ -160,13 +164,9 @@ namespace UnitTest
         public void myTest()
         {
 
-            int a = 1;
-            int b = 2;
+            ClientLogic client = new ClientLogic();
 
-
-
-
-            Assert.AreEqual(a,b);
+            Assert.IsTrue(client.GetTest());
         }
 
 
