@@ -171,9 +171,7 @@ namespace WindowsFormsApp1
             {
                 rTB_benutzername.Text = "";
                 rTB_passwort.Text = "";
-                rTB_passwort_bestaetigen.Text = "";
-
-           
+                rTB_passwort_bestaetigen.Text = "";        
             }   
         }   
 

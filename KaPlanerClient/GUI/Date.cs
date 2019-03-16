@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Storage;
-//using KaPlaner.Objects;
 using KaObjects;
 using System.Data.SqlClient;
+using KaPlaner.Storage;
 
 namespace WindowsFormsApp1
 {
@@ -23,8 +22,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             returnValue = new KaEvent();
-
-            returnValue.XWochentag = new int[7];
 
             DateTime localDate = DateTime.Now;
             TB_repeat_until_day.Text = DateTime.Now.ToString("dd");
@@ -44,8 +41,11 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void btn_speichern_Click(object sender, EventArgs e)
         {
-            this.Save();
-
+            KaPlaner.Storage.Database reg = new Database();
+            this.Write();
+            reg.Save(returnValue.Title, returnValue.Ort, returnValue.ganztaegig, returnValue.Beginn, returnValue.Ende, returnValue.Prioritaet, returnValue.Beschreibung, returnValue.Haeufigkeit,
+                returnValue.Haeufigkeit_Anzahl, returnValue.Immer_Wiederholen, returnValue.Wiederholungen, returnValue.Wiederholen_bis, returnValue.Wochentag, returnValue.XMontag,
+                returnValue.XDienstag, returnValue.XMittwoch, returnValue.XDonnerstag, returnValue.XFreitag, returnValue.XSamstag, returnValue.XSonntag);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -114,7 +114,7 @@ namespace WindowsFormsApp1
         }
 
         // write the date from the GUI in the object
-        public void Save()
+        public void Write()
         {
             int year = Convert.ToInt32(TB_year_beginn.Text);
             int month = Convert.ToInt32(TB_month_beginn.Text);
@@ -131,9 +131,9 @@ namespace WindowsFormsApp1
             minute = Convert.ToInt32(TB_minute_end.Text);
             returnValue.Ende = new DateTime(year, month, day, hour, minute, sec);
 
-            year = Convert.ToInt32(TB_repeat_until_day.Text);
+            year = Convert.ToInt32(TB_repeat_until_year.Text);
             month = Convert.ToInt32(TB_repeat_until_month.Text);
-            day = Convert.ToInt32(TB_repeat_until_year.Text);
+            day = Convert.ToInt32(TB_repeat_until_day.Text);
             minute = 0;
             returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
         }
@@ -345,7 +345,7 @@ namespace WindowsFormsApp1
         {
             if (CB_mon.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XMontag = -1;
                 NUD_mon.Enabled = false;
             }
             else
@@ -359,7 +359,7 @@ namespace WindowsFormsApp1
         {
             if (CB_die.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XDienstag = -1;
                 NUD_tue.Enabled = false;
             }
             else
@@ -373,7 +373,7 @@ namespace WindowsFormsApp1
         {
             if (CB_mit.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XMittwoch = -1;
                 NUD_wen.Enabled = false;
             }
             else
@@ -387,7 +387,7 @@ namespace WindowsFormsApp1
         {
             if (CB_don.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XDonnerstag = -1;
                 NUD_thu.Enabled = false;
             }
             else
@@ -401,7 +401,7 @@ namespace WindowsFormsApp1
         {
             if (CB_fre.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XFreitag = -1;
                 NUD_fri.Enabled = false;
             }
             else
@@ -415,7 +415,7 @@ namespace WindowsFormsApp1
         {
             if (CB_sam.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XSamstag = -1;
                 NUD_sat.Enabled = false;
             }
             else
@@ -429,7 +429,7 @@ namespace WindowsFormsApp1
         {
             if (CB_son.Checked == false)
             {
-                returnValue.XWochentag[0] = -1;
+                returnValue.XSonntag = -1;
                 NUD_sun.Enabled = false;
             }
             else
@@ -441,43 +441,43 @@ namespace WindowsFormsApp1
         //NUD_mon
         private void NUD_mon_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[0] = Convert.ToInt32(NUD_mon.Value);
+            returnValue.XMontag = Convert.ToInt32(NUD_mon.Value);
         }
 
         //NUD_tue
         private void NUD_tue_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[1] = Convert.ToInt32(NUD_tue.Value);
+            returnValue.XDienstag = Convert.ToInt32(NUD_tue.Value);
         }
 
         //NUD_wen
         private void NUD_wen_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[2] = Convert.ToInt32(NUD_wen.Value);
+            returnValue.XMittwoch = Convert.ToInt32(NUD_wen.Value);
         }
 
         //NUD_thu
         private void NUD_thu_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[3] = Convert.ToInt32(NUD_thu.Value);
+            returnValue.XDonnerstag = Convert.ToInt32(NUD_thu.Value);
         }
 
         //NUD_fri
         private void NUD_fri_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[4] = Convert.ToInt32(NUD_fri.Value);
+            returnValue.XFreitag = Convert.ToInt32(NUD_fri.Value);
         }
 
         //NUD_sat
         private void NUD_sat_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[5] = Convert.ToInt32(NUD_sat.Value);
+            returnValue.XSamstag = Convert.ToInt32(NUD_sat.Value);
         }
 
         //NUD_sun
         private void NUD_sun_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XWochentag[6] = Convert.ToInt32(NUD_sun.Value);
+            returnValue.XSonntag = Convert.ToInt32(NUD_sun.Value);
         }
 
         //MC_date_summery

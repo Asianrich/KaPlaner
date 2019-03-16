@@ -30,7 +30,8 @@ namespace KaPlaner.Storage
             }
             else if (String.Equals(password, password_bestaetigen))
             {
-                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
                 //Pruefen ob der Benutzer schon existiert
@@ -76,7 +77,8 @@ namespace KaPlaner.Storage
             }
             else
             {
-                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+                SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
                 con.Open();
 
                 //Pruefen ob der Benutzer existiert
@@ -100,47 +102,48 @@ namespace KaPlaner.Storage
             }
         }
 
-        public void Date(string titel, string ort, string tag, string monat, string jahr, string stunde, string minute, string prioritaet, string beschreibung, string haeufigkeit, string beschraenkung, string wochentag, string welcher_tag)
+        public void Save(string Title, string Ort, int ganztaegig, DateTime Beginn, DateTime Ende, int Prioritaet, string Beschreibung, 
+            string Haeufigkeit, int Haeufigkeit_Anzahl, int Immer_Wiederholen, int Wiederholungen, DateTime Wiederholen_bis,
+            string Wochentag, int XMontag, int XDienstag, int XMittwoch, int XDonnerstag, int XFreitag, int XSamstag, int XSonntag)
         {
-            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
-
-            string insert = "insert into Calendar (Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
+            //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+            con.Open();
+            //string insert = "insert into Calendar (Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
+            string insert = "insert into Calendar (Titel, Ort, ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis," +
+                "Wochentag, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) values(@Titel, @Ort, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, " +
+                "@Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @Wochentag, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
        
+            cmd_insert.Parameters.AddWithValue("@Titel", Title);
+            cmd_insert.Parameters.AddWithValue("@Ort", Ort);
+            cmd_insert.Parameters.AddWithValue("@Ganztaegig", ganztaegig);
 
-            cmd_insert.Parameters.AddWithValue("@titel", titel);
-            cmd_insert.Parameters.AddWithValue("@ort", ort);
-            cmd_insert.Parameters.AddWithValue("@tag", tag);
-            cmd_insert.Parameters.AddWithValue("@monat", monat);
-            cmd_insert.Parameters.AddWithValue("@jahr", jahr);
-            cmd_insert.Parameters.AddWithValue("@stunde", stunde);
-            cmd_insert.Parameters.AddWithValue("@minute", minute);
-            cmd_insert.Parameters.AddWithValue("@prioritaet", prioritaet);
-            cmd_insert.Parameters.AddWithValue("@beschreibung", beschreibung);
-            cmd_insert.Parameters.AddWithValue("@haeufigkeit", haeufigkeit);
-            cmd_insert.Parameters.AddWithValue("@beschraenkung", beschraenkung);
-            cmd_insert.Parameters.AddWithValue("@wochentag", wochentag);
-            cmd_insert.Parameters.AddWithValue("@welcher_tag", welcher_tag);
+            cmd_insert.Parameters.AddWithValue("@Beginn", Beginn);
+            cmd_insert.Parameters.AddWithValue("@Ende", Ende);
+
+            cmd_insert.Parameters.AddWithValue("@Prioritaet", Prioritaet);
+            cmd_insert.Parameters.AddWithValue("@Beschreibung", Beschreibung);
+            cmd_insert.Parameters.AddWithValue("@Haeufigkeit", Haeufigkeit);
+            cmd_insert.Parameters.AddWithValue("@Haeufigkeit_Anzahl", Haeufigkeit_Anzahl);
+            cmd_insert.Parameters.AddWithValue("@Immer_Wiederholen", Immer_Wiederholen);
+            cmd_insert.Parameters.AddWithValue("@Wiederholungen", Wiederholungen);
+            cmd_insert.Parameters.AddWithValue("@Wiederholen_bis", Wiederholen_bis);
+
+            cmd_insert.Parameters.AddWithValue("@Wochentag", Wochentag);
+            cmd_insert.Parameters.AddWithValue("@XMontag", XMontag);
+            cmd_insert.Parameters.AddWithValue("@XDienstag", XDienstag);
+            cmd_insert.Parameters.AddWithValue("@XMittwoch", XMittwoch);
+            cmd_insert.Parameters.AddWithValue("@XDonnerstag", XDonnerstag);
+            cmd_insert.Parameters.AddWithValue("@XFreitag", XFreitag);
+            cmd_insert.Parameters.AddWithValue("@XSamstag", XSamstag);
+            cmd_insert.Parameters.AddWithValue("@XSonntag", XSonntag);
 
             cmd_insert.ExecuteNonQuery();
             con.Close();
             return;
-            
-            
-            
-            
-           
-            
-
-
-
-
-
-
-
-
-
         }
+
 
        // public bool Wiederholung(string haeufigkeit,string beschraenkung, string wochentag, string welcher_tag)
         //{
