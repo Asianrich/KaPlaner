@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaPlaner.Database;
-//using KaPlaner.Objects;
-using KaObjects;
+using KaPlaner.Objects;
 
 namespace WindowsFormsApp1
 {
