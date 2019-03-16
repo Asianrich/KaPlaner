@@ -68,13 +68,15 @@ namespace UnitTest
         {
             ClientConnection client = new ClientConnection();
 
-           // client.connectServer();
-            User user = new User("Richard", "test");
+            StateObject state = new StateObject
+            {
+                user = new User("Richard", "test"),
+                results = "TEST"
+            };
 
-            
-            
+            client.Start(state);
 
-            Assert.IsTrue(client.logging(user));
+            Assert.IsTrue(true);
 
 
         }

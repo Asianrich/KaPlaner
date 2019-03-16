@@ -14,16 +14,8 @@ using System.IO;
 
 namespace KaPlanerServer.Networking
 {
-    public class StateObject
-    {
-        public User user;
-        public byte[] buffer;
-        public Socket socket;
-    }
 
-
-
-    class ServerConnection 
+    class ServerConnection
     {
         private IPHostEntry ipHostInfo;
         private IPAddress ipAddress;
@@ -59,9 +51,6 @@ namespace KaPlanerServer.Networking
                     // Wait until a connection is made before continuing.  
                     allDone.WaitOne();
                 }
-
-
-
             }
             catch (Exception ex)
             {
@@ -69,117 +58,48 @@ namespace KaPlanerServer.Networking
             }
         }
 
-
-
-
-
         public static void AcceptCallback(IAsyncResult ar)
         {
             try
             {
                 // Signal the main thread to continue.  
                 allDone.Set();
-                Console.Write("Someone joined the Hell");
+                Console.Write("Connection to Client success");
 
                 // Get the socket that handles the client request.  
                 Socket listener = (Socket)ar.AsyncState;
                 Socket handler = listener.EndAccept(ar);
-                StateObject state = new StateObject
-                {
-                    socket = handler,
-                    buffer = new byte[8192]
-                };
-                string[] delimiter = { ";;;;" };
+                StateObject state = new StateObject();
+                string[] delimiter = { "<EOF>" };
                 string[] msg;
-                while (true)
-                {
-                    
 
-
-                    //using (var stream = new NetworkStream(handler))
-                    //{
-
-                    //    stream.BeginRead(state.buffer, 0, 100, new AsyncCallback(ReceiveCallback),state.socket);
-                    //    receiveDone.WaitOne();
-
-                    //}
-
-                    handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
-                    receiveDone.WaitOne();
-
-                    
-
-                    msg = Encoding.ASCII.GetString(state.buffer).Split(delimiter, StringSplitOptions.None);
-                    foreach (string satz in msg)
-                    {
-                        Console.WriteLine(satz);
-                    }
-                    //state.buffer = new byte[Convert.ToInt32(msg[1])];
+                byte[] buffer = new byte[8192];
 
 
 
-                    switch (msg[0])
-                    {
-                        case "Login":
+                handler.BeginReceive(buffer, 0, buffer.Length, 0, new AsyncCallback(ReceiveCallback), handler);
+                receiveDone.WaitOne();
 
-                            User test;
-                            //using (var stream = new NetworkStream(handler))
-                            //{
+                msg = Encoding.ASCII.GetString(buffer).Split(delimiter, StringSplitOptions.None);
 
-                            //    //using (XmlReader reader = stream)
-                            //    //{
+                string asd = msg[0];
+                Console.WriteLine(asd);
+                StateObject user = DeSerialize<StateObject>(asd);
 
-                            //    //}
-                            //    StreamReader streamReader = new StreamReader(stream);
-                            //    string mesg = streamReader.ReadToEnd();
+
+                // DO SOMETHING! JOSHUUAUAUAUAUAUUAA
 
 
 
-                            //    XmlSerializer serializer = new XmlSerializer(typeof(User));
-                            //    //stream.Seek(0, 0);
+                handler.BeginSend(buffer, 0, buffer.Length, 0, new AsyncCallback(SendCallback), handler);
+                sendDone.WaitOne();
 
-
-
-                            //    var save = (User)serializer.Deserialize(streamReader.BaseStream);
-                            //    test = (User)save;
-
-
-
-                            //}
-                            
-                            //handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state.socket);
-                            //receiveDone.WaitOne();
-                            string asd = msg[1];
-                            Console.WriteLine(asd);
-                            User user = DeSerialize<User>(asd);
-                            Console.WriteLine(user);
-                            Console.WriteLine(user.name);
-                            Console.WriteLine(user.password);
-
-                            User sendUser = new User("Jan", "Swathi");
-
-                            //state.buffer = sendUser.Serialize();
-
-                            //handler.BeginSend(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(SendCallback), handler);
-                            //sendDone.WaitOne();
-
-
-
-                            break;
-
-                        default:
-                            break;
-                    }
-
-
-
-
-
-                }
-
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+                Console.WriteLine("Success at closing");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Write(ex.Message);
                 return;
@@ -193,7 +113,6 @@ namespace KaPlanerServer.Networking
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = socket.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
                 // Signal that all bytes have been sent.  
                 sendDone.Set();
@@ -213,7 +132,7 @@ namespace KaPlanerServer.Networking
 
                 // Complete sending the data to the remote device.  
                 int bytesReceive = socket.EndReceive(ar);
-                Console.WriteLine("Receives : " + bytesReceive);
+
                 // Signal that all bytes have been sent.  
                 receiveDone.Set();
             }
@@ -235,8 +154,6 @@ namespace KaPlanerServer.Networking
                 {
                     XmlSerializer xs = new XmlSerializer(myObject.GetType());
                     xs.Serialize(xw, myObject);
-
-
                 }
                 msg = sw.ToString();
             }
@@ -255,8 +172,6 @@ namespace KaPlanerServer.Networking
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(T));
                     myObject = (T)xs.Deserialize(xr);
-
-
                 }
             }
 
