@@ -16,11 +16,7 @@ namespace KaPlaner.Networking
 {
     public class ClientConnection : IClientConnection
     {
-        public User user { get => _user; set => _user = value; }
         public int port { get => _port; set => _port = value; }
-
-
-
 
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
@@ -28,8 +24,6 @@ namespace KaPlaner.Networking
         private Socket client;
         private byte[] buffer;
 
-
-        private User _user;
         private int _port;
 
 
@@ -48,104 +42,6 @@ namespace KaPlaner.Networking
             catch(Exception ex)
             {
 
-            }
-        }
-
-       
-        public User receiveUser()
-        {
-            try
-            {
-                
-                client.BeginReceive(buffer, 0, buffer.Length, 0, new AsyncCallback(ReceiveCallback), client);
-                receiveDone.WaitOne();
-
-                return null; //User.Deserialize(buffer);
-
-
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-        public bool logging(User user)
-        {
-            try
-            {
-                //byte[] msg = user.Serialize();
-
-
-                string msg = Serialize(user);
-
-                //byte[] msg = Encoding.ASCII.GetBytes(check);
-                SendRq("Login", msg);
-
-
-
-                //client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-                //sendDone.WaitOne();
-
-                int a = 0;
-                for (int i = 0; i < 1000; i++)
-                {
-                    a++;
-                }
-
-
-
-
-                //using (var stream = new NetworkStream(client))
-                //{
-
-
-
-
-                //    XmlDocument myXml = new XmlDocument();
-
-                //    string msg;
-                //    using (var writer = new StringWriter())
-                //    {
-
-
-                //        using (var xmlwriter = XmlWriter.Create(writer))
-                //        {
-
-                //            XmlSerializer xml = new XmlSerializer(typeof(User));
-                //            xml.Serialize(xmlwriter, user);
-
-
-
-
-                //        }
-
-                //        msg = writer.ToString();
-
-
-                //    }
-
-
-
-
-                //}
-
-
-
-                
-
-
-
-
-
-                //receiveUser();
-
-
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
             }
         }
 
@@ -210,17 +106,9 @@ namespace KaPlaner.Networking
             }
         }
 
-        private void SendRq(string request, string asd)
+        private void Send(StateObject send)
         {
-
-            //using (var stream = new NetworkStream(client))
-            //{
-                
-            //    stream.BeginWrite(msg, 0, msg.Length, new AsyncCallback(SendCallback), client);
-                
-            //}
-
-            byte[] msg = Encoding.ASCII.GetBytes(String.Format(request) + ";;;;" + asd + ";;;;");
+            byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
             client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
             sendDone.WaitOne();
         }
@@ -228,7 +116,8 @@ namespace KaPlaner.Networking
 
         public void Disconnect()
         {
-
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
         }
 
 
@@ -270,30 +159,28 @@ namespace KaPlaner.Networking
 
         }
 
-        public T update<T>(User user, KaEvent[] kaEvents)
+        public StateObject receive()
         {
-            throw new NotImplementedException();
-        }
+            byte[] msg = new byte[8192];
+            client.BeginReceive(msg, 0, msg.Length, 0, new AsyncCallback(ReceiveCallback), client);
+            receiveDone.WaitOne();
+            string[] delimiter = { "<EOF>" };
+            string[] recString = Encoding.ASCII.GetString(msg).Split(delimiter,StringSplitOptions.None);
 
-        public void disconnect()
-        {
-            throw new NotImplementedException();
+
+            return DeSerialize<StateObject>(recString[0]);
+
         }
 
         public StateObject Start(StateObject state)
         {
             connectServer();
-            StateObject receive;
+            StateObject recObject;
+            Send(state);
 
-
-
-
-
-
-
-            receive = new StateObject();
-
-            return receive;
+            recObject = receive();
+            Disconnect();
+            return recObject;
         }
     }
 }
