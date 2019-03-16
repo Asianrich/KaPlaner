@@ -121,6 +121,10 @@ namespace KaPlaner.Storage
             cmd_insert.Parameters.AddWithValue("@wochentag", wochentag);
             cmd_insert.Parameters.AddWithValue("@welcher_tag", welcher_tag);
 
+            cmd_insert.ExecuteNonQuery();
+            con.Close();
+
+
 
 
         }
