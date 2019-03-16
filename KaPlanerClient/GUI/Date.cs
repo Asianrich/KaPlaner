@@ -43,8 +43,8 @@ namespace WindowsFormsApp1
         {
             KaPlaner.Storage.Database reg = new Database();
             this.Write();
-            reg.Save(returnValue.Title, returnValue.Ort, returnValue.ganztaegig, returnValue.Beginn, returnValue.Ende, returnValue.Prioritaet, returnValue.Beschreibung, returnValue.Haeufigkeit,
-                returnValue.Haeufigkeit_Anzahl, returnValue.Immer_Wiederholen, returnValue.Wiederholungen, returnValue.Wiederholen_bis, returnValue.Wochentag, returnValue.XMontag,
+            reg.Save(returnValue.Title, returnValue.Ort, returnValue.Ganztaegig, returnValue.Beginn, returnValue.Ende, returnValue.Prioritaet, returnValue.Beschreibung, returnValue.Haeufigkeit,
+                returnValue.Haeufigkeit_Anzahl, returnValue.Immer_Wiederholen, returnValue.Wiederholungen, returnValue.Wiederholen_bis, returnValue.XMontag,
                 returnValue.XDienstag, returnValue.XMittwoch, returnValue.XDonnerstag, returnValue.XFreitag, returnValue.XSamstag, returnValue.XSonntag);
             this.DialogResult = DialogResult.OK;
             this.Close();

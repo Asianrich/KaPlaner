@@ -102,22 +102,22 @@ namespace KaPlaner.Storage
             }
         }
 
-        public void Save(string Title, string Ort, int ganztaegig, DateTime Beginn, DateTime Ende, int Prioritaet, string Beschreibung, 
+        public void Save(string Title, string Ort, int Ganztaegig, DateTime Beginn, DateTime Ende, int Prioritaet, string Beschreibung, 
             string Haeufigkeit, int Haeufigkeit_Anzahl, int Immer_Wiederholen, int Wiederholungen, DateTime Wiederholen_bis,
-            string Wochentag, int XMontag, int XDienstag, int XMittwoch, int XDonnerstag, int XFreitag, int XSamstag, int XSonntag)
+            int XMontag, int XDienstag, int XMittwoch, int XDonnerstag, int XFreitag, int XSamstag, int XSonntag)
         {
             //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
             SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
             con.Open();
             //string insert = "insert into Calendar (Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
-            string insert = "insert into Calendar (Titel, Ort, ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis," +
-                "Wochentag, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) values(@Titel, @Ort, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, " +
-                "@Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @Wochentag, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
+            string insert = "insert into Calendar " +
+                "(Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
+          "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
        
             cmd_insert.Parameters.AddWithValue("@Titel", Title);
             cmd_insert.Parameters.AddWithValue("@Ort", Ort);
-            cmd_insert.Parameters.AddWithValue("@Ganztaegig", ganztaegig);
+            cmd_insert.Parameters.AddWithValue("@Ganztaegig", Ganztaegig);
 
             cmd_insert.Parameters.AddWithValue("@Beginn", Beginn);
             cmd_insert.Parameters.AddWithValue("@Ende", Ende);
@@ -130,7 +130,6 @@ namespace KaPlaner.Storage
             cmd_insert.Parameters.AddWithValue("@Wiederholungen", Wiederholungen);
             cmd_insert.Parameters.AddWithValue("@Wiederholen_bis", Wiederholen_bis);
 
-            cmd_insert.Parameters.AddWithValue("@Wochentag", Wochentag);
             cmd_insert.Parameters.AddWithValue("@XMontag", XMontag);
             cmd_insert.Parameters.AddWithValue("@XDienstag", XDienstag);
             cmd_insert.Parameters.AddWithValue("@XMittwoch", XMittwoch);
