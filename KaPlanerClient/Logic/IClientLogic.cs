@@ -12,6 +12,8 @@ namespace KaPlaner.Logic
     /// </summary>
     public interface IClientLogic
     {
+        bool registerUser(string username, string password, string password_bestaetigen);
 
+        bool login(string username, string password);
     }
 }
