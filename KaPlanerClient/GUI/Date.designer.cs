@@ -100,8 +100,8 @@
             this.lbl_beschraenkung = new System.Windows.Forms.Label();
             this.CB_none = new System.Windows.Forms.CheckBox();
             this.lbl_haeufigkeit = new System.Windows.Forms.Label();
-            this.btn_speichern = new System.Windows.Forms.Button();
-            this.btn_schließen = new System.Windows.Forms.Button();
+            this.BTN_save = new System.Windows.Forms.Button();
+            this.BTN_close = new System.Windows.Forms.Button();
             this.BTN_load = new System.Windows.Forms.Button();
             this.BTN_delete = new System.Windows.Forms.Button();
             this.eingabe.SuspendLayout();
@@ -129,7 +129,7 @@
             this.eingabe.Location = new System.Drawing.Point(12, 12);
             this.eingabe.Name = "eingabe";
             this.eingabe.SelectedIndex = 0;
-            this.eingabe.Size = new System.Drawing.Size(889, 693);
+            this.eingabe.Size = new System.Drawing.Size(660, 693);
             this.eingabe.TabIndex = 0;
             // 
             // tab_allgemein
@@ -168,7 +168,7 @@
             this.tab_allgemein.Location = new System.Drawing.Point(4, 27);
             this.tab_allgemein.Name = "tab_allgemein";
             this.tab_allgemein.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_allgemein.Size = new System.Drawing.Size(881, 662);
+            this.tab_allgemein.Size = new System.Drawing.Size(655, 662);
             this.tab_allgemein.TabIndex = 0;
             this.tab_allgemein.Text = "Allgemein";
             this.tab_allgemein.UseVisualStyleBackColor = true;
@@ -337,7 +337,7 @@
             // 
             this.RTB_description.Location = new System.Drawing.Point(41, 382);
             this.RTB_description.Name = "RTB_description";
-            this.RTB_description.Size = new System.Drawing.Size(558, 240);
+            this.RTB_description.Size = new System.Drawing.Size(578, 240);
             this.RTB_description.TabIndex = 30;
             this.RTB_description.Text = "";
             this.RTB_description.TextChanged += new System.EventHandler(this.RTB_description_TextChanged);
@@ -419,7 +419,7 @@
             // 
             this.TB_Place.Location = new System.Drawing.Point(177, 55);
             this.TB_Place.Name = "TB_Place";
-            this.TB_Place.Size = new System.Drawing.Size(422, 26);
+            this.TB_Place.Size = new System.Drawing.Size(442, 26);
             this.TB_Place.TabIndex = 4;
             this.TB_Place.TextChanged += new System.EventHandler(this.TB_Place_TextChanged);
             // 
@@ -427,7 +427,7 @@
             // 
             this.TB_Title.Location = new System.Drawing.Point(177, 23);
             this.TB_Title.Name = "TB_Title";
-            this.TB_Title.Size = new System.Drawing.Size(422, 26);
+            this.TB_Title.Size = new System.Drawing.Size(442, 26);
             this.TB_Title.TabIndex = 3;
             this.TB_Title.TextChanged += new System.EventHandler(this.TB_Title_TextChanged);
             // 
@@ -444,7 +444,7 @@
             this.tab_wiederholung.Location = new System.Drawing.Point(4, 27);
             this.tab_wiederholung.Name = "tab_wiederholung";
             this.tab_wiederholung.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_wiederholung.Size = new System.Drawing.Size(881, 662);
+            this.tab_wiederholung.Size = new System.Drawing.Size(652, 662);
             this.tab_wiederholung.TabIndex = 1;
             this.tab_wiederholung.Text = "Wiederholung";
             this.tab_wiederholung.UseVisualStyleBackColor = true;
@@ -458,14 +458,14 @@
             this.pan_frequency.Controls.Add(this.CB_weekly);
             this.pan_frequency.Controls.Add(this.CB_dayli);
             this.pan_frequency.Enabled = false;
-            this.pan_frequency.Location = new System.Drawing.Point(278, 189);
+            this.pan_frequency.Location = new System.Drawing.Point(303, 85);
             this.pan_frequency.Name = "pan_frequency";
-            this.pan_frequency.Size = new System.Drawing.Size(495, 32);
+            this.pan_frequency.Size = new System.Drawing.Size(302, 94);
             this.pan_frequency.TabIndex = 71;
             // 
             // TB_number_repetitions
             // 
-            this.TB_number_repetitions.Location = new System.Drawing.Point(399, 3);
+            this.TB_number_repetitions.Location = new System.Drawing.Point(139, 59);
             this.TB_number_repetitions.Name = "TB_number_repetitions";
             this.TB_number_repetitions.Size = new System.Drawing.Size(50, 26);
             this.TB_number_repetitions.TabIndex = 68;
@@ -475,7 +475,7 @@
             // lbl_times_per
             // 
             this.lbl_times_per.AutoSize = true;
-            this.lbl_times_per.Location = new System.Drawing.Point(455, 7);
+            this.lbl_times_per.Location = new System.Drawing.Point(194, 62);
             this.lbl_times_per.Name = "lbl_times_per";
             this.lbl_times_per.Size = new System.Drawing.Size(33, 18);
             this.lbl_times_per.TabIndex = 67;
@@ -484,7 +484,7 @@
             // CB_yearly
             // 
             this.CB_yearly.AutoSize = true;
-            this.CB_yearly.Location = new System.Drawing.Point(313, 6);
+            this.CB_yearly.Location = new System.Drawing.Point(139, 31);
             this.CB_yearly.Name = "CB_yearly";
             this.CB_yearly.Size = new System.Drawing.Size(80, 22);
             this.CB_yearly.TabIndex = 66;
@@ -495,7 +495,7 @@
             // CB_monthly
             // 
             this.CB_monthly.AutoSize = true;
-            this.CB_monthly.Location = new System.Drawing.Point(214, 6);
+            this.CB_monthly.Location = new System.Drawing.Point(139, 3);
             this.CB_monthly.Name = "CB_monthly";
             this.CB_monthly.Size = new System.Drawing.Size(93, 22);
             this.CB_monthly.TabIndex = 65;
@@ -506,7 +506,7 @@
             // CB_weekly
             // 
             this.CB_weekly.AutoSize = true;
-            this.CB_weekly.Location = new System.Drawing.Point(97, 6);
+            this.CB_weekly.Location = new System.Drawing.Point(7, 34);
             this.CB_weekly.Name = "CB_weekly";
             this.CB_weekly.Size = new System.Drawing.Size(111, 22);
             this.CB_weekly.TabIndex = 64;
@@ -538,7 +538,7 @@
             this.pan_weekday.Enabled = false;
             this.pan_weekday.Location = new System.Drawing.Point(25, 305);
             this.pan_weekday.Name = "pan_weekday";
-            this.pan_weekday.Size = new System.Drawing.Size(831, 32);
+            this.pan_weekday.Size = new System.Drawing.Size(580, 32);
             this.pan_weekday.TabIndex = 70;
             // 
             // CB_son
@@ -657,7 +657,7 @@
             this.pan_which_day.Enabled = false;
             this.pan_which_day.Location = new System.Drawing.Point(25, 343);
             this.pan_which_day.Name = "pan_which_day";
-            this.pan_which_day.Size = new System.Drawing.Size(831, 33);
+            this.pan_which_day.Size = new System.Drawing.Size(580, 33);
             this.pan_which_day.TabIndex = 69;
             // 
             // NUD_sun
@@ -727,7 +727,7 @@
             // 
             // MC_date_summery
             // 
-            this.MC_date_summery.CalendarDimensions = new System.Drawing.Size(4, 1);
+            this.MC_date_summery.CalendarDimensions = new System.Drawing.Size(3, 1);
             this.MC_date_summery.Location = new System.Drawing.Point(25, 439);
             this.MC_date_summery.Name = "MC_date_summery";
             this.MC_date_summery.TabIndex = 58;
@@ -753,15 +753,15 @@
             this.pan_constraint.Controls.Add(this.LBL_times_repeat);
             this.pan_constraint.Controls.Add(this.lbl_beschraenkung);
             this.pan_constraint.Enabled = false;
-            this.pan_constraint.Location = new System.Drawing.Point(25, 243);
+            this.pan_constraint.Location = new System.Drawing.Point(25, 185);
             this.pan_constraint.Name = "pan_constraint";
-            this.pan_constraint.Size = new System.Drawing.Size(831, 56);
+            this.pan_constraint.Size = new System.Drawing.Size(580, 114);
             this.pan_constraint.TabIndex = 47;
             // 
             // TB_repeat_until_year
             // 
             this.TB_repeat_until_year.Enabled = false;
-            this.TB_repeat_until_year.Location = new System.Drawing.Point(739, 15);
+            this.TB_repeat_until_year.Location = new System.Drawing.Point(397, 80);
             this.TB_repeat_until_year.Name = "TB_repeat_until_year";
             this.TB_repeat_until_year.Size = new System.Drawing.Size(50, 26);
             this.TB_repeat_until_year.TabIndex = 74;
@@ -770,7 +770,7 @@
             // TB_repeat_until_month
             // 
             this.TB_repeat_until_month.Enabled = false;
-            this.TB_repeat_until_month.Location = new System.Drawing.Point(707, 15);
+            this.TB_repeat_until_month.Location = new System.Drawing.Point(365, 80);
             this.TB_repeat_until_month.Name = "TB_repeat_until_month";
             this.TB_repeat_until_month.Size = new System.Drawing.Size(26, 26);
             this.TB_repeat_until_month.TabIndex = 73;
@@ -780,7 +780,7 @@
             // 
             this.LBL_always_repeat_until.AutoSize = true;
             this.LBL_always_repeat_until.Enabled = false;
-            this.LBL_always_repeat_until.Location = new System.Drawing.Point(516, 18);
+            this.LBL_always_repeat_until.Location = new System.Drawing.Point(174, 83);
             this.LBL_always_repeat_until.Name = "LBL_always_repeat_until";
             this.LBL_always_repeat_until.Size = new System.Drawing.Size(153, 18);
             this.LBL_always_repeat_until.TabIndex = 72;
@@ -789,7 +789,7 @@
             // TB_repeat_until_day
             // 
             this.TB_repeat_until_day.Enabled = false;
-            this.TB_repeat_until_day.Location = new System.Drawing.Point(675, 15);
+            this.TB_repeat_until_day.Location = new System.Drawing.Point(333, 80);
             this.TB_repeat_until_day.Name = "TB_repeat_until_day";
             this.TB_repeat_until_day.Size = new System.Drawing.Size(26, 26);
             this.TB_repeat_until_day.TabIndex = 64;
@@ -798,7 +798,7 @@
             // TB_times_repeat
             // 
             this.TB_times_repeat.Enabled = false;
-            this.TB_times_repeat.Location = new System.Drawing.Point(358, 15);
+            this.TB_times_repeat.Location = new System.Drawing.Point(177, 42);
             this.TB_times_repeat.Name = "TB_times_repeat";
             this.TB_times_repeat.Size = new System.Drawing.Size(25, 26);
             this.TB_times_repeat.TabIndex = 63;
@@ -810,7 +810,7 @@
             this.CB_always_repeat.AutoSize = true;
             this.CB_always_repeat.Checked = true;
             this.CB_always_repeat.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CB_always_repeat.Location = new System.Drawing.Point(182, 17);
+            this.CB_always_repeat.Location = new System.Drawing.Point(177, 14);
             this.CB_always_repeat.Name = "CB_always_repeat";
             this.CB_always_repeat.Size = new System.Drawing.Size(158, 22);
             this.CB_always_repeat.TabIndex = 61;
@@ -822,7 +822,7 @@
             // 
             this.LBL_times_repeat.AutoSize = true;
             this.LBL_times_repeat.Enabled = false;
-            this.LBL_times_repeat.Location = new System.Drawing.Point(389, 18);
+            this.LBL_times_repeat.Location = new System.Drawing.Point(208, 45);
             this.LBL_times_repeat.Name = "LBL_times_repeat";
             this.LBL_times_repeat.Size = new System.Drawing.Size(121, 18);
             this.LBL_times_repeat.TabIndex = 53;
@@ -842,7 +842,7 @@
             this.CB_none.AutoSize = true;
             this.CB_none.Checked = true;
             this.CB_none.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CB_none.Location = new System.Drawing.Point(207, 189);
+            this.CB_none.Location = new System.Drawing.Point(202, 85);
             this.CB_none.Name = "CB_none";
             this.CB_none.Size = new System.Drawing.Size(65, 22);
             this.CB_none.TabIndex = 45;
@@ -853,48 +853,49 @@
             // lbl_haeufigkeit
             // 
             this.lbl_haeufigkeit.AutoSize = true;
-            this.lbl_haeufigkeit.Location = new System.Drawing.Point(39, 192);
+            this.lbl_haeufigkeit.Location = new System.Drawing.Point(39, 86);
             this.lbl_haeufigkeit.Name = "lbl_haeufigkeit";
             this.lbl_haeufigkeit.Size = new System.Drawing.Size(78, 18);
             this.lbl_haeufigkeit.TabIndex = 1;
             this.lbl_haeufigkeit.Text = "Häufigkeit";
             // 
-            // btn_speichern
+            // BTN_save
             // 
-            this.btn_speichern.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_speichern.Location = new System.Drawing.Point(12, 711);
-            this.btn_speichern.Name = "btn_speichern";
-            this.btn_speichern.Size = new System.Drawing.Size(95, 30);
-            this.btn_speichern.TabIndex = 1;
-            this.btn_speichern.Text = "Speichern";
-            this.btn_speichern.UseVisualStyleBackColor = true;
-            this.btn_speichern.Click += new System.EventHandler(this.btn_speichern_Click);
+            this.BTN_save.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_save.Location = new System.Drawing.Point(16, 711);
+            this.BTN_save.Name = "BTN_save";
+            this.BTN_save.Size = new System.Drawing.Size(95, 30);
+            this.BTN_save.TabIndex = 1;
+            this.BTN_save.Text = "Speichern";
+            this.BTN_save.UseVisualStyleBackColor = true;
+            this.BTN_save.Click += new System.EventHandler(this.BTN_save_Click);
             // 
-            // btn_schließen
+            // BTN_close
             // 
-            this.btn_schließen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_schließen.Location = new System.Drawing.Point(315, 711);
-            this.btn_schließen.Name = "btn_schließen";
-            this.btn_schließen.Size = new System.Drawing.Size(95, 30);
-            this.btn_schließen.TabIndex = 2;
-            this.btn_schließen.Text = "Schließen";
-            this.btn_schließen.UseVisualStyleBackColor = true;
-            this.btn_schließen.Click += new System.EventHandler(this.Btn_close_Click);
+            this.BTN_close.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_close.Location = new System.Drawing.Point(319, 711);
+            this.BTN_close.Name = "BTN_close";
+            this.BTN_close.Size = new System.Drawing.Size(95, 30);
+            this.BTN_close.TabIndex = 2;
+            this.BTN_close.Text = "Schließen";
+            this.BTN_close.UseVisualStyleBackColor = true;
+            this.BTN_close.Click += new System.EventHandler(this.BTN_close_Click);
             // 
             // BTN_load
             // 
             this.BTN_load.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_load.Location = new System.Drawing.Point(113, 711);
+            this.BTN_load.Location = new System.Drawing.Point(117, 711);
             this.BTN_load.Name = "BTN_load";
             this.BTN_load.Size = new System.Drawing.Size(95, 30);
             this.BTN_load.TabIndex = 3;
             this.BTN_load.Text = "Laden";
             this.BTN_load.UseVisualStyleBackColor = true;
+            this.BTN_load.Click += new System.EventHandler(this.BTN_load_Click);
             // 
             // BTN_delete
             // 
             this.BTN_delete.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_delete.Location = new System.Drawing.Point(214, 711);
+            this.BTN_delete.Location = new System.Drawing.Point(218, 711);
             this.BTN_delete.Name = "BTN_delete";
             this.BTN_delete.Size = new System.Drawing.Size(95, 30);
             this.BTN_delete.TabIndex = 72;
@@ -906,14 +907,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 749);
+            this.ClientSize = new System.Drawing.Size(684, 749);
             this.Controls.Add(this.BTN_delete);
             this.Controls.Add(this.BTN_load);
-            this.Controls.Add(this.btn_schließen);
-            this.Controls.Add(this.btn_speichern);
+            this.Controls.Add(this.BTN_close);
+            this.Controls.Add(this.BTN_save);
             this.Controls.Add(this.eingabe);
-            this.MaximumSize = new System.Drawing.Size(950, 800);
-            this.MinimumSize = new System.Drawing.Size(950, 726);
+            this.MaximumSize = new System.Drawing.Size(700, 800);
+            this.MinimumSize = new System.Drawing.Size(700, 726);
             this.Name = "Wdw_KaEvent";
             this.Text = "Date";
             this.eingabe.ResumeLayout(false);
@@ -958,8 +959,8 @@
         private System.Windows.Forms.RichTextBox RTB_description;
         private System.Windows.Forms.Label lbl_prioritaet;
         private System.Windows.Forms.Label lbl_haeufigkeit;
-        private System.Windows.Forms.Button btn_speichern;
-        private System.Windows.Forms.Button btn_schließen;
+        private System.Windows.Forms.Button BTN_save;
+        private System.Windows.Forms.Button BTN_close;
         private System.Windows.Forms.Label LBL_minute_end;
         private System.Windows.Forms.Label LBL_minute_beginn;
         private System.Windows.Forms.TextBox TB_minute_end;

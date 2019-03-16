@@ -62,16 +62,16 @@
             this.tb_Der_Sechste = new System.Windows.Forms.RichTextBox();
             this.tb_Der_Siebte = new System.Windows.Forms.RichTextBox();
             this.btn_prev = new System.Windows.Forms.Button();
-            this.btn_month = new System.Windows.Forms.Button();
             this.btn_next = new System.Windows.Forms.Button();
             this.lbl_year = new System.Windows.Forms.Label();
-            this.tb_checkbox = new System.Windows.Forms.RichTextBox();
+            this.BTN_manual_update = new System.Windows.Forms.Button();
+            this.LBL_month = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tb_Der_Achte
             // 
             this.tb_Der_Achte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Achte.Location = new System.Drawing.Point(318, 209);
+            this.tb_Der_Achte.Location = new System.Drawing.Point(12, 197);
             this.tb_Der_Achte.Name = "tb_Der_Achte";
             this.tb_Der_Achte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Achte.Size = new System.Drawing.Size(100, 103);
@@ -82,7 +82,7 @@
             // tb_Der_Neunte
             // 
             this.tb_Der_Neunte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Neunte.Location = new System.Drawing.Point(424, 209);
+            this.tb_Der_Neunte.Location = new System.Drawing.Point(118, 197);
             this.tb_Der_Neunte.Name = "tb_Der_Neunte";
             this.tb_Der_Neunte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Neunte.Size = new System.Drawing.Size(100, 103);
@@ -93,7 +93,7 @@
             // tb_Der_Zehnte
             // 
             this.tb_Der_Zehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Zehnte.Location = new System.Drawing.Point(530, 209);
+            this.tb_Der_Zehnte.Location = new System.Drawing.Point(224, 197);
             this.tb_Der_Zehnte.Name = "tb_Der_Zehnte";
             this.tb_Der_Zehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Zehnte.Size = new System.Drawing.Size(100, 103);
@@ -104,7 +104,7 @@
             // tb_Der_Elfte
             // 
             this.tb_Der_Elfte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Elfte.Location = new System.Drawing.Point(636, 209);
+            this.tb_Der_Elfte.Location = new System.Drawing.Point(330, 197);
             this.tb_Der_Elfte.Name = "tb_Der_Elfte";
             this.tb_Der_Elfte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Elfte.Size = new System.Drawing.Size(100, 103);
@@ -115,7 +115,7 @@
             // tb_Der_Zwoelfte
             // 
             this.tb_Der_Zwoelfte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Zwoelfte.Location = new System.Drawing.Point(742, 209);
+            this.tb_Der_Zwoelfte.Location = new System.Drawing.Point(436, 197);
             this.tb_Der_Zwoelfte.Name = "tb_Der_Zwoelfte";
             this.tb_Der_Zwoelfte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Zwoelfte.Size = new System.Drawing.Size(100, 103);
@@ -126,7 +126,7 @@
             // tb_Der_Dreizehnte
             // 
             this.tb_Der_Dreizehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Dreizehnte.Location = new System.Drawing.Point(848, 209);
+            this.tb_Der_Dreizehnte.Location = new System.Drawing.Point(542, 197);
             this.tb_Der_Dreizehnte.Name = "tb_Der_Dreizehnte";
             this.tb_Der_Dreizehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Dreizehnte.Size = new System.Drawing.Size(100, 103);
@@ -137,7 +137,7 @@
             // tb_Der_Vierzehnte
             // 
             this.tb_Der_Vierzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Vierzehnte.Location = new System.Drawing.Point(954, 209);
+            this.tb_Der_Vierzehnte.Location = new System.Drawing.Point(648, 197);
             this.tb_Der_Vierzehnte.Name = "tb_Der_Vierzehnte";
             this.tb_Der_Vierzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Vierzehnte.Size = new System.Drawing.Size(100, 103);
@@ -148,7 +148,7 @@
             // tb_Der_Einundzwanzigste
             // 
             this.tb_Der_Einundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Einundzwanzigste.Location = new System.Drawing.Point(954, 319);
+            this.tb_Der_Einundzwanzigste.Location = new System.Drawing.Point(648, 305);
             this.tb_Der_Einundzwanzigste.Name = "tb_Der_Einundzwanzigste";
             this.tb_Der_Einundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Einundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -159,7 +159,7 @@
             // tb_Der_Zwanzigste
             // 
             this.tb_Der_Zwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Zwanzigste.Location = new System.Drawing.Point(848, 319);
+            this.tb_Der_Zwanzigste.Location = new System.Drawing.Point(542, 305);
             this.tb_Der_Zwanzigste.Name = "tb_Der_Zwanzigste";
             this.tb_Der_Zwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Zwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -170,10 +170,10 @@
             // tb_Der_Neunzehnte
             // 
             this.tb_Der_Neunzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Neunzehnte.Location = new System.Drawing.Point(742, 319);
+            this.tb_Der_Neunzehnte.Location = new System.Drawing.Point(436, 307);
             this.tb_Der_Neunzehnte.Name = "tb_Der_Neunzehnte";
             this.tb_Der_Neunzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tb_Der_Neunzehnte.Size = new System.Drawing.Size(100, 103);
+            this.tb_Der_Neunzehnte.Size = new System.Drawing.Size(100, 101);
             this.tb_Der_Neunzehnte.TabIndex = 11;
             this.tb_Der_Neunzehnte.Text = "19";
             this.tb_Der_Neunzehnte.Click += new System.EventHandler(this.tb_open_date);
@@ -181,7 +181,7 @@
             // tb_Der_Achtzehnte
             // 
             this.tb_Der_Achtzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Achtzehnte.Location = new System.Drawing.Point(636, 319);
+            this.tb_Der_Achtzehnte.Location = new System.Drawing.Point(330, 307);
             this.tb_Der_Achtzehnte.Name = "tb_Der_Achtzehnte";
             this.tb_Der_Achtzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Achtzehnte.Size = new System.Drawing.Size(100, 103);
@@ -192,7 +192,7 @@
             // tb_Der_Siebzehnte
             // 
             this.tb_Der_Siebzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Siebzehnte.Location = new System.Drawing.Point(530, 319);
+            this.tb_Der_Siebzehnte.Location = new System.Drawing.Point(224, 305);
             this.tb_Der_Siebzehnte.Name = "tb_Der_Siebzehnte";
             this.tb_Der_Siebzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Siebzehnte.Size = new System.Drawing.Size(100, 103);
@@ -203,7 +203,7 @@
             // tb_Der_Sechzehnte
             // 
             this.tb_Der_Sechzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Sechzehnte.Location = new System.Drawing.Point(424, 319);
+            this.tb_Der_Sechzehnte.Location = new System.Drawing.Point(118, 306);
             this.tb_Der_Sechzehnte.Name = "tb_Der_Sechzehnte";
             this.tb_Der_Sechzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Sechzehnte.Size = new System.Drawing.Size(100, 103);
@@ -214,7 +214,7 @@
             // tb_Der_Fuenfzehnte
             // 
             this.tb_Der_Fuenfzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Fuenfzehnte.Location = new System.Drawing.Point(318, 319);
+            this.tb_Der_Fuenfzehnte.Location = new System.Drawing.Point(12, 306);
             this.tb_Der_Fuenfzehnte.Name = "tb_Der_Fuenfzehnte";
             this.tb_Der_Fuenfzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Fuenfzehnte.Size = new System.Drawing.Size(100, 103);
@@ -225,7 +225,7 @@
             // tb_Der_Achtundzwanzigste
             // 
             this.tb_Der_Achtundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Achtundzwanzigste.Location = new System.Drawing.Point(954, 429);
+            this.tb_Der_Achtundzwanzigste.Location = new System.Drawing.Point(648, 414);
             this.tb_Der_Achtundzwanzigste.Name = "tb_Der_Achtundzwanzigste";
             this.tb_Der_Achtundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Achtundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -236,7 +236,7 @@
             // tb_Der_Siebenundzwanzigste
             // 
             this.tb_Der_Siebenundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Siebenundzwanzigste.Location = new System.Drawing.Point(848, 429);
+            this.tb_Der_Siebenundzwanzigste.Location = new System.Drawing.Point(542, 414);
             this.tb_Der_Siebenundzwanzigste.Name = "tb_Der_Siebenundzwanzigste";
             this.tb_Der_Siebenundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Siebenundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -247,7 +247,7 @@
             // tb_Der_Sechsundzwanzigste
             // 
             this.tb_Der_Sechsundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Sechsundzwanzigste.Location = new System.Drawing.Point(742, 429);
+            this.tb_Der_Sechsundzwanzigste.Location = new System.Drawing.Point(436, 414);
             this.tb_Der_Sechsundzwanzigste.Name = "tb_Der_Sechsundzwanzigste";
             this.tb_Der_Sechsundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Sechsundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -258,7 +258,7 @@
             // tb_Der_Fuenfundzwanzigste
             // 
             this.tb_Der_Fuenfundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Fuenfundzwanzigste.Location = new System.Drawing.Point(636, 429);
+            this.tb_Der_Fuenfundzwanzigste.Location = new System.Drawing.Point(330, 417);
             this.tb_Der_Fuenfundzwanzigste.Name = "tb_Der_Fuenfundzwanzigste";
             this.tb_Der_Fuenfundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Fuenfundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -269,7 +269,7 @@
             // tb_Der_Vierundzwanzigste
             // 
             this.tb_Der_Vierundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Vierundzwanzigste.Location = new System.Drawing.Point(530, 429);
+            this.tb_Der_Vierundzwanzigste.Location = new System.Drawing.Point(224, 415);
             this.tb_Der_Vierundzwanzigste.Name = "tb_Der_Vierundzwanzigste";
             this.tb_Der_Vierundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Vierundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -280,7 +280,7 @@
             // tb_Der_Dreiundzwanzigste
             // 
             this.tb_Der_Dreiundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Dreiundzwanzigste.Location = new System.Drawing.Point(424, 429);
+            this.tb_Der_Dreiundzwanzigste.Location = new System.Drawing.Point(118, 415);
             this.tb_Der_Dreiundzwanzigste.Name = "tb_Der_Dreiundzwanzigste";
             this.tb_Der_Dreiundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Dreiundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -291,7 +291,7 @@
             // tb_Der_Zweiundzwanzigste
             // 
             this.tb_Der_Zweiundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Zweiundzwanzigste.Location = new System.Drawing.Point(318, 429);
+            this.tb_Der_Zweiundzwanzigste.Location = new System.Drawing.Point(12, 415);
             this.tb_Der_Zweiundzwanzigste.Name = "tb_Der_Zweiundzwanzigste";
             this.tb_Der_Zweiundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Zweiundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -303,7 +303,7 @@
             // 
             this.tb_Der_Einunddreißigste.Enabled = false;
             this.tb_Der_Einunddreißigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Einunddreißigste.Location = new System.Drawing.Point(530, 538);
+            this.tb_Der_Einunddreißigste.Location = new System.Drawing.Point(224, 523);
             this.tb_Der_Einunddreißigste.Name = "tb_Der_Einunddreißigste";
             this.tb_Der_Einunddreißigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Einunddreißigste.Size = new System.Drawing.Size(100, 103);
@@ -316,7 +316,7 @@
             // 
             this.tb_Der_Dreißigste.Enabled = false;
             this.tb_Der_Dreißigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Dreißigste.Location = new System.Drawing.Point(424, 538);
+            this.tb_Der_Dreißigste.Location = new System.Drawing.Point(118, 523);
             this.tb_Der_Dreißigste.Name = "tb_Der_Dreißigste";
             this.tb_Der_Dreißigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Dreißigste.Size = new System.Drawing.Size(100, 103);
@@ -329,7 +329,7 @@
             // 
             this.tb_Der_Neunundzwanzigste.Enabled = false;
             this.tb_Der_Neunundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Neunundzwanzigste.Location = new System.Drawing.Point(318, 538);
+            this.tb_Der_Neunundzwanzigste.Location = new System.Drawing.Point(12, 524);
             this.tb_Der_Neunundzwanzigste.Name = "tb_Der_Neunundzwanzigste";
             this.tb_Der_Neunundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Neunundzwanzigste.Size = new System.Drawing.Size(100, 103);
@@ -342,18 +342,18 @@
             // 
             this.lbl_calendar.AutoSize = true;
             this.lbl_calendar.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_calendar.Location = new System.Drawing.Point(33, 33);
+            this.lbl_calendar.Location = new System.Drawing.Point(12, 34);
             this.lbl_calendar.Name = "lbl_calendar";
-            this.lbl_calendar.Size = new System.Drawing.Size(206, 51);
+            this.lbl_calendar.Size = new System.Drawing.Size(220, 51);
             this.lbl_calendar.TabIndex = 28;
-            this.lbl_calendar.Text = "Kalender";
+            this.lbl_calendar.Text = "Kalender:";
             // 
             // btn_quit_calendar
             // 
             this.btn_quit_calendar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_quit_calendar.Location = new System.Drawing.Point(39, 604);
+            this.btn_quit_calendar.Location = new System.Drawing.Point(12, 633);
             this.btn_quit_calendar.Name = "btn_quit_calendar";
-            this.btn_quit_calendar.Size = new System.Drawing.Size(90, 38);
+            this.btn_quit_calendar.Size = new System.Drawing.Size(100, 38);
             this.btn_quit_calendar.TabIndex = 29;
             this.btn_quit_calendar.Text = "Beenden";
             this.btn_quit_calendar.UseVisualStyleBackColor = true;
@@ -362,7 +362,7 @@
             // tb_Der_Erste
             // 
             this.tb_Der_Erste.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Der_Erste.Location = new System.Drawing.Point(318, 99);
+            this.tb_Der_Erste.Location = new System.Drawing.Point(12, 88);
             this.tb_Der_Erste.Name = "tb_Der_Erste";
             this.tb_Der_Erste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Erste.Size = new System.Drawing.Size(100, 103);
@@ -374,7 +374,7 @@
             // tb_Der_Zweit
             // 
             this.tb_Der_Zweit.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Zweit.Location = new System.Drawing.Point(424, 99);
+            this.tb_Der_Zweit.Location = new System.Drawing.Point(118, 88);
             this.tb_Der_Zweit.Name = "tb_Der_Zweit";
             this.tb_Der_Zweit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Zweit.Size = new System.Drawing.Size(100, 103);
@@ -385,7 +385,7 @@
             // tb_Der_Dritte
             // 
             this.tb_Der_Dritte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Dritte.Location = new System.Drawing.Point(530, 99);
+            this.tb_Der_Dritte.Location = new System.Drawing.Point(224, 88);
             this.tb_Der_Dritte.Name = "tb_Der_Dritte";
             this.tb_Der_Dritte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Dritte.Size = new System.Drawing.Size(100, 103);
@@ -396,7 +396,7 @@
             // tb_Der_Vierte
             // 
             this.tb_Der_Vierte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Vierte.Location = new System.Drawing.Point(636, 99);
+            this.tb_Der_Vierte.Location = new System.Drawing.Point(330, 88);
             this.tb_Der_Vierte.Name = "tb_Der_Vierte";
             this.tb_Der_Vierte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Vierte.Size = new System.Drawing.Size(100, 103);
@@ -407,7 +407,7 @@
             // tb_Der_Fuenfte
             // 
             this.tb_Der_Fuenfte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Fuenfte.Location = new System.Drawing.Point(742, 99);
+            this.tb_Der_Fuenfte.Location = new System.Drawing.Point(436, 88);
             this.tb_Der_Fuenfte.Name = "tb_Der_Fuenfte";
             this.tb_Der_Fuenfte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Fuenfte.Size = new System.Drawing.Size(100, 103);
@@ -418,7 +418,7 @@
             // tb_Der_Sechste
             // 
             this.tb_Der_Sechste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Sechste.Location = new System.Drawing.Point(848, 99);
+            this.tb_Der_Sechste.Location = new System.Drawing.Point(542, 88);
             this.tb_Der_Sechste.Name = "tb_Der_Sechste";
             this.tb_Der_Sechste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Sechste.Size = new System.Drawing.Size(100, 103);
@@ -429,7 +429,7 @@
             // tb_Der_Siebte
             // 
             this.tb_Der_Siebte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Siebte.Location = new System.Drawing.Point(954, 99);
+            this.tb_Der_Siebte.Location = new System.Drawing.Point(648, 88);
             this.tb_Der_Siebte.Name = "tb_Der_Siebte";
             this.tb_Der_Siebte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Siebte.Size = new System.Drawing.Size(100, 103);
@@ -440,30 +440,20 @@
             // btn_prev
             // 
             this.btn_prev.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_prev.Location = new System.Drawing.Point(12, 99);
+            this.btn_prev.Location = new System.Drawing.Point(118, 633);
             this.btn_prev.Name = "btn_prev";
-            this.btn_prev.Size = new System.Drawing.Size(75, 30);
+            this.btn_prev.Size = new System.Drawing.Size(75, 38);
             this.btn_prev.TabIndex = 37;
             this.btn_prev.Text = "Prev";
             this.btn_prev.UseVisualStyleBackColor = true;
             this.btn_prev.Click += new System.EventHandler(this.btn_prev_Click);
             // 
-            // btn_month
-            // 
-            this.btn_month.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_month.Location = new System.Drawing.Point(93, 99);
-            this.btn_month.Name = "btn_month";
-            this.btn_month.Size = new System.Drawing.Size(109, 30);
-            this.btn_month.TabIndex = 38;
-            this.btn_month.Text = "Monat";
-            this.btn_month.UseVisualStyleBackColor = true;
-            // 
             // btn_next
             // 
             this.btn_next.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_next.Location = new System.Drawing.Point(208, 99);
+            this.btn_next.Location = new System.Drawing.Point(199, 633);
             this.btn_next.Name = "btn_next";
-            this.btn_next.Size = new System.Drawing.Size(75, 30);
+            this.btn_next.Size = new System.Drawing.Size(75, 38);
             this.btn_next.TabIndex = 39;
             this.btn_next.Text = "Next";
             this.btn_next.UseVisualStyleBackColor = true;
@@ -473,30 +463,41 @@
             // 
             this.lbl_year.AutoSize = true;
             this.lbl_year.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Bold);
-            this.lbl_year.Location = new System.Drawing.Point(274, 33);
+            this.lbl_year.Location = new System.Drawing.Point(635, 34);
             this.lbl_year.Name = "lbl_year";
             this.lbl_year.Size = new System.Drawing.Size(113, 51);
             this.lbl_year.TabIndex = 41;
             this.lbl_year.Text = "Jahr";
             // 
-            // tb_checkbox
+            // BTN_manual_update
             // 
-            this.tb_checkbox.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_checkbox.Location = new System.Drawing.Point(12, 177);
-            this.tb_checkbox.Name = "tb_checkbox";
-            this.tb_checkbox.Size = new System.Drawing.Size(271, 96);
-            this.tb_checkbox.TabIndex = 42;
-            this.tb_checkbox.Text = "";
+            this.BTN_manual_update.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_manual_update.Location = new System.Drawing.Point(330, 523);
+            this.BTN_manual_update.Name = "BTN_manual_update";
+            this.BTN_manual_update.Size = new System.Drawing.Size(418, 103);
+            this.BTN_manual_update.TabIndex = 43;
+            this.BTN_manual_update.Text = "Manuelles Update";
+            this.BTN_manual_update.UseVisualStyleBackColor = true;
+            // 
+            // LBL_month
+            // 
+            this.LBL_month.AutoSize = true;
+            this.LBL_month.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Bold);
+            this.LBL_month.Location = new System.Drawing.Point(321, 34);
+            this.LBL_month.Name = "LBL_month";
+            this.LBL_month.Size = new System.Drawing.Size(149, 51);
+            this.LBL_month.TabIndex = 44;
+            this.LBL_month.Text = "Monat";
             // 
             // wdw_calendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 671);
-            this.Controls.Add(this.tb_checkbox);
+            this.ClientSize = new System.Drawing.Size(760, 683);
+            this.Controls.Add(this.LBL_month);
+            this.Controls.Add(this.BTN_manual_update);
             this.Controls.Add(this.lbl_year);
             this.Controls.Add(this.btn_next);
-            this.Controls.Add(this.btn_month);
             this.Controls.Add(this.btn_prev);
             this.Controls.Add(this.tb_Der_Siebte);
             this.Controls.Add(this.tb_Der_Sechste);
@@ -575,10 +576,10 @@
         private System.Windows.Forms.RichTextBox tb_Der_Sechste;
         private System.Windows.Forms.RichTextBox tb_Der_Siebte;
         private System.Windows.Forms.Button btn_prev;
-        private System.Windows.Forms.Button btn_month;
         private System.Windows.Forms.Button btn_next;
         private System.Windows.Forms.Label lbl_year;
-        private System.Windows.Forms.RichTextBox tb_checkbox;
+        private System.Windows.Forms.Button BTN_manual_update;
+        private System.Windows.Forms.Label LBL_month;
     }
 }
 

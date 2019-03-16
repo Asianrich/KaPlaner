@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using KaObjects;
 using System.Data.SqlClient;
 using KaPlaner.Storage;
+using KaPlaner.GUI;
 
 namespace WindowsFormsApp1
 {
@@ -29,17 +30,15 @@ namespace WindowsFormsApp1
             TB_repeat_until_year.Text = DateTime.Now.ToString("yyyy");
         }
 
-        private void Btn_close_Click(object sender, EventArgs e)
+        private void BTN_close_Click(object sender, EventArgs e)
         {
             Close();
         }
 
         /// <summary>
-        /// btn_speichern_click
+        /// BTN_save_Click
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_speichern_Click(object sender, EventArgs e)
+        private void BTN_save_Click(object sender, EventArgs e)
         {
             KaPlaner.Storage.Database reg = new Database();
             this.Write();
@@ -49,7 +48,6 @@ namespace WindowsFormsApp1
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-
 
         /// #######################################
         /// <summary>
@@ -501,6 +499,11 @@ namespace WindowsFormsApp1
             con.Close();
         }
 
+        private void BTN_load_Click(object sender, EventArgs e)
+        {
+            Form open_list = new Wdw_List();
+            open_list.Show();
+        }
     }  /// #######################################
    
 }

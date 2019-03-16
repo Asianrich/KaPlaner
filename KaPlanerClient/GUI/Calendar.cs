@@ -32,8 +32,9 @@ namespace WindowsFormsApp1
 
             monthcounter = (localDate.Month-1);
             year = localDate.Year;
-            btn_month.Text = month[monthcounter];
+            
             lbl_year.Text = Convert.ToString(year);
+            LBL_month.Text = month[monthcounter];
             check();
         }
 
@@ -50,8 +51,8 @@ namespace WindowsFormsApp1
                 var result = form.ShowDialog();
                 if(result == DialogResult.OK)
                 {
-                    //Ereignis = form.returnValue;
-                    //MessageBox.Show(Ereignis.Title);
+                    Ereignis = form.returnValue;
+                    MessageBox.Show(Ereignis.Title);
                 }
                 else
                 {
@@ -73,8 +74,7 @@ namespace WindowsFormsApp1
             {
                 monthcounter--;
             }
-            btn_month.Text = month[monthcounter];
-            tb_checkbox.Text = monthcounter.ToString();
+            LBL_month.Text = month[monthcounter];
             check();
         }
 
@@ -91,8 +91,7 @@ namespace WindowsFormsApp1
             {
                 monthcounter++;
             }
-            btn_month.Text = month[monthcounter];
-            tb_checkbox.Text = monthcounter.ToString();
+            LBL_month.Text = month[monthcounter];
             check();
         }
 
