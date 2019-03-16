@@ -11,8 +11,7 @@ using WindowsFormsApp1;
 
 namespace KaPlaner.Storage
 {
-    class Database : IDatabase
-    {
+    class Database : IDatabase    {
         public Database()
         {
 
@@ -107,6 +106,8 @@ namespace KaPlaner.Storage
 
             string insert = "insert into Calendar (Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
+       
+
             cmd_insert.Parameters.AddWithValue("@titel", titel);
             cmd_insert.Parameters.AddWithValue("@ort", ort);
             cmd_insert.Parameters.AddWithValue("@tag", tag);
@@ -123,6 +124,18 @@ namespace KaPlaner.Storage
 
             cmd_insert.ExecuteNonQuery();
             con.Close();
+            return;
+            
+            
+            
+            
+           
+            
+
+
+
+
+
 
 
 
