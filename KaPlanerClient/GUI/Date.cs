@@ -10,13 +10,14 @@ using System.Windows.Forms;
 using KaPlaner.Storage;
 //using KaPlaner.Objects;
 using KaObjects;
+using System.Data.SqlClient;
 
 namespace WindowsFormsApp1
 {
     public partial class Wdw_KaEvent : Form
     {
         public KaEvent returnValue;
-        
+
         public Wdw_KaEvent()
         {
             InitializeComponent();
@@ -161,7 +162,7 @@ namespace WindowsFormsApp1
             if (CB_none.Checked == true)
             {
                 pan_frequency.Enabled = false;
-                pan_constraint.Enabled = false;   
+                pan_constraint.Enabled = false;
                 pan_weekday.Enabled = false;
                 pan_which_day.Enabled = false;
                 lbl_dates_with_actions.Enabled = false;
@@ -216,7 +217,7 @@ namespace WindowsFormsApp1
 
         //weekly
         private void CB_weekly_CheckedChanged(object sender, EventArgs e)
-        {    
+        {
             if (CB_weekly.Checked)
             {
                 CB_none.Enabled = false;
@@ -227,7 +228,7 @@ namespace WindowsFormsApp1
                 lbl_times_per.Enabled = false;
                 pan_which_day.Enabled = false;
                 returnValue.Haeufigkeit = "woechentlich";
-                
+
             }
             else if (CB_weekly.Checked == false)
             {
@@ -243,10 +244,10 @@ namespace WindowsFormsApp1
                 returnValue.Haeufigkeit = "";
             }
         }
-        
+
         //monthly
         private void CB_monthly_CheckedChanged(object sender, EventArgs e)
-        {       
+        {
             if (CB_monthly.Checked == true)
             {
                 CB_none.Enabled = false;
@@ -254,7 +255,7 @@ namespace WindowsFormsApp1
                 CB_weekly.Enabled = false;
                 CB_yearly.Enabled = false;
                 TB_number_repetitions.Enabled = true;
-                lbl_times_per.Enabled = true;        
+                lbl_times_per.Enabled = true;
 
                 returnValue.Haeufigkeit = "monatlich";
             }
@@ -263,7 +264,7 @@ namespace WindowsFormsApp1
                 CB_none.Enabled = true;
                 CB_dayli.Enabled = true;
                 CB_weekly.Enabled = true;
-                CB_yearly.Enabled = true;               
+                CB_yearly.Enabled = true;
 
                 returnValue.Haeufigkeit = "";
             }
@@ -484,6 +485,22 @@ namespace WindowsFormsApp1
         {
 
         }
-        /// #######################################
-    }
+
+        private void BTN_delete_Click(object sender, EventArgs e)
+        {
+
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+            con.Open();
+
+            string delete = "delete from Calendar where Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
+            SqlCommand cmd_delete = new SqlCommand(delete, con);
+
+            cmd_delete.ExecuteNonQuery();
+            MessageBox.Show("Termin wurde erfolgreich gelöscht");
+
+            con.Close();
+        }
+
+    }  /// #######################################
+   
 }

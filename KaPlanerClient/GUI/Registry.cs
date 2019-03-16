@@ -165,14 +165,17 @@ namespace WindowsFormsApp1
                 Form open_calendar = new wdw_calendar();
                 open_calendar.Show();
                 Close();
+                MessageBox.Show("Registrierung erfolgreich-Willkommen");
             }
             else
             {
                 rTB_benutzername.Text = "";
                 rTB_passwort.Text = "";
                 rTB_passwort_bestaetigen.Text = "";
+
+           
             }   
-        }
+        }   
 
         private void Btn_reg_quit_Click(object sender, EventArgs e)
         {

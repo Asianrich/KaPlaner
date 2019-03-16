@@ -179,5 +179,10 @@ namespace WindowsFormsApp1
                     break;
             }
         }
+
+        private void tb_Der_Erste_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
