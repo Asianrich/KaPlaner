@@ -12,7 +12,9 @@ namespace KaPlaner.Database
 
         bool login(string username, string password);
 
-        bool Date(string titel, string ort, string tag, string monat, string jahr, string stunde, string minute, string prioritaet, string beschreibung, string haeufigkeit, string beschraenkung, string wochentag, string welcher_tag);
+        void Save(string Title, string Ort, int ganztaegig, DateTime Beginn, DateTime Ende, int Prioritaet, string Beschreibung,
+             string Haeufigkeit, int Haeufigkeit_Anzahl, int Immer_Wiederholen, int Wiederholungen, DateTime Wiederholen_bis,
+             int XMontag, int XDienstag, int XMittwoch, int XDonnerstag, int XFreitag, int XSamstag, int XSonntag);
 
 
 
