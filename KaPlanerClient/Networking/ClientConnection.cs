@@ -41,7 +41,8 @@ namespace KaPlaner.Networking
         {
             try
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+                
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("fe80::789f:a611:c9c0:e21%9");
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -146,7 +147,7 @@ namespace KaPlaner.Networking
         }
 
 
-        public void Disconnect(Socket client)
+        private void Disconnect(Socket client)
         {
             client.Shutdown(SocketShutdown.Both);
             client.Close();
@@ -154,7 +155,7 @@ namespace KaPlaner.Networking
 
 
 
-        public string Serialize<T>(T myObject)
+        private string Serialize<T>(T myObject)
         {
             string msg;
             using (var sw = new StringWriter())
@@ -172,7 +173,7 @@ namespace KaPlaner.Networking
 
         }
 
-        public T DeSerialize<T>(string msg)
+        private T DeSerialize<T>(string msg)
         {
             T myObject;
             using (var sr = new StringReader(msg))
@@ -191,7 +192,7 @@ namespace KaPlaner.Networking
 
         }
 
-        public void receive(Socket client)
+        private void receive(Socket client)
         {
             try
             {
@@ -205,13 +206,19 @@ namespace KaPlaner.Networking
             }
         }
 
-        public Package Start(Package state)
+
+        /// <summary>
+        /// Starts Connecting, Sending Package, and receiving Response-Package from Server
+        /// </summary>
+        /// <param name="package">Packages that gets to be sent</param>
+        /// <returns></returns>
+        public Package Start(Package package)
         {
             Socket client = connectServer();
             Package recObject;
             string[] delimiter = { "<EOF>" };
 
-            Send(client,state);
+            Send(client,package);
             sendDone.WaitOne();
 
             receive(client);

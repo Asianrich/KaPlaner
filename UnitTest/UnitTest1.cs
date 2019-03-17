@@ -151,10 +151,6 @@ namespace UnitTest
 
             User user = new User("aaa", "sss");
 
-            string test = cc.Serialize(user);
-
-
-            User aso = cc.DeSerialize<User>(test);
 
             Assert.IsTrue(true);
         }
