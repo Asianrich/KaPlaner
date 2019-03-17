@@ -69,7 +69,7 @@ namespace KaPlanerServer.Networking
                 // Get the socket that handles the client request.  
                 Socket listener = (Socket)ar.AsyncState;
                 Socket handler = listener.EndAccept(ar);
-                StateObject state = new StateObject();
+                Package state = new Package();
                 string[] delimiter = { "<EOF>" };
                 string[] msg;
 
@@ -84,7 +84,7 @@ namespace KaPlanerServer.Networking
 
                 string asd = msg[0];
                 Console.WriteLine(asd);
-                StateObject user = DeSerialize<StateObject>(asd);
+                Package user = DeSerialize<Package>(asd);
 
 
                 // DO SOMETHING! JOSHUUAUAUAUAUAUUAA

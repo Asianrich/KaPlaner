@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace KaObjects
 {
     [Serializable, XmlRoot("StateObject")]
-    public class StateObject
+    public class Package
     {
         public string results { get; set; }
         public User user;

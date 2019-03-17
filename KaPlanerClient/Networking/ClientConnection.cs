@@ -106,7 +106,7 @@ namespace KaPlaner.Networking
             }
         }
 
-        private void Send(StateObject send)
+        private void Send(Package send)
         {
             byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
             client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
@@ -159,7 +159,7 @@ namespace KaPlaner.Networking
 
         }
 
-        public StateObject receive()
+        public Package receive()
         {
             byte[] msg = new byte[8192];
             client.BeginReceive(msg, 0, msg.Length, 0, new AsyncCallback(ReceiveCallback), client);
@@ -168,14 +168,14 @@ namespace KaPlaner.Networking
             string[] recString = Encoding.ASCII.GetString(msg).Split(delimiter,StringSplitOptions.None);
 
 
-            return DeSerialize<StateObject>(recString[0]);
+            return DeSerialize<Package>(recString[0]);
 
         }
 
-        public StateObject Start(StateObject state)
+        public Package Start(Package state)
         {
             connectServer();
-            StateObject recObject;
+            Package recObject;
             Send(state);
 
             recObject = receive();

@@ -9,7 +9,7 @@ namespace KaPlaner.Networking
 {
     public interface IClientConnection
     {
-        StateObject Start(StateObject state);
+        Package Start(Package state);
 
     }
 }

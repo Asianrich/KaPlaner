@@ -68,7 +68,7 @@ namespace UnitTest
         {
             ClientConnection client = new ClientConnection();
 
-            StateObject state = new StateObject
+            Package state = new Package
             {
                 user = new User("Richard", "test"),
                 results = "TEST"
