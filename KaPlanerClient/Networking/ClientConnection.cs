@@ -141,7 +141,7 @@ namespace KaPlaner.Networking
                 client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
             }catch (Exception ex)
             {
-                throw ex;
+                throw ex; //Warum wird hier die Exception geworfen nachdem sie bereits gefangen wurde? Da könnte man das Catch gleich weglassen
             }
 
         }

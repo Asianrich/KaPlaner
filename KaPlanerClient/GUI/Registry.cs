@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Storage;
 using KaPlaner.Logic;
 using KaObjects;
 //using System.Text.RegularExpressions;

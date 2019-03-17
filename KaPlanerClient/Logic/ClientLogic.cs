@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using KaPlaner.Storage;
+using KaObjects.Storage;
 using KaPlaner.Networking;
 using KaObjects;
 
@@ -16,7 +16,11 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        IDatabase database = new Database();
+        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = ""Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+
+        IDatabase database = new Database(connectionString);
         User currentUser = new User();
 
         /// <summary>
@@ -40,9 +44,12 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool loginRemote(User user)
+        public void loginRemote(User user)
         {
-            throw new NotImplementedException();
+            Package loginPackage = new Package(Request.Login, user);
+            IClientConnection clientConnection = new ClientConnection();
+
+            clientConnection.Start(loginPackage);
         }
 
         /// <summary>
@@ -67,13 +74,14 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="password_bestaetigen"></param>
         /// <returns></returns>
-        public bool registerRemote(User user, string password_bestaetigen)
+        public void registerRemote(User user, string password_bestaetigen)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
         /// Speichern des mitgelieferten Events in der Datenbank
+        /// Benutzt das Datenbankinterface
         /// </summary>
         /// <param name="kaEvent"></param>
         public void saveLocal(KaEvent kaEvent)

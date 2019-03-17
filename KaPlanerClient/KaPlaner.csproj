@@ -63,8 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\IDatabase.cs" />
     <Compile Include="GUI\Calendar.cs">
       <SubType>Form</SubType>
     </Compile>

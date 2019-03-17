@@ -15,11 +15,11 @@ namespace KaPlaner.Logic
     {
         bool loginLocal(User user);
 
-        bool loginRemote(User user);
+        void loginRemote(User user);
 
         bool registerLocal(User user, string password_bestaetigen);
 
-        bool registerRemote(User user, string password_bestaetigen);
+        void registerRemote(User user, string password_bestaetigen);
 
         void saveLocal(KaEvent kaEvent);
     }

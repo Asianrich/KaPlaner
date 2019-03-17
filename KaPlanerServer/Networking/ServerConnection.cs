@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 
+using KaPlanerServer.Logic;
 
 namespace KaPlanerServer.Networking
 {
@@ -28,6 +29,8 @@ namespace KaPlanerServer.Networking
 
     class ServerConnection
     {
+        static IServerLogic serverLogic = new ServerLogic();
+
         private IPHostEntry ipHostInfo;
         private IPAddress ipAddress;
         private IPEndPoint localEndPoint;
@@ -135,36 +138,12 @@ namespace KaPlanerServer.Networking
 
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
                         
-                        Package user = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
+                        Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
-
-                        /* DO SOMETHING! JOSHUUAUAUAUAUAUUAA
+                        serverLogic.resolvePackage(userPackage);
                         
-                        DO SOMETHING HERE?!?!?!!!
-                        THERE IS SPILLED MILK IN THE COW SECTION
 
-                        HEEEEEREEEEE
-
-                        */
-                        // user = Control(user);
-                        /*
-                         * 
-                         * 
-                         * public static Package Control (Package package)
-                         * {
-                         *      switch(package.results)
-                         *      {
-                         *          case "Loging": if(Database.login(package.user.username, package.user.password))
-                         *                          {
-                         *                              Die Sachen fürs Package machen.
-                         *                          
-                         *                          }
-                         *                          
-                         * 
-                         * 
-                         */
-
-                        Send(state.workSocket, user);
+                        Send(state.workSocket, userPackage);
 
                     }
                     else

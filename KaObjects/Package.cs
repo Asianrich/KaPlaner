@@ -11,8 +11,9 @@ namespace KaObjects
 {
     /// <summary>
     /// Enum list of possible Requests
+    /// Every  additional Request should be added here
     /// </summary>
-    public enum Request {Test=-1, Login};
+    public enum Request {Test=-1, Login, Register, Invite};
 
     [Serializable, XmlRoot("Package")]
     public class Package
@@ -29,6 +30,7 @@ namespace KaObjects
         public Package() { }
     }
 
+    [Serializable, XmlRoot("EventPackage")] //Does this work?
     public class EventPackage : Package
     {
         KaEvent[] kaEvents;

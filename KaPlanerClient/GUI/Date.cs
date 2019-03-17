@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaObjects;
 using System.Data.SqlClient;
-using KaPlaner.Storage;
 using KaPlaner.GUI;
 using KaPlaner.Logic;
 

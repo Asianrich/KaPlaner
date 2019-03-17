@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\IServerLogic.cs" />
+    <Compile Include="Logic\ServerLogic.cs" />
     <Compile Include="Networking\ServerConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
