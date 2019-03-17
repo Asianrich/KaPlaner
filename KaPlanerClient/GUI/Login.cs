@@ -26,6 +26,9 @@ namespace WindowsFormsApp1
         public Wdw_login()
         {
             InitializeComponent();
+
+            lbl_log_passwort.text.PasswordChar = '$';
+            lbl_log_passwort.MaxLenght = 10;
         }
 
         private void InitializeComponent()
