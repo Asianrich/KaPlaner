@@ -26,9 +26,21 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool login(string username, string password)
+        public bool loginLocal(string username, string password)
         {
             return database.login(username, password);
+        }
+
+        /// <summary>
+        /// Login mit Nutzernamen und Passwort
+        /// Benutzt das Networkinterface
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool loginRemote(string username, string password)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -40,9 +52,22 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="password_bestaetigen"></param>
         /// <returns></returns>
-        public bool registerUser(string username, string password, string password_bestaetigen)
+        public bool registerLocal(string username, string password, string password_bestaetigen)
         {
             return database.registerUser(username, password, password_bestaetigen);
+        }
+
+        /// <summary>
+        /// Registrierung eines Nutzers auf Server
+        /// Benutzt das Networkinterface
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="password_bestaetigen"></param>
+        /// <returns></returns>
+        public bool registerRemote(string username, string password, string password_bestaetigen)
+        {
+            throw new NotImplementedException();
         }
     }
 }

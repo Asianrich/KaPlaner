@@ -9,11 +9,40 @@ using System.Xml.Serialization;
 
 namespace KaObjects
 {
-    [Serializable, XmlRoot("StateObject")]
+    /// <summary>
+    /// Enum list of possible Requests
+    /// </summary>
+    public enum Request {Login};
+
+    [Serializable, XmlRoot("Package")]
     public class Package
     {
-        public string results { get; set; }
+        public Request request;
         public User user;
-        public KaEvent[] kaEvents;
+
+        public Package(Request request, User user)
+        {
+            this.request = request;
+            this.user = user;
+        }
+
+        public Package() { }
+    }
+
+    public class EventPackage : Package
+    {
+        KaEvent[] kaEvents;
+
+        public EventPackage(Request request, User user, KaEvent[] kaEvents) : base(request, user)
+        {
+            this.kaEvents = kaEvents;
+        }
+
+        public EventPackage(Package package, KaEvent[] kaEvents) : base(package.request, package.user)
+        {
+            this.kaEvents = kaEvents;
+        }
+
+        public KaEvent[] GetKaEvents() { return kaEvents; }
     }
 }
