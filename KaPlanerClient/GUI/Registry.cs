@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaPlaner.Storage;
+//using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
 {
@@ -167,6 +168,8 @@ namespace WindowsFormsApp1
                 Close();
                 MessageBox.Show("Registrierung erfolgreich-Willkommen");
             }
+
+          
             else
             {
                 rTB_benutzername.Text = "";
@@ -181,8 +184,8 @@ namespace WindowsFormsApp1
         }
 
         private void RichTextBox3_TextChanged(object sender, EventArgs e)
-        {
-            
+        { 
+      
         }
     }
 }

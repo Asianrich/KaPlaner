@@ -42,7 +42,7 @@ namespace KaPlaner.Networking
             try
             {
                 
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("fe80::789f:a611:c9c0:e21%9");
+                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

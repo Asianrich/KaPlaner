@@ -74,7 +74,7 @@ namespace UnitTest
                 results = "TEST"
             };
 
-            client.Start(state);
+            Package asd = client.Start(state);
 
             Assert.IsTrue(true);
 

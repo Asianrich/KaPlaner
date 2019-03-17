@@ -26,6 +26,8 @@ namespace WindowsFormsApp1
         public Wdw_login()
         {
             InitializeComponent();
+
+            
         }
 
         private void InitializeComponent()

@@ -146,7 +146,23 @@ namespace KaPlanerServer.Networking
                         HEEEEEREEEEE
 
                         */
-
+                        // user = Control(user);
+                        /*
+                         * 
+                         * 
+                         * public static Package Control (Package package)
+                         * {
+                         *      switch(package.results)
+                         *      {
+                         *          case "Loging": if(Database.login(package.user.username, package.user.password))
+                         *                          {
+                         *                              Die Sachen fürs Package machen.
+                         *                          
+                         *                          }
+                         *                          
+                         * 
+                         * 
+                         */
 
                         Send(state.workSocket, user);
 
