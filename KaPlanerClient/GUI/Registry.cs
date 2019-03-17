@@ -184,6 +184,7 @@ namespace WindowsFormsApp1
         }
 
         private void RichTextBox3_TextChanged(object sender, EventArgs e)
+        { 
       
         }
     }
