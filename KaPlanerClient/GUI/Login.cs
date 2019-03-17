@@ -27,8 +27,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            lbl_log_passwort.text.PasswordChar = '$';
-            lbl_log_passwort.MaxLenght = 10;
+            
         }
 
         private void InitializeComponent()
