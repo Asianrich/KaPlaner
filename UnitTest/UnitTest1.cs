@@ -16,20 +16,6 @@ namespace UnitTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
-        {
-            int a = 2;
-            int b = 2;
-
-            User user = new User();
-
-
-
-            Assert.AreEqual(a, b);
-            
-        }
-
-        [TestMethod]
         public void serialization()
         {
 
@@ -71,7 +57,7 @@ namespace UnitTest
             Package state = new Package
             {
                 user = new User("Richard", "test"),
-                results = "TEST"
+                request = Request.Test
             };
 
             Package asd = client.Start(state);
@@ -129,13 +115,6 @@ namespace UnitTest
             }
 
 
-
-
-
-
-
-
-
                 Assert.IsTrue(true);
 
 
@@ -153,16 +132,6 @@ namespace UnitTest
 
 
             Assert.IsTrue(true);
-        }
-
-        
-        [TestMethod]
-        public void myTest()
-        {
-
-            ClientLogic client = new ClientLogic();
-
-            //Assert.IsTrue(client.GetTest());
         }
 
 

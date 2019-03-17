@@ -4,27 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using KaPlaner.Objects;
+using KaObjects;
 
 namespace KaPlaner.Storage
 {
     interface IDatabase
     {
+        bool login(User user);
 
-        bool registerUser(string username, string password, string password_bestaetigen);
+        bool registerUser(User user, string password_bestaetigen);
 
-        bool login(string username, string password);
-
-        void Save(string Title, string Ort, int ganztaegig, DateTime Beginn, DateTime Ende, int Prioritaet, string Beschreibung,
-            string Haeufigkeit, int Haeufigkeit_Anzahl, int Immer_Wiederholen, int Wiederholungen, DateTime Wiederholen_bis,
-            int XMontag, int XDienstag, int XMittwoch, int XDonnerstag, int XFreitag, int XSamstag, int XSonntag);
-
-        /* So wäre wohl besser
-         * void save(KaEvent kaEvent);
-         */
-
-
-
-
+        void save(KaEvent kaEvent);
     }
 }

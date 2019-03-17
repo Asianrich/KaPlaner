@@ -12,7 +12,7 @@ namespace KaObjects
     /// <summary>
     /// Enum list of possible Requests
     /// </summary>
-    public enum Request {Login};
+    public enum Request {Test=-1, Login};
 
     [Serializable, XmlRoot("Package")]
     public class Package

@@ -16,7 +16,7 @@ namespace KaObjects
         DateTime date { get; set; }
         string[] members { get; set; }
 
-        public string Title { get; set; }
+        public string Titel { get; set; }
         public string Ort { get; set; }
         public int Ganztaegig { get; set; }
         public DateTime Beginn { get; set; }

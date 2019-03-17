@@ -8,12 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaPlaner.Storage;
+using KaPlaner.Logic;
+using KaObjects;
 //using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
 {
     public partial class Wdw_registrierung : Form
     {
+        IClientLogic clientLogic;
+
         private RichTextBox rTB_passwort_bestaetigen;
         private Label lbl_registrierung;
         private RichTextBox rTB_passwort;
@@ -24,8 +28,10 @@ namespace WindowsFormsApp1
         private Button btn_reg_schließen;
         private RichTextBox rTB_benutzername;
 
-        public Wdw_registrierung()
+        public Wdw_registrierung(IClientLogic clientLogic)
         {
+            this.clientLogic = clientLogic;
+
             InitializeComponent();
         }
 
@@ -160,10 +166,9 @@ namespace WindowsFormsApp1
 
         private void Btn_reg_send_Click(object sender, EventArgs e)
         {
-            KaPlaner.Storage.Database reg = new Database();
-            if (reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
+            if (clientLogic.registerLocal(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
             {
-                Form open_calendar = new wdw_calendar();
+                Form open_calendar = new wdw_calendar(clientLogic);
                 open_calendar.Show();
                 Close();
                 MessageBox.Show("Registrierung erfolgreich-Willkommen");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using KaPlaner.Storage;
 using KaPlaner.Networking;
-using KaPlaner.Objects;
+using KaObjects;
 
 namespace KaPlaner.Logic
 {
@@ -17,6 +17,7 @@ namespace KaPlaner.Logic
     public class ClientLogic : IClientLogic
     {
         IDatabase database = new Database();
+        User currentUser = new User();
 
         /// <summary>
         /// Login mit Nutzernamen und Password
@@ -26,9 +27,10 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool loginLocal(string username, string password)
+        public bool loginLocal(User user)
         {
-            return database.login(username, password);
+            currentUser = user;
+            return database.login(currentUser);
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool loginRemote(string username, string password)
+        public bool loginRemote(User user)
         {
             throw new NotImplementedException();
         }
@@ -52,9 +54,9 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="password_bestaetigen"></param>
         /// <returns></returns>
-        public bool registerLocal(string username, string password, string password_bestaetigen)
+        public bool registerLocal(User user, string password_bestaetigen)
         {
-            return database.registerUser(username, password, password_bestaetigen);
+            return database.registerUser(user, password_bestaetigen);
         }
 
         /// <summary>
@@ -65,9 +67,18 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="password_bestaetigen"></param>
         /// <returns></returns>
-        public bool registerRemote(string username, string password, string password_bestaetigen)
+        public bool registerRemote(User user, string password_bestaetigen)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Speichern des mitgelieferten Events in der Datenbank
+        /// </summary>
+        /// <param name="kaEvent"></param>
+        public void saveLocal(KaEvent kaEvent)
+        {
+            database.save(kaEvent);
         }
     }
 }

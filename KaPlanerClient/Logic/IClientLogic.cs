@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using KaPlaner.Objects;
+using KaObjects;
 
 namespace KaPlaner.Logic
 {
@@ -13,14 +13,14 @@ namespace KaPlaner.Logic
     /// </summary>
     public interface IClientLogic
     {
-        bool loginLocal(string username, string password);
+        bool loginLocal(User user);
 
-        bool loginRemote(string username, string password);
+        bool loginRemote(User user);
 
-        bool registerLocal(string username, string password, string password_bestaetigen);
+        bool registerLocal(User user, string password_bestaetigen);
 
-        bool registerRemote(string username, string password, string password_bestaetigen);
+        bool registerRemote(User user, string password_bestaetigen);
 
-        
+        void saveLocal(KaEvent kaEvent);
     }
 }
