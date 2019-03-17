@@ -9,10 +9,11 @@ using System.Xml.Serialization;
 
 namespace KaObjects
 {
-    [Serializable, XmlRoot("StateObject")]
+    [Serializable, XmlRoot("Package")]
     public class Package
     {
         public string results { get; set; }
+        public bool error { get; set; }
         public User user;
         public KaEvent[] kaEvents;
     }
