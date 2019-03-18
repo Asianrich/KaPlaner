@@ -106,6 +106,7 @@
             this.BTN_list_close.TabIndex = 75;
             this.BTN_list_close.Text = "Schließen";
             this.BTN_list_close.UseVisualStyleBackColor = true;
+            this.BTN_list_close.Click += new System.EventHandler(this.BTN_close_Click);
             // 
             // Wdw_List
             // 

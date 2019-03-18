@@ -140,22 +140,7 @@ namespace KaObjects.Storage
             con.Close();
             return;
         }
-
-
-        // public bool Wiederholung(string haeufigkeit,string beschraenkung, string wochentag, string welcher_tag)
-        //{
-
-        //} 
-
-
-
-
-
-
-
-
     }
-
 }
 
             

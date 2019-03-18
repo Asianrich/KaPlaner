@@ -50,10 +50,6 @@ namespace WindowsFormsApp1
         }
 
         public KaEvent Ereignis;
-        private void tb_open_date(object sender, EventArgs e)
-        {
-
-        }
 
         private void TB_open_list(object sender, EventArgs e)
         {

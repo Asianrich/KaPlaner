@@ -31,13 +31,78 @@ namespace WindowsFormsApp1
             TB_Title.Text = ereignis.Titel;
             TB_Place.Text = ereignis.Ort;
 
+            TB_day_beginn.Text = ereignis.Beginn.ToString("dd");
+            TB_month_beginn.Text = ereignis.Beginn.ToString("MM");
+            TB_year_beginn.Text = ereignis.Beginn.ToString("yyyy");
+            TB_hour_beginn.Text = ereignis.Beginn.ToString("HH");
+            TB_minute_beginn.Text = ereignis.Beginn.ToString("mm");
 
+            TB_day_end.Text = ereignis.Beginn.ToString("dd");
+            TB_month_end.Text = ereignis.Beginn.ToString("MM");
+            TB_year_end.Text = ereignis.Beginn.ToString("yyyy");
+            TB_hour_end.Text = ereignis.Beginn.ToString("HH");
+            TB_minute_end.Text = ereignis.Beginn.ToString("mm");
 
-            DateTime localDate = DateTime.Now;
-            TB_repeat_until_day.Text = DateTime.Now.ToString("dd");
-            TB_repeat_until_month.Text = DateTime.Now.ToString("MM");
-            TB_repeat_until_year.Text = DateTime.Now.ToString("yyyy");
+            NUD_Priority.Value = ereignis.Prioritaet;
+            RTB_description.Text = ereignis.Beschreibung;
+            
+            switch(ereignis.Haeufigkeit)
+            {
+                case "keine":
+                    CB_none.Checked = true;
+                    pan_frequency.Enabled = false;
+                    break;
+                case "taeglich":
+                    CB_dayli.Checked = true;
+                    break;
+                case "woechentlich":
+                    CB_weekly.Checked = true;
+                    break;
+                case "monatlich":
+                    CB_monthly.Checked = true;
+                    break;
+                case "jaehrlich":
+                    CB_yearly.Checked = true;
+                    break;  
+            }
+
+            TB_number_repetitions.Text = ereignis.Haeufigkeit_Anzahl.ToString();
+
+            if (ereignis.Immer_Wiederholen == 1)    { CB_always_repeat.Checked = true; }
+            else                                    { CB_always_repeat.Checked = false; }
+
+            TB_times_repeat.Text = ereignis.Wiederholungen.ToString();
+
+            TB_repeat_until_day.Text = ereignis.Wiederholen_bis.ToString("dd");
+            TB_repeat_until_month.Text = ereignis.Wiederholen_bis.ToString("MM");
+            TB_repeat_until_year.Text = ereignis.Wiederholen_bis.ToString("yyyy");
+
+            if (ereignis.XMontag <= -1)     { CB_mon.Checked = false; }
+            else                            { CB_mon.Checked = true; }
+            if (ereignis.XDienstag <= -1)   { CB_die.Checked = false; }
+            else                            { CB_die.Checked = true; }
+            if (ereignis.XMittwoch <= -1)   { CB_mit.Checked = false; }
+            else                            { CB_mit.Checked = true; }
+            if (ereignis.XDonnerstag <= -1) { CB_don.Checked = false; }
+            else                            { CB_don.Checked = true; }
+            if (ereignis.XFreitag <= -1)    { CB_fre.Checked = false; }
+            else                            { CB_fre.Checked = true; }
+            if (ereignis.XSamstag <= -1)    { CB_sam.Checked = false; }
+            else                            { CB_sam.Checked = true; }
+            if (ereignis.XSonntag <= -1)    { CB_son.Checked = false; }
+            else                            { CB_son.Checked = true; }
+
+            NUD_mon.Value = ereignis.XMontag;
+            NUD_tue.Value = ereignis.XDienstag;
+            NUD_wen.Value = ereignis.XMittwoch;
+            NUD_thu.Value = ereignis.XDonnerstag;
+            NUD_fri.Value = ereignis.XFreitag;
+            NUD_sat.Value = ereignis.XSamstag;
+            NUD_sun.Value = ereignis.XSonntag;
         }
+
+
+    
 
         private void BTN_close_Click(object sender, EventArgs e)
         {
@@ -302,7 +367,14 @@ namespace WindowsFormsApp1
         //TB_number_repetitions
         private void TB_number_repetitions_TextChanged(object sender, EventArgs e)
         {
-            returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
+            if(TB_number_repetitions.Text == "")
+            {
+                returnValue.Haeufigkeit_Anzahl = 0;
+            }
+            else
+            {
+                returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
+            }
         }
 
         /// <summary>
@@ -341,7 +413,14 @@ namespace WindowsFormsApp1
         //TB_times_repeat
         private void TB_times_repeat_TextChanged(object sender, EventArgs e)
         {
-            returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
+            if(TB_times_repeat.Text == "")
+            {
+                returnValue.Wiederholungen = 0;
+            }
+            else
+            {
+                returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
+            }
         }
 
         //CB_mon 
@@ -528,3 +607,4 @@ namespace WindowsFormsApp1
     }  /// #######################################
    
 }
+

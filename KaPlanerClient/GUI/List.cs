@@ -83,5 +83,10 @@ namespace KaPlaner.GUI
         {
             load(null, ListEvents[LV_Dates.FocusedItem.Index]);
         }
+
+        private void BTN_close_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
