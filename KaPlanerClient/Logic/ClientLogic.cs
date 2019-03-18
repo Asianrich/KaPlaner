@@ -16,11 +16,12 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = ""Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
+        IClientConnection clientConnection = new ClientConnection();
         User currentUser = new User();
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool loginLocal(User user)
+        public bool LoginLocal(User user)
         {
             currentUser = user;
             return database.login(currentUser);
@@ -44,12 +45,14 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public void loginRemote(User user)
+        public bool LoginRemote(User user)
         {
+            Package returnPackage;
             Package loginPackage = new Package(Request.Login, user);
-            IClientConnection clientConnection = new ClientConnection();
 
-            clientConnection.Start(loginPackage);
+            returnPackage = clientConnection.Start(loginPackage);
+
+            return RequestResolve(returnPackage);
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="password_bestaetigen"></param>
         /// <returns></returns>
-        public bool registerLocal(User user, string password_bestaetigen)
+        public bool RegisterLocal(User user, string password_bestaetigen)
         {
             return database.registerUser(user, password_bestaetigen);
         }
@@ -72,11 +75,16 @@ namespace KaPlaner.Logic
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <param name="password_bestaetigen"></param>
+        /// <param name="passwordConfirm"></param>
         /// <returns></returns>
-        public void registerRemote(User user, string password_bestaetigen)
+        public bool RegisterRemote(User user, string passwordConfirm)
         {
-            throw new NotImplementedException();
+            Package returnPackage;
+            Package registerPackage = new RegisterPackage(user, passwordConfirm);
+
+            returnPackage = clientConnection.Start(registerPackage);
+
+            return RequestResolve(returnPackage);
         }
 
         /// <summary>
@@ -84,7 +92,7 @@ namespace KaPlaner.Logic
         /// Benutzt das Datenbankinterface
         /// </summary>
         /// <param name="kaEvent"></param>
-        public void saveLocal(KaEvent kaEvent)
+        public void SaveLocal(KaEvent kaEvent)
         {
             database.save(kaEvent);
         }
@@ -93,9 +101,23 @@ namespace KaPlaner.Logic
         /// Synchronisieren der Datenbanken
         /// Hier wird das Update durchgeführt
         /// </summary>
-        public void syncData()
+        public void SyncData()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Determines wether a Request was a success or not
+        /// It's possible to increase its power
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        bool RequestResolve(Package package)
+        {
+            if (package.request == Request.Success)
+                return true;
+            else
+                return false;
         }
     }
 }

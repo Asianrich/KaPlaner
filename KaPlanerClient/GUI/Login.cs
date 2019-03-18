@@ -167,7 +167,7 @@ namespace WindowsFormsApp1
 
         private void Btn_log_send_Click(object sender, EventArgs e)
         {
-            if(clientLogic.loginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+            if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
             {
                 Form open_calendar = new wdw_calendar(clientLogic);
                 open_calendar.Show();
@@ -189,8 +189,19 @@ namespace WindowsFormsApp1
 
         private void BTN_offline_Click(object sender, EventArgs e)
         {
-            Form open_calendar = new wdw_calendar(clientLogic);
-            open_calendar.Show();
+            if (clientLogic.LoginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+            {
+                Form open_calendar = new wdw_calendar(clientLogic);
+                open_calendar.Show();
+                tb_log_benutzername.Text = "";
+                tb_log_passwort.Text = "";
+            }
+            else
+            {
+                tb_log_benutzername.Text = "";
+                tb_log_passwort.Text = "";
+            }
         }
     }
 }
+

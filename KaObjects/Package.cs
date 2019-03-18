@@ -13,7 +13,7 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request {Test=-1, Login, Register, Invite};
+    public enum Request {Test=-1, Failure, Success, Login, Register, Invite}; // Success and Failure are responses from the server
 
     [Serializable, XmlRoot("Package")]
     public class Package
@@ -30,6 +30,24 @@ namespace KaObjects
         public Package() { }
     }
 
+    [Serializable, XmlRoot("RegisterPackage")]
+    public class RegisterPackage : Package
+    {
+        public string passwordConfirm;
+
+        public RegisterPackage(User user, string passwordConfirm) : base(Request.Register, user)
+        {
+            this.passwordConfirm = passwordConfirm;
+        }
+
+        public RegisterPackage(Package package, string passwordConfirm) : base(Request.Register, package.user)
+        {
+            this.passwordConfirm = passwordConfirm;
+        }
+
+        public RegisterPackage() { }
+    }
+
     [Serializable, XmlRoot("EventPackage")] //Does this work?
     public class EventPackage : Package
     {
@@ -44,6 +62,8 @@ namespace KaObjects
         {
             this.kaEvents = kaEvents;
         }
+
+        public EventPackage() { }
 
         public KaEvent[] GetKaEvents() { return kaEvents; }
     }
