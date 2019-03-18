@@ -77,7 +77,6 @@ namespace WindowsFormsApp1
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
             this.rTB_benutzername.TabIndex = 3;
             this.rTB_benutzername.Text = "";
-            this.rTB_benutzername.TextChanged += new System.EventHandler(this.RichTextBox3_TextChanged);
             // 
             // lbl_reg_benutzername
             // 
@@ -131,7 +130,7 @@ namespace WindowsFormsApp1
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
             this.btn_reg_schließen.Click += new System.EventHandler(this.Btn_reg_quit_Click);
             // 
-            // wdw_registrierung
+            // Wdw_registrierung
             // 
             this.AccessibleName = "";
             this.ClientSize = new System.Drawing.Size(534, 436);
@@ -144,7 +143,7 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.rTB_passwort);
             this.Controls.Add(this.lbl_registrierung);
             this.Controls.Add(this.rTB_passwort_bestaetigen);
-            this.Name = "wdw_registrierung";
+            this.Name = "Wdw_registrierung";
             this.Text = "Registrierung";
             this.Load += new System.EventHandler(this.Registry_Load);
             this.ResumeLayout(false);
@@ -178,11 +177,6 @@ namespace WindowsFormsApp1
         private void Btn_reg_quit_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void RichTextBox3_TextChanged(object sender, EventArgs e)
-        {
-            
         }
     }
 }
