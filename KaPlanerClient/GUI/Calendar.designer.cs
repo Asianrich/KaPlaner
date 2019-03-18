@@ -368,8 +368,7 @@
             this.tb_Der_Erste.Size = new System.Drawing.Size(100, 103);
             this.tb_Der_Erste.TabIndex = 30;
             this.tb_Der_Erste.Text = "1";
-            this.tb_Der_Erste.Click += new System.EventHandler(this.tb_open_date);
-            this.tb_Der_Erste.TextChanged += new System.EventHandler(this.tb_Der_Erste_TextChanged);
+            this.tb_Der_Erste.Click += new System.EventHandler(this.TB_open_list);
             // 
             // tb_Der_Zweit
             // 

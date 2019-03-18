@@ -7,9 +7,11 @@ using System.Xml.Serialization;
 using System.Threading;
 using System.Runtime;
 using System.IO;
-
+using KaPlaner;
 using KaPlaner.Logic;
-
+using WindowsFormsApp1;
+using System.Windows.Forms;
+using KaPlaner.GUI;
 namespace UnitTest
 {
     [TestClass]
@@ -132,6 +134,25 @@ namespace UnitTest
 
 
             Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void listviewtest()
+        {
+
+            KaEvent[] kaEvents = new KaEvent[5];
+
+            for (int i = 0; i < 3; i++)
+            {
+                kaEvents[i] = new KaEvent();
+                kaEvents[i].Titel = "Titetl " + i;
+                kaEvents[i].Ort = "Ort " + i;
+            }
+
+            Form open_list = new Wdw_List(kaEvents);
+            open_list.Show();
+
+            Assert.IsFalse(false);
         }
 
 

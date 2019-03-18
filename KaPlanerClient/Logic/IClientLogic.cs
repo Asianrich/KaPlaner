@@ -22,5 +22,7 @@ namespace KaPlaner.Logic
         void registerRemote(User user, string password_bestaetigen);
 
         void saveLocal(KaEvent kaEvent);
+
+        void syncData();
     }
 }
