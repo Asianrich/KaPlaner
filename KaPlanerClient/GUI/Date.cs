@@ -20,13 +20,18 @@ namespace WindowsFormsApp1
 
         public KaEvent returnValue;
 
-        public Wdw_KaEvent(IClientLogic clientLogic)
+        public Wdw_KaEvent(IClientLogic clientLogic, KaEvent ereignis)
         {
             this.clientLogic = clientLogic;
 
             InitializeComponent();
 
             returnValue = new KaEvent();
+
+            TB_Title.Text = ereignis.Titel;
+            TB_Place.Text = ereignis.Ort;
+
+
 
             DateTime localDate = DateTime.Now;
             TB_repeat_until_day.Text = DateTime.Now.ToString("dd");
@@ -487,8 +492,11 @@ namespace WindowsFormsApp1
 
         private void BTN_delete_Click(object sender, EventArgs e)
         {
+            //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+            //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+            //static string connectionString = ""Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
-            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
             con.Open();
 
             string delete = "delete from Calendar where Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
@@ -502,9 +510,21 @@ namespace WindowsFormsApp1
 
         private void BTN_load_Click(object sender, EventArgs e)
         {
-            Form open_list = new Wdw_List();
+
+            KaEvent[] kaEvents = new KaEvent[3];
+
+            for(int i = 0; i < 3; i++)
+            {
+                kaEvents[i] = new KaEvent();
+                kaEvents[i].Titel = "Titetl " + i;
+                kaEvents[i].Ort = "Ort " + i;
+            }
+
+            Form open_list = new Wdw_List(kaEvents);
             open_list.Show();
         }
+
+
     }  /// #######################################
    
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaObjects;
 using KaPlaner.Logic;
+using KaPlaner.GUI;
 
 namespace WindowsFormsApp1
 {
@@ -51,19 +52,22 @@ namespace WindowsFormsApp1
         public KaEvent Ereignis;
         private void tb_open_date(object sender, EventArgs e)
         {
-            using (var form = new Wdw_KaEvent(clientLogic))
+
+        }
+
+        private void TB_open_list(object sender, EventArgs e)
+        {
+            KaEvent[] kaEvents = new KaEvent[3];
+
+            for (int i = 0; i < 3; i++)
             {
-                var result = form.ShowDialog();
-                if(result == DialogResult.OK)
-                {
-                    Ereignis = form.returnValue;
-                    MessageBox.Show(Ereignis.Titel);
-                }
-                else
-                {
-                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
-                }
+                kaEvents[i] = new KaEvent();
+                kaEvents[i].Titel = "Titetl " + i;
+                kaEvents[i].Ort = "Ort " + i;
             }
+
+            Form open_list = new Wdw_List(kaEvents);
+            open_list.Show();
         }
 
         /// <summary> check end of old year </summary>
@@ -182,11 +186,6 @@ namespace WindowsFormsApp1
                     tb_Der_Einunddreißigste.Visible = true;
                     break;
             }
-        }
-
-        private void tb_Der_Erste_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

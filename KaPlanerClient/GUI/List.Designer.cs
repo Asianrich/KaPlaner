@@ -35,6 +35,7 @@
             this.Ende = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.BTN_delete = new System.Windows.Forms.Button();
             this.BTN_oeffnen = new System.Windows.Forms.Button();
+            this.BTN_list_close = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LV_Dates
@@ -53,6 +54,7 @@
             this.LV_Dates.TabIndex = 0;
             this.LV_Dates.UseCompatibleStateImageBehavior = false;
             this.LV_Dates.View = System.Windows.Forms.View.Details;
+            this.LV_Dates.SelectedIndexChanged += new System.EventHandler(this.LV_Dates_SelectedIndexChanged);
             // 
             // Titel
             // 
@@ -93,12 +95,24 @@
             this.BTN_oeffnen.TabIndex = 74;
             this.BTN_oeffnen.Text = "Öffnen";
             this.BTN_oeffnen.UseVisualStyleBackColor = true;
+            this.BTN_oeffnen.Click += new System.EventHandler(this.BTN_oeffnen_Click);
+            // 
+            // BTN_list_close
+            // 
+            this.BTN_list_close.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_list_close.Location = new System.Drawing.Point(214, 419);
+            this.BTN_list_close.Name = "BTN_list_close";
+            this.BTN_list_close.Size = new System.Drawing.Size(95, 30);
+            this.BTN_list_close.TabIndex = 75;
+            this.BTN_list_close.Text = "Schließen";
+            this.BTN_list_close.UseVisualStyleBackColor = true;
             // 
             // Wdw_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
+            this.Controls.Add(this.BTN_list_close);
             this.Controls.Add(this.BTN_oeffnen);
             this.Controls.Add(this.BTN_delete);
             this.Controls.Add(this.LV_Dates);
@@ -117,5 +131,6 @@
         private System.Windows.Forms.ColumnHeader Ende;
         private System.Windows.Forms.Button BTN_delete;
         private System.Windows.Forms.Button BTN_oeffnen;
+        private System.Windows.Forms.Button BTN_list_close;
     }
 }
