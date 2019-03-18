@@ -44,6 +44,9 @@ namespace KaPlaner.Networking
                 
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
+
+
+                IPAddress[] iP = Dns.GetHostAddresses("192");
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
