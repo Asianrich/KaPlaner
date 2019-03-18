@@ -88,6 +88,15 @@ namespace KaPlaner.Logic
         {
             database.save(kaEvent);
         }
+
+        /// <summary>
+        /// Synchronisieren der Datenbanken
+        /// Hier wird das Update durchgeführt
+        /// </summary>
+        public void syncData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
