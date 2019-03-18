@@ -13,16 +13,16 @@ namespace KaPlaner.Logic
     /// </summary>
     public interface IClientLogic
     {
-        bool loginLocal(User user);
+        bool LoginLocal(User user);
 
-        void loginRemote(User user);
+        bool LoginRemote(User user);
 
-        bool registerLocal(User user, string password_bestaetigen);
+        bool RegisterLocal(User user, string password_bestaetigen);
 
-        void registerRemote(User user, string password_bestaetigen);
+        bool RegisterRemote(User user, string password_bestaetigen);
 
-        void saveLocal(KaEvent kaEvent);
+        void SaveLocal(KaEvent kaEvent);
 
-        void syncData();
+        void SyncData();
     }
 }

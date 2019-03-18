@@ -50,7 +50,7 @@ namespace WindowsFormsApp1
         private void BTN_save_Click(object sender, EventArgs e)
         {
             this.Write();
-            clientLogic.saveLocal(returnValue);
+            clientLogic.SaveLocal(returnValue);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

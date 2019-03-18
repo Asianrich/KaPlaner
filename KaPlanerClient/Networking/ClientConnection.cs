@@ -42,11 +42,11 @@ namespace KaPlaner.Networking
             try
             {
                 
-                //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                //IPAddress ipAddress = ipHostInfo.AddressList[0];
+                IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ip = ipHost.AddressList[0];
 
-                IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
-                IPAddress ip = iPHost.AddressList[1];
+                //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
+                //IPAddress ip = iPHost.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ip, 11000);
                 Socket client = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
