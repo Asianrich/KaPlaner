@@ -63,8 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\IDatabase.cs" />
     <Compile Include="GUI\Calendar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,8 +92,6 @@
     <Compile Include="Networking\IClientConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
     <Compile Include="Networking\NetworkTest.cs" />
-    <Compile Include="Objects\KaEvent.cs" />
-    <Compile Include="Objects\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Calendar.resx">

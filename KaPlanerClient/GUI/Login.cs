@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Storage;
+using KaPlaner.Logic;
+using KaObjects;
 
 namespace WindowsFormsApp1
 {
     public partial class Wdw_login : Form
     {
+        IClientLogic clientLogic;
+
         private Label lbl_login;
         private RichTextBox tb_log_benutzername;
         private RichTextBox tb_log_passwort;
@@ -23,8 +26,10 @@ namespace WindowsFormsApp1
         private Button BTN_offline;
         private Label lbl_log_passwort;
 
-        public Wdw_login()
+        public Wdw_login(IClientLogic clientLogic)
         {
+            this.clientLogic = clientLogic;
+
             InitializeComponent();
         }
 
@@ -162,10 +167,9 @@ namespace WindowsFormsApp1
 
         private void Btn_log_send_Click(object sender, EventArgs e)
         {
-            KaPlaner.Storage.Database reg = new Database();
-            if(reg.login(tb_log_benutzername.Text, tb_log_passwort.Text))
+            if(clientLogic.loginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
             {
-                Form open_calendar = new wdw_calendar();
+                Form open_calendar = new wdw_calendar(clientLogic);
                 open_calendar.Show();
                 tb_log_benutzername.Text = "";
                 tb_log_passwort.Text = "";
@@ -179,13 +183,13 @@ namespace WindowsFormsApp1
 
         private void Wdw_registry_Click(object sender, EventArgs e)
         {
-            Form open_registry = new Wdw_registrierung();
+            Form open_registry = new Wdw_registrierung(clientLogic);
             open_registry.Show();
         }
 
         private void BTN_offline_Click(object sender, EventArgs e)
         {
-            Form open_calendar = new wdw_calendar();
+            Form open_calendar = new wdw_calendar(clientLogic);
             open_calendar.Show();
         }
     }

@@ -15,11 +15,11 @@ namespace KaObjects
     [Serializable, XmlRoot("User")]
     public class User
     {
-
+        //Warum kann ich auf public nicht zugreifen?
         [XmlAttribute]
-        public string name { get; set; }
+        public string name;
         [XmlAttribute]
-        public string password { get; set; }
+        public string password;
 
 
 
@@ -27,7 +27,7 @@ namespace KaObjects
 
         public User()
         {
-
+            name = "KaPlanerUser"; //Default User
         }
 
         public User(string name, string password)

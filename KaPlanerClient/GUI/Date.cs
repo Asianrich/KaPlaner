@@ -9,17 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaObjects;
 using System.Data.SqlClient;
-using KaPlaner.Storage;
 using KaPlaner.GUI;
+using KaPlaner.Logic;
 
 namespace WindowsFormsApp1
 {
     public partial class Wdw_KaEvent : Form
     {
+        IClientLogic clientLogic;
+
         public KaEvent returnValue;
 
-        public Wdw_KaEvent()
+        public Wdw_KaEvent(IClientLogic clientLogic)
         {
+            this.clientLogic = clientLogic;
+
             InitializeComponent();
 
             returnValue = new KaEvent();
@@ -40,11 +44,8 @@ namespace WindowsFormsApp1
         /// </summary>
         private void BTN_save_Click(object sender, EventArgs e)
         {
-            KaPlaner.Storage.Database reg = new Database();
             this.Write();
-            reg.Save(returnValue.Title, returnValue.Ort, returnValue.Ganztaegig, returnValue.Beginn, returnValue.Ende, returnValue.Prioritaet, returnValue.Beschreibung, returnValue.Haeufigkeit,
-                returnValue.Haeufigkeit_Anzahl, returnValue.Immer_Wiederholen, returnValue.Wiederholungen, returnValue.Wiederholen_bis, returnValue.XMontag,
-                returnValue.XDienstag, returnValue.XMittwoch, returnValue.XDonnerstag, returnValue.XFreitag, returnValue.XSamstag, returnValue.XSonntag);
+            clientLogic.saveLocal(returnValue);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -57,7 +58,7 @@ namespace WindowsFormsApp1
         //TB_Title
         private void TB_Title_TextChanged(object sender, EventArgs e)
         {
-            returnValue.Title = TB_Title.Text;
+            returnValue.Titel = TB_Title.Text;
         }
 
         //TB_Place

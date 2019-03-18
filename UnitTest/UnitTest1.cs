@@ -16,20 +16,6 @@ namespace UnitTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
-        {
-            int a = 2;
-            int b = 2;
-
-            User user = new User();
-
-
-
-            Assert.AreEqual(a, b);
-            
-        }
-
-        [TestMethod]
         public void serialization()
         {
 
@@ -68,13 +54,13 @@ namespace UnitTest
         {
             ClientConnection client = new ClientConnection();
 
-            StateObject state = new StateObject
+            Package state = new Package
             {
                 user = new User("Richard", "test"),
-                results = "TEST"
+                request = Request.Test
             };
 
-            client.Start(state);
+            Package asd = client.Start(state);
 
             Assert.IsTrue(true);
 
@@ -129,13 +115,6 @@ namespace UnitTest
             }
 
 
-
-
-
-
-
-
-
                 Assert.IsTrue(true);
 
 
@@ -151,22 +130,8 @@ namespace UnitTest
 
             User user = new User("aaa", "sss");
 
-            string test = cc.Serialize(user);
-
-
-            User aso = cc.DeSerialize<User>(test);
 
             Assert.IsTrue(true);
-        }
-
-        
-        [TestMethod]
-        public void myTest()
-        {
-
-            ClientLogic client = new ClientLogic();
-
-            Assert.IsTrue(client.GetTest());
         }
 
 

@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaPlaner.Storage;
+using KaPlaner.Logic;
+using KaObjects;
+//using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
 {
     public partial class Wdw_registrierung : Form
     {
+        IClientLogic clientLogic;
+
         private RichTextBox rTB_passwort_bestaetigen;
         private Label lbl_registrierung;
         private RichTextBox rTB_passwort;
@@ -23,8 +27,10 @@ namespace WindowsFormsApp1
         private Button btn_reg_schließen;
         private RichTextBox rTB_benutzername;
 
-        public Wdw_registrierung()
+        public Wdw_registrierung(IClientLogic clientLogic)
         {
+            this.clientLogic = clientLogic;
+
             InitializeComponent();
         }
 
@@ -77,6 +83,7 @@ namespace WindowsFormsApp1
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
             this.rTB_benutzername.TabIndex = 3;
             this.rTB_benutzername.Text = "";
+            this.rTB_benutzername.TextChanged += new System.EventHandler(this.RichTextBox3_TextChanged);
             // 
             // lbl_reg_benutzername
             // 
@@ -130,7 +137,7 @@ namespace WindowsFormsApp1
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
             this.btn_reg_schließen.Click += new System.EventHandler(this.Btn_reg_quit_Click);
             // 
-            // Wdw_registrierung
+            // wdw_registrierung
             // 
             this.AccessibleName = "";
             this.ClientSize = new System.Drawing.Size(534, 436);
@@ -143,7 +150,7 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.rTB_passwort);
             this.Controls.Add(this.lbl_registrierung);
             this.Controls.Add(this.rTB_passwort_bestaetigen);
-            this.Name = "Wdw_registrierung";
+            this.Name = "wdw_registrierung";
             this.Text = "Registrierung";
             this.Load += new System.EventHandler(this.Registry_Load);
             this.ResumeLayout(false);
@@ -158,14 +165,15 @@ namespace WindowsFormsApp1
 
         private void Btn_reg_send_Click(object sender, EventArgs e)
         {
-            KaPlaner.Storage.Database reg = new Database();
-            if (reg.registerUser(rTB_benutzername.Text, rTB_passwort.Text, rTB_passwort_bestaetigen.Text))
+            if (clientLogic.registerLocal(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
             {
-                Form open_calendar = new wdw_calendar();
+                Form open_calendar = new wdw_calendar(clientLogic);
                 open_calendar.Show();
                 Close();
                 MessageBox.Show("Registrierung erfolgreich-Willkommen");
             }
+
+          
             else
             {
                 rTB_benutzername.Text = "";
@@ -177,6 +185,11 @@ namespace WindowsFormsApp1
         private void Btn_reg_quit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void RichTextBox3_TextChanged(object sender, EventArgs e)
+        { 
+      
         }
     }
 }

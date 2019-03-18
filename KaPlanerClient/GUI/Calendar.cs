@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaObjects;
+using KaPlaner.Logic;
 
 namespace WindowsFormsApp1
 {
@@ -15,6 +16,8 @@ namespace WindowsFormsApp1
 
     public partial class wdw_calendar : Form
     {
+        IClientLogic clientLogic;
+
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
@@ -26,8 +29,10 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar()
+        public wdw_calendar(IClientLogic clientLogic)
         {
+            this.clientLogic = clientLogic;
+
             InitializeComponent();
 
             monthcounter = (localDate.Month-1);
@@ -46,13 +51,13 @@ namespace WindowsFormsApp1
         public KaEvent Ereignis;
         private void tb_open_date(object sender, EventArgs e)
         {
-            using (var form = new Wdw_KaEvent())
+            using (var form = new Wdw_KaEvent(clientLogic))
             {
                 var result = form.ShowDialog();
                 if(result == DialogResult.OK)
                 {
                     Ereignis = form.returnValue;
-                    MessageBox.Show(Ereignis.Title);
+                    MessageBox.Show(Ereignis.Titel);
                 }
                 else
                 {

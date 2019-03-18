@@ -14,6 +14,17 @@ using System.IO;
 
 namespace KaPlaner.Networking
 {
+    class StateObject
+    {
+        public Socket workSocket = null;
+        public const int BufferSize = 1024;
+        public byte[] buffer = new byte[BufferSize];
+        public StringBuilder sb = new StringBuilder();
+        Package package = new Package();
+
+
+    }
+
     public class ClientConnection : IClientConnection
     {
         public int port { get => _port; set => _port = value; }
@@ -21,27 +32,30 @@ namespace KaPlaner.Networking
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
-        private Socket client;
-        private byte[] buffer;
 
         private int _port;
+        private static string response;
 
 
-
-        private void connectServer()
+        private Socket connectServer()
         {
             try
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                IPAddress ipAddress = ipHostInfo.AddressList[0];
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
-                client = new Socket(ipAddress.AddressFamily,SocketType.Stream, ProtocolType.Tcp);
+                
+                //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+                //IPAddress ipAddress = ipHostInfo.AddressList[0];
+
+                IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
+                IPAddress ip = iPHost.AddressList[1];
+                IPEndPoint remoteEP = new IPEndPoint(ip, 11000);
+                Socket client = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
                 connectDone.WaitOne();
+                return client;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                throw new Exception(ex.Message);
             }
         }
 
@@ -70,13 +84,29 @@ namespace KaPlaner.Networking
             try
             {
                 // Retrieve the socket from the state object.  
-                Socket socket = (Socket)ar.AsyncState;
-
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket socket = state.workSocket;
                 // Complete sending the data to the remote device.  
-                int bytesReceive = socket.EndReceive(ar);
+                int bytesRead = socket.EndReceive(ar);
+                if (bytesRead > 0)
+                {
+                    // There might be more data, so store the data received so far.  
+                    state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                // Signal that all bytes have been sent.  
-                receiveDone.Set();
+                    // Get the rest of the data.  
+                    socket.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                        new AsyncCallback(ReceiveCallback), state);
+                }
+                else
+                {
+                    // All the data has arrived; put it in response.  
+                    if (state.sb.Length > 1)
+                    {
+                        response = state.sb.ToString();
+                    }
+                    // Signal that all bytes have been received.  
+                    receiveDone.Set();
+                }
             }
             catch (Exception e)
             {
@@ -106,15 +136,21 @@ namespace KaPlaner.Networking
             }
         }
 
-        private void Send(StateObject send)
+        private void Send(Socket client, Package send)
         {
-            byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
-            client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-            sendDone.WaitOne();
+            try
+            {
+                byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
+                client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+            }catch (Exception ex)
+            {
+                throw ex; //Warum wird hier die Exception geworfen nachdem sie bereits gefangen wurde? Da könnte man das Catch gleich weglassen
+            }
+
         }
 
 
-        public void Disconnect()
+        private void Disconnect(Socket client)
         {
             client.Shutdown(SocketShutdown.Both);
             client.Close();
@@ -122,7 +158,7 @@ namespace KaPlaner.Networking
 
 
 
-        public string Serialize<T>(T myObject)
+        private string Serialize<T>(T myObject)
         {
             string msg;
             using (var sw = new StringWriter())
@@ -140,7 +176,7 @@ namespace KaPlaner.Networking
 
         }
 
-        public T DeSerialize<T>(string msg)
+        private T DeSerialize<T>(string msg)
         {
             T myObject;
             using (var sr = new StringReader(msg))
@@ -159,27 +195,40 @@ namespace KaPlaner.Networking
 
         }
 
-        public StateObject receive()
+        private void receive(Socket client)
         {
-            byte[] msg = new byte[8192];
-            client.BeginReceive(msg, 0, msg.Length, 0, new AsyncCallback(ReceiveCallback), client);
-            receiveDone.WaitOne();
-            string[] delimiter = { "<EOF>" };
-            string[] recString = Encoding.ASCII.GetString(msg).Split(delimiter,StringSplitOptions.None);
+            try
+            {
+                StateObject state = new StateObject();
+                state.workSocket = client;
 
-
-            return DeSerialize<StateObject>(recString[0]);
-
+                client.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
+            }catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public StateObject Start(StateObject state)
-        {
-            connectServer();
-            StateObject recObject;
-            Send(state);
 
-            recObject = receive();
-            Disconnect();
+        /// <summary>
+        /// Starts Connecting, Sending Package, and receiving Response-Package from Server
+        /// </summary>
+        /// <param name="package">Packages that gets to be sent</param>
+        /// <returns></returns>
+        public Package Start(Package package)
+        {
+            Socket client = connectServer();
+            Package recObject;
+            string[] delimiter = { "<EOF>" };
+
+            Send(client,package);
+            sendDone.WaitOne();
+
+            receive(client);
+            receiveDone.WaitOne();
+
+            recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]); 
+            Disconnect(client);
             return recObject;
         }
     }
