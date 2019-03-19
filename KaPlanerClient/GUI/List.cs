@@ -16,11 +16,11 @@ using System.Data.SqlClient;
 
 namespace KaPlaner.GUI
 {
-    public partial class Wdw_List : Form
+    public partial class Wdw_date_list : Form
     {
 
         private KaEvent[] ListEvents;
-        public Wdw_List(KaEvent[] kaEvents)
+        public Wdw_date_list(KaEvent[] kaEvents)
         {
             InitializeComponent();
             string[] row = new string[5];
@@ -47,7 +47,7 @@ namespace KaPlaner.GUI
 
                 ListViewItem lvi = new ListViewItem(row);
 
-                LV_Dates.Items.Add(lvi);               
+                LV_dates.Items.Add(lvi);               
             }
         }
 
@@ -109,7 +109,7 @@ namespace KaPlaner.GUI
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
-            int index = LV_Dates.FocusedItem.Index;
+            int index = LV_dates.FocusedItem.Index;
             load(null, index);
         }
 
@@ -125,7 +125,7 @@ namespace KaPlaner.GUI
 
         private void BTN_new_Click(object sender, EventArgs e)
         {
-            int index = LV_Dates.FocusedItem.Index;
+            int index = LV_dates.FocusedItem.Index;
             load(null, ListEvents.Length +1);
         }
           //TO FIX: Logik als Funktion in die Datenbankklasse verschieben und nur diese Funktion

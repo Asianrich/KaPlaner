@@ -62,7 +62,7 @@ namespace WindowsFormsApp1
                 kaEvents[i].Ort = "Ort " + i;
             }
 
-            Form open_list = new Wdw_List(kaEvents);
+            Form open_list = new Wdw_date_list(kaEvents);
             open_list.Show();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace KaPlaner.GUI
 {
-    partial class Wdw_List
+    partial class Wdw_date_list
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LV_Dates = new System.Windows.Forms.ListView();
+            this.LV_dates = new System.Windows.Forms.ListView();
             this.Titel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Ort = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Beginn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -39,23 +39,23 @@
             this.BTN_new = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // LV_Dates
+            // LV_dates
             // 
-            this.LV_Dates.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LV_dates.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Titel,
             this.Ort,
             this.Beginn,
             this.Ende});
-            this.LV_Dates.Font = new System.Drawing.Font("Arial", 12F);
-            this.LV_Dates.FullRowSelect = true;
-            this.LV_Dates.GridLines = true;
-            this.LV_Dates.Location = new System.Drawing.Point(12, 12);
-            this.LV_Dates.Name = "LV_Dates";
-            this.LV_Dates.Size = new System.Drawing.Size(860, 401);
-            this.LV_Dates.TabIndex = 0;
-            this.LV_Dates.UseCompatibleStateImageBehavior = false;
-            this.LV_Dates.View = System.Windows.Forms.View.Details;
-            this.LV_Dates.SelectedIndexChanged += new System.EventHandler(this.LV_Dates_SelectedIndexChanged);
+            this.LV_dates.Font = new System.Drawing.Font("Arial", 12F);
+            this.LV_dates.FullRowSelect = true;
+            this.LV_dates.GridLines = true;
+            this.LV_dates.Location = new System.Drawing.Point(12, 12);
+            this.LV_dates.Name = "LV_dates";
+            this.LV_dates.Size = new System.Drawing.Size(860, 401);
+            this.LV_dates.TabIndex = 0;
+            this.LV_dates.UseCompatibleStateImageBehavior = false;
+            this.LV_dates.View = System.Windows.Forms.View.Details;
+            this.LV_dates.SelectedIndexChanged += new System.EventHandler(this.LV_Dates_SelectedIndexChanged);
             // 
             // Titel
             // 
@@ -121,7 +121,7 @@
             this.BTN_new.UseVisualStyleBackColor = true;
             this.BTN_new.Click += new System.EventHandler(this.BTN_new_Click);
             // 
-            // Wdw_List
+            // Wdw_date_list
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -130,8 +130,8 @@
             this.Controls.Add(this.BTN_list_close);
             this.Controls.Add(this.BTN_oeffnen);
             this.Controls.Add(this.BTN_delete);
-            this.Controls.Add(this.LV_Dates);
-            this.Name = "Wdw_List";
+            this.Controls.Add(this.LV_dates);
+            this.Name = "Wdw_date_list";
             this.Text = "Terminliste";
             this.Load += new System.EventHandler(this.Wdw_List_Load);
             this.ResumeLayout(false);
@@ -140,7 +140,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView LV_Dates;
+        private System.Windows.Forms.ListView LV_dates;
         private System.Windows.Forms.ColumnHeader Titel;
         private System.Windows.Forms.ColumnHeader Ort;
         private System.Windows.Forms.ColumnHeader Beginn;

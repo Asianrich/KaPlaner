@@ -75,6 +75,12 @@
     <Compile Include="GUI\Date.designer.cs">
       <DependentUpon>Date.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Userlist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Userlist.Designer.cs">
+      <DependentUpon>Userlist.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Date.resx">
       <DependentUpon>Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Userlist.resx">
+      <DependentUpon>Userlist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\List.resx">
       <DependentUpon>List.cs</DependentUpon>
