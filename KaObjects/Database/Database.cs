@@ -8,11 +8,13 @@ using System.Configuration;
 using System.Windows.Forms;
 
 
+
 namespace KaObjects.Storage
 {
     public class Database : IDatabase {
 
         string connectionString;
+        private readonly object UserID;
 
         public Database(string connectionString)
         {
@@ -141,21 +143,21 @@ namespace KaObjects.Storage
             return;
         }
 
-        public void Delete_date(KaEvent UserID)
-        {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-            string delete = ("DELETE FROM Calendar WHERE User-ID = @user-id");
-            
-            SqlCommand cmd_delete = new SqlCommand(delete, con);
-            cmd_delete.Parameters.AddWithValue("@User-ID",UserID);
+        //public void Delete_date()
+        //{
+            //SqlConnection con = new SqlConnection(connectionString);
+            //con.Open();
+            //string delete = ("DELETE FROM Calendar WHERE UserID = @userid");
+            //string delete = "DELETE FROM database.calendar WHERE UserID =' " + this.UserID.txt.Text + " '; ";
+            //SqlCommand cmd_delete = new SqlCommand(delete, con);
+            //cmd_delete.Parameters.AddWithValue("@UserID");
            
-            cmd_delete.ExecuteNonQuery();
-            MessageBox.Show("Termin wurde erfolgreich gelöscht");
+            //cmd_delete.ExecuteNonQuery();
+            //MessageBox.Show("Termin wurde erfolgreich gelöscht");
 
          
-            con.Close();
-        }
+            //con.Close();
+        //}
 
 
     }
