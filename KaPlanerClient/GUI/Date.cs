@@ -576,7 +576,7 @@ namespace WindowsFormsApp1
 
         private void BTN_delete_Click(object sender, EventArgs e)
         {
-
+            
         }
     }  /// ####################################### 
 }
