@@ -30,11 +30,22 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar(IClientLogic clientLogic)
+        public wdw_calendar(IClientLogic clientLogic, bool online)
         {
             this.clientLogic = clientLogic;
 
             InitializeComponent();
+
+            if(!online)
+            {
+                BTN_manual_update.Visible = false;
+                BTN_manual_update.Enabled = false;
+            }
+            else
+            {
+                BTN_manual_update.Visible = true;
+                BTN_manual_update.Enabled = true;
+            }
 
             monthcounter = (localDate.Month-1);
             year = localDate.Year;

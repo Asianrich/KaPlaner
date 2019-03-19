@@ -116,10 +116,11 @@ namespace WindowsFormsApp1
             // 
             // btn_reg_senden
             // 
-            this.btn_reg_senden.Font = new System.Drawing.Font("Arial", 12F);
+            this.btn_reg_senden.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
+            this.btn_reg_senden.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btn_reg_senden.Location = new System.Drawing.Point(40, 357);
             this.btn_reg_senden.Name = "btn_reg_senden";
-            this.btn_reg_senden.Size = new System.Drawing.Size(90, 30);
+            this.btn_reg_senden.Size = new System.Drawing.Size(100, 30);
             this.btn_reg_senden.TabIndex = 7;
             this.btn_reg_senden.Text = "Senden";
             this.btn_reg_senden.UseVisualStyleBackColor = true;
@@ -127,10 +128,10 @@ namespace WindowsFormsApp1
             // 
             // btn_reg_schließen
             // 
-            this.btn_reg_schließen.Font = new System.Drawing.Font("Arial", 12F);
-            this.btn_reg_schließen.Location = new System.Drawing.Point(396, 357);
+            this.btn_reg_schließen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_reg_schließen.Location = new System.Drawing.Point(386, 357);
             this.btn_reg_schließen.Name = "btn_reg_schließen";
-            this.btn_reg_schließen.Size = new System.Drawing.Size(90, 30);
+            this.btn_reg_schließen.Size = new System.Drawing.Size(100, 30);
             this.btn_reg_schließen.TabIndex = 8;
             this.btn_reg_schließen.Text = "Schließen";
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
@@ -162,7 +163,7 @@ namespace WindowsFormsApp1
             {
                 if (clientLogic.RegisterRemote(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
                 {
-                    Form open_calendar = new wdw_calendar(clientLogic);
+                    Form open_calendar = new wdw_calendar(clientLogic, true);
                     open_calendar.Show();
                     Close();
                     MessageBox.Show("Registrierung erfolgreich-Willkommen");
