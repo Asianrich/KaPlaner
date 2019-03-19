@@ -36,6 +36,7 @@
             this.BTN_delete = new System.Windows.Forms.Button();
             this.BTN_oeffnen = new System.Windows.Forms.Button();
             this.BTN_list_close = new System.Windows.Forms.Button();
+            this.BTN_new = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LV_Dates
@@ -79,12 +80,13 @@
             // BTN_delete
             // 
             this.BTN_delete.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_delete.Location = new System.Drawing.Point(113, 419);
+            this.BTN_delete.Location = new System.Drawing.Point(214, 419);
             this.BTN_delete.Name = "BTN_delete";
             this.BTN_delete.Size = new System.Drawing.Size(95, 30);
             this.BTN_delete.TabIndex = 73;
             this.BTN_delete.Text = "Löschen";
             this.BTN_delete.UseVisualStyleBackColor = true;
+            this.BTN_delete.Click += new System.EventHandler(this.BTN_delete_Click);
             // 
             // BTN_oeffnen
             // 
@@ -100,7 +102,7 @@
             // BTN_list_close
             // 
             this.BTN_list_close.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_list_close.Location = new System.Drawing.Point(214, 419);
+            this.BTN_list_close.Location = new System.Drawing.Point(315, 419);
             this.BTN_list_close.Name = "BTN_list_close";
             this.BTN_list_close.Size = new System.Drawing.Size(95, 30);
             this.BTN_list_close.TabIndex = 75;
@@ -108,17 +110,30 @@
             this.BTN_list_close.UseVisualStyleBackColor = true;
             this.BTN_list_close.Click += new System.EventHandler(this.BTN_close_Click);
             // 
+            // BTN_new
+            // 
+            this.BTN_new.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_new.Location = new System.Drawing.Point(113, 419);
+            this.BTN_new.Name = "BTN_new";
+            this.BTN_new.Size = new System.Drawing.Size(95, 30);
+            this.BTN_new.TabIndex = 76;
+            this.BTN_new.Text = "Neu";
+            this.BTN_new.UseVisualStyleBackColor = true;
+            this.BTN_new.Click += new System.EventHandler(this.BTN_new_Click);
+            // 
             // Wdw_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
+            this.Controls.Add(this.BTN_new);
             this.Controls.Add(this.BTN_list_close);
             this.Controls.Add(this.BTN_oeffnen);
             this.Controls.Add(this.BTN_delete);
             this.Controls.Add(this.LV_Dates);
             this.Name = "Wdw_List";
             this.Text = "Terminliste";
+            this.Load += new System.EventHandler(this.Wdw_List_Load);
             this.ResumeLayout(false);
 
         }
@@ -133,5 +148,6 @@
         private System.Windows.Forms.Button BTN_delete;
         private System.Windows.Forms.Button BTN_oeffnen;
         private System.Windows.Forms.Button BTN_list_close;
+        private System.Windows.Forms.Button BTN_new;
     }
 }
