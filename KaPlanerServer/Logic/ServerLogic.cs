@@ -17,6 +17,8 @@ namespace KaPlanerServer.Logic
         static readonly string RegisterSuccess = "Registry Successful.";
         static readonly string RegisterFail = "Registry Failed.";
         static readonly string SaveRequest = "Save Requested.";
+        static readonly string SaveSuccess = "Save Success.";
+        static readonly string SaveFail = "Save Failed.";
         static readonly string RequestTest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
@@ -61,7 +63,17 @@ namespace KaPlanerServer.Logic
 
                 case Request.Save:
                     Console.WriteLine(SaveRequest);
-                    database.save(package.kaEvents[0]);
+                    try
+                    {
+                        database.save(package.kaEvents[0]);
+                        writeResult(Request.Success, SaveSuccess);
+                    } catch(Exception e)
+                    {
+                        Console.WriteLine(e.GetType().FullName);
+                        Console.WriteLine(e.Message);
+                        writeResult(Request.Failure, SaveFail);
+                    }
+                        
                     break;
                 
                 case Request.Test:

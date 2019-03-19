@@ -50,7 +50,7 @@ namespace KaPlaner.GUI
             }
         }
 
-        public void load(ClientLogic clientLogic, int index)
+        public void load(int index)
         {
             bool isNewElement = false;
             KaEvent kaEvent;
@@ -101,7 +101,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_dates.FocusedItem.Index;
-                load(null, index);
+                load(index);
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_dates.FocusedItem.Index;
-                load(null, ListEvents.Length + 1);
+                load(ListEvents.Length + 1);
             }
             catch (Exception ex)
             {

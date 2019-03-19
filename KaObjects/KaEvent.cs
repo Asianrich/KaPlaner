@@ -14,7 +14,7 @@ namespace KaObjects
     {
         public string TerminID;
         User owner { get; set; }
-        DateTime date { get; set; }
+        public DateTime date { get; set; }
         string[] members { get; set; }
 
         public string Titel { get; set; }
