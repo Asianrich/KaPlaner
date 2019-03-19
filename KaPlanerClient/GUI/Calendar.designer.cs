@@ -350,10 +350,10 @@
             // 
             // btn_quit_calendar
             // 
-            this.btn_quit_calendar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_quit_calendar.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold);
             this.btn_quit_calendar.Location = new System.Drawing.Point(12, 633);
             this.btn_quit_calendar.Name = "btn_quit_calendar";
-            this.btn_quit_calendar.Size = new System.Drawing.Size(100, 38);
+            this.btn_quit_calendar.Size = new System.Drawing.Size(116, 38);
             this.btn_quit_calendar.TabIndex = 29;
             this.btn_quit_calendar.Text = "Beenden";
             this.btn_quit_calendar.UseVisualStyleBackColor = true;
@@ -438,8 +438,8 @@
             // 
             // btn_prev
             // 
-            this.btn_prev.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_prev.Location = new System.Drawing.Point(118, 633);
+            this.btn_prev.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btn_prev.Location = new System.Drawing.Point(134, 633);
             this.btn_prev.Name = "btn_prev";
             this.btn_prev.Size = new System.Drawing.Size(75, 38);
             this.btn_prev.TabIndex = 37;
@@ -449,8 +449,8 @@
             // 
             // btn_next
             // 
-            this.btn_next.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_next.Location = new System.Drawing.Point(199, 633);
+            this.btn_next.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold);
+            this.btn_next.Location = new System.Drawing.Point(215, 632);
             this.btn_next.Name = "btn_next";
             this.btn_next.Size = new System.Drawing.Size(75, 38);
             this.btn_next.TabIndex = 39;
