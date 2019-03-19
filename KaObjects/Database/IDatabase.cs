@@ -15,6 +15,6 @@ namespace KaObjects.Storage
 
         void save(KaEvent kaEvent);
 
-        void Delete_date(KaEvent UserID);
+        void Delete_date();
     }
 }
