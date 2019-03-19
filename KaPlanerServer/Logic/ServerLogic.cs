@@ -19,9 +19,9 @@ namespace KaPlanerServer.Logic
         static readonly string RequestTest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
-        //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = ""Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
         
@@ -38,20 +38,24 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(LoginRequest);
                     if (database.login(package.user))
                     {
-                        Console.WriteLine(LoginSuccess);
-                        package.request = Request.Success;
+                        writeResult(Request.Success, LoginSuccess);
                     }
                     else
                     {
-                        Console.WriteLine(LoginFail);
-                        package.request = Request.Failure;
+                        writeResult(Request.Failure, LoginFail);
                     }
                     break;
                 /// In case of Register Request try to login to the server database and set Request accordingly
                 case Request.Register:
                     Console.WriteLine(RegisterRequest);
-                    if(package is RegisterPackage)
-                        resolveRegisterPackage((RegisterPackage)package);
+                    if(database.registerUser(package.user, package.passwordConfirm))
+                    {
+                        writeResult(Request.Success, RegisterSuccess);
+                    }
+                    else
+                    {
+                        writeResult(Request.Failure, RegisterFail);
+                    }
                     break;
 
                 case Request.Test:
@@ -62,19 +66,11 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(RequestUnknown);
                     break;
             }
-        }
 
-        void resolveRegisterPackage(RegisterPackage registerPackage)
-        {
-            if(database.registerUser(registerPackage.user, registerPackage.passwordConfirm))
+            void writeResult(Request request, string line)
             {
-                Console.WriteLine(RegisterSuccess);
-                registerPackage.request = Request.Success;
-            }
-            else
-            {
-                Console.WriteLine(RegisterFail);
-                registerPackage.request = Request.Failure;
+                Console.WriteLine(line);
+                package.request = request;
             }
         }
     }

@@ -16,9 +16,9 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
         IClientConnection clientConnection = new ClientConnection();
@@ -80,7 +80,7 @@ namespace KaPlaner.Logic
         public bool RegisterRemote(User user, string passwordConfirm)
         {
             Package returnPackage;
-            Package registerPackage = new RegisterPackage(user, passwordConfirm);
+            Package registerPackage = new Package(user, passwordConfirm);
 
             returnPackage = clientConnection.Start(registerPackage);
 
