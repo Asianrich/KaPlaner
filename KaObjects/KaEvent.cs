@@ -29,6 +29,7 @@ namespace KaObjects
         public int Wiederholungen { get; set; }
         public DateTime Wiederholen_bis { get; set; }
 
+        public string[] usergroup;
         public string Wochentag { get; set; }
         public int XMontag { get; set; }
         public int XDienstag { get; set; }

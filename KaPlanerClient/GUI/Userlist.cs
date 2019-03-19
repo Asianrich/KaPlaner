@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KaObjects;
 
 namespace KaPlaner.GUI
 {
@@ -19,12 +20,28 @@ namespace KaPlaner.GUI
 
         private void BTN_Close_Click(object sender, EventArgs e)
         {
-            Close();
+            try
+            {
+                //Save_usergroup(???);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
-        public void Save_usergroup()
+        public void Save_usergroup(KaEvent list, int index)
         {
-
+            list.usergroup = new string[index];
+            for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
+            {
+                for (int spalte = 0; spalte < LV_users.Columns.Count; spalte++)
+                {
+                    list.usergroup[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
+                }
+            }
         }
     }
 }

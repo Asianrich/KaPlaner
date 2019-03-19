@@ -158,21 +158,28 @@ namespace WindowsFormsApp1
 
         private void Btn_reg_send_Click(object sender, EventArgs e)
         {
-            if (clientLogic.RegisterRemote(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
+            try
             {
-                Form open_calendar = new wdw_calendar(clientLogic);
-                open_calendar.Show();
-                Close();
-                MessageBox.Show("Registrierung erfolgreich-Willkommen");
-            }
+                if (clientLogic.RegisterRemote(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
+                {
+                    Form open_calendar = new wdw_calendar(clientLogic);
+                    open_calendar.Show();
+                    Close();
+                    MessageBox.Show("Registrierung erfolgreich-Willkommen");
+                }
 
-          
-            else
+
+                else
+                {
+                    rTB_benutzername.Text = "";
+                    rTB_passwort.Text = "";
+                    rTB_passwort_bestaetigen.Text = "";
+                }
+            }
+            catch (Exception ex)
             {
-                rTB_benutzername.Text = "";
-                rTB_passwort.Text = "";
-                rTB_passwort_bestaetigen.Text = "";        
-            }   
+                MessageBox.Show(ex.Message);
+            }
         }   
 
         private void Btn_reg_quit_Click(object sender, EventArgs e)

@@ -179,29 +179,40 @@ namespace WindowsFormsApp1
                 }
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                
             }
         }
 
         private void Wdw_registry_Click(object sender, EventArgs e)
         {
-            Form open_registry = new Wdw_registrierung(clientLogic);
-            open_registry.Show();
+            try
+            {
+                Form open_registry = new Wdw_registrierung(clientLogic);
+                open_registry.Show();
+            }
+            
         }
 
         private void BTN_offline_Click(object sender, EventArgs e)
         {
-            if (clientLogic.LoginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+            try
             {
-                Form open_calendar = new wdw_calendar(clientLogic);
-                open_calendar.Show();
-                tb_log_benutzername.Text = "";
-                tb_log_passwort.Text = "";
+                if (clientLogic.LoginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+                {
+                    Form open_calendar = new wdw_calendar(clientLogic);
+                    open_calendar.Show();
+                    tb_log_benutzername.Text = "";
+                    tb_log_passwort.Text = "";
+                }
+                else
+                {
+                    tb_log_benutzername.Text = "";
+                    tb_log_passwort.Text = "";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                tb_log_benutzername.Text = "";
-                tb_log_passwort.Text = "";
+                MessageBox.Show(ex.Message);
             }
         }
     }

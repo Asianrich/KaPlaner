@@ -112,10 +112,17 @@ namespace WindowsFormsApp1
         /// </summary>
         private void BTN_save_Click(object sender, EventArgs e)
         {
-            this.Write();
-            clientLogic.SaveLocal(returnValue);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            try
+            {
+                this.Write();
+                clientLogic.SaveLocal(returnValue);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// #######################################

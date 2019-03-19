@@ -49,16 +49,6 @@ namespace KaPlaner.GUI
             }
         }
 
-        private void LV_Dates_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Read(ka);
-        }
-
-        public void Read(KaEvent ka)
-        {
-            
-        }
-
         public void load(ClientLogic clientLogic, int index)
         {
             bool isNewElement = false;
@@ -107,8 +97,15 @@ namespace KaPlaner.GUI
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
-            int index = LV_dates.FocusedItem.Index;
-            load(null, index);
+            try
+            {
+                int index = LV_dates.FocusedItem.Index;
+                load(null, index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void BTN_close_Click(object sender, EventArgs e)
@@ -116,31 +113,30 @@ namespace KaPlaner.GUI
             Close();
         }
 
-        private void Wdw_List_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void BTN_new_Click(object sender, EventArgs e)
         {
-            int index = LV_dates.FocusedItem.Index;
-            load(null, ListEvents.Length +1);
+            try
+            {
+                int index = LV_dates.FocusedItem.Index;
+                load(null, ListEvents.Length + 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void BTN_delete_Click(object sender, EventArgs e)
+        private void BTN_invite_Click(object sender, EventArgs e)
         {
-            //TO FIX: Logik als Funktion in die Datenbankklasse verschieben und nur diese Funktion
-            // hier aufrufen.
-            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
-            con.Open();
-
-            string delete = "delete from Calendar where Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
-            SqlCommand cmd_delete = new SqlCommand(delete, con);
-
-            cmd_delete.ExecuteNonQuery();
-            MessageBox.Show("Termin wurde erfolgreich gelöscht");
-
-            con.Close();
+            try
+            {
+                Form open_user_list = new Wdw_user_list();
+                open_user_list.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

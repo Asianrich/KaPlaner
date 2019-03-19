@@ -37,6 +37,7 @@
             this.BTN_oeffnen = new System.Windows.Forms.Button();
             this.BTN_list_close = new System.Windows.Forms.Button();
             this.BTN_new = new System.Windows.Forms.Button();
+            this.BTN_invite = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LV_dates
@@ -55,7 +56,6 @@
             this.LV_dates.TabIndex = 0;
             this.LV_dates.UseCompatibleStateImageBehavior = false;
             this.LV_dates.View = System.Windows.Forms.View.Details;
-            this.LV_dates.SelectedIndexChanged += new System.EventHandler(this.LV_Dates_SelectedIndexChanged);
             // 
             // Titel
             // 
@@ -86,7 +86,6 @@
             this.BTN_delete.TabIndex = 73;
             this.BTN_delete.Text = "Löschen";
             this.BTN_delete.UseVisualStyleBackColor = true;
-            this.BTN_delete.Click += new System.EventHandler(this.BTN_delete_Click);
             // 
             // BTN_oeffnen
             // 
@@ -121,11 +120,23 @@
             this.BTN_new.UseVisualStyleBackColor = true;
             this.BTN_new.Click += new System.EventHandler(this.BTN_new_Click);
             // 
+            // BTN_invite
+            // 
+            this.BTN_invite.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_invite.Location = new System.Drawing.Point(416, 419);
+            this.BTN_invite.Name = "BTN_invite";
+            this.BTN_invite.Size = new System.Drawing.Size(95, 30);
+            this.BTN_invite.TabIndex = 77;
+            this.BTN_invite.Text = "Einladen";
+            this.BTN_invite.UseVisualStyleBackColor = true;
+            this.BTN_invite.Click += new System.EventHandler(this.BTN_invite_Click);
+            // 
             // Wdw_date_list
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
+            this.Controls.Add(this.BTN_invite);
             this.Controls.Add(this.BTN_new);
             this.Controls.Add(this.BTN_list_close);
             this.Controls.Add(this.BTN_oeffnen);
@@ -133,7 +144,6 @@
             this.Controls.Add(this.LV_dates);
             this.Name = "Wdw_date_list";
             this.Text = "Terminliste";
-            this.Load += new System.EventHandler(this.Wdw_List_Load);
             this.ResumeLayout(false);
 
         }
@@ -149,5 +159,6 @@
         private System.Windows.Forms.Button BTN_oeffnen;
         private System.Windows.Forms.Button BTN_list_close;
         private System.Windows.Forms.Button BTN_new;
+        private System.Windows.Forms.Button BTN_invite;
     }
 }

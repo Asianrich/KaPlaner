@@ -53,51 +53,72 @@ namespace WindowsFormsApp1
 
         private void TB_open_list(object sender, EventArgs e)
         {
-            KaEvent[] kaEvents = new KaEvent[3];
-
-            for (int i = 0; i < 3; i++)
+            try
             {
-                kaEvents[i] = new KaEvent();
-                kaEvents[i].Titel = "Titetl " + i;
-                kaEvents[i].Ort = "Ort " + i;
-            }
+                KaEvent[] kaEvents = new KaEvent[3];
 
-            Form open_list = new Wdw_date_list(kaEvents);
-            open_list.Show();
+                for (int i = 0; i < 3; i++)
+                {
+                    kaEvents[i] = new KaEvent();
+                    kaEvents[i].Titel = "Titetl " + i;
+                    kaEvents[i].Ort = "Ort " + i;
+                }
+
+                Form open_list = new Wdw_date_list(kaEvents);
+                open_list.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary> check end of old year </summary>
         private void btn_prev_Click(object sender, EventArgs e)
         {
-            if (monthcounter == 0)
+            try
             {
-                monthcounter = 11;
-                year--;
-                lbl_year.Text = Convert.ToString(year);
+                if (monthcounter == 0)
+                {
+                    monthcounter = 11;
+                    year--;
+                    lbl_year.Text = Convert.ToString(year);
+                }
+                else
+                {
+                    monthcounter--;
+                }
+                LBL_month.Text = month[monthcounter];
+                check();
             }
-            else
+            catch (Exception ex)
             {
-                monthcounter--;
+                MessageBox.Show(ex.Message);
             }
-            LBL_month.Text = month[monthcounter];
-            check();
         }
 
         private void btn_next_Click(object sender, EventArgs e)
         {
-            /// <summary> check beginning of new year </summary>
-            if (monthcounter == 11)
+            try
             {
-                monthcounter = 0;
-                year++;
-                lbl_year.Text = Convert.ToString(year);
+                /// <summary> check beginning of new year </summary>
+                if (monthcounter == 11)
+                {
+                    monthcounter = 0;
+                    year++;
+                    lbl_year.Text = Convert.ToString(year);
+                }
+                else
+                {
+                    monthcounter++;
+                }
+                LBL_month.Text = month[monthcounter];
+                check();
             }
-            else
+            catch (Exception ex)
             {
-                monthcounter++;
+                MessageBox.Show(ex.Message);
             }
-            LBL_month.Text = month[monthcounter];
-            check();
         }
 
         ///<summary> 
@@ -181,6 +202,19 @@ namespace WindowsFormsApp1
                     tb_Der_Einunddreißigste.Enabled = true;
                     tb_Der_Einunddreißigste.Visible = true;
                     break;
+            }
+        }
+
+        private void BTN_manual_update_Click(object sender, EventArgs e)
+        {
+            // Logik für manuelles Update
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

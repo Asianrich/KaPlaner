@@ -477,6 +477,7 @@
             this.BTN_manual_update.TabIndex = 43;
             this.BTN_manual_update.Text = "Manuelles Update";
             this.BTN_manual_update.UseVisualStyleBackColor = true;
+            this.BTN_manual_update.Click += new System.EventHandler(this.BTN_manual_update_Click);
             // 
             // LBL_month
             // 
