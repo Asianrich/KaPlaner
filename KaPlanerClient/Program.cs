@@ -15,11 +15,9 @@ namespace KaPlaner
         [STAThread]
         static void Main()
         {
-            KaPlaner.Logic.IClientLogic clientLogic = new KaPlaner.Logic.ClientLogic();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Wdw_login(clientLogic));
+            Application.Run(new Wdw_login());
         }
     }
 }

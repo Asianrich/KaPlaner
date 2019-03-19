@@ -138,7 +138,7 @@ namespace KaObjects.Storage
 
             cmd_insert.ExecuteNonQuery();
             con.Close();
-            return;
+            return; //Können wir überprüfen ob es geklappt hat?
         }
 
         // TO FIX: Den Wert der User-ID aus der Datenbank auslesen

@@ -14,14 +14,12 @@ namespace WindowsFormsApp1
 {
     public partial class Wdw_KaEvent : Form
     {
-        IClientLogic clientLogic;
+        IClientLogic clientLogic = ClientActivator.clientLogic;
 
         public KaEvent returnValue;
 
-        public Wdw_KaEvent(IClientLogic clientLogic, KaEvent ereignis)
+        public Wdw_KaEvent(KaEvent ereignis)
         {
-            this.clientLogic = clientLogic;
-
             InitializeComponent();
 
             returnValue = new KaEvent();
@@ -115,7 +113,7 @@ namespace WindowsFormsApp1
             try
             {
                 this.Write();
-                clientLogic.SaveLocal(returnValue);
+                clientLogic.SaveRemote(returnValue);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

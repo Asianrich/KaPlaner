@@ -13,7 +13,7 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request {Test=-1, Failure, Success, Login, Register, Invite}; // Success and Failure are responses from the server
+    public enum Request {Test=-1, Failure, Success, Login, Register, Invite, Save, Delete}; // Success and Failure are responses from the server
 
     [Serializable, XmlRoot("Package")]
     public class Package
@@ -23,7 +23,7 @@ namespace KaObjects
 
         public string passwordConfirm;
 
-        KaEvent[] kaEvents;
+        public KaEvent[] kaEvents;
 
         public Package(Request request, User user)
         {
@@ -41,6 +41,12 @@ namespace KaObjects
             this.request = Request.Register; /// This should be the only case for a passwordConfirm
             this.user = user;
             this.passwordConfirm = passwordConfirm;
+        }
+
+        public Package(Request request, KaEvent[] kaEvents)
+        {
+            this.request = request;
+            this.kaEvents = kaEvents;
         }
 
         public Package() { }

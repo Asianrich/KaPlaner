@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
 {
     public partial class Wdw_login : Form
     {
-        IClientLogic clientLogic;
+        IClientLogic clientLogic = ClientActivator.clientLogic;
 
         private Label lbl_login;
         private Label lbl_log_benutzername;
@@ -26,10 +26,8 @@ namespace WindowsFormsApp1
         private TextBox tb_log_passwort;
         private Label lbl_log_passwort;
 
-        public Wdw_login(IClientLogic clientLogic)
+        public Wdw_login()
         {
-            this.clientLogic = clientLogic;
-
             InitializeComponent();
         }
 
@@ -190,10 +188,6 @@ namespace WindowsFormsApp1
                 Form open_registry = new Wdw_registrierung(clientLogic);
                 open_registry.Show();
             } catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

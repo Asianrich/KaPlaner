@@ -23,6 +23,8 @@ namespace KaPlaner.Logic
 
         void SaveLocal(KaEvent kaEvent);
 
+        void SaveRemote(KaEvent kaEvent);
+
         void SyncData();
     }
 }

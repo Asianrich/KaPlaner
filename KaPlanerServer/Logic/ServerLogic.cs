@@ -16,6 +16,7 @@ namespace KaPlanerServer.Logic
         static readonly string RegisterRequest = "Registry Requested.";
         static readonly string RegisterSuccess = "Registry Successful.";
         static readonly string RegisterFail = "Registry Failed.";
+        static readonly string SaveRequest = "Save Requested.";
         static readonly string RequestTest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
@@ -48,7 +49,7 @@ namespace KaPlanerServer.Logic
                 /// In case of Register Request try to login to the server database and set Request accordingly
                 case Request.Register:
                     Console.WriteLine(RegisterRequest);
-                    if(database.registerUser(package.user, package.passwordConfirm))
+                    if (database.registerUser(package.user, package.passwordConfirm))
                     {
                         writeResult(Request.Success, RegisterSuccess);
                     }
@@ -58,6 +59,11 @@ namespace KaPlanerServer.Logic
                     }
                     break;
 
+                case Request.Save:
+                    Console.WriteLine(SaveRequest);
+                    database.save(package.kaEvents[0]);
+                    break;
+                
                 case Request.Test:
                     Console.WriteLine(RequestTest);
                     break;

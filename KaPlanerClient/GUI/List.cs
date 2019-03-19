@@ -16,6 +16,7 @@ namespace KaPlaner.GUI
 {
     public partial class Wdw_date_list : Form
     {
+        ClientLogic clientLogic = ClientActivator.clientLogic;
 
         private KaEvent[] ListEvents;
         public Wdw_date_list(KaEvent[] kaEvents)
@@ -64,7 +65,7 @@ namespace KaPlaner.GUI
             }
 
 
-            using (var form = new Wdw_KaEvent(clientLogic, kaEvent))
+            using (var form = new Wdw_KaEvent(kaEvent))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

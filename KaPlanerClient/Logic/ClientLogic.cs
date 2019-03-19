@@ -97,6 +97,15 @@ namespace KaPlaner.Logic
             database.save(kaEvent);
         }
 
+        public void SaveRemote(KaEvent kaEvent)
+        {
+            KaEvent[] kaEvents = new KaEvent[1];
+            kaEvents[0] = kaEvent;
+            Package savePackage = new Package(Request.Save, kaEvents);
+
+            clientConnection.Start(savePackage);
+        }
+
         /// <summary>
         /// Synchronisieren der Datenbanken
         /// Hier wird das Update durchgeführt
@@ -119,6 +128,14 @@ namespace KaPlaner.Logic
             else
                 return false;
         }
+    }
+
+    /// <summary>
+    /// This provides every GUI component access to the same ClientLogic
+    /// </summary>
+    public class ClientActivator
+    {
+        public static ClientLogic clientLogic = new ClientLogic();
     }
 }
 
