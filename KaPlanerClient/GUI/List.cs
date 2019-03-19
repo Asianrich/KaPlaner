@@ -141,20 +141,15 @@ namespace KaPlaner.GUI
 
         private void BTN_delete_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-            string delete = ("DELETE FROM Calendar WHERE UserID = @userid");
-            //string delete = "DELETE FROM database.calendar WHERE UserID =' " + this.UserID.txt.Text + " '; ";
-            SqlCommand cmd_delete = new SqlCommand(delete, con);
-            //cmd_delete.Parameters.AddWithValue("@UserID");
+            // Logik Lösch-Button hier einfügen
+            try
+            {
 
-            cmd_delete.ExecuteNonQuery();
-            MessageBox.Show("Termin wurde erfolgreich gelöscht");
-
-
-            con.Close();
-
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
