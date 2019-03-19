@@ -165,7 +165,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (true)//clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+                if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
                 {
                     Form open_calendar = new wdw_calendar(clientLogic);
                     open_calendar.Show();
@@ -179,7 +179,7 @@ namespace WindowsFormsApp1
                 }
             }catch(Exception ex)
             {
-                
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -189,6 +189,9 @@ namespace WindowsFormsApp1
             {
                 Form open_registry = new Wdw_registrierung(clientLogic);
                 open_registry.Show();
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             
         }

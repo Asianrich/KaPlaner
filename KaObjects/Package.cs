@@ -21,50 +21,28 @@ namespace KaObjects
         public Request request;
         public User user;
 
+        public string passwordConfirm;
+
+        KaEvent[] kaEvents;
+
         public Package(Request request, User user)
         {
             this.request = request;
             this.user = user;
         }
 
+        /// <summary>
+        /// This constructor should only be called to register
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="passwordConfirm"></param>
+        public Package(User user, string passwordConfirm)
+        {
+            this.request = Request.Register; /// This should be the only case for a passwordConfirm
+            this.user = user;
+            this.passwordConfirm = passwordConfirm;
+        }
+
         public Package() { }
-    }
-
-    [Serializable, XmlRoot("RegisterPackage")]
-    public class RegisterPackage : Package
-    {
-        public string passwordConfirm;
-
-        public RegisterPackage(User user, string passwordConfirm) : base(Request.Register, user)
-        {
-            this.passwordConfirm = passwordConfirm;
-        }
-
-        public RegisterPackage(Package package, string passwordConfirm) : base(Request.Register, package.user)
-        {
-            this.passwordConfirm = passwordConfirm;
-        }
-
-        public RegisterPackage() { }
-    }
-
-    [Serializable, XmlRoot("EventPackage")] //Does this work?
-    public class EventPackage : Package
-    {
-        KaEvent[] kaEvents;
-
-        public EventPackage(Request request, User user, KaEvent[] kaEvents) : base(request, user)
-        {
-            this.kaEvents = kaEvents;
-        }
-
-        public EventPackage(Package package, KaEvent[] kaEvents) : base(package.request, package.user)
-        {
-            this.kaEvents = kaEvents;
-        }
-
-        public EventPackage() { }
-
-        public KaEvent[] GetKaEvents() { return kaEvents; }
     }
 }
