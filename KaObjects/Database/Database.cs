@@ -141,19 +141,19 @@ namespace KaObjects.Storage
             return;
         }
 
-        public void Delete_date(KaEvent UserID)
+        // TO FIX: Den Wert der User-ID aus der Datenbank auslesen
+        public void Delete_date()
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
             string delete = ("DELETE FROM Calendar WHERE User-ID = @user-id");
             
             SqlCommand cmd_delete = new SqlCommand(delete, con);
-            cmd_delete.Parameters.AddWithValue("@User-ID",UserID);
+            //cmd_delete.Parameters.AddWithValue("@User-ID",UserID);
            
             cmd_delete.ExecuteNonQuery();
             MessageBox.Show("Termin wurde erfolgreich gelöscht");
-
-         
+       
             con.Close();
         }
 

@@ -138,5 +138,18 @@ namespace KaPlaner.GUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void BTN_delete_Click(object sender, EventArgs e)
+        {
+            // Logik Lösch-Button hier einfügen
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
