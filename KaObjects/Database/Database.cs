@@ -103,6 +103,7 @@ namespace KaObjects.Storage
             }
         }
 
+        // Termine in Datenbank speichern 
         public void save(KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
