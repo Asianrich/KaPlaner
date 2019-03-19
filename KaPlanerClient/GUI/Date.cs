@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KaObjects;
-using System.Data.SqlClient;
-using KaPlaner.GUI;
 using KaPlaner.Logic;
 
 namespace WindowsFormsApp1
@@ -571,40 +569,8 @@ namespace WindowsFormsApp1
 
         private void BTN_delete_Click(object sender, EventArgs e)
         {
-            //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-            //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-            //static string connectionString = ""Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
-            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
-            con.Open();
-
-            string delete = "delete from Calendar where Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
-            SqlCommand cmd_delete = new SqlCommand(delete, con);
-
-            cmd_delete.ExecuteNonQuery();
-            MessageBox.Show("Termin wurde erfolgreich gelöscht");
-
-            con.Close();
         }
-
-        private void BTN_load_Click(object sender, EventArgs e)
-        {
-
-            KaEvent[] kaEvents = new KaEvent[3];
-
-            for(int i = 0; i < 3; i++)
-            {
-                kaEvents[i] = new KaEvent();
-                kaEvents[i].Titel = "Titetl " + i;
-                kaEvents[i].Ort = "Ort " + i;
-            }
-
-            Form open_list = new Wdw_List(kaEvents);
-            open_list.Show();
-        }
-
-
-    }  /// #######################################
-   
+    }  /// ####################################### 
 }
 

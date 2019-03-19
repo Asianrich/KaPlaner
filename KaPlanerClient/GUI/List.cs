@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using KaObjects;
 using WindowsFormsApp1;
 using KaPlaner.Logic;
+using System.Data.SqlClient;
 
 namespace KaPlaner.GUI
 {
@@ -58,8 +59,20 @@ namespace KaPlaner.GUI
             
         }
 
-        public void load(ClientLogic clientLogic, KaEvent kaEvent)
+        public void load(ClientLogic clientLogic, int index)
         {
+            bool isNewElement = false;
+            KaEvent kaEvent;
+            if (index >= ListEvents.Length)
+            {
+                isNewElement = true;
+                kaEvent = new KaEvent();
+            }
+            else
+            {
+                kaEvent = ListEvents[index];
+            }
+
 
             using (var form = new Wdw_KaEvent(clientLogic, kaEvent))
             {
@@ -67,13 +80,26 @@ namespace KaPlaner.GUI
                 if (result == DialogResult.OK)
                 {
                     kaEvent = form.returnValue;
-                    MessageBox.Show(kaEvent.Titel);
+                    
                 }
                 else
                 {
                     //MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
+
+            if(isNewElement)
+            {
+                List<KaEvent> GenList = ListEvents.ToList<KaEvent>();
+                GenList.Add(kaEvent);
+                ListEvents = GenList.ToArray();
+            }
+            else
+            {
+                ListEvents[index] = kaEvent;
+            }
+
+
             //Beispiel Funktion fuer das Oeffnen eines Date.cs/ oder Kaevents-Fenster
             // Wenn man das Oeffnet sollte mit bestehender Daten befuellt werden. Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
             //Form date = new Wdw_KaEvent();
@@ -81,12 +107,40 @@ namespace KaPlaner.GUI
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
-            load(null, ListEvents[LV_Dates.FocusedItem.Index]);
+            int index = LV_Dates.FocusedItem.Index;
+            load(null, index);
         }
 
         private void BTN_close_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Wdw_List_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_new_Click(object sender, EventArgs e)
+        {
+            int index = LV_Dates.FocusedItem.Index;
+            load(null, ListEvents.Length +1);
+        }
+
+        private void BTN_delete_Click(object sender, EventArgs e)
+        {
+            //TO FIX: Logik als Funktion in die Datenbankklasse verschieben und nur diese Funktion
+            // hier aufrufen.
+            SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+            con.Open();
+
+            string delete = "delete from Calendar where Titel,Ort,Tag,Monat,Jahr,Stunde,Minute,Prioritaet,Beschreibung,Haeufigkeit,Beschraenkung,Wochentag,Welcher_Tag) values(@titel, @ort, @monat, @jahr, @stunde, @minute, @priorität, @beschreibung,@haeufigkeit,@beschraenkung,@wochentag,@welcher_tag)";
+            SqlCommand cmd_delete = new SqlCommand(delete, con);
+
+            cmd_delete.ExecuteNonQuery();
+            MessageBox.Show("Termin wurde erfolgreich gelöscht");
+
+            con.Close();
         }
     }
 }

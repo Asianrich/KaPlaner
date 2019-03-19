@@ -17,13 +17,13 @@ namespace WindowsFormsApp1
         IClientLogic clientLogic;
 
         private Label lbl_login;
-        private RichTextBox tb_log_benutzername;
-        private RichTextBox tb_log_passwort;
         private Label lbl_log_benutzername;
         private Button btn_log_senden;
         private Button btn_log_schließen;
         private Button wdw_registrierung;
         private Button BTN_offline;
+        private TextBox tb_log_benutzername;
+        private TextBox tb_log_passwort;
         private Label lbl_log_passwort;
 
         public Wdw_login(IClientLogic clientLogic)
@@ -36,14 +36,14 @@ namespace WindowsFormsApp1
         private void InitializeComponent()
         {
             this.lbl_login = new System.Windows.Forms.Label();
-            this.tb_log_benutzername = new System.Windows.Forms.RichTextBox();
-            this.tb_log_passwort = new System.Windows.Forms.RichTextBox();
             this.lbl_log_benutzername = new System.Windows.Forms.Label();
             this.lbl_log_passwort = new System.Windows.Forms.Label();
             this.btn_log_senden = new System.Windows.Forms.Button();
             this.btn_log_schließen = new System.Windows.Forms.Button();
             this.wdw_registrierung = new System.Windows.Forms.Button();
             this.BTN_offline = new System.Windows.Forms.Button();
+            this.tb_log_benutzername = new System.Windows.Forms.TextBox();
+            this.tb_log_passwort = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbl_login
@@ -55,24 +55,6 @@ namespace WindowsFormsApp1
             this.lbl_login.Size = new System.Drawing.Size(128, 49);
             this.lbl_login.TabIndex = 0;
             this.lbl_login.Text = "Login";
-            // 
-            // tb_log_benutzername
-            // 
-            this.tb_log_benutzername.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_log_benutzername.Location = new System.Drawing.Point(192, 183);
-            this.tb_log_benutzername.Name = "tb_log_benutzername";
-            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 40);
-            this.tb_log_benutzername.TabIndex = 1;
-            this.tb_log_benutzername.Text = "";
-            // 
-            // tb_log_passwort
-            // 
-            this.tb_log_passwort.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_log_passwort.Location = new System.Drawing.Point(192, 229);
-            this.tb_log_passwort.Name = "tb_log_passwort";
-            this.tb_log_passwort.Size = new System.Drawing.Size(230, 40);
-            this.tb_log_passwort.TabIndex = 2;
-            this.tb_log_passwort.Text = "";
             // 
             // lbl_log_benutzername
             // 
@@ -138,17 +120,31 @@ namespace WindowsFormsApp1
             this.BTN_offline.UseVisualStyleBackColor = true;
             this.BTN_offline.Click += new System.EventHandler(this.BTN_offline_Click);
             // 
+            // tb_log_benutzername
+            // 
+            this.tb_log_benutzername.Location = new System.Drawing.Point(192, 197);
+            this.tb_log_benutzername.Name = "tb_log_benutzername";
+            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 26);
+            this.tb_log_benutzername.TabIndex = 9;
+            // 
+            // tb_log_passwort
+            // 
+            this.tb_log_passwort.Location = new System.Drawing.Point(192, 243);
+            this.tb_log_passwort.Name = "tb_log_passwort";
+            this.tb_log_passwort.Size = new System.Drawing.Size(230, 26);
+            this.tb_log_passwort.TabIndex = 10;
+            // 
             // Wdw_login
             // 
             this.ClientSize = new System.Drawing.Size(459, 421);
+            this.Controls.Add(this.tb_log_passwort);
+            this.Controls.Add(this.tb_log_benutzername);
             this.Controls.Add(this.BTN_offline);
             this.Controls.Add(this.wdw_registrierung);
             this.Controls.Add(this.btn_log_schließen);
             this.Controls.Add(this.btn_log_senden);
             this.Controls.Add(this.lbl_log_passwort);
             this.Controls.Add(this.lbl_log_benutzername);
-            this.Controls.Add(this.tb_log_passwort);
-            this.Controls.Add(this.tb_log_benutzername);
             this.Controls.Add(this.lbl_login);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximumSize = new System.Drawing.Size(475, 460);
@@ -167,17 +163,23 @@ namespace WindowsFormsApp1
 
         private void Btn_log_send_Click(object sender, EventArgs e)
         {
-            if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+            try
             {
-                Form open_calendar = new wdw_calendar(clientLogic);
-                open_calendar.Show();
-                tb_log_benutzername.Text = "";
-                tb_log_passwort.Text = "";
-            }
-            else
+                if (true)//clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+                {
+                    Form open_calendar = new wdw_calendar(clientLogic);
+                    open_calendar.Show();
+                    tb_log_benutzername.Text = "";
+                    tb_log_passwort.Text = "";
+                }
+                else
+                {
+                    tb_log_benutzername.Text = "";
+                    tb_log_passwort.Text = "";
+                }
+            }catch(Exception ex)
             {
-                tb_log_benutzername.Text = "";
-                tb_log_passwort.Text = "";
+                MessageBox.Show(ex.Message);
             }
         }
 

@@ -102,8 +102,6 @@
             this.lbl_haeufigkeit = new System.Windows.Forms.Label();
             this.BTN_save = new System.Windows.Forms.Button();
             this.BTN_close = new System.Windows.Forms.Button();
-            this.BTN_load = new System.Windows.Forms.Button();
-            this.BTN_delete = new System.Windows.Forms.Button();
             this.eingabe.SuspendLayout();
             this.tab_allgemein.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Priority)).BeginInit();
@@ -168,7 +166,7 @@
             this.tab_allgemein.Location = new System.Drawing.Point(4, 27);
             this.tab_allgemein.Name = "tab_allgemein";
             this.tab_allgemein.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_allgemein.Size = new System.Drawing.Size(655, 662);
+            this.tab_allgemein.Size = new System.Drawing.Size(652, 662);
             this.tab_allgemein.TabIndex = 0;
             this.tab_allgemein.Text = "Allgemein";
             this.tab_allgemein.UseVisualStyleBackColor = true;
@@ -873,7 +871,7 @@
             // BTN_close
             // 
             this.BTN_close.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_close.Location = new System.Drawing.Point(319, 711);
+            this.BTN_close.Location = new System.Drawing.Point(117, 711);
             this.BTN_close.Name = "BTN_close";
             this.BTN_close.Size = new System.Drawing.Size(95, 30);
             this.BTN_close.TabIndex = 2;
@@ -881,35 +879,11 @@
             this.BTN_close.UseVisualStyleBackColor = true;
             this.BTN_close.Click += new System.EventHandler(this.BTN_close_Click);
             // 
-            // BTN_load
-            // 
-            this.BTN_load.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_load.Location = new System.Drawing.Point(117, 711);
-            this.BTN_load.Name = "BTN_load";
-            this.BTN_load.Size = new System.Drawing.Size(95, 30);
-            this.BTN_load.TabIndex = 3;
-            this.BTN_load.Text = "Laden";
-            this.BTN_load.UseVisualStyleBackColor = true;
-            this.BTN_load.Click += new System.EventHandler(this.BTN_load_Click);
-            // 
-            // BTN_delete
-            // 
-            this.BTN_delete.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_delete.Location = new System.Drawing.Point(218, 711);
-            this.BTN_delete.Name = "BTN_delete";
-            this.BTN_delete.Size = new System.Drawing.Size(95, 30);
-            this.BTN_delete.TabIndex = 72;
-            this.BTN_delete.Text = "Löschen";
-            this.BTN_delete.UseVisualStyleBackColor = true;
-            this.BTN_delete.Click += new System.EventHandler(this.BTN_delete_Click);
-            // 
             // Wdw_KaEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 749);
-            this.Controls.Add(this.BTN_delete);
-            this.Controls.Add(this.BTN_load);
             this.Controls.Add(this.BTN_close);
             this.Controls.Add(this.BTN_save);
             this.Controls.Add(this.eingabe);
@@ -1018,8 +992,6 @@
         private System.Windows.Forms.Label LBL_always_repeat_until;
         private System.Windows.Forms.TextBox TB_repeat_until_year;
         private System.Windows.Forms.TextBox TB_repeat_until_month;
-        private System.Windows.Forms.Button BTN_load;
-        private System.Windows.Forms.Button BTN_delete;
     }
 }
 
