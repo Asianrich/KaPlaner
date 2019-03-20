@@ -23,7 +23,7 @@ namespace KaPlaner.Logic
 
         IDatabase database = new Database(connectionString);
         IClientConnection clientConnection = new ClientConnection();
-        User currentUser;
+        User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
         /// <summary>
         /// Login mit Nutzernamen und Password
@@ -69,7 +69,15 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public bool RegisterLocal(User user, string password_bestaetigen)
         {
-            return database.registerUser(user, password_bestaetigen);
+            if (database.registerUser(user, password_bestaetigen))
+            {
+                currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -87,7 +95,15 @@ namespace KaPlaner.Logic
 
             returnPackage = clientConnection.Start(registerPackage);
 
-            return RequestResolve(returnPackage);
+            if (RequestResolve(returnPackage))
+            {
+                currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
