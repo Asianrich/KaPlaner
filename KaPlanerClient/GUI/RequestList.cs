@@ -21,7 +21,6 @@ namespace KaPlaner.GUI
         public RequestList(KaEvent[] kaEvents)
         {
             InitializeComponent();
-
             ListEvents = kaEvents;
 
             string[] row = new string[5];

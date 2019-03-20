@@ -255,6 +255,7 @@
             // 
             // TB_year_end
             // 
+            this.TB_year_end.Enabled = false;
             this.TB_year_end.Location = new System.Drawing.Point(569, 189);
             this.TB_year_end.Name = "TB_year_end";
             this.TB_year_end.Size = new System.Drawing.Size(50, 26);
@@ -262,6 +263,7 @@
             // 
             // TB_year_beginn
             // 
+            this.TB_year_beginn.Enabled = false;
             this.TB_year_beginn.Location = new System.Drawing.Point(246, 189);
             this.TB_year_beginn.Name = "TB_year_beginn";
             this.TB_year_beginn.Size = new System.Drawing.Size(50, 26);
@@ -287,6 +289,7 @@
             // 
             // TB_month_end
             // 
+            this.TB_month_end.Enabled = false;
             this.TB_month_end.Location = new System.Drawing.Point(569, 157);
             this.TB_month_end.Name = "TB_month_end";
             this.TB_month_end.Size = new System.Drawing.Size(50, 26);
@@ -294,6 +297,7 @@
             // 
             // TB_month_beginn
             // 
+            this.TB_month_beginn.Enabled = false;
             this.TB_month_beginn.Location = new System.Drawing.Point(246, 157);
             this.TB_month_beginn.Name = "TB_month_beginn";
             this.TB_month_beginn.Size = new System.Drawing.Size(50, 26);
@@ -319,6 +323,7 @@
             // 
             // TB_day_end
             // 
+            this.TB_day_end.Enabled = false;
             this.TB_day_end.Location = new System.Drawing.Point(569, 125);
             this.TB_day_end.Name = "TB_day_end";
             this.TB_day_end.Size = new System.Drawing.Size(50, 26);
@@ -326,6 +331,7 @@
             // 
             // TB_day_beginn
             // 
+            this.TB_day_beginn.Enabled = false;
             this.TB_day_beginn.Location = new System.Drawing.Point(246, 125);
             this.TB_day_beginn.Name = "TB_day_beginn";
             this.TB_day_beginn.Size = new System.Drawing.Size(50, 26);

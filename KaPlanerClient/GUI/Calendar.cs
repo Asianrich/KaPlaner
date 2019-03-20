@@ -40,11 +40,15 @@ namespace WindowsFormsApp1
             {
                 BTN_manual_update.Visible = false;
                 BTN_manual_update.Enabled = false;
+                BT_Request.Visible = false;
+                BT_Request.Enabled = false;
             }
             else
             {
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
+                BT_Request.Visible = true;
+                BT_Request.Enabled = true;
             }
 
             monthcounter = (localDate.Month - 1);
@@ -66,6 +70,14 @@ namespace WindowsFormsApp1
         {
             try
             {
+                RichTextBox trigger = (RichTextBox)sender;
+
+                Int32.TryParse(trigger.Text, out int day);
+
+                DateTime date = new DateTime(year, monthcounter + 1,day);
+
+
+
                 KaEvent[] kaEvents = new KaEvent[3];
 
                 for (int i = 0; i < 3; i++)
@@ -75,7 +87,7 @@ namespace WindowsFormsApp1
                     kaEvents[i].Ort = "Ort " + i;
                 }
 
-                Form open_list = new Wdw_date_list(kaEvents);
+                Form open_list = new Wdw_date_list(kaEvents, date);
                 open_list.Show();
             }
             catch (Exception ex)
