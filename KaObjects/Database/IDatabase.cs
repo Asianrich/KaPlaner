@@ -13,7 +13,9 @@ namespace KaObjects.Storage
 
         bool registerUser(User user, string password_bestaetigen);
 
-        void Save(KaEvent kaEvent);
+        void SaveEvent(KaEvent kaEvent);
+
+        List<KaEvent> LoadEvents(DateTime month);
 
         void Delete_date();
     }

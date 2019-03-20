@@ -114,7 +114,7 @@ namespace KaPlaner.Logic
         public void SaveLocal(KaEvent kaEvent)
         {
             kaEvent.owner = currentUser;
-            database.Save(kaEvent);
+            database.SaveEvent(kaEvent);
         }
 
         /// <summary>

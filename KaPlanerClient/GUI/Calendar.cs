@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
 
     public partial class wdw_calendar : Form
     {
-        IClientLogic clientLogic;
+        IClientLogic clientLogic = ClientActivator.clientLogic;
 
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
@@ -30,10 +30,8 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar(IClientLogic clientLogic, bool online)
+        public wdw_calendar(bool online)
         {
-            this.clientLogic = clientLogic;
-
             InitializeComponent();
 
             if (!online)

@@ -74,7 +74,7 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(SaveRequest);
                     try
                     {
-                        database.Save(package.kaEvents[0]);
+                        database.SaveEvent(package.kaEvents[0]);
                         writeResult(Request.Success, SaveSuccess);
                     } catch(Exception e)
                     {

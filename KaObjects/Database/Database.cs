@@ -118,7 +118,7 @@ namespace KaObjects.Storage
         }
 
         // Termine in Datenbank speichern 
-        public void Save(KaEvent kaEvent)
+        public void SaveEvent(KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -156,6 +156,21 @@ namespace KaObjects.Storage
             cmd_insert.ExecuteNonQuery();
             con.Close();
             return; //Können wir überprüfen ob es geklappt hat?
+        }
+
+        /// <summary>
+        /// Loads every Event in a month to store in a list
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public List<KaEvent> LoadEvents(DateTime month)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string select = "SELECT * FROM @username WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
+
+            return null; //kaEvents
         }
 
         // TO FIX: Den Wert der User-ID aus der Datenbank auslesen
