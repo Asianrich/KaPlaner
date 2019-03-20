@@ -51,21 +51,30 @@ namespace KaPlanerServer.Logic
                 /// In case of Register Request try to login to the server database and set Request accordingly
                 case Request.Register:
                     Console.WriteLine(RegisterRequest);
-                    if (database.registerUser(package.user, package.passwordConfirm))
+                    try
                     {
-                        writeResult(Request.Success, RegisterSuccess);
-                    }
-                    else
+                        if (database.registerUser(package.user, package.passwordConfirm))
+                        {
+                            writeResult(Request.Success, RegisterSuccess);
+                        }
+                        else
+                        {
+                            writeResult(Request.Failure, RegisterFail);
+                        }
+                    } catch(Exception e)
                     {
+                        Console.WriteLine(e.GetType().FullName);
+                        Console.WriteLine(e.Message);
                         writeResult(Request.Failure, RegisterFail);
                     }
+
                     break;
 
                 case Request.Save:
                     Console.WriteLine(SaveRequest);
                     try
                     {
-                        database.save(package.kaEvents[0]);
+                        database.Save(package.kaEvents[0]);
                         writeResult(Request.Success, SaveSuccess);
                     } catch(Exception e)
                     {

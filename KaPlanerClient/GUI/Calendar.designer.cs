@@ -171,10 +171,10 @@
             // tb_Der_Neunzehnte
             // 
             this.tb_Der_Neunzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Neunzehnte.Location = new System.Drawing.Point(436, 307);
+            this.tb_Der_Neunzehnte.Location = new System.Drawing.Point(436, 305);
             this.tb_Der_Neunzehnte.Name = "tb_Der_Neunzehnte";
             this.tb_Der_Neunzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tb_Der_Neunzehnte.Size = new System.Drawing.Size(100, 101);
+            this.tb_Der_Neunzehnte.Size = new System.Drawing.Size(100, 103);
             this.tb_Der_Neunzehnte.TabIndex = 11;
             this.tb_Der_Neunzehnte.Text = "19";
             this.tb_Der_Neunzehnte.Click += new System.EventHandler(this.TB_open_list);
@@ -182,7 +182,7 @@
             // tb_Der_Achtzehnte
             // 
             this.tb_Der_Achtzehnte.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Achtzehnte.Location = new System.Drawing.Point(330, 307);
+            this.tb_Der_Achtzehnte.Location = new System.Drawing.Point(330, 305);
             this.tb_Der_Achtzehnte.Name = "tb_Der_Achtzehnte";
             this.tb_Der_Achtzehnte.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tb_Der_Achtzehnte.Size = new System.Drawing.Size(100, 103);
@@ -259,10 +259,10 @@
             // tb_Der_Fuenfundzwanzigste
             // 
             this.tb_Der_Fuenfundzwanzigste.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.tb_Der_Fuenfundzwanzigste.Location = new System.Drawing.Point(330, 417);
+            this.tb_Der_Fuenfundzwanzigste.Location = new System.Drawing.Point(330, 414);
             this.tb_Der_Fuenfundzwanzigste.Name = "tb_Der_Fuenfundzwanzigste";
             this.tb_Der_Fuenfundzwanzigste.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tb_Der_Fuenfundzwanzigste.Size = new System.Drawing.Size(100, 103);
+            this.tb_Der_Fuenfundzwanzigste.Size = new System.Drawing.Size(100, 106);
             this.tb_Der_Fuenfundzwanzigste.TabIndex = 17;
             this.tb_Der_Fuenfundzwanzigste.Text = "25";
             this.tb_Der_Fuenfundzwanzigste.Click += new System.EventHandler(this.TB_open_list);
@@ -403,6 +403,7 @@
             this.tb_Der_Vierte.TabIndex = 33;
             this.tb_Der_Vierte.Text = "4";
             this.tb_Der_Vierte.Click += new System.EventHandler(this.TB_open_list);
+            this.tb_Der_Vierte.TextChanged += new System.EventHandler(this.TB_open_list);
             // 
             // tb_Der_Fuenfte
             // 

@@ -34,12 +34,12 @@ namespace KaPlaner.GUI
 
         public void Save_usergroup(KaEvent list, int index)
         {
-            list.usergroup = new string[index];
+            list.members = new string[index];
             for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
             {
                 for (int spalte = 0; spalte < LV_users.Columns.Count; spalte++)
                 {
-                    list.usergroup[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
+                    list.members[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
                 }
             }
         }

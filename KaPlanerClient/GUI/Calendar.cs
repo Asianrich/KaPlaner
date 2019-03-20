@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
 
-        private string[] month = new string[] 
+        private string[] month = new string[]
         { "Januar", "Februar", "Maerz", "April",
             "Mai", "Juni", "Juli", "August",
             "September", "Oktober", "November",
@@ -36,7 +36,7 @@ namespace WindowsFormsApp1
 
             InitializeComponent();
 
-            if(!online)
+            if (!online)
             {
                 BTN_manual_update.Visible = false;
                 BTN_manual_update.Enabled = false;
@@ -47,9 +47,9 @@ namespace WindowsFormsApp1
                 BTN_manual_update.Enabled = true;
             }
 
-            monthcounter = (localDate.Month-1);
+            monthcounter = (localDate.Month - 1);
             year = localDate.Year;
-            
+
             lbl_year.Text = Convert.ToString(year);
             LBL_month.Text = month[monthcounter];
             check();
@@ -148,7 +148,7 @@ namespace WindowsFormsApp1
                     tb_Der_Einunddreißigste.Visible = true;
                     break;
                 case (int)MonthName.FEBRUAR:
-                    
+
                     //Check leap year
                     if (DateTime.IsLeapYear(year))
                     {
@@ -234,7 +234,7 @@ namespace WindowsFormsApp1
 
             KaEvent[] kaEvents = new KaEvent[3];
 
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 kaEvents[i] = new KaEvent();
                 kaEvents[i].Titel = "Titel" + i;
@@ -250,7 +250,7 @@ namespace WindowsFormsApp1
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    
+
 
                 }
                 else

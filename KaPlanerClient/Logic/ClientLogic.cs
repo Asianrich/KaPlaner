@@ -16,14 +16,14 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
         IClientConnection clientConnection = new ClientConnection();
-        User currentUser = new User();
+        User currentUser;
 
         /// <summary>
         /// Login mit Nutzernamen und Password
@@ -48,8 +48,10 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public bool LoginRemote(User user)
         {
+            currentUser = user;
+
             Package returnPackage;
-            Package loginPackage = new Package(Request.Login, user);
+            Package loginPackage = new Package(Request.Login, currentUser);
 
             returnPackage = clientConnection.Start(loginPackage);
 
@@ -95,11 +97,19 @@ namespace KaPlaner.Logic
         /// <param name="kaEvent"></param>
         public void SaveLocal(KaEvent kaEvent)
         {
-            database.save(kaEvent);
+            kaEvent.owner = currentUser;
+            database.Save(kaEvent);
         }
 
+        /// <summary>
+        /// Speichern des mitgelieferten Events in der Remote Datenbank
+        /// Benutzt das Datenbankinterface
+        /// </summary>
+        /// <param name="kaEvent"></param>
         public void SaveRemote(KaEvent kaEvent)
         {
+            kaEvent.owner = currentUser;
+
             KaEvent[] kaEvents = new KaEvent[1];
             kaEvents[0] = kaEvent;
             Package savePackage = new Package(Request.Save, kaEvents);
