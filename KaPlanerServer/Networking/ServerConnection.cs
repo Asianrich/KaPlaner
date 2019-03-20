@@ -29,7 +29,7 @@ namespace KaPlanerServer.Networking
 
     class ServerConnection
     {
-        IServerLogic serverLogic = new ServerLogic();
+        static IServerLogic serverLogic = new ServerLogic(); //needs to be static because it is used in a static method
 
         private IPHostEntry ipHostInfo;
         private IPAddress ipAddress;

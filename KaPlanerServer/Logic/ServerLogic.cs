@@ -27,8 +27,6 @@ namespace KaPlanerServer.Logic
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
-
-        User currentUser;
         
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
