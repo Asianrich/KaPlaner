@@ -48,7 +48,7 @@ namespace KaPlaner.GUI
 
                 ListViewItem lvi = new ListViewItem(row);
 
-                LV_dates.Items.Add(lvi);               
+                LV_dates.Items.Add(lvi);
             }
         }
 
@@ -73,7 +73,7 @@ namespace KaPlaner.GUI
                 if (result == DialogResult.OK)
                 {
                     kaEvent = form.returnValue;
-                    
+
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace KaPlaner.GUI
                 }
             }
 
-            if(isNewElement)
+            if (isNewElement)
             {
                 List<KaEvent> GenList = ListEvents.ToList<KaEvent>();
                 GenList.Add(kaEvent);
@@ -133,28 +133,19 @@ namespace KaPlaner.GUI
         {
             try
             {
-                string[] list;
+                
 
                 using (var form = new Wdw_user_list())
                 {
                     var results = form.ShowDialog();
-                    if(results == DialogResult.OK)
-                    {
-                        list = form.listStringreturn.ToArray();
 
-
-
-                    }
-                    else
-                    {
-
-                    }
-
+                    //Betroffenes Termin
+                    KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
+                    FocusEvent.members = form.listStringreturn.ToArray();
+                    //Joshua hier bei updatest du den Event. FocusEvent ist das neue Event, welches abgeändert wurde.
 
 
                 }
-                    Form open_user_list = new Wdw_user_list();
-                open_user_list.Show();
             }
             catch (Exception ex)
             {
