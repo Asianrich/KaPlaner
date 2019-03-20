@@ -66,6 +66,14 @@ namespace WindowsFormsApp1
         {
             try
             {
+                RichTextBox trigger = (RichTextBox)sender;
+
+                Int32.TryParse(trigger.Text, out int day);
+
+                DateTime date = new DateTime(year, monthcounter + 1,day);
+
+
+
                 KaEvent[] kaEvents = new KaEvent[3];
 
                 for (int i = 0; i < 3; i++)
@@ -75,7 +83,7 @@ namespace WindowsFormsApp1
                     kaEvents[i].Ort = "Ort " + i;
                 }
 
-                Form open_list = new Wdw_date_list(kaEvents);
+                Form open_list = new Wdw_date_list(kaEvents, date);
                 open_list.Show();
             }
             catch (Exception ex)

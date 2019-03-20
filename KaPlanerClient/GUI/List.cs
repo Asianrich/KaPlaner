@@ -17,13 +17,15 @@ namespace KaPlaner.GUI
     public partial class Wdw_date_list : Form
     {
         ClientLogic clientLogic = ClientActivator.clientLogic;
+        DateTime date;
+
 
         private KaEvent[] ListEvents;
-        public Wdw_date_list(KaEvent[] kaEvents)
+        public Wdw_date_list(KaEvent[] kaEvents, DateTime date)
         {
             InitializeComponent();
             string[] row = new string[5];
-
+            this.date = date;
 
             /*
              * Joshua ListenUpdates wir brauchen die KaEvents des jeweiligen Tages
@@ -57,7 +59,7 @@ namespace KaPlaner.GUI
             if (index >= ListEvents.Length)
             {
                 isNewElement = true;
-                kaEvent = new KaEvent();
+                kaEvent = null;
             }
             else
             {
@@ -65,7 +67,7 @@ namespace KaPlaner.GUI
             }
 
 
-            using (var form = new Wdw_KaEvent(kaEvent))
+            using (var form = new Wdw_KaEvent(kaEvent, date))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
