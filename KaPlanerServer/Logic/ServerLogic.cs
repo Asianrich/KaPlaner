@@ -27,6 +27,8 @@ namespace KaPlanerServer.Logic
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
+
+        User currentUser;
         
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
@@ -51,21 +53,30 @@ namespace KaPlanerServer.Logic
                 /// In case of Register Request try to login to the server database and set Request accordingly
                 case Request.Register:
                     Console.WriteLine(RegisterRequest);
-                    if (database.registerUser(package.user, package.passwordConfirm))
+                    try
                     {
-                        writeResult(Request.Success, RegisterSuccess);
-                    }
-                    else
+                        if (database.registerUser(package.user, package.passwordConfirm))
+                        {
+                            writeResult(Request.Success, RegisterSuccess);
+                        }
+                        else
+                        {
+                            writeResult(Request.Failure, RegisterFail);
+                        }
+                    } catch(Exception e)
                     {
+                        Console.WriteLine(e.GetType().FullName);
+                        Console.WriteLine(e.Message);
                         writeResult(Request.Failure, RegisterFail);
                     }
+
                     break;
 
                 case Request.Save:
                     Console.WriteLine(SaveRequest);
                     try
                     {
-                        database.save(package.kaEvents[0]);
+                        database.Save(package.kaEvents[0]);
                         writeResult(Request.Success, SaveSuccess);
                     } catch(Exception e)
                     {

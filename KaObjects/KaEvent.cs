@@ -15,7 +15,7 @@ namespace KaObjects
         public string TerminID;
         public User owner { get; set; }
         public DateTime date { get; set; }
-        string[] members { get; set; }
+        public string[] members { get; set; }
 
         public string Titel { get; set; }
         public string Ort { get; set; }
@@ -30,7 +30,6 @@ namespace KaObjects
         public int Wiederholungen { get; set; }
         public DateTime Wiederholen_bis { get; set; }
 
-        public string[] usergroup;
         public string Wochentag { get; set; }
         public int XMontag { get; set; }
         public int XDienstag { get; set; }

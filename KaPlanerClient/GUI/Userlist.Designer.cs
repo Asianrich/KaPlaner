@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.LV_users = new System.Windows.Forms.ListView();
+            this.Gaste = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Einladung = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TB_add_user = new System.Windows.Forms.TextBox();
             this.BTN_add_user = new System.Windows.Forms.Button();
             this.LBL_username = new System.Windows.Forms.Label();
             this.BTN_delete_user = new System.Windows.Forms.Button();
-            this.Gaste = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Einladung = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.BTN_Close = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -53,6 +53,16 @@
             this.LV_users.UseCompatibleStateImageBehavior = false;
             this.LV_users.View = System.Windows.Forms.View.Details;
             // 
+            // Gaste
+            // 
+            this.Gaste.Text = "Gaeste";
+            this.Gaste.Width = 213;
+            // 
+            // Einladung
+            // 
+            this.Einladung.Text = "Einladung";
+            this.Einladung.Width = 266;
+            // 
             // TB_add_user
             // 
             this.TB_add_user.Location = new System.Drawing.Point(584, 155);
@@ -69,6 +79,7 @@
             this.BTN_add_user.TabIndex = 2;
             this.BTN_add_user.Text = "Hinzufügen";
             this.BTN_add_user.UseVisualStyleBackColor = true;
+            this.BTN_add_user.Click += new System.EventHandler(this.BTN_add_user_Click);
             // 
             // LBL_username
             // 
@@ -89,16 +100,7 @@
             this.BTN_delete_user.TabIndex = 4;
             this.BTN_delete_user.Text = "Löschen";
             this.BTN_delete_user.UseVisualStyleBackColor = true;
-            // 
-            // Gaste
-            // 
-            this.Gaste.Text = "Gaeste";
-            this.Gaste.Width = 213;
-            // 
-            // Einladung
-            // 
-            this.Einladung.Text = "Einladung";
-            this.Einladung.Width = 266;
+            this.BTN_delete_user.Click += new System.EventHandler(this.BTN_delete_user_Click);
             // 
             // BTN_Close
             // 

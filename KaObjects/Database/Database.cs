@@ -48,12 +48,26 @@ namespace KaObjects.Storage
                 }
                 else
                 {
+                    reader_exists.Close();
+
+                    ///This creates a new table for each new user
+                    string newTable = "SELECT * INTO @username FROM calendar";
+                    SqlCommand cmd_newTable = new SqlCommand(newTable, con);
+                    cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
+
+                    //This works...
+                    cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
+
+                    cmd_newTable.ExecuteNonQuery();
+
                     string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
                     SqlCommand cmd_insert = new SqlCommand(insert, con);
                     cmd_insert.Parameters.AddWithValue("@username", user.name);
                     cmd_insert.Parameters.AddWithValue("@password", user.password);
-                    reader_exists.Close();
+
                     cmd_insert.ExecuteNonQuery();
+
+
                     con.Close();
                     return true;
                 }
@@ -104,14 +118,17 @@ namespace KaObjects.Storage
         }
 
         // Termine in Datenbank speichern 
-        public void save(KaEvent kaEvent)
+        public void Save(KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            string insert = "insert into Calendar " +
+            string insert = "insert into @username " +
                 "(Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
           "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
+
+            ///To insert into seperate tables
+            cmd_insert.Parameters.AddWithValue("@username", kaEvent.owner.name); //Name of owner is sufficient, hence no need for another user object reference
 
             cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
             cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);

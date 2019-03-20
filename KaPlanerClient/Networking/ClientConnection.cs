@@ -220,19 +220,33 @@ namespace KaPlaner.Networking
         /// <returns></returns>
         public Package Start(Package package)
         {
-            Socket client = connectServer();
-            Package recObject;
-            string[] delimiter = { "<EOF>" };
+            Socket client = null;
+            try
+            {
+                client = connectServer();
+                Package recObject;
+                string[] delimiter = { "<EOF>" };
 
-            Send(client,package);
-            sendDone.WaitOne();
+                Send(client, package);
+                sendDone.WaitOne();
 
-            receive(client);
-            receiveDone.WaitOne();
+                receive(client);
+                if (!receiveDone.WaitOne(10000))
+                {
+                    throw new Exception("Keine Antwort vom Server");
+                }
 
-            recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]); 
-            Disconnect(client);
-            return recObject;
+                recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]);
+                Disconnect(client);
+                return recObject;
+            } catch(Exception ex)
+            {
+                if (client != null)
+                {
+                    Disconnect(client);
+                }
+                throw ex;
+            }
         }
     }
 }

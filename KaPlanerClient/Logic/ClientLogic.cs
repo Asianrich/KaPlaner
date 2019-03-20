@@ -23,7 +23,7 @@ namespace KaPlaner.Logic
 
         IDatabase database = new Database(connectionString);
         IClientConnection clientConnection = new ClientConnection();
-        User currentUser = new User();
+        User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
         /// <summary>
         /// Login mit Nutzernamen und Password
@@ -48,8 +48,10 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public bool LoginRemote(User user)
         {
+            currentUser = user;
+
             Package returnPackage;
-            Package loginPackage = new Package(Request.Login, user);
+            Package loginPackage = new Package(Request.Login, currentUser);
 
             returnPackage = clientConnection.Start(loginPackage);
 
@@ -67,7 +69,15 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public bool RegisterLocal(User user, string password_bestaetigen)
         {
-            return database.registerUser(user, password_bestaetigen);
+            if (database.registerUser(user, password_bestaetigen))
+            {
+                currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -85,7 +95,15 @@ namespace KaPlaner.Logic
 
             returnPackage = clientConnection.Start(registerPackage);
 
-            return RequestResolve(returnPackage);
+            if (RequestResolve(returnPackage))
+            {
+                currentUser = user;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -95,11 +113,19 @@ namespace KaPlaner.Logic
         /// <param name="kaEvent"></param>
         public void SaveLocal(KaEvent kaEvent)
         {
-            database.save(kaEvent);
+            kaEvent.owner = currentUser;
+            database.Save(kaEvent);
         }
 
+        /// <summary>
+        /// Speichern des mitgelieferten Events in der Remote Datenbank
+        /// Benutzt das Datenbankinterface
+        /// </summary>
+        /// <param name="kaEvent"></param>
         public void SaveRemote(KaEvent kaEvent)
         {
+            kaEvent.owner = currentUser;
+
             KaEvent[] kaEvents = new KaEvent[1];
             kaEvents[0] = kaEvent;
             Package savePackage = new Package(Request.Save, kaEvents);

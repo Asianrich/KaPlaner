@@ -149,8 +149,8 @@ namespace UnitTest
                 kaEvents[i].Ort = "Ort " + i;
             }
 
-            Form open_list = new Wdw_List(kaEvents);
-            open_list.Show();
+            //Form open_list = new Wdw_List(kaEvents);
+            //open_list.Show();
 
             Assert.IsFalse(false);
         }
