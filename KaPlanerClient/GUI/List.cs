@@ -133,7 +133,27 @@ namespace KaPlaner.GUI
         {
             try
             {
-                Form open_user_list = new Wdw_user_list();
+                string[] list;
+
+                using (var form = new Wdw_user_list())
+                {
+                    var results = form.ShowDialog();
+                    if(results == DialogResult.OK)
+                    {
+                        list = form.listStringreturn.ToArray();
+
+
+
+                    }
+                    else
+                    {
+
+                    }
+
+
+
+                }
+                    Form open_user_list = new Wdw_user_list();
                 open_user_list.Show();
             }
             catch (Exception ex)

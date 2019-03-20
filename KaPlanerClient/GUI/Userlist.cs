@@ -13,6 +13,10 @@ namespace KaPlaner.GUI
 {
     public partial class Wdw_user_list : Form
     {
+        public List<string> listStringreturn;
+
+        ListViewItem lvi = new ListViewItem();
+
         public Wdw_user_list()
         {
             InitializeComponent();
@@ -42,6 +46,17 @@ namespace KaPlaner.GUI
                     list.members[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
                 }
             }
+        }
+
+        private void BTN_add_user_Click(object sender, EventArgs e)
+        {
+            LV_users.Items.Add(TB_add_user.Text);
+            TB_add_user.Text = String.Empty;
+        }
+
+        private void BTN_delete_user_Click(object sender, EventArgs e)
+        {
+            LV_users.Items.Remove(LV_users.FocusedItem);
         }
     }
 }
