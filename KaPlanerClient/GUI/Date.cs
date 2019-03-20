@@ -111,7 +111,42 @@ namespace WindowsFormsApp1
         }
 
 
-    
+        public void onlyNumber(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != '\b' && e.KeyChar != ',')
+                //Copy & paste zulassen
+                if (Char.IsControl((e.KeyChar)))
+                {
+                }
+                //Nur Nummern zulassen
+                else if (!Char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+        }
+
+        private void EmptyBox(object sender, EventArgs e)
+        {
+            TextBox box = (TextBox)sender;
+
+            if(box.Text == String.Empty)
+            {
+                box.Text = "0";
+            }
+            if(Int32.TryParse(box.Text, out int result))
+            {
+                if(result > 60)
+                {
+                    box.Text = "60";
+                }
+                else if(result < 0)
+                {
+                    box.Text = "0";
+                }
+            }
+
+
+        }
 
         private void BTN_close_Click(object sender, EventArgs e)
         {
