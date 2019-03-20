@@ -26,9 +26,11 @@ namespace WindowsFormsApp1
             InitializeComponent();
             this.date = date;
             TB_day_beginn.Text = date.Day.ToString();
+            TB_day_end.Text = date.Day.ToString();
             TB_month_beginn.Text = date.Month.ToString();
+            TB_month_end.Text = date.Month.ToString();
             TB_year_beginn.Text = date.Year.ToString();
-
+            TB_year_end.Text = date.Year.ToString();
 
             returnValue = new KaEvent();
 

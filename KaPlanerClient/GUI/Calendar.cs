@@ -40,11 +40,15 @@ namespace WindowsFormsApp1
             {
                 BTN_manual_update.Visible = false;
                 BTN_manual_update.Enabled = false;
+                BT_Request.Visible = false;
+                BT_Request.Enabled = false;
             }
             else
             {
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
+                BT_Request.Visible = true;
+                BT_Request.Enabled = true;
             }
 
             monthcounter = (localDate.Month-1);
