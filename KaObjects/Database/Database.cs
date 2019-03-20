@@ -53,7 +53,7 @@ namespace KaObjects.Storage
                     ///This creates a new table for each new user
                     string newTable = "SELECT * INTO @username FROM calendar";
                     SqlCommand cmd_newTable = new SqlCommand(newTable, con);
-                    cmd_newTable.Parameters.AddWithValue("@username", user.name);
+                    cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
 
                     //This works...
                     cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
