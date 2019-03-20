@@ -165,7 +165,7 @@ namespace WindowsFormsApp1
             {
                 if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
                 {
-                    Form open_calendar = new wdw_calendar(clientLogic, true);
+                    Form open_calendar = new wdw_calendar(true);
                     open_calendar.Show();
                     tb_log_benutzername.Text = "";
                     tb_log_passwort.Text = "";
@@ -200,7 +200,7 @@ namespace WindowsFormsApp1
             {
                 if (clientLogic.LoginLocal(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
                 {
-                    Form open_calendar = new wdw_calendar(clientLogic, false);
+                    Form open_calendar = new wdw_calendar(false);
                     open_calendar.Show();
                     tb_log_benutzername.Text = "";
                     tb_log_passwort.Text = "";
