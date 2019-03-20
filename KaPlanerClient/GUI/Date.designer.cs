@@ -195,6 +195,9 @@
             this.TB_minute_end.Name = "TB_minute_end";
             this.TB_minute_end.Size = new System.Drawing.Size(50, 26);
             this.TB_minute_end.TabIndex = 54;
+            this.TB_minute_end.Text = "00";
+            this.TB_minute_end.TextChanged += new System.EventHandler(this.EmptyBox);
+            this.TB_minute_end.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onlyNumber);
             // 
             // TB_minute_beginn
             // 
@@ -202,6 +205,9 @@
             this.TB_minute_beginn.Name = "TB_minute_beginn";
             this.TB_minute_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_minute_beginn.TabIndex = 53;
+            this.TB_minute_beginn.Text = "00";
+            this.TB_minute_beginn.TextChanged += new System.EventHandler(this.EmptyBox);
+            this.TB_minute_beginn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onlyNumber);
             // 
             // LBL_hour_end
             // 
@@ -227,6 +233,9 @@
             this.TB_hour_end.Name = "TB_hour_end";
             this.TB_hour_end.Size = new System.Drawing.Size(50, 26);
             this.TB_hour_end.TabIndex = 50;
+            this.TB_hour_end.Text = "00";
+            this.TB_hour_end.TextChanged += new System.EventHandler(this.EmptyBox);
+            this.TB_hour_end.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onlyNumber);
             // 
             // TB_hour_beginn
             // 
@@ -234,6 +243,9 @@
             this.TB_hour_beginn.Name = "TB_hour_beginn";
             this.TB_hour_beginn.Size = new System.Drawing.Size(50, 26);
             this.TB_hour_beginn.TabIndex = 49;
+            this.TB_hour_beginn.Text = "00";
+            this.TB_hour_beginn.TextChanged += new System.EventHandler(this.EmptyBox);
+            this.TB_hour_beginn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onlyNumber);
             // 
             // LBL_year_end
             // 
