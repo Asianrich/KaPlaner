@@ -48,18 +48,26 @@ namespace KaObjects.Storage
                 }
                 else
                 {
-                    string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
-                    SqlCommand cmd_insert = new SqlCommand(insert, con);
-                    cmd_insert.Parameters.AddWithValue("@username", user.name);
-                    cmd_insert.Parameters.AddWithValue("@password", user.password);
+                    reader_exists.Close();
+
                     ///This creates a new table for each new user
                     string newTable = "SELECT * INTO @username FROM calendar";
                     SqlCommand cmd_newTable = new SqlCommand(newTable, con);
                     cmd_newTable.Parameters.AddWithValue("@username", user.name);
 
-                    reader_exists.Close();
-                    cmd_insert.ExecuteNonQuery();
+                    //This works...
+                    cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
+
                     cmd_newTable.ExecuteNonQuery();
+
+                    string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
+                    SqlCommand cmd_insert = new SqlCommand(insert, con);
+                    cmd_insert.Parameters.AddWithValue("@username", user.name);
+                    cmd_insert.Parameters.AddWithValue("@password", user.password);
+
+                    cmd_insert.ExecuteNonQuery();
+
+
                     con.Close();
                     return true;
                 }
