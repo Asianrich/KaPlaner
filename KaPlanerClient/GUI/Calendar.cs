@@ -228,5 +228,36 @@ namespace WindowsFormsApp1
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void BT_Request_Click(object sender, EventArgs e)
+        {
+
+            KaEvent[] kaEvents = new KaEvent[3];
+
+            for(int i = 0; i < 3; i++)
+            {
+                kaEvents[i] = new KaEvent();
+                kaEvents[i].Titel = "Titel" + i;
+                kaEvents[i].Beginn = DateTime.Now;
+                kaEvents[i].Ende = DateTime.Now;
+                kaEvents[i].Ort = "Ort" + i;
+                kaEvents[i].owner = new User("Name " + i, "Password");
+            }
+
+
+            using (var form = new RequestList(kaEvents))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    
+
+                }
+                else
+                {
+                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
+                }
+            }
+        }
     }
 }

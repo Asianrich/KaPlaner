@@ -13,7 +13,7 @@ namespace KaObjects
     public class KaEvent
     {
         public string TerminID;
-        User owner { get; set; }
+        public User owner { get; set; }
         public DateTime date { get; set; }
         string[] members { get; set; }
 

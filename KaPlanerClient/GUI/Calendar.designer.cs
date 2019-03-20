@@ -66,6 +66,7 @@
             this.lbl_year = new System.Windows.Forms.Label();
             this.BTN_manual_update = new System.Windows.Forms.Button();
             this.LBL_month = new System.Windows.Forms.Label();
+            this.BT_Request = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tb_Der_Achte
@@ -489,11 +490,23 @@
             this.LBL_month.TabIndex = 44;
             this.LBL_month.Text = "Monat";
             // 
+            // BT_Request
+            // 
+            this.BT_Request.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold);
+            this.BT_Request.Location = new System.Drawing.Point(296, 632);
+            this.BT_Request.Name = "BT_Request";
+            this.BT_Request.Size = new System.Drawing.Size(111, 38);
+            this.BT_Request.TabIndex = 45;
+            this.BT_Request.Text = "Anfragen";
+            this.BT_Request.UseVisualStyleBackColor = true;
+            this.BT_Request.Click += new System.EventHandler(this.BT_Request_Click);
+            // 
             // wdw_calendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 683);
+            this.Controls.Add(this.BT_Request);
             this.Controls.Add(this.LBL_month);
             this.Controls.Add(this.BTN_manual_update);
             this.Controls.Add(this.lbl_year);
@@ -580,6 +593,7 @@
         private System.Windows.Forms.Label lbl_year;
         private System.Windows.Forms.Button BTN_manual_update;
         private System.Windows.Forms.Label LBL_month;
+        private System.Windows.Forms.Button BT_Request;
     }
 }
 
