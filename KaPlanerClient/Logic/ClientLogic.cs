@@ -44,8 +44,18 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public List<KaEvent> LoadEventsRemote(DateTime month)
         {
+            KaEvent eventMonth = new KaEvent();
+            eventMonth.Beginn = month;
+
             Package returnPackage;
-            Package loadPackage = new Package(Request.Load, )
+            Package loadPackage = new Package(Request.Load, currentUser, eventMonth);
+
+            returnPackage = clientConnection.Start(loadPackage);
+
+            if (returnPackage.request == Request.Success)
+                return returnPackage.kaEvents;
+            else
+                return null;
         }
 
         /// <summary>

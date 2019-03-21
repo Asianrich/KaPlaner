@@ -56,6 +56,14 @@ namespace KaObjects
             this.kaEvents.Add(kaEvent);
         }
 
+        public Package(Request request, User user, KaEvent kaEvent)
+        {
+            this.user = user;
+            this.request = request;
+            this.kaEvents = new List<KaEvent>();
+            this.kaEvents.Add(kaEvent);
+        }
+
         public Package() { }
     }
 }
