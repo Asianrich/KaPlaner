@@ -25,17 +25,8 @@ namespace KaPlaner.GUI
             ListEvents = kaEvents;
             this.user = user;
             string[] row = new string[5];
-
-            foreach (KaEvent ka in ListEvents)
-            {
-                row[0] = ka.Titel;
-                row[1] = ka.Ort;
-                row[2] = ka.Beginn.ToString();
-                row[3] = ka.Ende.ToString();
-                row[4] = ka.owner.name;
-                ListViewItem lvi = new ListViewItem(row);
-                LV_Dates.Items.Add(lvi);
-            }
+            indexes = new List<int>();
+            update();
 
 
         }
@@ -71,7 +62,7 @@ namespace KaPlaner.GUI
         {
             foreach(string a in list)
             {
-                if(String.Compare(a,username) > 0)
+                if(String.Equals(a,username))
                 {
                     return true;
                 }

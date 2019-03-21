@@ -287,6 +287,8 @@ namespace WindowsFormsApp1
                 kaEvents[i].owner = new User("Name " + i, "Password");
             }
 
+            kaEvents[2].members = new List<string>();
+            kaEvents[2].members.Add("asd");
 
             using (var form = new RequestList(kaEvents.ToList<KaEvent>(), client.currentUser))
             {
