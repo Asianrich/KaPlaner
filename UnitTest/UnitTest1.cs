@@ -12,6 +12,8 @@ using KaPlaner.Logic;
 using WindowsFormsApp1;
 using System.Windows.Forms;
 using KaPlaner.GUI;
+using KaObjects.Storage;
+
 namespace UnitTest
 {
     [TestClass]
@@ -121,6 +123,27 @@ namespace UnitTest
 
 
 
+        }
+
+        [TestMethod]
+        public void Write()
+        {
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+
+            IDatabase db = new Database(connectionString);
+            KaEvent ka = new KaEvent();
+
+            ka.owner = new User("qwe");
+            ka.Titel = String.Format("asd");
+            ka.Ort = "wer";
+            ka.Beschreibung = "ads";
+
+            ka.Beginn = DateTime.Now;
+            ka.Ende = DateTime.Now;
+
+
+            db.SaveEvent(ka);
+            int a = 0;
         }
 
 

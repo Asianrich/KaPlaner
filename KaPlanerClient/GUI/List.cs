@@ -16,7 +16,7 @@ namespace KaPlaner.GUI
 {
     public partial class Wdw_date_list : Form
     {
-        ClientLogic clientLogic = ClientActivator.clientLogic;
+        IClientLogic clientLogic = ClientActivator.clientLogic;
         DateTime date;
 
         private List<int> indexes;

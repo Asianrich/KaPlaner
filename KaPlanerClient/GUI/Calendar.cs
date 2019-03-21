@@ -39,14 +39,12 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar(bool isOnline, ClientLogic clientLogic)
+        public wdw_calendar(bool isOnline)
         {
             
             InitializeComponent();
             this.isOnline = isOnline;
             KaEvent[] kaEvents2 = new KaEvent[3];
-
-            client = clientLogic;
 
             for (int i = 0; i < 3; i++)
             {
