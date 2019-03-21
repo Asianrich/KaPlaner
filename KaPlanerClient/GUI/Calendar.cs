@@ -48,9 +48,10 @@ namespace WindowsFormsApp1
                 kaEvents2[i] = new KaEvent();
                 kaEvents2[i].Titel = "Titetl " + i;
                 kaEvents2[i].Ort = "Ort " + i;
-                kaEvents2[i].date = new DateTime(2019, 03, 03);
+                kaEvents2[i].Beginn = new DateTime(2019, 03, 03);
             }
 
+            kaEvents = kaEvents2.ToList();
 
             if (!online)
             {

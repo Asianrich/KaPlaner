@@ -42,7 +42,7 @@ namespace KaPlaner.GUI
             foreach (KaEvent ka in ListEvents)
             {
 
-                if (ka.Beginn.Day == date.Day && ka.Beginn.Year == date.Year && ka.date.Month == date.Month)
+                if (ka.Beginn.Day == date.Day && ka.Beginn.Year == date.Year && ka.Beginn.Month == date.Month)
                 {
                     row[0] = ka.Titel;
                     row[1] = ka.Ort;
