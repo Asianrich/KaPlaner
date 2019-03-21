@@ -145,6 +145,13 @@ namespace KaObjects.Storage
                 
             }
 
+            //Cheezy workaround
+            cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
+                " (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
+                "values(" + kaEvent.Titel + ", " + kaEvent.Ort + ", " + kaEvent.Ganztaegig + ", " + kaEvent.Beginn + ", " + kaEvent.Ende + ", " + kaEvent.Prioritaet + ", " + kaEvent.Beschreibung + ", " + kaEvent.Haeufigkeit + ", " + kaEvent.Haeufigkeit_Anzahl + ", " +
+                kaEvent.Immer_Wiederholen + ", " + kaEvent.Wiederholungen + ", " + kaEvent.Wiederholen_bis + ", " + kaEvent.XMontag + ", " + kaEvent.XDienstag + ", " + kaEvent.XMittwoch + ", " + kaEvent.XDonnerstag + ", " + kaEvent.XFreitag + ", " + kaEvent.XSamstag + ", " + kaEvent.XSonntag + ")";
+
+            /*
             ///To insert into seperate tables ... DOESNT WORK WHY????
             cmd_insert.Parameters.AddWithValue("@username", kaEvent.owner.name); //Name of owner is sufficient, hence no need for another user object reference
 
@@ -170,6 +177,7 @@ namespace KaObjects.Storage
             cmd_insert.Parameters.AddWithValue("@XFreitag", kaEvent.XFreitag);
             cmd_insert.Parameters.AddWithValue("@XSamstag", kaEvent.XSamstag);
             cmd_insert.Parameters.AddWithValue("@XSonntag", kaEvent.XSonntag);
+            */
 
             cmd_insert.ExecuteNonQuery();
             con.Close();
