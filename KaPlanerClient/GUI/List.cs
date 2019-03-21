@@ -21,13 +21,14 @@ namespace KaPlaner.GUI
 
         private List<int> indexes;
         public List<KaEvent> ListEvents;
+        bool isOnline;
 
-        public Wdw_date_list(List<KaEvent>kaEvents, DateTime date)
+        public Wdw_date_list(List<KaEvent>kaEvents, DateTime date, bool isOnline)
         {
             InitializeComponent();
-            string[] row = new string[5];
+            this.isOnline = isOnline;
             this.date = date;
-
+            indexes = new List<int>();
             /*
              * Joshua ListenUpdates wir brauchen die KaEvents des jeweiligen Tages
              * Aendere den Konstrukter so, das es fuer dich und dem foreach passt.
@@ -35,10 +36,17 @@ namespace KaPlaner.GUI
              * Fuelle die ListEvents mit Werten. Damit man spaeter beim oeffnen des Date.cs mit Daten befuellen.
              */
             ListEvents = kaEvents;
+            update();
 
 
+        }
 
-
+        public void update()
+        {
+            string[] row = new string[5];
+            LV_dates.Items.Clear();
+            indexes.Clear();
+            int i = 0;
             foreach (KaEvent ka in ListEvents)
             {
 
@@ -48,13 +56,15 @@ namespace KaPlaner.GUI
                     row[1] = ka.Ort;
                     row[2] = ka.Beginn.ToString();
                     row[3] = ka.Ende.ToString();
-                    indexes.Add(ka.TerminID);
+                    indexes.Add(i);
                     ListViewItem lvi = new ListViewItem(row);
 
                     LV_dates.Items.Add(lvi);
                 }
+                i++;
             }
         }
+
 
         public void load(int index)
         {
@@ -71,7 +81,7 @@ namespace KaPlaner.GUI
             }
 
 
-            using (var form = new Wdw_KaEvent(kaEvent, date))
+            using (var form = new Wdw_KaEvent(kaEvent, date, isOnline))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -89,6 +99,8 @@ namespace KaPlaner.GUI
             {
                 
                 ListEvents.Add(kaEvent);
+                update();
+
             }
             else
             {
@@ -100,6 +112,10 @@ namespace KaPlaner.GUI
             // Wenn man das Oeffnet sollte mit bestehender Daten befuellt werden. Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
             //Form date = new Wdw_KaEvent();
         }
+
+
+
+
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
@@ -160,7 +176,8 @@ namespace KaPlaner.GUI
             // Logik Lösch-Button hier einfügen
             try
             {
-
+                ListEvents.RemoveAt(indexes[LV_dates.FocusedItem.Index]);
+                update();
             }
             catch (Exception ex)
             {

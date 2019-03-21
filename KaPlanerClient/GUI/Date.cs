@@ -18,13 +18,14 @@ namespace WindowsFormsApp1
 
         public KaEvent returnValue;
         DateTime date;
+        bool isOnline;
 
 
-
-        public Wdw_KaEvent(KaEvent ereignis, DateTime date = new DateTime())
+        public Wdw_KaEvent(KaEvent ereignis, DateTime date = new DateTime(), bool isOnline = false)
         {
             InitializeComponent();
             this.date = date;
+            this.isOnline = isOnline;
             TB_day_beginn.Text = date.Day.ToString();
             TB_day_end.Text = date.Day.ToString();
             TB_month_beginn.Text = date.Month.ToString();
@@ -161,7 +162,14 @@ namespace WindowsFormsApp1
             try
             {
                 this.Write();
-                clientLogic.SaveRemote(returnValue);
+                if (!isOnline)
+                {
+                    clientLogic.SaveLocal(returnValue);
+                }
+                else
+                {
+                    clientLogic.SaveRemote(returnValue);
+                }
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

@@ -15,14 +15,15 @@ namespace KaPlaner.GUI
 {
     public partial class RequestList : Form
     {
-
-        KaEvent[] ListEvents;
-
-        public RequestList(KaEvent[] kaEvents)
+        private List<int> indexes;
+        public List<KaEvent> ListEvents;
+        //KaEvent[] ListEvents;
+        private User user;
+        public RequestList(List<KaEvent> kaEvents, User user)
         {
             InitializeComponent();
             ListEvents = kaEvents;
-
+            this.user = user;
             string[] row = new string[5];
 
             foreach (KaEvent ka in ListEvents)
@@ -39,6 +40,46 @@ namespace KaPlaner.GUI
 
         }
 
+        public void update()
+        {
+            string[] row = new string[5];
+            LV_Dates.Items.Clear();
+            indexes.Clear();
+            int i = 0;
+            foreach (KaEvent ka in ListEvents)
+            {
+
+                if (ka.members != null)
+                {
+                    if (invite(ka.members.ToArray(), user.name)) //Eingeladene Termine angezeigt bekommen. 
+                    {
+                        row[0] = ka.Titel;
+                        row[1] = ka.Ort;
+                        row[2] = ka.Beginn.ToString();
+                        row[3] = ka.Ende.ToString();
+                        indexes.Add(i);
+                        ListViewItem lvi = new ListViewItem(row);
+
+                        LV_Dates.Items.Add(lvi);
+                    }
+                }
+                i++;
+            }
+        }
+
+        private bool invite(string[] list, string username)
+        {
+            foreach(string a in list)
+            {
+                if(String.Compare(a,username) > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
         private void BT_Close_Click(object sender, EventArgs e)
         {
             Close();
@@ -50,7 +91,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_Dates.FocusedItem.Index;
-                load(index);
+                
             }
             catch (Exception ex)
             {
@@ -64,7 +105,7 @@ namespace KaPlaner.GUI
         {
             bool isNewElement = false;
             KaEvent kaEvent;
-            if (index >= ListEvents.Length)
+            if (index >= ListEvents.Count)
             {
                 isNewElement = true;
                 kaEvent = new KaEvent();
@@ -91,9 +132,7 @@ namespace KaPlaner.GUI
 
             if (isNewElement)
             {
-                List<KaEvent> GenList = ListEvents.ToList<KaEvent>();
-                GenList.Add(kaEvent);
-                ListEvents = GenList.ToArray();
+                ListEvents[index] = kaEvent;
             }
             else
             {

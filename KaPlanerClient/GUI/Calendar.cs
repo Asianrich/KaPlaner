@@ -19,6 +19,7 @@ namespace WindowsFormsApp1
     {
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
+        ClientLogic client;
 #pragma warning disable CS0169 // The field 'wdw_calendar.kaEvents' is never used
         List<KaEvent> kaEvents;
 #pragma warning restore CS0169 // The field 'wdw_calendar.kaEvents' is never used
@@ -28,6 +29,8 @@ namespace WindowsFormsApp1
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
+        bool isOnline;
+
 
         private string[] month = new string[]
         { "Januar", "Februar", "Maerz", "April",
@@ -36,12 +39,14 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar(bool online)
+        public wdw_calendar(bool isOnline, ClientLogic clientLogic)
         {
             
             InitializeComponent();
-
+            this.isOnline = isOnline;
             KaEvent[] kaEvents2 = new KaEvent[3];
+
+            client = clientLogic;
 
             for (int i = 0; i < 3; i++)
             {
@@ -53,7 +58,7 @@ namespace WindowsFormsApp1
 
             kaEvents = kaEvents2.ToList();
 
-            if (!online)
+            if (!isOnline)
             {
                 BTN_manual_update.Visible = false;
                 BTN_manual_update.Enabled = false;
@@ -107,7 +112,7 @@ namespace WindowsFormsApp1
                 //    kaEvents[i].Ort = "Ort " + i;
                 //}
 
-                using (var form = new Wdw_date_list(kaEvents, date))
+                using (var form = new Wdw_date_list(kaEvents, date, isOnline))
                 {
                     var result = form.ShowDialog();
 
@@ -283,7 +288,7 @@ namespace WindowsFormsApp1
             }
 
 
-            using (var form = new RequestList(kaEvents))
+            using (var form = new RequestList(kaEvents.ToList<KaEvent>(), client.currentUser))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

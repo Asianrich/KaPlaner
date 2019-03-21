@@ -84,8 +84,8 @@ namespace KaPlanerServer.Networking
                 StateObject state = new StateObject();
 
                 // Get the socket that handles the client request.  
-                Socket listener = (Socket)ar.AsyncState;
-                Socket handler = listener.EndAccept(ar);
+                Socket listener2 = (Socket)ar.AsyncState;
+                Socket handler = listener2.EndAccept(ar);
 
                 state.workSocket = handler;
 
@@ -159,6 +159,9 @@ namespace KaPlanerServer.Networking
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                StateObject state =(StateObject)ar.AsyncState;
+                state.workSocket.Shutdown(SocketShutdown.Both);
+                state.workSocket.Close();
                 return;
             }
         }
