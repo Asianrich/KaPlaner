@@ -28,5 +28,7 @@ namespace KaPlaner.Logic
         List<KaEvent> LoadEventsLocal(DateTime month);
 
         List<KaEvent> LoadEventsRemote(DateTime month);
+
+        List<KaEvent> GetEventList();
     }
 }

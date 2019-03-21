@@ -46,6 +46,9 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(LoginRequest);
                     if (database.login(package.user))
                     {
+                        List<KaEvent> kaEvents;
+                        kaEvents = database.read(package.user.name);
+                        package.kaEvents = kaEvents;
                         writeResult(Request.Success, LoginSuccess);
                     }
                     else
@@ -93,7 +96,8 @@ namespace KaPlanerServer.Logic
                     try
                     {
                         List<KaEvent> kaEvents;
-                        kaEvents = database.LoadEvents(package.user, package.kaEvents[0].Beginn);
+                        //kaEvents = database.LoadEvents(package.user, package.kaEvents[0].Beginn);
+                        kaEvents = database.read(package.user.name);
                         package.kaEvents = kaEvents;
                         writeResult(Request.Success, LoadSuccess);
                     } catch(Exception e)

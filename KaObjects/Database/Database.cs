@@ -126,6 +126,24 @@ namespace KaObjects.Storage
         // Termine in Datenbank speichern 
         public void SaveEvent(KaEvent kaEvent)
         {
+            ///This recursively saves given Event to every invitees calendar
+            if(kaEvent.members.Count > 0)
+            {
+                KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
+                invitee.owner = new User(kaEvent.members[0]);
+                kaEvent.members.RemoveAt(0);
+                try
+                {
+                    SaveEvent(invitee);
+                }
+                catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
+                {
+                    Console.WriteLine(e.GetType().FullName);
+                    Console.WriteLine(e.Message);
+                }
+                
+            }
+
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
             //string insert = "insert into " + kaEvent.owner.name +
@@ -149,24 +167,6 @@ namespace KaObjects.Storage
             cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
 
 
-
-            ///This recursively saves given Event to every invitees calendar
-            /*if(kaEvent.members.Count > 0)
-            {
-                KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
-                invitee.owner = new User(kaEvent.members[0]);
-                kaEvent.members.RemoveAt(0);
-                try
-                {
-                    SaveEvent(invitee);
-                }
-                catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
-                {
-                    Console.WriteLine(e.GetType().FullName);
-                    Console.WriteLine(e.Message);
-                }
-                
-            }
 
             //Cheezy workaround
             /*cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
@@ -275,25 +275,25 @@ namespace KaObjects.Storage
                 while (reader.Read())
                 {
                     temp.TerminID = reader.GetInt32(0);
-                    //temp.Titel = reader.GetString(1);
+                    temp.Titel = reader.GetString(1);
                     temp.Ort = reader.GetString(2);
-                    temp.Ganztaegig = reader.GetInt32(3);
-                    //temp.Beginn = reader.GetDateTime(4);
-                    //temp.Ende = reader.GetDateTime(5);
-                    temp.Prioritaet = reader.GetInt32(6);
+                    //temp.Ganztaegig = reader.GetInt32(3);
+                    temp.Beginn = reader.GetDateTime(4);
+                    temp.Ende = reader.GetDateTime(5);
+                    //temp.Prioritaet = reader.GetInt32(6);
                     temp.Beschreibung = reader.GetString(7);
-                    temp.Haeufigkeit = reader.GetString(8);
-                    temp.Haeufigkeit_Anzahl = reader.GetInt32(9);
-                    temp.Immer_Wiederholen = reader.GetInt32(10);
-                    temp.Wiederholungen = reader.GetInt32(11);
-                    temp.Wiederholen_bis = reader.GetDateTime(12);
-                    temp.XMontag = reader.GetInt32(13);
-                    temp.XDienstag = reader.GetInt32(14);
-                    temp.XMittwoch = reader.GetInt32(15);
-                    temp.XDonnerstag = reader.GetInt32(16);
-                    temp.XFreitag = reader.GetInt32(17);
-                    temp.XSamstag = reader.GetInt32(18);
-                    temp.XSonntag = reader.GetInt32(19);
+                    //temp.Haeufigkeit = reader.GetString(8);
+                    //temp.Haeufigkeit_Anzahl = reader.GetInt32(9);
+                    //temp.Immer_Wiederholen = reader.GetInt32(10);
+                    //temp.Wiederholungen = reader.GetInt32(11);
+                    //temp.Wiederholen_bis = reader.GetDateTime(12);
+                    //temp.XMontag = reader.GetInt32(13);
+                    //temp.XDienstag = reader.GetInt32(14);
+                    //temp.XMittwoch = reader.GetInt32(15);
+                    //temp.XDonnerstag = reader.GetInt32(16);
+                    //temp.XFreitag = reader.GetInt32(17);
+                    //temp.XSamstag = reader.GetInt32(18);
+                    //temp.XSonntag = reader.GetInt32(19);
 
 
 

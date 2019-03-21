@@ -44,17 +44,17 @@ namespace WindowsFormsApp1
             
             InitializeComponent();
             this.isOnline = isOnline;
-            KaEvent[] kaEvents2 = new KaEvent[3];
+            //KaEvent[] kaEvents2 = new KaEvent[3];
 
-            for (int i = 0; i < 3; i++)
-            {
-                kaEvents2[i] = new KaEvent();
-                kaEvents2[i].Titel = "Titetl " + i;
-                kaEvents2[i].Ort = "Ort " + i;
-                kaEvents2[i].Beginn = new DateTime(2019, 03, 03);
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    kaEvents2[i] = new KaEvent();
+            //    kaEvents2[i].Titel = "Titetl " + i;
+            //    kaEvents2[i].Ort = "Ort " + i;
+            //    kaEvents2[i].Beginn = new DateTime(2019, 03, 03);
+            //}
 
-            kaEvents = kaEvents2.ToList();
+            //kaEvents = kaEvents2.ToList();
 
             if (!isOnline)
             {
@@ -65,6 +65,7 @@ namespace WindowsFormsApp1
             }
             else
             {
+                kaEvents = clientLogic.GetEventList();
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
                 BT_Request.Visible = true;

@@ -26,6 +26,13 @@ namespace KaPlaner.Logic
         IClientConnection clientConnection = new ClientConnection();
         public User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
+        public List<KaEvent> eventList = new List<KaEvent>();
+
+        public List<KaEvent> GetEventList()
+        {
+            return eventList;
+        }
+
         /// <summary>
         /// Läd eine Liste an Events für einen Monat lokal von der Datenbank
         /// Nutzt das Datenbankinterface
@@ -34,7 +41,8 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public List<KaEvent> LoadEventsLocal(DateTime month)
         {
-            return database.LoadEvents(currentUser, month);
+            //return database.LoadEvents(currentUser, month);
+            return database.read(currentUser.name);
         }
 
         /// <summary>
@@ -88,6 +96,8 @@ namespace KaPlaner.Logic
             Package loginPackage = new Package(Request.Login, currentUser);
 
             returnPackage = clientConnection.Start(loginPackage);
+
+            eventList = returnPackage.kaEvents;
 
             return RequestResolve(returnPackage);
         }
