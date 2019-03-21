@@ -21,6 +21,8 @@ namespace WindowsFormsApp1
 
         List<KaEvent> kaEvents;
 
+        
+
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
@@ -34,7 +36,19 @@ namespace WindowsFormsApp1
 
         public wdw_calendar(bool online)
         {
+            
             InitializeComponent();
+
+            KaEvent[] kaEvents2 = new KaEvent[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                kaEvents2[i] = new KaEvent();
+                kaEvents2[i].Titel = "Titetl " + i;
+                kaEvents2[i].Ort = "Ort " + i;
+                kaEvents2[i].date = new DateTime(2019, 03, 03);
+            }
+
 
             if (!online)
             {
@@ -67,7 +81,7 @@ namespace WindowsFormsApp1
             Application.Exit();
         }
 
-        public KaEvent Ereignis;
+        
 
         private void TB_open_list(object sender, EventArgs e)
         {
@@ -81,17 +95,23 @@ namespace WindowsFormsApp1
 
 
 
-                KaEvent[] kaEvents = new KaEvent[3];
+                //KaEvent[] kaEvents = new KaEvent[3];
 
-                for (int i = 0; i < 3; i++)
+                //for (int i = 0; i < 3; i++)
+                //{
+                //    kaEvents[i] = new KaEvent();
+                //    kaEvents[i].Titel = "Titetl " + i;
+                //    kaEvents[i].Ort = "Ort " + i;
+                //}
+
+                using (var form = new Wdw_date_list(kaEvents, date))
                 {
-                    kaEvents[i] = new KaEvent();
-                    kaEvents[i].Titel = "Titetl " + i;
-                    kaEvents[i].Ort = "Ort " + i;
+                    var result = form.ShowDialog();
+
+                    kaEvents = form.ListEvents;
+
                 }
 
-                Form open_list = new Wdw_date_list(kaEvents, date);
-                open_list.Show();
             }
             catch (Exception ex)
             {

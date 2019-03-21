@@ -12,7 +12,7 @@ namespace KaObjects
     [Serializable]
     public class KaEvent
     {
-        public string TerminID;
+        public int TerminID;
         public User owner { get; set; }
         public DateTime date { get; set; }
         public string[] members { get; set; }

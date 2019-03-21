@@ -19,9 +19,10 @@ namespace KaPlaner.GUI
         ClientLogic clientLogic = ClientActivator.clientLogic;
         DateTime date;
 
+        private List<int> indexes;
+        public List<KaEvent> ListEvents;
 
-        private KaEvent[] ListEvents;
-        public Wdw_date_list(KaEvent[] kaEvents, DateTime date)
+        public Wdw_date_list(List<KaEvent>kaEvents, DateTime date)
         {
             InitializeComponent();
             string[] row = new string[5];
@@ -38,17 +39,20 @@ namespace KaPlaner.GUI
 
 
 
-
             foreach (KaEvent ka in ListEvents)
             {
-                row[0] = ka.Titel;
-                row[1] = ka.Ort;
-                row[2] = ka.Beginn.ToString();
-                row[3] = ka.Ende.ToString();
 
-                ListViewItem lvi = new ListViewItem(row);
+                if (ka.Beginn.Day == date.Day && ka.Beginn.Year == date.Year && ka.date.Month == date.Month)
+                {
+                    row[0] = ka.Titel;
+                    row[1] = ka.Ort;
+                    row[2] = ka.Beginn.ToString();
+                    row[3] = ka.Ende.ToString();
+                    indexes.Add(ka.TerminID);
+                    ListViewItem lvi = new ListViewItem(row);
 
-                LV_dates.Items.Add(lvi);
+                    LV_dates.Items.Add(lvi);
+                }
             }
         }
 
@@ -56,7 +60,7 @@ namespace KaPlaner.GUI
         {
             bool isNewElement = false;
             KaEvent kaEvent;
-            if (index >= ListEvents.Length)
+            if (index >= ListEvents.Count)
             {
                 isNewElement = true;
                 kaEvent = null;
@@ -83,9 +87,8 @@ namespace KaPlaner.GUI
 
             if (isNewElement)
             {
-                List<KaEvent> GenList = ListEvents.ToList<KaEvent>();
-                GenList.Add(kaEvent);
-                ListEvents = GenList.ToArray();
+                
+                ListEvents.Add(kaEvent);
             }
             else
             {
@@ -103,7 +106,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_dates.FocusedItem.Index;
-                load(index);
+                load(indexes[index]);
             }
             catch (Exception ex)
             {
@@ -120,8 +123,7 @@ namespace KaPlaner.GUI
         {
             try
             {
-                int index = LV_dates.FocusedItem.Index;
-                load(ListEvents.Length + 1);
+                load(ListEvents.Count + 1);
             }
             catch (Exception ex)
             {

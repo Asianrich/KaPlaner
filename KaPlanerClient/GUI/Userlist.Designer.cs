@@ -30,7 +30,6 @@
         {
             this.LV_users = new System.Windows.Forms.ListView();
             this.Gaste = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Einladung = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TB_add_user = new System.Windows.Forms.TextBox();
             this.BTN_add_user = new System.Windows.Forms.Button();
             this.LBL_username = new System.Windows.Forms.Label();
@@ -42,8 +41,7 @@
             // 
             this.LV_users.AutoArrange = false;
             this.LV_users.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Gaste,
-            this.Einladung});
+            this.Gaste});
             this.LV_users.Font = new System.Drawing.Font("Arial", 12F);
             this.LV_users.GridLines = true;
             this.LV_users.Location = new System.Drawing.Point(12, 12);
@@ -57,11 +55,6 @@
             // 
             this.Gaste.Text = "Gaeste";
             this.Gaste.Width = 213;
-            // 
-            // Einladung
-            // 
-            this.Einladung.Text = "Einladung";
-            this.Einladung.Width = 266;
             // 
             // TB_add_user
             // 
@@ -139,7 +132,6 @@
         private System.Windows.Forms.Label LBL_username;
         private System.Windows.Forms.Button BTN_delete_user;
         private System.Windows.Forms.ColumnHeader Gaste;
-        private System.Windows.Forms.ColumnHeader Einladung;
         private System.Windows.Forms.Button BTN_Close;
     }
 }
