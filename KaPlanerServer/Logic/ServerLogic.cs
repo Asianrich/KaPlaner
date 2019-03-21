@@ -19,6 +19,9 @@ namespace KaPlanerServer.Logic
         static readonly string SaveRequest = "Save Requested.";
         static readonly string SaveSuccess = "Save Success.";
         static readonly string SaveFail = "Save Failed.";
+        static readonly string LoadRequest = "Load Requested.";
+        static readonly string LoadSuccess = "Load Success.";
+        static readonly string LoadFail = "Load Failed.";
         static readonly string RequestTest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
@@ -67,7 +70,6 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine(e.Message);
                         writeResult(Request.Failure, RegisterFail);
                     }
-
                     break;
 
                 case Request.Save:
@@ -82,9 +84,24 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine(e.Message);
                         writeResult(Request.Failure, SaveFail);
                     }
-                        
                     break;
-                
+
+                case Request.Load:
+                    Console.WriteLine(LoadRequest);
+                    try
+                    {
+                        List<KaEvent> kaEvents;
+                        kaEvents = database.LoadEvents(package.user, package.kaEvents[0].Beginn);
+                        package.kaEvents = kaEvents;
+                        writeResult(Request.Success, LoadSuccess);
+                    } catch(Exception e)
+                    {
+                        Console.WriteLine(e.GetType().FullName);
+                        Console.WriteLine(e.Message);
+                        writeResult(Request.Failure, LoadFail);
+                    }
+                    break;
+
                 case Request.Test:
                     Console.WriteLine(RequestTest);
                     break;

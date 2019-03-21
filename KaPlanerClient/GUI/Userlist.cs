@@ -16,7 +16,9 @@ namespace KaPlaner.GUI
         public List<string> listStringreturn = new List<string>();
 
         ListViewItem lvi = new ListViewItem();
+#pragma warning disable CS0414 // The field 'Wdw_user_list.index' is assigned but its value is never used
         int index = 0;
+#pragma warning restore CS0414 // The field 'Wdw_user_list.index' is assigned but its value is never used
 
 
         public Wdw_user_list()
@@ -38,9 +40,9 @@ namespace KaPlaner.GUI
 
         }
 
-        public void Save_usergroup(KaEvent list, int index)
+        public void Save_usergroup(KaEvent list, int index) // Do we even need this?
         {
-            list.members = new string[index];
+            list.members = new List<string>();
             for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
             {
                 for (int spalte = 0; spalte < LV_users.Columns.Count; spalte++)

@@ -36,5 +36,14 @@ namespace KaObjects
             this.password = password;
         }
 
+        /// <summary>
+        /// Cheezy
+        /// </summary>
+        /// <param name="name"></param>
+        public User(string name)
+        {
+            this.name = name;
+        }
+
     }
 }

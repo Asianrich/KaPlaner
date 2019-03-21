@@ -75,7 +75,9 @@ namespace KaPlaner.Networking
                 // Signal that all bytes have been sent.  
                 sendDone.Set();
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 return;
             }

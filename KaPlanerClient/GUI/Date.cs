@@ -251,11 +251,18 @@ namespace WindowsFormsApp1
             minute = Convert.ToInt32(TB_minute_end.Text);
             returnValue.Ende = new DateTime(year, month, day, hour, minute, sec);
 
-            year = Convert.ToInt32(TB_repeat_until_year.Text);
-            month = Convert.ToInt32(TB_repeat_until_month.Text);
-            day = Convert.ToInt32(TB_repeat_until_day.Text);
-            minute = 0;
-            returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
+            if (!CB_none.Checked)
+            {
+                year = Convert.ToInt32(TB_repeat_until_year.Text);
+                month = Convert.ToInt32(TB_repeat_until_month.Text);
+                day = Convert.ToInt32(TB_repeat_until_day.Text);
+                minute = 0;
+                returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
+            }
+            else
+            {
+                returnValue.Wiederholen_bis = new DateTime(2019,1,1,1,1,1); //Another cheezy trick just to avoid sql errors
+            }
         }
 
         //NUD_Priority

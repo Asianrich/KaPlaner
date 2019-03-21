@@ -65,7 +65,9 @@ namespace KaPlanerServer.Networking
                     allDone.WaitOne();
                 }
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
 
             }
@@ -108,7 +110,9 @@ namespace KaPlanerServer.Networking
                 handler.Close();
                 Console.WriteLine("Success at closing");
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 return;
             }
