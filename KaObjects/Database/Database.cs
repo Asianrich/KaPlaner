@@ -229,6 +229,78 @@ namespace KaObjects.Storage
             con.Close();
         }
 
+        public List<KaEvent> read(string owner)
+        {
+            List<KaEvent> ka = new List<KaEvent>();
+            //string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+
+            SqlConnection con = new SqlConnection(connectionString);
+            //SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True");
+
+            con.Open();
+
+            //Pruefen ob der Benutzer existiert
+            string exist = "SELECT * FROM @table";
+            exist = String.Format("SELECT * FROM {0}", owner);
+
+            SqlCommand com = new SqlCommand(exist, con);
+            //com.Parameters.AddWithValue("@table", owner);
+
+
+            KaEvent temp = new KaEvent();
+            SqlDataReader reader = com.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+
+                while (reader.Read())
+                {
+                    temp.TerminID = reader.GetInt32(0);
+                    //temp.Titel = reader.GetString(1);
+                    temp.Ort = reader.GetString(2);
+                    temp.Ganztaegig = reader.GetInt32(3);
+                    //temp.Beginn = reader.GetDateTime(4);
+                    //temp.Ende = reader.GetDateTime(5);
+                    temp.Prioritaet = reader.GetInt32(6);
+                    temp.Beschreibung = reader.GetString(7);
+                    temp.Haeufigkeit = reader.GetString(8);
+                    temp.Haeufigkeit_Anzahl = reader.GetInt32(9);
+                    temp.Immer_Wiederholen = reader.GetInt32(10);
+                    temp.Wiederholungen = reader.GetInt32(11);
+                    temp.Wiederholen_bis = reader.GetDateTime(12);
+                    temp.XMontag = reader.GetInt32(13);
+                    temp.XDienstag = reader.GetInt32(14);
+                    temp.XMittwoch = reader.GetInt32(15);
+                    temp.XDonnerstag = reader.GetInt32(16);
+                    temp.XFreitag = reader.GetInt32(17);
+                    temp.XSamstag = reader.GetInt32(18);
+                    temp.XSonntag = reader.GetInt32(19);
+
+
+
+
+
+                    
+
+               
+                    Console.WriteLine(temp.Titel);
+                }
+                ka.Add(temp);
+
+
+            }
+
+
+
+
+            return ka;
+
+
+        }
+
+
+
+
 
     }
 
