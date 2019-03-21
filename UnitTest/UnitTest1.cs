@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using KaPlaner.GUI;
 using KaObjects.Storage;
 
+
+
 namespace UnitTest
 {
     [TestClass]
@@ -146,6 +148,20 @@ namespace UnitTest
             int a = 0;
         }
 
+
+
+        [TestMethod]
+        public void SQLREAD()
+        {
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+
+
+            Database db = new Database(connectionString);
+
+            KaEvent[] list = db.read("asd").ToArray();
+
+            int a = 0;
+        }
 
 
         [TestMethod]
