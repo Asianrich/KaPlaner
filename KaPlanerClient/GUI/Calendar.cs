@@ -19,7 +19,9 @@ namespace WindowsFormsApp1
     {
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
+#pragma warning disable CS0169 // The field 'wdw_calendar.kaEvents' is never used
         List<KaEvent> kaEvents;
+#pragma warning restore CS0169 // The field 'wdw_calendar.kaEvents' is never used
 
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter

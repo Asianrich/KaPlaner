@@ -141,7 +141,7 @@ namespace KaPlaner.GUI
 
                     //Betroffenes Termin
                     KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
-                    FocusEvent.members = form.listStringreturn.ToArray();
+                    FocusEvent.members = form.listStringreturn;
                     //Joshua hier bei updatest du den Event. FocusEvent ist das neue Event, welches abgeändert wurde.
 
 

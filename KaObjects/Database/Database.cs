@@ -127,7 +127,25 @@ namespace KaObjects.Storage
           "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
 
-            ///To insert into seperate tables
+            ///This recursively saves given Event to every invitees calendar
+            if(kaEvent.members.Count > 0)
+            {
+                KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
+                invitee.owner = new User(kaEvent.members[0]);
+                kaEvent.members.RemoveAt(0);
+                try
+                {
+                    SaveEvent(invitee);
+                }
+                catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
+                {
+                    Console.WriteLine(e.GetType().FullName);
+                    Console.WriteLine(e.Message);
+                }
+                
+            }
+
+            ///To insert into seperate tables ... DOESNT WORK WHY????
             cmd_insert.Parameters.AddWithValue("@username", kaEvent.owner.name); //Name of owner is sufficient, hence no need for another user object reference
 
             cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
@@ -168,7 +186,9 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
+#pragma warning disable CS0219 // The variable 'select' is assigned but its value is never used
             string select = "SELECT * FROM @username WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
+#pragma warning restore CS0219 // The variable 'select' is assigned but its value is never used
 
             return null; //kaEvents
         }
