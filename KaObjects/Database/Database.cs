@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Windows.Forms;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlTypes;
 
 
 namespace KaObjects.Storage
@@ -122,13 +125,13 @@ namespace KaObjects.Storage
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            string insert = "insert into @username " +
-                "(Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
+            string insert = "insert into " + kaEvent.owner.name +
+                " (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
           "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
 
             ///This recursively saves given Event to every invitees calendar
-            if(kaEvent.members.Count > 0)
+            /*if(kaEvent.members.Count > 0)
             {
                 KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
                 invitee.owner = new User(kaEvent.members[0]);
@@ -146,16 +149,24 @@ namespace KaObjects.Storage
             }
 
             //Cheezy workaround
-            cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
+            /*cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
                 " (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
                 "values(" + kaEvent.Titel + ", " + kaEvent.Ort + ", " + kaEvent.Ganztaegig + ", " + kaEvent.Beginn + ", " + kaEvent.Ende + ", " + kaEvent.Prioritaet + ", " + kaEvent.Beschreibung + ", " + kaEvent.Haeufigkeit + ", " + kaEvent.Haeufigkeit_Anzahl + ", " +
                 kaEvent.Immer_Wiederholen + ", " + kaEvent.Wiederholungen + ", " + kaEvent.Wiederholen_bis + ", " + kaEvent.XMontag + ", " + kaEvent.XDienstag + ", " + kaEvent.XMittwoch + ", " + kaEvent.XDonnerstag + ", " + kaEvent.XFreitag + ", " + kaEvent.XSamstag + ", " + kaEvent.XSonntag + ")";
 
+            cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
+                "(Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
+                "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";*/
+
+            Console.WriteLine(cmd_insert.CommandText);//debugging
+
             /*
             ///To insert into seperate tables ... DOESNT WORK WHY????
             cmd_insert.Parameters.AddWithValue("@username", kaEvent.owner.name); //Name of owner is sufficient, hence no need for another user object reference
+            */
 
-            cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
+            //cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
+            cmd_insert.Parameters.Add("@Titel", SqlDbType.NVarChar); cmd_insert.Parameters["@Titel"].Value = kaEvent.Titel;
             cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);
             cmd_insert.Parameters.AddWithValue("@Ganztaegig", kaEvent.Ganztaegig);
 
@@ -177,7 +188,8 @@ namespace KaObjects.Storage
             cmd_insert.Parameters.AddWithValue("@XFreitag", kaEvent.XFreitag);
             cmd_insert.Parameters.AddWithValue("@XSamstag", kaEvent.XSamstag);
             cmd_insert.Parameters.AddWithValue("@XSonntag", kaEvent.XSonntag);
-            */
+
+            Console.WriteLine(cmd_insert.CommandText);//debugging
 
             cmd_insert.ExecuteNonQuery();
             con.Close();
