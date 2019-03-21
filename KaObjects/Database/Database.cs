@@ -163,7 +163,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="month"></param>
         /// <returns></returns>
-        public List<KaEvent> LoadEvents(DateTime month)
+        public List<KaEvent> LoadEvents(User user, DateTime month)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();

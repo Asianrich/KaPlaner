@@ -15,7 +15,7 @@ namespace KaObjects.Storage
 
         void SaveEvent(KaEvent kaEvent);
 
-        List<KaEvent> LoadEvents(DateTime month);
+        List<KaEvent> LoadEvents(User user, DateTime month);
 
         void Delete_date();
     }

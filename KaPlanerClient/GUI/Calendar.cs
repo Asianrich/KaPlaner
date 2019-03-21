@@ -19,6 +19,8 @@ namespace WindowsFormsApp1
     {
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
+        List<KaEvent> kaEvents;
+
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
@@ -54,7 +56,10 @@ namespace WindowsFormsApp1
 
             lbl_year.Text = Convert.ToString(year);
             LBL_month.Text = month[monthcounter];
+
             check();
+
+
         }
 
         private void btn_quit_calendar_Click(object sender, EventArgs e)

@@ -26,6 +26,29 @@ namespace KaPlaner.Logic
         User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
         /// <summary>
+        /// Läd eine Liste an Events für einen Monat lokal von der Datenbank
+        /// Nutzt das Datenbankinterface
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public List<KaEvent> LoadEventsLocal(DateTime month)
+        {
+            return database.LoadEvents(currentUser, month);
+        }
+
+        /// <summary>
+        /// Läd eine Liste an Events für einen Monat Remote von der Datenbank
+        /// Nutzt das Datenbankinterface
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public List<KaEvent> LoadEventsRemote(DateTime month)
+        {
+            Package returnPackage;
+            Package loadPackage = new Package(Request.Load, )
+        }
+
+        /// <summary>
         /// Login mit Nutzernamen und Password
         /// Benutzt das Datenbankinterface
         /// TODO: Weitere Kontrollen
@@ -126,9 +149,7 @@ namespace KaPlaner.Logic
         {
             kaEvent.owner = currentUser;
 
-            KaEvent[] kaEvents = new KaEvent[1];
-            kaEvents[0] = kaEvent;
-            Package savePackage = new Package(Request.Save, kaEvents);
+            Package savePackage = new Package(Request.Save, kaEvent);
 
             clientConnection.Start(savePackage);
         }
