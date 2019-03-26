@@ -97,6 +97,7 @@ namespace KaPlanerServer.Networking
                 return;
             }
         }
+
         private static void SendCallback(IAsyncResult ar)
         {
             try
@@ -126,9 +127,10 @@ namespace KaPlanerServer.Networking
                 // Retrieve the socket from the state object.  
                 StateObject state = (StateObject)ar.AsyncState;
                 Socket handler = state.workSocket;
-                // Complete sending the data to the remote device.  
+                // Complete receiving the data from the remote device.  
                 int bytesReceive = handler.EndReceive(ar);
 
+                //If there is actually something to read
                 if (bytesReceive > 0)
                 {
 
@@ -137,6 +139,7 @@ namespace KaPlanerServer.Networking
                     content = state.sb.ToString();
 
 
+                    //If the End of File Tag is in there.
                     if (content.IndexOf("<EOF>") > -1)
                     {
 
@@ -152,6 +155,7 @@ namespace KaPlanerServer.Networking
                     }
                     else
                     {
+                        //Not everything was received, trying to receive new Data.
                         handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
                     }
                 }
@@ -166,6 +170,7 @@ namespace KaPlanerServer.Networking
             }
         }
 
+        //Sending Packages
         public static void Send(Socket handler, Package package)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(Serialize<Package>(package)+ "<EOF>");
@@ -174,7 +179,7 @@ namespace KaPlanerServer.Networking
 
         }
 
-
+        //Serializing
         public static string Serialize<T>(T myObject)
         {
             string msg;
@@ -193,6 +198,7 @@ namespace KaPlanerServer.Networking
 
         }
 
+        //Deserializing
         public static T DeSerialize<T>(string msg)
         {
             T myObject;

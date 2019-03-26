@@ -41,16 +41,17 @@ namespace KaPlaner.Networking
         {
             try
             {
-                
+                //Lokal Host
                 IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
                 IPAddress ip = ipHost.AddressList[0];
 
+                //Externer Host
                 //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
                 //IPAddress ip = iPHost.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ip, 11000);
                 Socket client = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-                if(!connectDone.WaitOne(10000))
+                if (!connectDone.WaitOne(10000))
                 {
                     throw new Exception("Konnte keine Verbindung aufbauen nach 10 Sekunden");
                 }
@@ -141,20 +142,15 @@ namespace KaPlaner.Networking
             }
         }
 
+        //Sending Packages
         private void Send(Socket client, Package send)
         {
-            try
-            {
-                byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
-                client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
-            }catch (Exception ex)
-            {
-                throw ex; //Warum wird hier die Exception geworfen nachdem sie bereits gefangen wurde? Da könnte man das Catch gleich weglassen
-            }
 
+            byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
+            client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
         }
 
-
+        //Successfully disconnecting and closing the Sockets
         private void Disconnect(Socket client)
         {
             client.Shutdown(SocketShutdown.Both);
@@ -200,6 +196,8 @@ namespace KaPlaner.Networking
 
         }
 
+
+        //Receiving Packages
         private void receive(Socket client)
         {
             try
@@ -208,7 +206,8 @@ namespace KaPlaner.Networking
                 state.workSocket = client;
 
                 client.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -241,7 +240,8 @@ namespace KaPlaner.Networking
                 recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]);
                 Disconnect(client);
                 return recObject;
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 if (client != null)
                 {
