@@ -31,7 +31,9 @@ namespace WindowsFormsApp1
         int year = 0;                           //current year
         bool isOnline;
 
-
+        /// <summary>
+        /// show the name of the month in thel LBL_month
+        /// </summary>
         private string[] month = new string[]
         { "Januar", "Februar", "Maerz", "April",
             "Mai", "Juni", "Juli", "August",
@@ -44,17 +46,6 @@ namespace WindowsFormsApp1
             
             InitializeComponent();
             this.isOnline = isOnline;
-            //KaEvent[] kaEvents2 = new KaEvent[3];
-
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    kaEvents2[i] = new KaEvent();
-            //    kaEvents2[i].Titel = "Titetl " + i;
-            //    kaEvents2[i].Ort = "Ort " + i;
-            //    kaEvents2[i].Beginn = new DateTime(2019, 03, 03);
-            //}
-
-            //kaEvents = kaEvents2.ToList();
 
             if (!isOnline)
             {
@@ -79,17 +70,20 @@ namespace WindowsFormsApp1
             LBL_month.Text = month[monthcounter];
 
             check();
-
-
         }
 
+        /// <summary>
+        /// close the application
+        /// </summary>
         private void btn_quit_calendar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
         
-
+        /// <summary>
+        /// open the datelist over the dayli text boxes
+        /// </summary>
         private void TB_open_list(object sender, EventArgs e)
         {
             try
@@ -99,17 +93,6 @@ namespace WindowsFormsApp1
                 Int32.TryParse(trigger.Text, out int day);
 
                 DateTime date = new DateTime(year, monthcounter + 1,day);
-
-
-
-                //KaEvent[] kaEvents = new KaEvent[3];
-
-                //for (int i = 0; i < 3; i++)
-                //{
-                //    kaEvents[i] = new KaEvent();
-                //    kaEvents[i].Titel = "Titetl " + i;
-                //    kaEvents[i].Ort = "Ort " + i;
-                //}
 
                 using (var form = new Wdw_date_list(kaEvents, date, isOnline))
                 {
@@ -126,7 +109,9 @@ namespace WindowsFormsApp1
             }
         }
 
-        /// <summary> check end of old year </summary>
+        /// <summary> 
+        /// check end of old year 
+        /// </summary>
         private void btn_prev_Click(object sender, EventArgs e)
         {
             try
@@ -154,7 +139,9 @@ namespace WindowsFormsApp1
         {
             try
             {
-                /// <summary> check beginning of new year </summary>
+                /// <summary>
+                /// check beginning of new year
+                /// </summary>
                 if (monthcounter == 11)
                 {
                     monthcounter = 0;
@@ -299,7 +286,7 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
         }

@@ -20,7 +20,9 @@ namespace WindowsFormsApp1
         DateTime date;
         bool isOnline;
 
-
+        /// <summary>
+        /// wrote the informations from an object of the class KaEvent to the input mask
+        /// </summary>
         public Wdw_KaEvent(KaEvent ereignis, DateTime date = new DateTime(), bool isOnline = false)
         {
             InitializeComponent();
@@ -241,7 +243,9 @@ namespace WindowsFormsApp1
             }
         }
 
-        // write the date from the GUI in the object
+        /// <summary>
+        /// write the informations from the input mask in an object of the class KaEvent
+        /// </summary>
         public void Write()
         {
             int year = Convert.ToInt32(TB_year_beginn.Text);
@@ -289,6 +293,7 @@ namespace WindowsFormsApp1
         /// #######################################
         /// <summary>
         /// values from tab2
+        /// none, dayli, weekly, monthly, yearly activate respectively deactivate the respectively other Checkboxes
         /// </summary>
 
         //none
@@ -430,7 +435,10 @@ namespace WindowsFormsApp1
             }
         }
 
-        //TB_number_repetitions
+        /// <summary>
+        /// TB_number_repetitions
+        /// The new value will written in the object every time if the value will changed or 0 if the textbox is empty.
+        /// </summary>
         private void TB_number_repetitions_TextChanged(object sender, EventArgs e)
         {
             if(TB_number_repetitions.Text == "")
@@ -446,8 +454,6 @@ namespace WindowsFormsApp1
         /// <summary>
         /// always repeat
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CB_always_repeat_CheckedChanged(object sender, EventArgs e)
         {
             if (CB_always_repeat.Checked)
@@ -488,6 +494,11 @@ namespace WindowsFormsApp1
                 returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
             }
         }
+
+        /// CB_always_repeat_CheckedChanged, 
+        /// CB_mon, CB_die, CB_mit, CB_don, CB_fre, CB_sam, CB_son activate or
+        /// deactivate the suitable NUD-box. As symbol for the deactivation
+        /// the functions write the value -1 in the object.
 
         //CB_mon 
         private void CB_mon_CheckedChanged(object sender, EventArgs e)
@@ -633,11 +644,6 @@ namespace WindowsFormsApp1
         private void MC_date_summery_DateChanged(object sender, DateRangeEventArgs e)
         {
 
-        }
-
-        private void BTN_delete_Click(object sender, EventArgs e)
-        {
-            
         }
     }  /// ####################################### 
 }

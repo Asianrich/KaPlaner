@@ -17,7 +17,6 @@ namespace KaPlaner.GUI
     {
         private List<int> indexes;
         public List<KaEvent> ListEvents;
-        //KaEvent[] ListEvents;
         private User user;
         public RequestList(List<KaEvent> kaEvents, User user)
         {
@@ -27,8 +26,6 @@ namespace KaPlaner.GUI
             string[] row = new string[5];
             indexes = new List<int>();
             update();
-
-
         }
 
         public void update()
@@ -42,7 +39,8 @@ namespace KaPlaner.GUI
 
                 if (ka.members != null)
                 {
-                    if (invite(ka.members.ToArray(), user.name)) //Eingeladene Termine angezeigt bekommen. 
+                    //Eingeladene Termine angezeigt bekommen.
+                    if (invite(ka.members.ToArray(), user.name))  
                     {
                         row[0] = ka.Titel;
                         row[1] = ka.Ort;
@@ -68,7 +66,6 @@ namespace KaPlaner.GUI
                 }
             }
             return false;
-
         }
 
         private void BT_Close_Click(object sender, EventArgs e)
@@ -78,18 +75,14 @@ namespace KaPlaner.GUI
 
         private void Bt_Open_Click(object sender, EventArgs e)
         {
-
             try
             {
-                int index = LV_Dates.FocusedItem.Index;
-                
+                int index = LV_Dates.FocusedItem.Index;                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-
         }
 
         public void load(int index)
@@ -106,7 +99,6 @@ namespace KaPlaner.GUI
                 kaEvent = ListEvents[index];
             }
 
-
             using (var form = new Wdw_KaEvent(kaEvent))
             {
                 var result = form.ShowDialog();
@@ -117,7 +109,7 @@ namespace KaPlaner.GUI
                 }
                 else
                 {
-                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
 
@@ -130,10 +122,9 @@ namespace KaPlaner.GUI
                 ListEvents[index] = kaEvent;
             }
 
-
-            //Beispiel Funktion fuer das Oeffnen eines Date.cs/ oder Kaevents-Fenster
-            // Wenn man das Oeffnet sollte mit bestehender Daten befuellt werden. Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
-            //Form date = new Wdw_KaEvent();
+            /// Beispiel Funktion fuer das Oeffnen eines Date.cs/ oder Kaevents-Fenster
+            /// Wenn man das Oeffnet sollte mit bestehenden Daten befuellt werden. 
+            /// Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
         }
     }
 }

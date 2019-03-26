@@ -29,12 +29,6 @@ namespace KaPlaner.GUI
             this.isOnline = isOnline;
             this.date = date;
             indexes = new List<int>();
-            /*
-             * Joshua ListenUpdates wir brauchen die KaEvents des jeweiligen Tages
-             * Aendere den Konstrukter so, das es fuer dich und dem foreach passt.
-             * Am Besten den Foreach
-             * Fuelle die ListEvents mit Werten. Damit man spaeter beim oeffnen des Date.cs mit Daten befuellen.
-             */
             ListEvents = kaEvents;
             update();
 
@@ -91,7 +85,7 @@ namespace KaPlaner.GUI
                 }
                 else
                 {
-                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
 
@@ -106,16 +100,7 @@ namespace KaPlaner.GUI
             {
                 ListEvents[index] = kaEvent;
             }
-
-
-            //Beispiel Funktion fuer das Oeffnen eines Date.cs/ oder Kaevents-Fenster
-            // Wenn man das Oeffnet sollte mit bestehender Daten befuellt werden. Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
-            //Form date = new Wdw_KaEvent();
         }
-
-
-
-
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
@@ -157,12 +142,8 @@ namespace KaPlaner.GUI
                 {
                     var results = form.ShowDialog();
 
-                    //Betroffenes Termin
                     KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
                     FocusEvent.members = form.listStringreturn;
-                    //Joshua hier bei updatest du den Event. FocusEvent ist das neue Event, welches abgeändert wurde.
-
-
                 }
             }
             catch (Exception ex)
@@ -172,8 +153,7 @@ namespace KaPlaner.GUI
         }
 
         private void BTN_delete_Click(object sender, EventArgs e)
-        {
-            // Logik Lösch-Button hier einfügen
+        { 
             try
             {
                 ListEvents.RemoveAt(indexes[LV_dates.FocusedItem.Index]);

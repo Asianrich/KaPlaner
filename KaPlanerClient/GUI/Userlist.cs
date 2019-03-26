@@ -30,7 +30,6 @@ namespace KaPlaner.GUI
         {
             try
             {
-                //Save_usergroup(???);
                 Close();
             }
             catch (Exception ex)
@@ -40,7 +39,7 @@ namespace KaPlaner.GUI
 
         }
 
-        public void Save_usergroup(KaEvent list, int index) // Do we even need this?
+        public void Save_usergroup(KaEvent list, int index)
         {
             list.members = new List<string>();
             for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
