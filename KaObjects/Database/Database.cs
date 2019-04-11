@@ -15,7 +15,9 @@ namespace KaObjects.Storage
 {
     public class Database : IDatabase {
 
-        string connectionString;
+        private string tableName = "calendar";
+
+        private string connectionString;
 
         public Database(string connectionString)
         {
@@ -52,16 +54,6 @@ namespace KaObjects.Storage
                 else
                 {
                     reader_exists.Close();
-
-                    ///This creates a new table for each new user
-                    string newTable = "SELECT * INTO @username FROM calendar";
-                    SqlCommand cmd_newTable = new SqlCommand(newTable, con);
-                    cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
-
-                    //This works...
-                    cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
-
-                    cmd_newTable.ExecuteNonQuery();
 
                     string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
                     SqlCommand cmd_insert = new SqlCommand(insert, con);
@@ -125,45 +117,13 @@ namespace KaObjects.Storage
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            string insert = "insert into " + kaEvent.owner.name +
+            string insert = "INSERT INTO " + this.tableName +
                 " (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
           "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             SqlCommand cmd_insert = new SqlCommand(insert, con);
 
-            ///This recursively saves given Event to every invitees calendar
-            /*if(kaEvent.members.Count > 0)
-            {
-                KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
-                invitee.owner = new User(kaEvent.members[0]);
-                kaEvent.members.RemoveAt(0);
-                try
-                {
-                    SaveEvent(invitee);
-                }
-                catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
-                {
-                    Console.WriteLine(e.GetType().FullName);
-                    Console.WriteLine(e.Message);
-                }
-                
-            }
-
-            //Cheezy workaround
-            /*cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
-                " (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
-                "values(" + kaEvent.Titel + ", " + kaEvent.Ort + ", " + kaEvent.Ganztaegig + ", " + kaEvent.Beginn + ", " + kaEvent.Ende + ", " + kaEvent.Prioritaet + ", " + kaEvent.Beschreibung + ", " + kaEvent.Haeufigkeit + ", " + kaEvent.Haeufigkeit_Anzahl + ", " +
-                kaEvent.Immer_Wiederholen + ", " + kaEvent.Wiederholungen + ", " + kaEvent.Wiederholen_bis + ", " + kaEvent.XMontag + ", " + kaEvent.XDienstag + ", " + kaEvent.XMittwoch + ", " + kaEvent.XDonnerstag + ", " + kaEvent.XFreitag + ", " + kaEvent.XSamstag + ", " + kaEvent.XSonntag + ")";
-
-            cmd_insert.CommandText = "insert into " + kaEvent.owner.name +
-                "(Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
-                "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";*/
-
             Console.WriteLine(cmd_insert.CommandText);//debugging
 
-            /*
-            ///To insert into seperate tables ... DOESNT WORK WHY????
-            cmd_insert.Parameters.AddWithValue("@username", kaEvent.owner.name); //Name of owner is sufficient, hence no need for another user object reference
-            */
 
             //cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
             cmd_insert.Parameters.Add("@Titel", SqlDbType.NVarChar); cmd_insert.Parameters["@Titel"].Value = kaEvent.Titel;
@@ -207,7 +167,7 @@ namespace KaObjects.Storage
             con.Open();
 
 #pragma warning disable CS0219 // The variable 'select' is assigned but its value is never used
-            string select = "SELECT * FROM @username WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
+            string select = "SELECT * FROM " + this.tableName + " WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
 #pragma warning restore CS0219 // The variable 'select' is assigned but its value is never used
 
             return null; //kaEvents
@@ -218,7 +178,7 @@ namespace KaObjects.Storage
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            string delete = ("DELETE FROM Calendar WHERE User-ID = @user-id");
+            string delete = ("DELETE FROM " + this.tableName + " WHERE User-ID = @user-id");
             
             SqlCommand cmd_delete = new SqlCommand(delete, con);
             //cmd_delete.Parameters.AddWithValue("@User-ID",UserID);
