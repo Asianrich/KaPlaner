@@ -16,14 +16,23 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
+        // Connection String muss noch angepasst werden
         //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
 
         IDatabase database = new Database(connectionString);
         IClientConnection clientConnection = new ClientConnection();
-        User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
+        public User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
+
+        public List<KaEvent> eventList = new List<KaEvent>();
+
+        public List<KaEvent> GetEventList()
+        {
+            return eventList;
+        }
 
         /// <summary>
         /// Läd eine Liste an Events für einen Monat lokal von der Datenbank
@@ -33,7 +42,8 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public List<KaEvent> LoadEventsLocal(DateTime month)
         {
-            return database.LoadEvents(currentUser, month);
+            //return database.LoadEvents(currentUser, month);
+            return database.read(currentUser.name);
         }
 
         /// <summary>
@@ -87,6 +97,8 @@ namespace KaPlaner.Logic
             Package loginPackage = new Package(Request.Login, currentUser);
 
             returnPackage = clientConnection.Start(loginPackage);
+
+            eventList = returnPackage.kaEvents;
 
             return RequestResolve(returnPackage);
         }

@@ -19,6 +19,7 @@ namespace WindowsFormsApp1
     {
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
+        ClientLogic client;
 #pragma warning disable CS0169 // The field 'wdw_calendar.kaEvents' is never used
         List<KaEvent> kaEvents;
 #pragma warning restore CS0169 // The field 'wdw_calendar.kaEvents' is never used
@@ -28,7 +29,11 @@ namespace WindowsFormsApp1
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
         int year = 0;                           //current year
+        bool isOnline;
 
+        /// <summary>
+        /// show the name of the month in thel LBL_month
+        /// </summary>
         private string[] month = new string[]
         { "Januar", "Februar", "Maerz", "April",
             "Mai", "Juni", "Juli", "August",
@@ -36,24 +41,13 @@ namespace WindowsFormsApp1
             "Dezember"
         };
 
-        public wdw_calendar(bool online)
+        public wdw_calendar(bool isOnline)
         {
             
             InitializeComponent();
+            this.isOnline = isOnline;
 
-            KaEvent[] kaEvents2 = new KaEvent[3];
-
-            for (int i = 0; i < 3; i++)
-            {
-                kaEvents2[i] = new KaEvent();
-                kaEvents2[i].Titel = "Titetl " + i;
-                kaEvents2[i].Ort = "Ort " + i;
-                kaEvents2[i].Beginn = new DateTime(2019, 03, 03);
-            }
-
-            kaEvents = kaEvents2.ToList();
-
-            if (!online)
+            if (!isOnline)
             {
                 BTN_manual_update.Visible = false;
                 BTN_manual_update.Enabled = false;
@@ -62,6 +56,7 @@ namespace WindowsFormsApp1
             }
             else
             {
+                kaEvents = clientLogic.GetEventList();
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
                 BT_Request.Visible = true;
@@ -75,17 +70,20 @@ namespace WindowsFormsApp1
             LBL_month.Text = month[monthcounter];
 
             check();
-
-
         }
 
+        /// <summary>
+        /// close the application
+        /// </summary>
         private void btn_quit_calendar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
         
-
+        /// <summary>
+        /// open the datelist over the dayli text boxes
+        /// </summary>
         private void TB_open_list(object sender, EventArgs e)
         {
             try
@@ -96,18 +94,7 @@ namespace WindowsFormsApp1
 
                 DateTime date = new DateTime(year, monthcounter + 1,day);
 
-
-
-                //KaEvent[] kaEvents = new KaEvent[3];
-
-                //for (int i = 0; i < 3; i++)
-                //{
-                //    kaEvents[i] = new KaEvent();
-                //    kaEvents[i].Titel = "Titetl " + i;
-                //    kaEvents[i].Ort = "Ort " + i;
-                //}
-
-                using (var form = new Wdw_date_list(kaEvents, date))
+                using (var form = new Wdw_date_list(kaEvents, date, isOnline))
                 {
                     var result = form.ShowDialog();
 
@@ -122,7 +109,9 @@ namespace WindowsFormsApp1
             }
         }
 
-        /// <summary> check end of old year </summary>
+        /// <summary> 
+        /// check end of old year 
+        /// </summary>
         private void btn_prev_Click(object sender, EventArgs e)
         {
             try
@@ -150,7 +139,9 @@ namespace WindowsFormsApp1
         {
             try
             {
-                /// <summary> check beginning of new year </summary>
+                /// <summary>
+                /// check beginning of new year
+                /// </summary>
                 if (monthcounter == 11)
                 {
                     monthcounter = 0;
@@ -282,8 +273,10 @@ namespace WindowsFormsApp1
                 kaEvents[i].owner = new User("Name " + i, "Password");
             }
 
+            kaEvents[2].members = new List<string>();
+            kaEvents[2].members.Add("asd");
 
-            using (var form = new RequestList(kaEvents))
+            using (var form = new RequestList(kaEvents.ToList<KaEvent>(), client.currentUser))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -293,7 +286,7 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    //MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
                 }
             }
         }
