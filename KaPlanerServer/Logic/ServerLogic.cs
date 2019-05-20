@@ -33,7 +33,13 @@ namespace KaPlanerServer.Logic
 
 
         IDatabase database = new Database(connectionString);
-        
+
+        void writeResult(Request request, string line, Package package)
+        {
+            Console.WriteLine(line);
+            package.request = request;
+        }
+
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
         /// </summary>
@@ -50,11 +56,11 @@ namespace KaPlanerServer.Logic
                         List<KaEvent> kaEvents;
                         kaEvents = database.read(package.user.name);
                         package.kaEvents = kaEvents;
-                        writeResult(Request.Success, LoginSuccess);
+                        writeResult(Request.Success, LoginSuccess, package);
                     }
                     else
                     {
-                        writeResult(Request.Failure, LoginFail);
+                        writeResult(Request.Failure, LoginFail, package);
                     }
                     break;
                 /// In case of Register Request try to login to the server database and set Request accordingly
@@ -64,17 +70,17 @@ namespace KaPlanerServer.Logic
                     {
                         if (database.registerUser(package.user, package.passwordConfirm))
                         {
-                            writeResult(Request.Success, RegisterSuccess);
+                            writeResult(Request.Success, RegisterSuccess, package);
                         }
                         else
                         {
-                            writeResult(Request.Failure, RegisterFail);
+                            writeResult(Request.Failure, RegisterFail, package);
                         }
                     } catch(Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
-                        writeResult(Request.Failure, RegisterFail);
+                        writeResult(Request.Failure, RegisterFail, package);
                     }
                     break;
 
@@ -83,12 +89,12 @@ namespace KaPlanerServer.Logic
                     try
                     {
                         database.SaveEvent(package.kaEvents[0]);
-                        writeResult(Request.Success, SaveSuccess);
+                        writeResult(Request.Success, SaveSuccess, package);
                     } catch(Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
-                        writeResult(Request.Failure, SaveFail);
+                        writeResult(Request.Failure, SaveFail, package);
                     }
                     break;
 
@@ -100,12 +106,12 @@ namespace KaPlanerServer.Logic
                         //kaEvents = database.LoadEvents(package.user, package.kaEvents[0].Beginn);
                         kaEvents = database.read(package.user.name);
                         package.kaEvents = kaEvents;
-                        writeResult(Request.Success, LoadSuccess);
+                        writeResult(Request.Success, LoadSuccess, package);
                     } catch(Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
-                        writeResult(Request.Failure, LoadFail);
+                        writeResult(Request.Failure, LoadFail, package);
                     }
                     break;
 
@@ -116,12 +122,6 @@ namespace KaPlanerServer.Logic
                 default:
                     Console.WriteLine(RequestUnknown);
                     break;
-            }
-
-            void writeResult(Request request, string line)
-            {
-                Console.WriteLine(line);
-                package.request = request;
             }
         }
     }

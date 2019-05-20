@@ -131,12 +131,12 @@ namespace WindowsFormsApp1
         private void EmptyBox(object sender, EventArgs e)
         {
             TextBox box = (TextBox)sender;
-
-            if(box.Text == String.Empty)
+            int result;
+            if (box.Text == String.Empty)
             {
                 box.Text = "0";
             }
-            if(Int32.TryParse(box.Text, out int result))
+            if(Int32.TryParse(box.Text, out result))
             {
                 if(result > 60)
                 {

@@ -27,7 +27,7 @@ namespace KaPlaner.Networking
 
     public class ClientConnection : IClientConnection
     {
-        public int port { get => _port; set => _port = value; }
+        public int port { get { return _port; } set { _port = value; } }
 
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);

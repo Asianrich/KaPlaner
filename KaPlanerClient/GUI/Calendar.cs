@@ -89,8 +89,8 @@ namespace WindowsFormsApp1
             try
             {
                 RichTextBox trigger = (RichTextBox)sender;
-
-                Int32.TryParse(trigger.Text, out int day);
+                int day;
+                Int32.TryParse(trigger.Text, out day);
 
                 DateTime date = new DateTime(year, monthcounter + 1,day);
 
