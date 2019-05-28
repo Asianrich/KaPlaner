@@ -42,8 +42,8 @@ namespace KaPlanerServer.Networking
         public ServerConnection()
         {
             ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            //ipAddress = ipHostInfo.AddressList[3]; //4: IP-Adresse 0: fuer Lokal
-            ipAddress = IPAddress.Parse("192.168.56.1");
+            ipAddress = ipHostInfo.AddressList[0]; //4: IP-Adresse 0: fuer Lokal
+            //ipAddress = IPAddress.Parse("192.168.56.1");
             //ipAddress.AddressFamily = AddressFamily.InterNetwork;
             localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

@@ -43,12 +43,12 @@ namespace KaPlaner.Networking
             {
                 //Lokal Host
                 IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
-                //IPAddress ip = ipHost.AddressList[0];
+                IPAddress ip = ipHost.AddressList[0];
 
                 //Externer Host
 
                 //Muss man irgendwie anders machen. 
-                IPAddress ip = IPAddress.Parse("192.168.56.1");
+                //IPAddress ip = IPAddress.Parse("192.168.56.1");
 
                 //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
                 //IPAddress ip = iPHost.AddressList[1];
