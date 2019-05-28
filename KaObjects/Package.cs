@@ -22,6 +22,8 @@ namespace KaObjects
         public User user;
 
         public string passwordConfirm;
+        public List<string> Connections = new List<string>();
+
 
         public List<KaEvent> kaEvents;
 

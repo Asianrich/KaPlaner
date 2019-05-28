@@ -86,6 +86,7 @@ namespace KaPlaner.GUI
                 else
                 {
                     MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    isNewElement = false;
                 }
             }
 
@@ -98,7 +99,7 @@ namespace KaPlaner.GUI
             }
             else
             {
-                ListEvents[index] = kaEvent;
+                ListEvents[index - 1] = kaEvent;
             }
         }
 
