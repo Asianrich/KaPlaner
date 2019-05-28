@@ -26,7 +26,7 @@ namespace KaObjects.Storage
         /// Registry
         /// create a new user
         /// </summary>
-        public bool registerUser(User user, string password_bestaetigen)
+        public bool registerUser(User user,string password_bestaetigen)
         {
             if (String.IsNullOrEmpty(user.name) || String.IsNullOrEmpty(user.password) || String.IsNullOrEmpty(password_bestaetigen))
             {
@@ -53,17 +53,20 @@ namespace KaObjects.Storage
                 {
                     reader_exists.Close();
 
-                    ///This creates a new table for each new user
-                    string newTable = "SELECT * INTO @username FROM calendar";
-                    SqlCommand cmd_newTable = new SqlCommand(newTable, con);
-                    //cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
+                        ///This creates a new table for each new user
+                        // string newTable = "SELECT * INTO @username FROM calendar";
+                        // SqlCommand cmd_newTable = new SqlCommand(newTable, con);
+                        //cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
 
-                    //This works...
-                    cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
-                    //Alternative for no Data copy
-                    //cmd_newTable.CommandText = "SELECT TOP 0 INTO " + user.name + " FROM calendar";
+                        //This works...
+                        //cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
+                        //Alternative for no Data copy
+                        //cmd_newTable.CommandText = "SELECT TOP 0 INTO " + user.name + " FROM calendar";
 
-                    cmd_newTable.ExecuteNonQuery();
+                        //cmd_newTable.ExecuteNonQuery();
+
+
+
 
                     string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
                     SqlCommand cmd_insert = new SqlCommand(insert, con);
@@ -123,26 +126,30 @@ namespace KaObjects.Storage
             }
         }
 
+
+
+
+
         // Termine in Datenbank speichern 
         public void SaveEvent(KaEvent kaEvent)
         {
-            ///This recursively saves given Event to every invitees calendar
-            if(kaEvent.members.Count > 0)
-            {
-                KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
-                invitee.owner = new User(kaEvent.members[0]);
-                kaEvent.members.RemoveAt(0);
-                try
-                {
-                    SaveEvent(invitee);
-                }
-                catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
-                {
-                    Console.WriteLine(e.GetType().FullName);
-                    Console.WriteLine(e.Message);
-                }
+            //This recursively saves given Event to every invitees calendar
+            //if(kaEvent.members.Count > 0)
+            //{
+                //KaEvent invitee = new KaEvent(kaEvent); //Shallow copy
+                //invitee.owner = new User(kaEvent.members[0]);
+                //kaEvent.members.RemoveAt(0);
+                //try
+                //{
+                    //SaveEvent(invitee);
+                //}
+                //catch (Exception e) //This isn't pretty on Client side, but it shouldn't abort if just one of the members names is wrong
+                //{
+                    //Console.WriteLine(e.GetType().FullName);
+                    //Console.WriteLine(e.Message);
+                //}
                 
-            }
+            //}
 
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -215,6 +222,10 @@ namespace KaObjects.Storage
             return; //Können wir überprüfen ob es geklappt hat?
         }
 
+
+
+
+
         /// <summary>
         /// Loads every Event in a month to store in a list
         /// </summary>
@@ -232,6 +243,9 @@ namespace KaObjects.Storage
             return null; //kaEvents
         }
 
+
+
+
         // TO FIX: Den Wert der User-ID aus der Datenbank auslesen
         public void Delete_date()
         {
@@ -247,6 +261,9 @@ namespace KaObjects.Storage
        
             con.Close();
         }
+
+
+
 
         public List<KaEvent> read(string owner)
         {
@@ -295,31 +312,16 @@ namespace KaObjects.Storage
                     //temp.XSamstag = reader.GetInt32(18);
                     //temp.XSonntag = reader.GetInt32(19);
 
-
-
-
-
-                    
-
-               
+         
                     Console.WriteLine(temp.Titel);
                 }
                 ka.Add(temp);
 
-
             }
-
-
-
 
             return ka;
 
-
         }
-
-
-
-
 
     }
 
