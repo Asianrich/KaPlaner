@@ -53,28 +53,30 @@ namespace KaObjects.Storage
                 {
                     reader_exists.Close();
 
-                        ///This creates a new table for each new user
-                        // string newTable = "SELECT * INTO @username FROM calendar";
-                        // SqlCommand cmd_newTable = new SqlCommand(newTable, con);
-                        //cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
+                    ///This creates a new table for each new user
+                    // string newTable = "SELECT * INTO @username FROM calendar";
+                    // SqlCommand cmd_newTable = new SqlCommand(newTable, con);
+                    //cmd_newTable.Parameters.AddWithValue("@username", user.name); // This doesn't work for some inexplicable reason
 
-                        //This works...
-                        //cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
-                        //Alternative for no Data copy
-                        //cmd_newTable.CommandText = "SELECT TOP 0 INTO " + user.name + " FROM calendar";
+                    //This works...
+                    //cmd_newTable.CommandText = "SELECT * INTO " + user.name + " FROM calendar";
+                    //Alternative for no Data copy
+                    //cmd_newTable.CommandText = "SELECT TOP 0 INTO " + user.name + " FROM calendar";
 
-                        //cmd_newTable.ExecuteNonQuery();
-
-
+                    //cmd_newTable.ExecuteNonQuery();
 
 
-                    string insert = "insert into Registry (Benutzername,Passwort) values(@username, @password)";
+                    con.Close();
+
+                    con.Open();
+                    string insert = "Insert INTO Registry (Benutzername, Passwort) VALUES(@username, @password);";
+                    //insert = String.Format("INSERT INTO Registry (Benutzername, Passwort) values('{0}', '{1}');", user.name, user.password);
                     SqlCommand cmd_insert = new SqlCommand(insert, con);
                     cmd_insert.Parameters.AddWithValue("@username", user.name);
                     cmd_insert.Parameters.AddWithValue("@password", user.password);
 
-                    cmd_insert.ExecuteNonQuery();
-
+                    int test = cmd_insert.ExecuteNonQuery();
+                    Console.WriteLine("Rows affected {0}", test);
 
                     con.Close();
                     return true;
@@ -105,11 +107,13 @@ namespace KaObjects.Storage
                 con.Open();
 
                 //Pruefen ob der Benutzer existiert
-                string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = @username AND Passwort = @password);";
-
+                //string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = '@username' AND Passwort = '@password');";
+                string exist = "SELECT Benutzername FROM Registry WHERE Benutzername = 'yxc' AND Passwort = 'yxc'";
+                exist = String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}' AND Passwort = '{1}'", user.name, user.password);
                 SqlCommand cmd = new SqlCommand(exist, con);
                 cmd.Parameters.AddWithValue("@username", user.name);
                 cmd.Parameters.AddWithValue("@password", user.password);
+                Console.WriteLine("Received {0} {1}", user.name, user.password);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -158,7 +162,7 @@ namespace KaObjects.Storage
             //    kaEvent.Immer_Wiederholen + ", " + kaEvent.Wiederholungen + ", " + kaEvent.Wiederholen_bis + ", " + kaEvent.XMontag + ", " + kaEvent.XDienstag + ", " + kaEvent.XMittwoch + ", " + kaEvent.XDonnerstag + ", " + kaEvent.XFreitag + ", " + kaEvent.XSamstag + ", " + kaEvent.XSonntag + ") " +
             //    "values(@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)";
             //string ins2 = String.Format("INSERT INTO {0} (Titel, Beginn, Ende)  VALUES ({1}, {2}, {3})", kaEvent.owner.name, kaEvent.Titel, kaEvent.Beginn.ToUniversalTime(), kaEvent.Ende.ToUniversalTime());
-            string ins3 = String.Format("INSERT INTO {0} (Titel, Ort, Beginn, Ende, Beschreibung)  VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung)", kaEvent.owner.name);
+            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername)  VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
             //Titel, Beginn, Ende
             //string insert = String.Format("INSERT INTO {0} (Titel, Ort, Ganztaegig, Beginn, Ende, Prioritaet, Beschreibung, Haeufigkeit, Haeufigkeit_Anzahl, Immer_Wiederholen, Wiederholungen, Wiederholen_bis, XMontag, XDienstag, XMittwoch, XDonnerstag, XFreitag, XSamstag, XSonntag) " +
             //    "VALUES (@Titel, @Ort, @Ganztaegig, @Beginn, @Ende, @Prioritaet, @Beschreibung, @Haeufigkeit, @Haeufigkeit_Anzahl, @Immer_Wiederholen, @Wiederholungen, @Wiederholen_bis, @XMontag, @XDienstag, @XMittwoch, @XDonnerstag, @XFreitag, @XSamstag, @XSonntag)");
@@ -172,6 +176,7 @@ namespace KaObjects.Storage
             cmd_insert.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
             cmd_insert.Parameters.AddWithValue("@Ende", kaEvent.Ende);
             cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
+            cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
 
 
 
@@ -237,7 +242,7 @@ namespace KaObjects.Storage
             con.Open();
 
 #pragma warning disable CS0219 // The variable 'select' is assigned but its value is never used
-            string select = "SELECT * FROM @username WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
+            string select = "SELECT * FROM calendar WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
 #pragma warning restore CS0219 // The variable 'select' is assigned but its value is never used
 
             return null; //kaEvents
@@ -276,8 +281,8 @@ namespace KaObjects.Storage
             con.Open();
 
             //Pruefen ob der Benutzer existiert
-            string exist = "SELECT * FROM @table";
-            exist = String.Format("SELECT * FROM {0}", owner);
+            string exist = "SELECT * FROM calendar Where username =";
+            exist = String.Format("SELECT * FROM calendar where Benutzername = '{0}'", owner);
 
             SqlCommand com = new SqlCommand(exist, con);
             //com.Parameters.AddWithValue("@table", owner);
