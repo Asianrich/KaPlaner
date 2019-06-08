@@ -145,6 +145,18 @@ namespace KaPlanerServer.Networking
                         
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
+
+                        userPackage = serverLogic.forwarding(userPackage);
+
+                        if(userPackage.isForwarding)
+                        {
+                            //Lösung
+
+
+
+                        }
+
+
                         serverLogic.resolvePackage(userPackage);
                         
 
