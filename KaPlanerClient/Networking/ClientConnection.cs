@@ -46,6 +46,10 @@ namespace KaPlaner.Networking
                 IPAddress ip = ipHost.AddressList[0];
 
                 //Externer Host
+
+                //Muss man irgendwie anders machen. 
+                //IPAddress ip = IPAddress.Parse("192.168.56.1");
+
                 //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
                 //IPAddress ip = iPHost.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ip, 11000);

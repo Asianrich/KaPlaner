@@ -22,6 +22,9 @@ namespace KaObjects
         public User user;
 
         public string passwordConfirm;
+        public List<string> Connections = new List<string>();
+        public bool isForwarding;
+        public string server;
 
         public List<KaEvent> kaEvents;
 

@@ -43,6 +43,8 @@ namespace KaPlanerServer.Networking
         {
             ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             ipAddress = ipHostInfo.AddressList[0]; //4: IP-Adresse 0: fuer Lokal
+            //ipAddress = IPAddress.Parse("192.168.56.1");
+            //ipAddress.AddressFamily = AddressFamily.InterNetwork;
             localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         }
@@ -65,11 +67,9 @@ namespace KaPlanerServer.Networking
                     allDone.WaitOne();
                 }
             }
-#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
-#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -111,9 +111,7 @@ namespace KaPlanerServer.Networking
                 handler.Close();
                 Console.WriteLine("Success at closing");
             }
-#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
-#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 return;
             }
@@ -147,8 +145,22 @@ namespace KaPlanerServer.Networking
                         
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
+
+                        userPackage = serverLogic.forwarding(userPackage);
+
+                        if(userPackage.isForwarding)
+                        {
+                            //Lösung
+
+
+
+                        }
+
+
                         serverLogic.resolvePackage(userPackage);
                         
+
+
 
                         Send(state.workSocket, userPackage);
 
@@ -178,6 +190,15 @@ namespace KaPlanerServer.Networking
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
 
         }
+
+        public static void communicateServer()
+        {
+
+        }
+
+
+
+
 
         //Serializing
         public static string Serialize<T>(T myObject)

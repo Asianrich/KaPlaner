@@ -8,6 +8,7 @@ using KaObjects.Storage;
 
 namespace KaPlanerServer.Logic
 {
+
     class ServerLogic : IServerLogic
     {
         static readonly string LoginRequest = "Login Requested.";
@@ -28,18 +29,23 @@ namespace KaPlanerServer.Logic
         //Connection String muss noch angepasst werden
         //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
+
+
 
 
         IDatabase database = new Database(connectionString);
-        
+
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
         /// </summary>
         /// <param name="package"></param>
         public void resolvePackage(Package package)
         {
+
+
             switch (package.request)
             {
                 /// In case of Login Request try to login to the server database and set Request accordingly
@@ -70,7 +76,8 @@ namespace KaPlanerServer.Logic
                         {
                             writeResult(Request.Failure, RegisterFail);
                         }
-                    } catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
@@ -84,7 +91,8 @@ namespace KaPlanerServer.Logic
                     {
                         database.SaveEvent(package.kaEvents[0]);
                         writeResult(Request.Success, SaveSuccess);
-                    } catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
@@ -101,7 +109,8 @@ namespace KaPlanerServer.Logic
                         kaEvents = database.read(package.user.name);
                         package.kaEvents = kaEvents;
                         writeResult(Request.Success, LoadSuccess);
-                    } catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
@@ -124,5 +133,13 @@ namespace KaPlanerServer.Logic
                 package.request = request;
             }
         }
+
+        public Package forwarding(Package package)
+        {
+
+
+            return package;
+        }
+
     }
 }
