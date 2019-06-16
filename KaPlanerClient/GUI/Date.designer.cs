@@ -174,6 +174,7 @@
             // LBL_minute_end
             // 
             this.LBL_minute_end.AutoSize = true;
+            this.LBL_minute_end.Enabled = false;
             this.LBL_minute_end.Location = new System.Drawing.Point(512, 256);
             this.LBL_minute_end.Name = "LBL_minute_end";
             this.LBL_minute_end.Size = new System.Drawing.Size(54, 18);
@@ -183,6 +184,7 @@
             // LBL_minute_beginn
             // 
             this.LBL_minute_beginn.AutoSize = true;
+            this.LBL_minute_beginn.Enabled = false;
             this.LBL_minute_beginn.Location = new System.Drawing.Point(174, 256);
             this.LBL_minute_beginn.Name = "LBL_minute_beginn";
             this.LBL_minute_beginn.Size = new System.Drawing.Size(54, 18);
@@ -191,6 +193,7 @@
             // 
             // TB_minute_end
             // 
+            this.TB_minute_end.Enabled = false;
             this.TB_minute_end.Location = new System.Drawing.Point(569, 253);
             this.TB_minute_end.Name = "TB_minute_end";
             this.TB_minute_end.Size = new System.Drawing.Size(50, 26);
@@ -201,6 +204,7 @@
             // 
             // TB_minute_beginn
             // 
+            this.TB_minute_beginn.Enabled = false;
             this.TB_minute_beginn.Location = new System.Drawing.Point(246, 253);
             this.TB_minute_beginn.Name = "TB_minute_beginn";
             this.TB_minute_beginn.Size = new System.Drawing.Size(50, 26);
@@ -212,6 +216,7 @@
             // LBL_hour_end
             // 
             this.LBL_hour_end.AutoSize = true;
+            this.LBL_hour_end.Enabled = false;
             this.LBL_hour_end.Location = new System.Drawing.Point(509, 224);
             this.LBL_hour_end.Name = "LBL_hour_end";
             this.LBL_hour_end.Size = new System.Drawing.Size(57, 18);
@@ -221,6 +226,7 @@
             // LBL_hour_beginn
             // 
             this.LBL_hour_beginn.AutoSize = true;
+            this.LBL_hour_beginn.Enabled = false;
             this.LBL_hour_beginn.Location = new System.Drawing.Point(174, 224);
             this.LBL_hour_beginn.Name = "LBL_hour_beginn";
             this.LBL_hour_beginn.Size = new System.Drawing.Size(57, 18);
@@ -229,6 +235,7 @@
             // 
             // TB_hour_end
             // 
+            this.TB_hour_end.Enabled = false;
             this.TB_hour_end.Location = new System.Drawing.Point(569, 221);
             this.TB_hour_end.Name = "TB_hour_end";
             this.TB_hour_end.Size = new System.Drawing.Size(50, 26);
@@ -239,6 +246,7 @@
             // 
             // TB_hour_beginn
             // 
+            this.TB_hour_beginn.Enabled = false;
             this.TB_hour_beginn.Location = new System.Drawing.Point(246, 221);
             this.TB_hour_beginn.Name = "TB_hour_beginn";
             this.TB_hour_beginn.Size = new System.Drawing.Size(50, 26);
@@ -361,6 +369,7 @@
             // lbl_prioritaet
             // 
             this.lbl_prioritaet.AutoSize = true;
+            this.lbl_prioritaet.Enabled = false;
             this.lbl_prioritaet.Location = new System.Drawing.Point(38, 306);
             this.lbl_prioritaet.Name = "lbl_prioritaet";
             this.lbl_prioritaet.Size = new System.Drawing.Size(63, 18);
@@ -387,11 +396,12 @@
             // 
             // NUD_Priority
             // 
+            this.NUD_Priority.Enabled = false;
             this.NUD_Priority.Location = new System.Drawing.Point(177, 304);
             this.NUD_Priority.Name = "NUD_Priority";
             this.NUD_Priority.Size = new System.Drawing.Size(50, 26);
             this.NUD_Priority.TabIndex = 26;
-            this.NUD_Priority.ValueChanged += new System.EventHandler(this.NUD_Priority_ValueChanged);
+//            this.NUD_Priority.ValueChanged += new System.EventHandler(this.NUD_Priority_ValueChanged);
             // 
             // lbl_beginn
             // 
@@ -405,6 +415,7 @@
             // CB_ganztägige_verantstaltung
             // 
             this.CB_ganztägige_verantstaltung.AutoSize = true;
+            this.CB_ganztägige_verantstaltung.Enabled = false;
             this.CB_ganztägige_verantstaltung.Location = new System.Drawing.Point(177, 87);
             this.CB_ganztägige_verantstaltung.Name = "CB_ganztägige_verantstaltung";
             this.CB_ganztägige_verantstaltung.Size = new System.Drawing.Size(205, 22);
@@ -744,6 +755,7 @@
             // MC_date_summery
             // 
             this.MC_date_summery.CalendarDimensions = new System.Drawing.Size(3, 1);
+            this.MC_date_summery.Enabled = false;
             this.MC_date_summery.Location = new System.Drawing.Point(25, 439);
             this.MC_date_summery.Name = "MC_date_summery";
             this.MC_date_summery.TabIndex = 58;
@@ -752,6 +764,7 @@
             // lbl_dates_with_actions
             // 
             this.lbl_dates_with_actions.AutoSize = true;
+            this.lbl_dates_with_actions.Enabled = false;
             this.lbl_dates_with_actions.Location = new System.Drawing.Point(39, 412);
             this.lbl_dates_with_actions.Name = "lbl_dates_with_actions";
             this.lbl_dates_with_actions.Size = new System.Drawing.Size(152, 18);
@@ -858,6 +871,7 @@
             this.CB_none.AutoSize = true;
             this.CB_none.Checked = true;
             this.CB_none.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CB_none.Enabled = false;
             this.CB_none.Location = new System.Drawing.Point(202, 85);
             this.CB_none.Name = "CB_none";
             this.CB_none.Size = new System.Drawing.Size(65, 22);
@@ -869,6 +883,7 @@
             // lbl_haeufigkeit
             // 
             this.lbl_haeufigkeit.AutoSize = true;
+            this.lbl_haeufigkeit.Enabled = false;
             this.lbl_haeufigkeit.Location = new System.Drawing.Point(39, 86);
             this.lbl_haeufigkeit.Name = "lbl_haeufigkeit";
             this.lbl_haeufigkeit.Size = new System.Drawing.Size(78, 18);

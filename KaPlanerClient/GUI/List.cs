@@ -31,8 +31,6 @@ namespace KaPlaner.GUI
             indexes = new List<int>();
             ListEvents = kaEvents;
             update();
-
-
         }
 
         public void update()
@@ -79,29 +77,27 @@ namespace KaPlaner.GUI
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
-                {
-                    kaEvent = form.returnValue;
-
+                { 
+                        kaEvent = form.returnValue;
                 }
                 else
                 {
-                    MessageBox.Show("Ne ne ne So funktionierts nicht");
-                    isNewElement = false;
+                        MessageBox.Show("Ne ne ne So funktionierts nicht");
+                        isNewElement = false;
+                    }
+                }
+
+                if (isNewElement)
+                {
+                    ListEvents.Add(kaEvent);
+                    update();
+                }
+                else
+                {
+                    ListEvents[index - 1] = kaEvent;
                 }
             }
-
-            if (isNewElement)
-            {
-                
-                ListEvents.Add(kaEvent);
-                update();
-
-            }
-            else
-            {
-                ListEvents[index - 1] = kaEvent;
-            }
-        }
+        
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
@@ -137,8 +133,6 @@ namespace KaPlaner.GUI
         {
             try
             {
-                
-
                 using (var form = new Wdw_user_list())
                 {
                     var results = form.ShowDialog();

@@ -21,10 +21,6 @@ namespace KaObjects
         [XmlAttribute]
         public string password;
 
-
-
-
-
         public User()
         {
             name = "KaPlanerUser"; //Default User

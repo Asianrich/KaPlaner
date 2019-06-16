@@ -37,6 +37,7 @@ namespace WindowsFormsApp1
 
             returnValue = new KaEvent();
 
+            /*
             if (ereignis != null)
             {
                 TB_Title.Text = ereignis.Titel;
@@ -54,7 +55,8 @@ namespace WindowsFormsApp1
                 TB_hour_end.Text = ereignis.Beginn.ToString("HH");
                 TB_minute_end.Text = ereignis.Beginn.ToString("mm");
 
-                NUD_Priority.Value = ereignis.Prioritaet;
+                //NUD_Priority.Value = ereignis.Prioritaet;
+
                 RTB_description.Text = ereignis.Beschreibung;
 
                 switch (ereignis.Haeufigkeit)
@@ -75,8 +77,9 @@ namespace WindowsFormsApp1
                     case "jaehrlich":
                         CB_yearly.Checked = true;
                         break;
-                }
+                }*/
 
+                /*
                 TB_number_repetitions.Text = ereignis.Haeufigkeit_Anzahl.ToString();
 
                 if (ereignis.Immer_Wiederholen == 1) { CB_always_repeat.Checked = true; }
@@ -110,7 +113,9 @@ namespace WindowsFormsApp1
                 NUD_fri.Value = ereignis.XFreitag;
                 NUD_sat.Value = ereignis.XSamstag;
                 NUD_sun.Value = ereignis.XSonntag;
+                
             }
+            */
         }
 
 
@@ -263,6 +268,7 @@ namespace WindowsFormsApp1
             minute = Convert.ToInt32(TB_minute_end.Text);
             returnValue.Ende = new DateTime(year, month, day, hour, minute, sec);
 
+ /*
             if (!CB_none.Checked)
             {
                 year = Convert.ToInt32(TB_repeat_until_year.Text);
@@ -275,13 +281,15 @@ namespace WindowsFormsApp1
             {
                 returnValue.Wiederholen_bis = new DateTime(2019,1,1,1,1,1); //Another cheezy trick just to avoid sql errors
             }
+*/
         }
 
         //NUD_Priority
-        private void NUD_Priority_ValueChanged(object sender, EventArgs e)
+/*        private void NUD_Priority_ValueChanged(object sender, EventArgs e)
         {
             returnValue.Prioritaet = Decimal.ToInt32(NUD_Priority.Value);
         }
+*/
 
         //RTB_description
         private void RTB_description_TextChanged(object sender, EventArgs e)
@@ -308,7 +316,7 @@ namespace WindowsFormsApp1
                 lbl_dates_with_actions.Enabled = false;
                 MC_date_summery.Enabled = false;
 
-                returnValue.Haeufigkeit = "keine";
+//                returnValue.Haeufigkeit = "keine";
             }
             else if (CB_none.Checked == false)
             {
@@ -319,7 +327,7 @@ namespace WindowsFormsApp1
                 lbl_dates_with_actions.Enabled = true;
                 MC_date_summery.Enabled = true;
 
-                returnValue.Haeufigkeit = "";
+//                returnValue.Haeufigkeit = "";
             }
         }
 
@@ -337,7 +345,7 @@ namespace WindowsFormsApp1
                 pan_weekday.Enabled = true;
                 pan_which_day.Enabled = false;
 
-                returnValue.Haeufigkeit = "taeglich";
+//                returnValue.Haeufigkeit = "taeglich";
                 TB_number_repetitions.Text = "1";
             }
             else if (CB_dayli.Checked == false)
@@ -350,7 +358,7 @@ namespace WindowsFormsApp1
                 pan_frequency.Enabled = true;
                 pan_which_day.Enabled = true;
 
-                returnValue.Haeufigkeit = "";
+//                returnValue.Haeufigkeit = "";
                 TB_number_repetitions.Text = "0";
             }
         }
@@ -367,7 +375,7 @@ namespace WindowsFormsApp1
                 TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = false;
                 pan_which_day.Enabled = false;
-                returnValue.Haeufigkeit = "woechentlich";
+//               returnValue.Haeufigkeit = "woechentlich";
 
             }
             else if (CB_weekly.Checked == false)
@@ -381,7 +389,7 @@ namespace WindowsFormsApp1
                 TB_times_repeat.Enabled = true;
                 pan_which_day.Enabled = true;
 
-                returnValue.Haeufigkeit = "";
+//                returnValue.Haeufigkeit = "";
             }
         }
 
@@ -397,7 +405,7 @@ namespace WindowsFormsApp1
                 TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = true;
 
-                returnValue.Haeufigkeit = "monatlich";
+//                returnValue.Haeufigkeit = "monatlich";
             }
             else if (CB_monthly.Checked == false)
             {
@@ -406,7 +414,7 @@ namespace WindowsFormsApp1
                 CB_weekly.Enabled = true;
                 CB_yearly.Enabled = true;
 
-                returnValue.Haeufigkeit = "";
+//                returnValue.Haeufigkeit = "";
             }
         }
 
@@ -420,7 +428,7 @@ namespace WindowsFormsApp1
                 CB_weekly.Enabled = false;
                 CB_monthly.Enabled = false;
 
-                returnValue.Haeufigkeit = "jaehrlich";
+//                returnValue.Haeufigkeit = "jaehrlich";
             }
             else if (CB_yearly.Checked == false)
             {
@@ -431,7 +439,7 @@ namespace WindowsFormsApp1
                 TB_number_repetitions.Enabled = true;
                 lbl_times_per.Enabled = true;
 
-                returnValue.Haeufigkeit = "";
+                //returnValue.Haeufigkeit = "";
             }
         }
 
@@ -443,11 +451,11 @@ namespace WindowsFormsApp1
         {
             if(TB_number_repetitions.Text == "")
             {
-                returnValue.Haeufigkeit_Anzahl = 0;
+//                returnValue.Haeufigkeit_Anzahl = 0;
             }
             else
             {
-                returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
+//                returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
             }
         }
 
@@ -466,7 +474,7 @@ namespace WindowsFormsApp1
                 TB_repeat_until_year.Enabled = false;
 
                 TB_times_repeat.Text = "0";
-                returnValue.Immer_Wiederholen = 1;
+//                returnValue.Immer_Wiederholen = 1;
             }
             else if (CB_always_repeat.Checked == false)
             {
@@ -478,7 +486,7 @@ namespace WindowsFormsApp1
                 TB_repeat_until_year.Enabled = true;
 
                 TB_times_repeat.Text = "1";
-                returnValue.Immer_Wiederholen = 0;
+  //              returnValue.Immer_Wiederholen = 0;
             }
         }
 
@@ -487,11 +495,11 @@ namespace WindowsFormsApp1
         {
             if(TB_times_repeat.Text == "")
             {
-                returnValue.Wiederholungen = 0;
+//                returnValue.Wiederholungen = 0;
             }
             else
             {
-                returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
+//                returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
             }
         }
 
@@ -505,7 +513,7 @@ namespace WindowsFormsApp1
         {
             if (CB_mon.Checked == false)
             {
-                returnValue.XMontag = -1;
+//                returnValue.XMontag = -1;
                 NUD_mon.Enabled = false;
             }
             else
@@ -519,7 +527,7 @@ namespace WindowsFormsApp1
         {
             if (CB_die.Checked == false)
             {
-                returnValue.XDienstag = -1;
+//                returnValue.XDienstag = -1;
                 NUD_tue.Enabled = false;
             }
             else
@@ -533,7 +541,7 @@ namespace WindowsFormsApp1
         {
             if (CB_mit.Checked == false)
             {
-                returnValue.XMittwoch = -1;
+//                returnValue.XMittwoch = -1;
                 NUD_wen.Enabled = false;
             }
             else
@@ -547,7 +555,7 @@ namespace WindowsFormsApp1
         {
             if (CB_don.Checked == false)
             {
-                returnValue.XDonnerstag = -1;
+//                returnValue.XDonnerstag = -1;
                 NUD_thu.Enabled = false;
             }
             else
@@ -561,7 +569,7 @@ namespace WindowsFormsApp1
         {
             if (CB_fre.Checked == false)
             {
-                returnValue.XFreitag = -1;
+//                returnValue.XFreitag = -1;
                 NUD_fri.Enabled = false;
             }
             else
@@ -575,7 +583,7 @@ namespace WindowsFormsApp1
         {
             if (CB_sam.Checked == false)
             {
-                returnValue.XSamstag = -1;
+//                returnValue.XSamstag = -1;
                 NUD_sat.Enabled = false;
             }
             else
@@ -589,7 +597,7 @@ namespace WindowsFormsApp1
         {
             if (CB_son.Checked == false)
             {
-                returnValue.XSonntag = -1;
+//                returnValue.XSonntag = -1;
                 NUD_sun.Enabled = false;
             }
             else
@@ -601,43 +609,43 @@ namespace WindowsFormsApp1
         //NUD_mon
         private void NUD_mon_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XMontag = Convert.ToInt32(NUD_mon.Value);
+//          returnValue.XMontag = Convert.ToInt32(NUD_mon.Value);
         }
 
         //NUD_tue
         private void NUD_tue_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XDienstag = Convert.ToInt32(NUD_tue.Value);
+//            returnValue.XDienstag = Convert.ToInt32(NUD_tue.Value);
         }
 
         //NUD_wen
         private void NUD_wen_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XMittwoch = Convert.ToInt32(NUD_wen.Value);
+ //           returnValue.XMittwoch = Convert.ToInt32(NUD_wen.Value);
         }
 
         //NUD_thu
         private void NUD_thu_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XDonnerstag = Convert.ToInt32(NUD_thu.Value);
+//            returnValue.XDonnerstag = Convert.ToInt32(NUD_thu.Value);
         }
 
         //NUD_fri
         private void NUD_fri_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XFreitag = Convert.ToInt32(NUD_fri.Value);
+//            returnValue.XFreitag = Convert.ToInt32(NUD_fri.Value);
         }
 
         //NUD_sat
         private void NUD_sat_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XSamstag = Convert.ToInt32(NUD_sat.Value);
+//            returnValue.XSamstag = Convert.ToInt32(NUD_sat.Value);
         }
 
         //NUD_sun
         private void NUD_sun_ValueChanged(object sender, EventArgs e)
         {
-            returnValue.XSonntag = Convert.ToInt32(NUD_sun.Value);
+//            returnValue.XSonntag = Convert.ToInt32(NUD_sun.Value);
         }
 
         //MC_date_summery
