@@ -44,8 +44,7 @@ namespace KaPlanerServer.Logic
         /// <param name="package"></param>
         public void resolvePackage(Package package)
         {
-            //Test
-            //P2P
+        
             switch (package.request)
             {
                 /// In case of Login Request try to login to the server database and set Request accordingly
@@ -132,6 +131,11 @@ namespace KaPlanerServer.Logic
                 Console.WriteLine(line);
                 package.request = request;
             }
+        }
+
+        private void resolvePackage(P2PPackage package)
+        {
+            throw new NotImplementedException();
         }
 
         public Package forwarding(Package package)

@@ -142,8 +142,10 @@ namespace KaPlanerServer.Networking
                     {
 
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
-                        
+                        //var userPackage = new Object();
+
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
+                        
 
 
                         userPackage = serverLogic.forwarding(userPackage);
@@ -156,7 +158,8 @@ namespace KaPlanerServer.Networking
 
                         }
 
-
+                        /*if (userPackage is P2PPackage)
+                            serverLogic.resolvePackage(userPackage);*/
                         serverLogic.resolvePackage(userPackage);
                         
 
