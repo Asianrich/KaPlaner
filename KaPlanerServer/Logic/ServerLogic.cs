@@ -45,7 +45,7 @@ namespace KaPlanerServer.Logic
         public void resolvePackage(Package package)
         {
             //Test
-
+            //P2P
             switch (package.request)
             {
                 /// In case of Login Request try to login to the server database and set Request accordingly
