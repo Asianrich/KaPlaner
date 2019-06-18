@@ -44,7 +44,7 @@ namespace KaPlanerServer.Logic
         /// <param name="package"></param>
         public void resolvePackage(Package package)
         {
-            //Test
+            //Test mastere
 
             switch (package.request)
             {
