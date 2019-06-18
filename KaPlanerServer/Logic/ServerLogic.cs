@@ -46,6 +46,8 @@ namespace KaPlanerServer.Logic
         {
             //Test mastere
 
+            //asd
+
             switch (package.request)
             {
                 /// In case of Login Request try to login to the server database and set Request accordingly
