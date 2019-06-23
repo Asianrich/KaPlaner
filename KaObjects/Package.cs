@@ -21,6 +21,9 @@ namespace KaObjects
         public Request request;
         public User user;
 
+        public P2PPackage p2p;
+        
+
         public string passwordConfirm;
         public List<string> Connections = new List<string>();
         public bool isForwarding;

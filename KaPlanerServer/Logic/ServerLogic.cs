@@ -192,6 +192,9 @@ namespace KaPlanerServer.Logic
 
         }
 
-
+        void IServerLogic.resolvePackage(P2PPackage package)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
