@@ -36,6 +36,9 @@ namespace KaPlanerServer.Logic
 
 
 
+        public string typeofServer = "P2P";
+
+
         IDatabase database = new Database(connectionString);
 
         /// <summary>
@@ -144,6 +147,51 @@ namespace KaPlanerServer.Logic
 
             return package;
         }
+        /// <summary>
+        /// Einstellungen fuer den Server wird abgefragt!!!!
+        /// </summary>
+        public void Settings()
+        {
+            string input = "";
+            Console.WriteLine("Einstellungen fuer den Server");
+            Console.WriteLine("Hierarchie(0) oder P2P(1)?");
+
+            while(input != "0" || input != "1")
+            {
+                input = Console.ReadLine();
+                {
+
+                }
+            }
+            
+
+            Console.WriteLine("Bin ich Root? J/N");
+
+            while (input != "J" || input != "N")
+            {
+                input = Console.ReadLine();
+                if (input != "J" && input != "N")
+                    Console.WriteLine("Bitte J oder N eingeben");
+            }
+
+            if(input == "J")
+            {
+                //WERDE ZUM HOST!
+            }
+            else
+            {
+                //WERDE ZUM SKLAVEN!
+            }
+
+
+
+
+
+
+
+
+        }
+
 
     }
 }

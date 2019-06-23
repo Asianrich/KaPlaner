@@ -15,6 +15,9 @@ using KaPlanerServer.Logic;
 
 namespace KaPlanerServer.Networking
 {
+
+    //Netztwerkintern. Verschickt die serialisierte Packete
+
     class StateObject
     {
         public Socket workSocket = null;
@@ -42,21 +45,51 @@ namespace KaPlanerServer.Networking
         public ServerConnection()
         {
             ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            ipAddress = ipHostInfo.AddressList[0]; //4: IP-Adresse 0: fuer Lokal
-            //ipAddress = IPAddress.Parse("192.168.56.1");
+            //ipAddress = ipHostInfo.AddressList[0]; //4: IP-Adresse 0: fuer Lokal
+            ipAddress = IPAddress.Parse(GetAddress(ipHostInfo.AddressList));
             //ipAddress.AddressFamily = AddressFamily.InterNetwork;
             localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
         }
 
+        private string GetAddress(IPAddress[] iPAddresses)
+        {
+            string adress;
+            int result;
+            Console.WriteLine("Waehle die IP-Adresse");
+            for (int i = 0; i < ipHostInfo.AddressList.Length; i++)
+            {
+                Console.WriteLine(i + ": " + ipHostInfo.AddressList[i].ToString());
+            }
+            Console.Write("Ihre Auswahl: ");
+            string keyRead = Console.ReadLine();
 
+
+            while (!Int32.TryParse(keyRead, out result))
+            {
+                Console.WriteLine("Ein Fehler ist unterlaufen. Versuchen sie erneut");
+                keyRead = Console.ReadLine();
+            }
+
+            adress = iPAddresses[result].ToString();
+
+            return adress;
+        }
+
+        /// <summary>
+        /// Aufruf um den Server zu Starten
+        /// </summary>
         public void start()
         {
             try
             {
+                //Server einstellen. P2P oder Hierarchie inklusive 
+                serverLogic.Settings();
+
+
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
-
                 while (true)
                 {
                     allDone.Reset();
@@ -142,26 +175,23 @@ namespace KaPlanerServer.Networking
                     {
 
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
-                        //var userPackage = new Object();
 
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
-                        
 
-
+                        //Überprüfen des 
                         userPackage = serverLogic.forwarding(userPackage);
 
-                        if(userPackage.isForwarding)
+                        if (userPackage.isForwarding)
                         {
                             //Lösung
-
+                            communicateServer();
 
 
                         }
 
-                        /*if (userPackage is P2PPackage)
-                            serverLogic.resolvePackage(userPackage);*/
+
                         serverLogic.resolvePackage(userPackage);
-                        
+
 
 
 
@@ -178,7 +208,7 @@ namespace KaPlanerServer.Networking
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                StateObject state =(StateObject)ar.AsyncState;
+                StateObject state = (StateObject)ar.AsyncState;
                 state.workSocket.Shutdown(SocketShutdown.Both);
                 state.workSocket.Close();
                 return;
@@ -188,7 +218,7 @@ namespace KaPlanerServer.Networking
         //Sending Packages
         public static void Send(Socket handler, Package package)
         {
-            byte[] byteData = Encoding.ASCII.GetBytes(Serialize<Package>(package)+ "<EOF>");
+            byte[] byteData = Encoding.ASCII.GetBytes(Serialize<Package>(package) + "<EOF>");
 
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
 

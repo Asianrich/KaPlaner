@@ -13,5 +13,6 @@ namespace KaPlanerServer.Logic
         void resolvePackage(Package package);
         void resolvePackage(P2PPackage package);
         Package forwarding(Package package);
+        void Settings();
     }
 }
