@@ -218,6 +218,11 @@ namespace KaPlaner.Networking
         }
 
 
+        public void changeIP()
+        {
+
+        }
+
         /// <summary>
         /// Starts Connecting, Sending Package, and receiving Response-Package from Server
         /// </summary>

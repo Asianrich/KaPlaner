@@ -11,6 +11,8 @@ namespace KaPlanerServer.Logic
     interface IServerLogic
     {
         void resolvePackage(Package package);
+        void resolvePackage(P2PPackage package);
         Package forwarding(Package package);
+        void Settings();
     }
 }
