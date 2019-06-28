@@ -14,7 +14,7 @@ namespace KaObjects
     {
         static public readonly int TTLinit = 5;
 
-        private P2PRequest P2Prequest;
+        public P2PRequest P2Prequest;
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
         private int anzConn;
@@ -23,6 +23,7 @@ namespace KaObjects
         public P2PPackage() : base()
         {
             generatePID();
+            base.p2p = this;
         }
 
         private void generatePID()

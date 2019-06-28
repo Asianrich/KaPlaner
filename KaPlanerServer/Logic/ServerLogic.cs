@@ -33,13 +33,16 @@ namespace KaPlanerServer.Logic
         //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
-
+        private List<string> neighbours; //Liste der IP Adressen, der Verbindungen
+        public static string ipString;
 
 
         public string typeofServer = "P2P";
 
 
         IDatabase database = new Database(connectionString);
+
+        string IServerLogic.ipString { get => ipString;   set  => ipString = value;   }
 
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
@@ -147,11 +150,23 @@ namespace KaPlanerServer.Logic
 
             return package;
         }
+
+        private void ipInitialize()
+        {
+            LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
+            List<string> neighbours = new List<string>
+            {
+                listOfWellKnownPeers.Find(ipString).Previous.ToString(),
+                listOfWellKnownPeers.Find(ipString).Next.ToString()
+            };
+        }
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!
         /// </summary>
         public void Settings()
         {
+
+
             string input = "";
             Console.WriteLine("Einstellungen fuer den Server");
             Console.WriteLine("Hierarchie(0) oder P2P(1)?");
@@ -192,8 +207,19 @@ namespace KaPlanerServer.Logic
 
         }
 
-        void IServerLogic.resolvePackage(P2PPackage package)
+        List<string> IServerLogic.resolvePackage(P2PPackage package)
         {
+            switch (package.P2Prequest)
+            {
+                case P2PRequest.NewServer:
+                    //0. Gab es die Anfrage schon?
+                    //1. Anzahl Verbindungen (s. neighbours)
+                    //2. TTL --
+                    //3. Antwort zurücksenden (P2PPackage.ipAddress)
+                    //4. Falls TTL > 0 weiterleiten
+                    break;
+            }
+
             throw new NotImplementedException();
         }
     }

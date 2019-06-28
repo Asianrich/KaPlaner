@@ -221,5 +221,10 @@ namespace KaObjects.Storage
             }
             return ka;
         }
+
+        public LinkedList<string> GetWellKnownPeers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

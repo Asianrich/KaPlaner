@@ -20,5 +20,7 @@ namespace KaObjects.Storage
         List<KaEvent> read(string owner);
 
         void Delete_date();
+
+        LinkedList<string> GetWellKnownPeers();
     }
 }
