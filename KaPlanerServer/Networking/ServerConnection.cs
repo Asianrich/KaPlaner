@@ -12,6 +12,7 @@ using System.Xml;
 using System.IO;
 
 using KaPlanerServer.Logic;
+using KaPlaner.Networking;
 
 namespace KaPlanerServer.Networking
 {
@@ -26,7 +27,6 @@ namespace KaPlanerServer.Networking
         public StringBuilder sb = new StringBuilder();
         public string[] delimiter = { "<EOF>" };
         Package package = new Package();
-
 
     }
 
@@ -179,15 +179,13 @@ namespace KaPlanerServer.Networking
 
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
-                        //Überprüfen des 
+                        //Überprüfen des Packetes
                         userPackage = serverLogic.forwarding(userPackage);
 
                         if (userPackage.isForwarding)
                         {
-                            //Lösung
-                            communicateServer();
-
-
+                            //Anfrage an andere Server
+                            communicateServer(userPackage);
                         }
 
 
@@ -195,7 +193,7 @@ namespace KaPlanerServer.Networking
 
 
 
-
+                        //Sende Antwort
                         Send(state.workSocket, userPackage);
 
                     }
@@ -225,9 +223,17 @@ namespace KaPlanerServer.Networking
 
         }
 
-        public static void communicateServer()
+        public static List<Package> communicateServer(Package package)
         {
+            ClientConnection client = new ClientConnection();
+            List<Package> packages = new List<Package>();
+            for (int i = 0; i < package.Connections.Count; i++)
+            {
+                client.changeIP(package.Connections[i]);
+                packages.Add(client.Start(package));
+            }
 
+            return packages;
         }
 
 

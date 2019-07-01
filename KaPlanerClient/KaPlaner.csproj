@@ -104,7 +104,6 @@
     <Compile Include="Logic\IClientLogic.cs" />
     <Compile Include="Networking\IClientConnection.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
-    <Compile Include="Networking\NetworkTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Calendar.resx">

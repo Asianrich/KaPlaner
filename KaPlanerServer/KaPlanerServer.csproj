@@ -62,6 +62,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Logic\IServerLogic.cs" />
     <Compile Include="Logic\ServerLogic.cs" />
+    <Compile Include="Networking\ClientConnection.cs" />
+    <Compile Include="Networking\IClientConnection.cs" />
     <Compile Include="Networking\ServerConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
