@@ -39,7 +39,7 @@ namespace KaPlanerServer.Logic
 
         private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
         private List<P2PPackage> recievedPackages = new List<P2PPackage>();
-        public static string ipString;
+        public static string _ipString;
 
 
         public string typeofServer = "P2P";
@@ -47,7 +47,8 @@ namespace KaPlanerServer.Logic
 
         IDatabase database = new Database(connectionString);
 
-        string IServerLogic.IpString { get => ipString;   set  => ipString = value;   }
+        string IServerLogic.ipString { get => _ipString;   set  => _ipString = value;   }
+        //string IServerLogic.ipString { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests. For Client
@@ -178,8 +179,8 @@ namespace KaPlanerServer.Logic
             LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
             List<string> neighbours = new List<string>
             {
-                listOfWellKnownPeers.Find(ipString).Previous.ToString(),
-                listOfWellKnownPeers.Find(ipString).Next.ToString()
+                listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
+                listOfWellKnownPeers.Find(_ipString).Next.ToString()
             };
         }
         /// <summary>
@@ -266,6 +267,11 @@ namespace KaPlanerServer.Logic
                 }
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+        List<string> IServerLogic.resolvePackage(P2PPackage package)
+        {
+            throw new NotImplementedException();
         }
     }
 }
