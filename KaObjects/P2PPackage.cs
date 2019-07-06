@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Net;
 
 namespace KaObjects
 {
@@ -13,22 +14,45 @@ namespace KaObjects
     public class P2PPackage : Package
     {
         static public readonly int TTLinit = 5;
+        static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
 
         public P2PRequest P2Prequest;
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
-        private int anzConn;
+        public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         private int anzUser;
-        private string ipAddress;
+        private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
+        public IPAddress returnIPAddress;
+
         public P2PPackage() : base()
         {
-            generatePID();
+            GeneratePID();
             base.p2p = this;
         }
 
-        private void generatePID()
+        private void GeneratePID()
         {
             packageID = Guid.NewGuid();
+        }
+
+        public Guid GetPackageID()
+        {
+            return packageID;
+        }
+
+        public int DecrementTTL()
+        {
+            return --ttl;
+        }
+
+        public IPAddress GetOriginIPAddress()
+        {
+            return originIPAddress;
+        }
+
+        public void SetOriginIPAddress(IPAddress value)
+        {
+            originIPAddress = value;
         }
     }
 }
