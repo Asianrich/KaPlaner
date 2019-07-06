@@ -46,8 +46,8 @@ namespace KaPlanerServer.Networking
         {
             ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             //ipAddress = ipHostInfo.AddressList[0]; //4: IP-Adresse 0: fuer Lokal
-            serverLogic.IpString = GetAddress(ipHostInfo.AddressList);
-            ipAddress = IPAddress.Parse(serverLogic.IpString);
+            serverLogic.ipString = GetAddress(ipHostInfo.AddressList);
+            ipAddress = IPAddress.Parse(serverLogic.ipString);
             //ipAddress.AddressFamily = AddressFamily.InterNetwork;
             localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -176,8 +176,15 @@ namespace KaPlanerServer.Networking
                     {
 
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
-
+                        
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
+
+                        //Joshuas ResolvePackages
+                        //Forwarden oder net?
+                        //1. Paket  empfangen
+                        //2. resolve
+                        //3. weiterleiten
+
 
                         //Überprüfen des Packetes
                         userPackage = serverLogic.Forwarding(userPackage);
@@ -262,6 +269,7 @@ namespace KaPlanerServer.Networking
         public static T DeSerialize<T>(string msg)
         {
             T myObject;
+
             using (var sr = new StringReader(msg))
             {
                 using (var xr = XmlReader.Create(sr))

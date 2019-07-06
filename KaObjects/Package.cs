@@ -13,16 +13,19 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request {Test=-1, Failure, Success, Login, Register, Invite, Save, Load, Delete}; // Success and Failure are responses from the server
+    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete }; // Success and Failure are responses from the server
+
 
     [Serializable, XmlRoot("Package")]
+    [XmlInclude(typeof(P2PPackage))]
     public class Package
     {
         public Request request;
         public User user;
 
         public P2PPackage p2p;
-        
+        public Package packageReference;
+        public HierarchiePackage hierarchie;
 
         public string passwordConfirm;
         public List<string> Connections = new List<string>();

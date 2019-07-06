@@ -10,8 +10,8 @@ namespace KaObjects
 {
     public enum P2PRequest { NewServer, Register, Login, Invite}
 
-    [Serializable, XmlRoot("P2PPackage")]
-    public class P2PPackage : Package
+    [Serializable]
+    public class P2PPackage
     {
         static public readonly int TTLinit = 5;
         static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
@@ -21,13 +21,15 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         private int anzUser;
-        private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
-        public IPAddress returnIPAddress;
+        
+        //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
 
-        public P2PPackage() : base()
+        //public IPAddress returnIPAddress;
+
+        public P2PPackage()
         {
             GeneratePID();
-            base.p2p = this;
+            //base.packageReference = this;
         }
 
         private void GeneratePID()
@@ -45,14 +47,14 @@ namespace KaObjects
             return --ttl;
         }
 
-        public IPAddress GetOriginIPAddress()
-        {
-            return originIPAddress;
-        }
+        //public IPAddress GetOriginIPAddress()
+        //{
+        //    return originIPAddress;
+        //}
 
-        public void SetOriginIPAddress(IPAddress value)
-        {
-            originIPAddress = value;
-        }
+        //public void SetOriginIPAddress(IPAddress value)
+        //{
+        //    originIPAddress = value;
+        //}
     }
 }
