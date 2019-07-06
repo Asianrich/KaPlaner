@@ -21,26 +21,38 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         private int anzUser;
-        public IPAddress ipAddress; //this is best an Net.IPAddress so we can check on correct form
+        private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
+        public IPAddress returnIPAddress;
+
         public P2PPackage() : base()
         {
-            generatePID();
+            GeneratePID();
             base.p2p = this;
         }
 
-        private void generatePID()
+        private void GeneratePID()
         {
             packageID = Guid.NewGuid();
         }
 
-        public Guid getPackageID()
+        public Guid GetPackageID()
         {
             return packageID;
         }
 
-        public int decrementTTL()
+        public int DecrementTTL()
         {
             return --ttl;
+        }
+
+        public IPAddress GetOriginIPAddress()
+        {
+            return originIPAddress;
+        }
+
+        public void SetOriginIPAddress(IPAddress value)
+        {
+            originIPAddress = value;
         }
     }
 }

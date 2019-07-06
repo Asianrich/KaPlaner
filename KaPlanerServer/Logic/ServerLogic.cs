@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using KaObjects;
 using KaObjects.Storage;
 using System.Net;
+using System.Net.Sockets;
 
 namespace KaPlanerServer.Logic
 {
@@ -46,13 +47,13 @@ namespace KaPlanerServer.Logic
 
         IDatabase database = new Database(connectionString);
 
-        string IServerLogic.ipString { get => ipString;   set  => ipString = value;   }
+        string IServerLogic.IpString { get => ipString;   set  => ipString = value;   }
 
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests
         /// </summary>
         /// <param name="package"></param>
-        public void resolvePackage(Package package)
+        public void ResolvePackage(Package package)
         {
         
             switch (package.request)
@@ -148,7 +149,7 @@ namespace KaPlanerServer.Logic
             throw new NotImplementedException();
         }
 
-        public Package forwarding(Package package)
+        public Package Forwarding(Package package)
         {
 
 
@@ -210,25 +211,32 @@ namespace KaPlanerServer.Logic
         /// </summary>
         /// <param name="package"></param>
         /// <returns>List to which further packages are sent.</returns>
-        List<IPAddress> IServerLogic.resolvePackage(P2PPackage package)
+        List<IPAddress> IServerLogic.ResolvePackage(P2PPackage package)
         {
             List<IPAddress> returnList = new List<IPAddress>();
 
             switch (package.P2Prequest)
             {
                 case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
+                    //-1. Ist es eine Antwort auf meine Anfrage?
+                    if (package.GetOriginIPAddress() == GetLocalIPAddress())
+                    {
+                        HandleReturn(package);
+                        break;
+                    }
                     //0. Gab es die Anfrage schon?
-                    if (!addPackage(package))
+                    if (!AddPackage(package))
                         break;
                     //1. Anzahl Verbindungen (s. neighbours)
                     if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-                    {//Wenn das Packet noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                    {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
                         package.anzConn = neighbours.Count;
-                        //2. Antwort zurücksenden (P2PPackage.ipAddress)
-                        returnList.Add(package.ipAddress);
+                        //2. Antwort zurücksenden (P2PPackage.originIPAddress)
+                        returnList.Add(package.GetOriginIPAddress());
                     }
+                    package.returnIPAddress = GetLocalIPAddress();
                     //3. TTL --
-                    if (package.decrementTTL() == 0)
+                    if (package.DecrementTTL() == 0)
                         break;
                     //4. Falls TTL > 0 weiterleiten
                     returnList.AddRange(neighbours); // Flooding
@@ -238,9 +246,9 @@ namespace KaPlanerServer.Logic
             return returnList;
         }
 
-        private bool addPackage(P2PPackage package)
+        private bool AddPackage(P2PPackage package)
         {
-            if (recievedPackages.Exists(x => x.getPackageID() == package.getPackageID()))
+            if (recievedPackages.Exists(x => x.GetPackageID() == package.GetPackageID()))
                 return false;
 
             recievedPackages.Add(package);
@@ -249,6 +257,29 @@ namespace KaPlanerServer.Logic
                 recievedPackages.Remove(recievedPackages.First());
 
             return true;
+        }
+
+        private void HandleReturn(P2PPackage package)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gibt eine geroutete IPAdresse des Hosts zurück.
+        /// Handling von mehreren IPAdressen könnte ein Problem sein.
+        /// </summary>
+        /// <returns></returns>
+        private IPAddress GetLocalIPAddress()
+        {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip;
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
     }
 }
