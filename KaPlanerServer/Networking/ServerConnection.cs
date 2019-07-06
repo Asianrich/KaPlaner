@@ -184,15 +184,14 @@ namespace KaPlanerServer.Networking
 
                         if (userPackage.isForwarding)
                         {
+                            List<Package> packages = communicateServer(userPackage);
                             //Anfrage an andere Server
-                            communicateServer(userPackage);
+                            userPackage = serverLogic.resolvePackages(packages);
                         }
-
-
-                        serverLogic.resolvePackage(userPackage);
-
-
-
+                        else
+                        {
+                            userPackage = serverLogic.resolvePackage(userPackage);
+                        }
                         //Sende Antwort
                         Send(state.workSocket, userPackage);
 

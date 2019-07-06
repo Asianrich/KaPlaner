@@ -45,10 +45,10 @@ namespace KaPlanerServer.Logic
         string IServerLogic.ipString { get => ipString;   set  => ipString = value;   }
 
         /// <summary>
-        /// Resolve Acquired Packages and trigger corresponding requests
+        /// Resolve Acquired Packages and trigger corresponding requests. For Client
         /// </summary>
         /// <param name="package"></param>
-        public void resolvePackage(Package package)
+        public Package resolvePackage(Package package)
         {
         
             switch (package.request)
@@ -137,6 +137,23 @@ namespace KaPlanerServer.Logic
                 Console.WriteLine(line);
                 package.request = request;
             }
+
+
+            return package;
+
+        }
+
+        public Package resolvePackages(List<Package> packages)
+        {
+            //Eventuell original mitnehmen?
+            Package userPackage = new Package();
+            if(packages[0].p2p != null)
+            {
+                //resolvePackage(packages);
+            }
+
+
+            return userPackage;
         }
 
         private void resolvePackage(P2PPackage package)
@@ -167,38 +184,7 @@ namespace KaPlanerServer.Logic
         {
 
 
-            string input = "";
-            Console.WriteLine("Einstellungen fuer den Server");
-            Console.WriteLine("Hierarchie(0) oder P2P(1)?");
-
-            while(input != "0" || input != "1")
-            {
-                input = Console.ReadLine();
-                {
-
-                }
-            }
-            
-
-            Console.WriteLine("Bin ich Root? J/N");
-
-            while (input != "J" || input != "N")
-            {
-                input = Console.ReadLine();
-                if (input != "J" && input != "N")
-                    Console.WriteLine("Bitte J oder N eingeben");
-            }
-
-            if(input == "J")
-            {
-                //WERDE ZUM HOST!
-            }
-            else
-            {
-                //WERDE ZUM SKLAVEN!
-            }
-
-
+           
 
 
 

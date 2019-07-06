@@ -11,10 +11,12 @@ namespace KaPlanerServer.Logic
     interface IServerLogic
     {
         string ipString { get; set; }
-        void resolvePackage(Package package);
+        Package resolvePackage(Package package);
         List<string> resolvePackage(P2PPackage package);
         //List<string> resolvePackage(HPackage package);
         Package forwarding(Package package);
         void Settings();
+
+        Package resolvePackages(List<Package> packages);
     }
 }
