@@ -36,11 +36,17 @@ namespace KaPlaner.Networking
         private int _port;
         private static string response;
         IPAddress ip;
+        private IPAddress iPAddress;
 
         public ClientConnection()
         {
             //Anfangshost oder sonst wer
             ip = IPAddress.Parse("192.168.56.1");
+        }
+
+        public ClientConnection(IPAddress iPAddress)
+        {
+            this.iPAddress = iPAddress;
         }
 
         private Socket connectServer()

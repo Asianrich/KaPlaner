@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace KaObjects
 {
+    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Login, Invite }
+
     [Serializable]
     public class HierarchiePackage
     {
@@ -13,7 +15,7 @@ namespace KaObjects
         public int child;           //Kinder-Knoten
         public int number;          // jedes Kind hat ne Kennung
         public int level;           // Ebene-Erweiterung
-
+        public HierarchieRequest hierarchieRequest;
 
         public int test = 0;
 

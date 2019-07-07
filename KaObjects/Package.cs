@@ -29,10 +29,13 @@ namespace KaObjects
 
         public string passwordConfirm;
         public List<string> Connections = new List<string>();
+        //P2P? aufschreiben, wo das Paket durchgelaufen ist
         public List<string> visitedPlace = new List<string>();
 
+        //nicht beachten
         public bool isForwarding;
-        public string server;
+
+        public string sourceServer;
 
         public List<KaEvent> kaEvents;
 

@@ -43,6 +43,11 @@ namespace KaPlaner.Networking
             ip = IPAddress.Parse("192.168.56.1");
         }
 
+        public ClientConnection(IPAddress iPAddress)
+        {
+            ip = iPAddress;
+        }
+
         private Socket connectServer()
         {
             try

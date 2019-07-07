@@ -66,7 +66,6 @@ namespace KaPlanerServer.Networking
             Console.Write("Ihre Auswahl: ");
             string keyRead = Console.ReadLine();
 
-
             while (!Int32.TryParse(keyRead, out result))
             {
                 Console.WriteLine("Ein Fehler ist unterlaufen. Versuchen sie erneut");
@@ -76,11 +75,6 @@ namespace KaPlanerServer.Networking
             adress = iPAddresses[result].ToString();
 
             KaPlanerServer.Data.ServerConfig.host = iPAddresses[result];
-
-
-
-
-
             return adress;
         }
 
@@ -205,7 +199,6 @@ namespace KaPlanerServer.Networking
                         //{
                         //    userPackage = serverLogic.resolvePackage(userPackage);
                         //}
-
 
                         userPackage = serverLogic.resolving(userPackage);
 
