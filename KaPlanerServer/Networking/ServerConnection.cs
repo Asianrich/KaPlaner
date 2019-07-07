@@ -75,6 +75,12 @@ namespace KaPlanerServer.Networking
 
             adress = iPAddresses[result].ToString();
 
+            KaPlanerServer.Data.ServerConfig.host = iPAddresses[result];
+
+
+
+
+
             return adress;
         }
 
@@ -187,18 +193,22 @@ namespace KaPlanerServer.Networking
 
 
                         //Überprüfen des Packetes
-                        userPackage = serverLogic.Forwarding(userPackage);
+                        //userPackage = serverLogic.Forwarding(userPackage);
 
-                        if (userPackage.isForwarding)
-                        {
-                            List<Package> packages = communicateServer(userPackage);
-                            //Anfrage an andere Server
-                            userPackage = serverLogic.resolvePackages(packages);
-                        }
-                        else
-                        {
-                            userPackage = serverLogic.resolvePackage(userPackage);
-                        }
+                        //if (userPackage.isForwarding)
+                        //{
+                        //    List<Package> packages = communicateServer(userPackage);
+                        //    //Anfrage an andere Server
+                        //    userPackage = serverLogic.resolvePackages(packages);
+                        //}
+                        //else
+                        //{
+                        //    userPackage = serverLogic.resolvePackage(userPackage);
+                        //}
+
+
+                        userPackage = serverLogic.resolving(userPackage);
+
                         //Sende Antwort
                         Send(state.workSocket, userPackage);
 

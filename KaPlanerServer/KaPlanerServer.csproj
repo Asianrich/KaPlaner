@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ServerConfig.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Logic\IServerLogic.cs" />
     <Compile Include="Logic\ServerLogic.cs" />

@@ -29,6 +29,8 @@ namespace KaObjects
 
         public string passwordConfirm;
         public List<string> Connections = new List<string>();
+        public List<string> visitedPlace = new List<string>();
+
         public bool isForwarding;
         public string server;
 

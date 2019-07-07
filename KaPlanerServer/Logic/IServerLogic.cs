@@ -20,7 +20,7 @@ namespace KaPlanerServer.Logic
         //List<string> resolvePackage(HPackage package);
         Package Forwarding(Package package);
         void Settings();
-
+        Package resolving(Package package);
         Package resolvePackages(List<Package> packages);
     }
 }

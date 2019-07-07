@@ -207,7 +207,7 @@ namespace UnitTest
             string decode = Encoding.ASCII.GetString(msg);
             Package package1 = DeSerialize<Package>(decode);
 
-
+            //AFK
             if (package1.hierarchie != null)
             {
 
@@ -262,5 +262,10 @@ namespace UnitTest
 
         }
 
+        [TestMethod]
+        public void globaltest()
+        {
+            
+        }
     }
 }

@@ -47,8 +47,86 @@ namespace KaPlanerServer.Logic
 
         IDatabase database = new Database(connectionString);
 
-        string IServerLogic.ipString { get => _ipString;   set  => _ipString = value;   }
+        string IServerLogic.ipString { get => _ipString; set => _ipString = value; }
         //string IServerLogic.ipString { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+
+        //P2P Paket handlen
+        private bool resolveP2P(P2PPackage package)
+        {
+            
+            bool isPresent = false;
+
+            if (!isPresent)
+            {
+                isPresent = Data.ServerConfig.getPackageID(package.GetPackageID());
+
+                switch (package.P2Prequest)
+                {
+                    case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
+                                               //-1. Ist es eine Antwort auf meine Anfrage?
+                        //if (package.GetOriginIPAddress() == GetLocalIPAddress())
+                        //{
+                        //    HandleReturn(package);
+                        //    break;
+                        //}
+                        ////0. Gab es die Anfrage schon?
+                        //if (!AddPackage(package))
+                        //    break;
+                        ////1. Anzahl Verbindungen (s. neighbours)
+                        //if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
+                        //{//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                        //    package.anzConn = neighbours.Count;
+                        //    //2. Antwort zurücksenden (P2PPackage.originIPAddress)
+                        //    returnList.Add(package.GetOriginIPAddress());
+                        //}
+                        //package.returnIPAddress = GetLocalIPAddress();
+                        ////3. TTL --
+                        //if (package.DecrementTTL() == 0)
+                        //    break;
+                        ////4. Falls TTL > 0 weiterleiten
+                        //returnList.AddRange(neighbours); // Flooding
+                        //break;
+
+                    case P2PRequest.Register:
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+
+
+            }
+
+            return isPresent;
+        }
+
+
+
+        public Package resolving(Package package)
+        {
+            //Muss ich das Paket abaendern oder nicht?
+            bool isResolving = false;
+            if (package.p2p != null)
+            {
+                isResolving = resolveP2P(package.p2p);
+            }
+            else if (package.hierarchie != null)
+            {
+
+            }
+
+            if (isResolving)
+            {
+                package = resolvePackage(package);
+            }
+
+
+            return package;
+        }
 
         /// <summary>
         /// Resolve Acquired Packages and trigger corresponding requests. For Client
@@ -56,7 +134,7 @@ namespace KaPlanerServer.Logic
         /// <param name="package"></param>
         public Package resolvePackage(Package package)
         {
-        
+
             switch (package.request)
             {
                 /// In case of Login Request try to login to the server database and set Request accordingly
@@ -202,33 +280,7 @@ namespace KaPlanerServer.Logic
         {
             List<IPAddress> returnList = new List<IPAddress>();
 
-            //switch (package.P2Prequest)
-            //{
-            //    case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
-            //        //-1. Ist es eine Antwort auf meine Anfrage?
-            //        if (package.GetOriginIPAddress() == GetLocalIPAddress())
-            //        {
-            //            HandleReturn(package);
-            //            break;
-            //        }
-            //        //0. Gab es die Anfrage schon?
-            //        if (!AddPackage(package))
-            //            break;
-            //        //1. Anzahl Verbindungen (s. neighbours)
-            //        if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-            //        {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-            //            package.anzConn = neighbours.Count;
-            //            //2. Antwort zurücksenden (P2PPackage.originIPAddress)
-            //            returnList.Add(package.GetOriginIPAddress());
-            //        }
-            //        package.returnIPAddress = GetLocalIPAddress();
-            //        //3. TTL --
-            //        if (package.DecrementTTL() == 0)
-            //            break;
-            //        //4. Falls TTL > 0 weiterleiten
-            //        returnList.AddRange(neighbours); // Flooding
-            //        break;
-            //}
+
 
             return returnList;
         }
