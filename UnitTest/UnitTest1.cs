@@ -13,8 +13,8 @@ using WindowsFormsApp1;
 using System.Windows.Forms;
 using KaPlaner.GUI;
 using KaObjects.Storage;
-
-
+using System.Text;
+using System.Collections.Generic;
 
 namespace UnitTest
 {
@@ -45,7 +45,7 @@ namespace UnitTest
                 var asd = serializer.Deserialize(stream);
 
                 test = (User)asd;
-                
+
 
 
 
@@ -121,7 +121,7 @@ namespace UnitTest
             }
 
 
-                Assert.IsTrue(true);
+            Assert.IsTrue(true);
 
 
 
@@ -194,7 +194,78 @@ namespace UnitTest
             Assert.IsFalse(false);
         }
 
+        [TestMethod]
+        public void p2pSerialize()
+        {
+            //Package package = new P2PPackage();
+            Package package = new Package();
+            package.p2p = new P2PPackage();
+            //package.packageReference = new P2PPackage();
+            string test = Serialize<Package>(package);
+            byte[] msg = Encoding.ASCII.GetBytes(test);
+
+            string decode = Encoding.ASCII.GetString(msg);
+            Package package1 = DeSerialize<Package>(decode);
+
+            //AFK
+            if (package1.hierarchie != null)
+            {
+
+                Assert.IsTrue(true);
+            }
+            else
+            {
 
 
+                Assert.IsTrue(false);
+            }
+        }
+
+        private string Serialize<T>(T myObject)
+        {
+            string msg;
+            List<Type> extra = new List<Type>();
+            extra.Add(typeof(P2PPackage));
+            using (var sw = new StringWriter())
+            {
+                using (var xw = XmlWriter.Create(sw))
+                {
+                    XmlSerializer xs = new XmlSerializer(myObject.GetType(), extra.ToArray());
+                    xs.Serialize(xw, myObject);
+                }
+                msg = sw.ToString();
+            }
+
+
+            return msg;
+
+        }
+
+        private T DeSerialize<T>(string msg)
+        {
+            T myObject;
+            List<Type> extra = new List<Type>();
+            extra.Add(typeof(P2PPackage));
+            using (var sr = new StringReader(msg))
+            {
+                using (var xr = XmlReader.Create(sr))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(T),extra.ToArray());
+                    myObject = (T)xs.Deserialize(xr);
+
+
+                }
+            }
+
+
+            return myObject;
+
+        }
+
+        [TestMethod]
+        public void globaltest()
+        {
+            
+        }
     }
 }

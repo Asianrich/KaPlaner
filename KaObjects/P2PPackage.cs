@@ -8,10 +8,10 @@ using System.Net;
 
 namespace KaObjects
 {
-    public enum P2PRequest { NewServer, Register, Login, Invite}
+    public enum P2PRequest { NewServer, RegisterServer, RegisterUser, Login, Invite}
 
-    [Serializable, XmlRoot("P2PPackage")]
-    public class P2PPackage : Package
+    [Serializable]
+    public class P2PPackage
     {
         static public readonly int TTLinit = 5;
         static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
@@ -20,15 +20,40 @@ namespace KaObjects
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
-        private int anzUser;
-        private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
-        public IPAddress returnIPAddress;
+        private int anzUser = -1; // -1 Soll andeuten, das noch keine Aenderungen kam!
+        private string server;
+        //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
 
-        public P2PPackage() : base()
+        //public IPAddress returnIPAddress;
+
+        public P2PPackage()
         {
             GeneratePID();
-            base.p2p = this;
+            //base.packageReference = this;
         }
+
+
+
+        public int getTTL()
+        {
+            return ttl;
+        }
+
+
+        /// <summary>
+        /// Diese Methode soll die Sachen hier abaendern
+        /// </summary>
+        /// <param name="anzUserServer"></param>
+        /// <param name="server"></param>
+        public void setAnzUser(int anzUserServer, string server)
+        {
+            if(anzUser == -1 || anzUser > anzUserServer)
+            {
+                anzUser = anzUserServer;
+                this.server = server;
+            }
+        }
+
 
         private void GeneratePID()
         {
@@ -45,14 +70,14 @@ namespace KaObjects
             return --ttl;
         }
 
-        public IPAddress GetOriginIPAddress()
-        {
-            return originIPAddress;
-        }
+        //public IPAddress GetOriginIPAddress()
+        //{
+        //    return originIPAddress;
+        //}
 
-        public void SetOriginIPAddress(IPAddress value)
-        {
-            originIPAddress = value;
-        }
+        //public void SetOriginIPAddress(IPAddress value)
+        //{
+        //    originIPAddress = value;
+        //}
     }
 }

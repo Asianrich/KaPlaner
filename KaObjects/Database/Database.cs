@@ -226,5 +226,15 @@ namespace KaObjects.Storage
         {
             throw new NotImplementedException();
         }
+
+        public int getUserCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool getUser(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
