@@ -24,7 +24,7 @@ namespace KaObjects
         private string server;
         private string originIPAddress; //has to be string to be able to serialize
         //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
-
+        public string returnIPAddress;
         //public IPAddress returnIPAddress;
 
         public P2PPackage()

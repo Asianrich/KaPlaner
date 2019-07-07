@@ -355,7 +355,7 @@ namespace KaPlanerServer.Logic
                         //2. Antwort zurücksenden (P2PPackage.originIPAddress)
                         returnList.Add(package.GetOriginIPAddress());
                     }
-                    package.returnIPAddress = GetLocalIPAddress();
+                    package.returnIPAddress = GetLocalIPAddress().ToString();
                     //3. TTL --
                     if (package.DecrementTTL() == 0)
                         break;
