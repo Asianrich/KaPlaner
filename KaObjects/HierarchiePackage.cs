@@ -16,9 +16,48 @@ namespace KaObjects
 
 
         public int test = 0;
+
+
         public HierarchiePackage()
+        
         {
 
         }
+
+        public void AddChild()
+        {
+
+        }
+
+        public void FindRoute()                     // Root finden
+        {
+            // start with this as root
+                            //MyObject root = this;
+            // get the parent
+                            //MyObject parent = this.Parent;
+
+            // keep going until no more parents
+            //while (parent != null)
+            //{
+                // save the parent
+                //root = parent;
+                // get the parent of the parent
+                //parent = parent.Parent;
+            //}
+
+            //return root;
+        }
+
+
+
+
+
+
+
     }
+
+
+
+
+
 }
