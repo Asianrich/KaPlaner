@@ -174,6 +174,10 @@ namespace KaPlanerServer.Logic
 
 
             }
+            else
+            {
+                isResolving = true;
+            }
 
             if (isResolving)
             {
