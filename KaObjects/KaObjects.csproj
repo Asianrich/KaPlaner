@@ -48,7 +48,6 @@
     <Compile Include="Database\IDatabase.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HierarchiePackage.cs" />
-    <Compile Include="HierarchyPackage.cs" />
     <Compile Include="KaEvent.cs" />
     <Compile Include="P2PPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
