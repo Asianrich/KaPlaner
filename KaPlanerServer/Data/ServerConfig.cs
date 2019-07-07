@@ -10,8 +10,12 @@ namespace KaPlanerServer.Data
     public static class ServerConfig
     {
         public static List<IPAddress> ipAddress = new List<IPAddress>();
+
+        //HIerarchie
         public static IPAddress root; // = new IPAddress(); <--- richtige Root-Adresse eintragen
+        //P2P
         public static List<IPAddress> ListofWellKnown = new List<IPAddress>();
+        //dieser Server
         public static IPAddress host;
         private static List<Guid> packageIDs = new List<Guid>();
         public static structure structure = 0;

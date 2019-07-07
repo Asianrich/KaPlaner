@@ -116,27 +116,23 @@ namespace KaPlanerServer.Logic
         }
 
 
-        public List<Package> send(Package package)
+        private Package send(Package package, IPAddress iPAddress)
         {
-            List<Package> packages = new List<Package>();
+            Package receive = new Package();
             ClientConnection client = new ClientConnection();
-            List<IPAddress> iPAddresses = Data.ServerConfig.ipAddress;
+
+            //IP-Adressen die er zuschicken soll
+            //List<IPAddress> iPAddresses = Data.ServerConfig.ipAddress;
 
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
-            for (int i = 0; i < iPAddresses.Count; i++)
-            {
-                Package receive = new Package();
-                client.changeIP(iPAddresses[i].ToString());
-                receive = client.Start(package);
 
-                packages.Add(receive);
-
-            }
+            client.changeIP(iPAddress.ToString());
+            receive = client.Start(package);
 
 
 
-            return packages;
+            return receive;
         }
 
         public Package resolveAll(List<Package> packages)
@@ -161,10 +157,11 @@ namespace KaPlanerServer.Logic
 
                 if (package.p2p.getTTL() != 0)
                 {
-                    packages = send(package);
+                    //Ipadressen rauslesen
+                    //packages.Add(send(package,));
                 }
                 //
-                if(packages.Count > 0)
+                if (packages.Count > 0)
                 {
                     package = resolveAll(packages);
                 }
@@ -172,6 +169,9 @@ namespace KaPlanerServer.Logic
             }
             else if (package.hierarchie != null)
             {
+
+
+
 
             }
 
@@ -322,11 +322,65 @@ namespace KaPlanerServer.Logic
         /// </summary>
         public void Settings()
         {
+            string read;
 
+            Console.WriteLine("Machen wir P2P(1) oder Hierarchie(2)?");
+            while (true)
+            {
+                read = Console.ReadLine();
+
+                if (read == "1")
+                {
+                    //TODO Logic
+                    break;
+                }
+                else if (read == "2")
+                {
+                    //TODO logic
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Falsche Eingabe");
+                }
+            }
+
+
+            Console.WriteLine("Moechten Sie zum Root / P2PNetzwerk verbinden? Y/N");
+            while (true)
+            {
+                read = Console.ReadLine();
+
+                if (read == "Y")
+                {
+                    //TODO Logic Verbindung
+                    P2PSettings();
+
+                    break;
+                }
+                else if (read == "N")
+                {
+                    //TODO logic
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Falsche Eingabe");
+                }
+            }
 
 
         }
 
+        private void P2PSettings()
+        {
+
+        }
+
+        private void HierarchieSettings()
+        {
+
+        }
         /// <summary>
         /// Resolves and modifies P2PPackages. Returns a list of addresses to forward to.
         /// </summary>
