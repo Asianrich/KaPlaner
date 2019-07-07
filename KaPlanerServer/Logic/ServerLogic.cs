@@ -219,7 +219,7 @@ namespace KaPlanerServer.Logic
             {
                 case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
                     //-1. Ist es eine Antwort auf meine Anfrage?
-                    if (package.GetOriginIPAddress() == GetLocalIPAddress())
+                    if (package.GetOriginIPAddress() == GetLocalIPAddress()) //oder ipString
                     {
                         HandleReturn(package);
                         break;
