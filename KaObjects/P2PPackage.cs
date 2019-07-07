@@ -22,6 +22,7 @@ namespace KaObjects
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         private int anzUser = -1; // -1 Soll andeuten, das noch keine Aenderungen kam!
         private string server;
+        private string originIPAddress; //has to be string to be able to serialize
         //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
 
         //public IPAddress returnIPAddress;
@@ -70,14 +71,14 @@ namespace KaObjects
             return --ttl;
         }
 
-        //public IPAddress GetOriginIPAddress()
-        //{
-        //    return originIPAddress;
-        //}
+        public IPAddress GetOriginIPAddress()
+        {
+            return IPAddress.Parse(originIPAddress);
+        }
 
-        //public void SetOriginIPAddress(IPAddress value)
-        //{
-        //    originIPAddress = value;
-        //}
+        public void SetOriginIPAddress(IPAddress iPAddress)
+        {
+            originIPAddress = iPAddress.ToString();
+        }
     }
 }
