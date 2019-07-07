@@ -119,7 +119,7 @@ namespace KaPlanerServer.Logic
         private Package send(Package package, IPAddress iPAddress)
         {
             Package receive = new Package();
-            ClientConnection client = new ClientConnection();
+            ClientConnection client = new ClientConnection(iPAddress);
 
             //IP-Adressen die er zuschicken soll
             //List<IPAddress> iPAddresses = Data.ServerConfig.ipAddress;
@@ -127,7 +127,6 @@ namespace KaPlanerServer.Logic
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
 
-            client.changeIP(iPAddress.ToString());
             receive = client.Start(package);
 
 
