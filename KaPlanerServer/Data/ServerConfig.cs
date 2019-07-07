@@ -16,30 +16,37 @@ namespace KaPlanerServer.Data
         private static List<Guid> packageIDs = new List<Guid>();
         public static structure structure = 0;
 
+        static readonly object _object = new object();
+
+
         public static bool getPackageID(Guid packageID)
         {
-            bool isThere = false;
-            for(int i = 0; i < 10; i++)
+            //Ein Thread hintereinander und nicht alle gleichzeitig
+            lock (_object)
             {
-                if(packageIDs[i] == packageID)
+                bool isThere = false;
+                for (int i = 0; i < 10; i++)
                 {
-                    isThere = true;
-                }
-            }
-
-
-            if(!isThere)
-            {
-                if(packageIDs.Count == 10)
-                {
-                    //immer das oberste löschen
-                    packageIDs.RemoveAt(0);
+                    if (packageIDs[i] == packageID)
+                    {
+                        isThere = true;
+                    }
                 }
 
-                packageIDs.Add(packageID);
-            }
 
-            return isThere;
+                if (!isThere)
+                {
+                    if (packageIDs.Count == 10)
+                    {
+                        //immer das oberste löschen
+                        packageIDs.RemoveAt(0);
+                    }
+
+                    packageIDs.Add(packageID);
+                }
+
+                return isThere;
+            }
         }
 
 

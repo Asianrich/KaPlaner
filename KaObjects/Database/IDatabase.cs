@@ -22,5 +22,13 @@ namespace KaObjects.Storage
         void Delete_date();
 
         LinkedList<string> GetWellKnownPeers();
+
+        int getUserCount();
+        bool getUser(User user);
+
+
+
+
+
     }
 }

@@ -7,6 +7,7 @@ using KaObjects;
 using KaObjects.Storage;
 using System.Net;
 using System.Net.Sockets;
+using KaPlaner.Networking;
 
 namespace KaPlanerServer.Logic
 {
@@ -55,41 +56,49 @@ namespace KaPlanerServer.Logic
         //P2P Paket handlen
         private bool resolveP2P(P2PPackage package)
         {
-            
+
             bool isPresent = false;
+            isPresent = Data.ServerConfig.getPackageID(package.GetPackageID());
 
             if (!isPresent)
             {
-                isPresent = Data.ServerConfig.getPackageID(package.GetPackageID());
-
                 switch (package.P2Prequest)
                 {
                     case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
                                                //-1. Ist es eine Antwort auf meine Anfrage?
-                        //if (package.GetOriginIPAddress() == GetLocalIPAddress())
-                        //{
-                        //    HandleReturn(package);
-                        //    break;
-                        //}
-                        ////0. Gab es die Anfrage schon?
-                        //if (!AddPackage(package))
-                        //    break;
-                        ////1. Anzahl Verbindungen (s. neighbours)
-                        //if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-                        //{//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                        //    package.anzConn = neighbours.Count;
-                        //    //2. Antwort zurücksenden (P2PPackage.originIPAddress)
-                        //    returnList.Add(package.GetOriginIPAddress());
-                        //}
-                        //package.returnIPAddress = GetLocalIPAddress();
-                        ////3. TTL --
-                        //if (package.DecrementTTL() == 0)
-                        //    break;
-                        ////4. Falls TTL > 0 weiterleiten
-                        //returnList.AddRange(neighbours); // Flooding
-                        //break;
+                                               //if (package.GetOriginIPAddress() == GetLocalIPAddress())
+                                               //{
+                                               //    HandleReturn(package);
+                                               //    break;
+                                               //}
+                                               ////0. Gab es die Anfrage schon?
+                                               //if (!AddPackage(package))
+                                               //    break;
+                                               ////1. Anzahl Verbindungen (s. neighbours)
+                                               //if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
+                                               //{//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                                               //    package.anzConn = neighbours.Count;
+                                               //    //2. Antwort zurücksenden (P2PPackage.originIPAddress)
+                                               //    returnList.Add(package.GetOriginIPAddress());
+                                               //}
+                                               //package.returnIPAddress = GetLocalIPAddress();
+                                               ////3. TTL --
+                                               //if (package.DecrementTTL() == 0)
+                                               //    break;
+                                               ////4. Falls TTL > 0 weiterleiten
+                                               //returnList.AddRange(neighbours); // Flooding
+                                               //break;
 
-                    case P2PRequest.Register:
+                    case P2PRequest.RegisterServer:
+
+
+
+                        break;
+                    case P2PRequest.RegisterUser:
+                        int anzUser = database.getUserCount();
+
+
+
                         break;
 
                     default:
@@ -101,18 +110,65 @@ namespace KaPlanerServer.Logic
 
             }
 
+            package.DecrementTTL();
+
             return isPresent;
         }
 
 
+        public List<Package> send(Package package)
+        {
+            List<Package> packages = new List<Package>();
+            ClientConnection client = new ClientConnection();
+            List<IPAddress> iPAddresses = Data.ServerConfig.ipAddress;
+
+            //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
+            //Wenn ja dann einfach ein null wert zurückgeben
+            for (int i = 0; i < iPAddresses.Count; i++)
+            {
+                Package receive = new Package();
+                client.changeIP(iPAddresses[i].ToString());
+                receive = client.Start(package);
+
+                packages.Add(receive);
+
+            }
+
+
+
+            return packages;
+        }
+
+        public Package resolveAll(List<Package> packages)
+        {
+            Package package = new Package();
+
+
+
+
+            return package;
+        }
 
         public Package resolving(Package package)
         {
+            List<Package> packages = new List<Package>();
             //Muss ich das Paket abaendern oder nicht?
             bool isResolving = false;
             if (package.p2p != null)
             {
                 isResolving = resolveP2P(package.p2p);
+                package.visitedPlace.Add(Data.ServerConfig.host.ToString());
+
+                if (package.p2p.getTTL() != 0)
+                {
+                    packages = send(package);
+                }
+                //
+                if(packages.Count > 0)
+                {
+                    package = resolveAll(packages);
+                }
+
             }
             else if (package.hierarchie != null)
             {

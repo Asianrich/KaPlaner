@@ -32,7 +32,7 @@ namespace KaObjects
         public List<string> visitedPlace = new List<string>();
 
         public bool isForwarding;
-        public string server;
+        public string sourceServer;
 
         public List<KaEvent> kaEvents;
 
