@@ -60,8 +60,19 @@ namespace KaPlanerServer.Data
 
         public static void addServer(IPAddress ip)
         {
-            ipAddress.Add(ip);
+            try
+            {
+                ipAddress.Add(ip);
+            }
+            catch(Exception ex)
+            {
+               
+            }
         }
+
+
+
+
 
         public static void removeServer(IPAddress ip)
         {

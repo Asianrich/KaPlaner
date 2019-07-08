@@ -61,26 +61,13 @@ namespace KaObjects
         }
 
 
+        public void AddChild()
+        {
 
 
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        //public void AddChild()
-        //{
-
-        //}
 
         //public void FindRoute()                     // Root finden
         //{
