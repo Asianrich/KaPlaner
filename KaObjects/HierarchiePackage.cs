@@ -18,7 +18,7 @@ namespace KaObjects
 
         public HierarchiePackage()
         {
-
+            
         }
 
         public void AddChild()
