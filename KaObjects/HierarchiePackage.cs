@@ -6,44 +6,81 @@ using System.Threading.Tasks;
 
 namespace KaObjects
 {
+    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite}
     [Serializable]
     public class HierarchiePackage
     {
-        public int parent;          //root-server
-        public int child;           //Kinder-Knoten
-        public int number;          // jedes Kind hat ne Kennung
-        public int level;           // Ebene-Erweiterung
+        public int destinationID;
+        
+        public HierarchieRequest HierarchieRequest;
+        private Guid packageID; //Package ID? braucht man das? just in case
+        public int serverID;
+        public string serveradress;
+        public int anzUser = -1;
+        public int anzConnection = -1;
 
-        public int test = 0;
+
+
+
+
+
+
 
         public HierarchiePackage()
         {
-            
+            GeneratePID();
         }
 
-        public void AddChild()
+        private void GeneratePID()
         {
-
+            packageID = Guid.NewGuid();
         }
 
-        public void FindRoute()                     // Root finden
+        public Guid GetPackageID()
         {
-            // start with this as root
-                            //MyObject root = this;
-            // get the parent
-                            //MyObject parent = this.Parent;
-
-            // keep going until no more parents
-            //while (parent != null)
-            //{
-                // save the parent
-                //root = parent;
-                // get the parent of the parent
-                //parent = parent.Parent;
-            //}
-
-            //return root;
+            return packageID;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public void AddChild()
+        //{
+
+        //}
+
+        //public void FindRoute()                     // Root finden
+        //{
+        //    // start with this as root
+        //                    //MyObject root = this;
+        //    // get the parent
+        //                    //MyObject parent = this.Parent;
+
+        //    // keep going until no more parents
+        //    //while (parent != null)
+        //    //{
+        //        // save the parent
+        //        //root = parent;
+        //        // get the parent of the parent
+        //        //parent = parent.Parent;
+        //    //}
+
+        //    //return root;
+        //}
 
 
 

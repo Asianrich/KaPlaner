@@ -13,6 +13,9 @@ namespace KaPlanerServer.Data
 
         //HIerarchie
         public static IPAddress root; // = new IPAddress(); <--- richtige Root-Adresse eintragen
+        public static int serverID;
+
+
         //P2P
         public static List<IPAddress> ListofWellKnown = new List<IPAddress>();
         //dieser Server

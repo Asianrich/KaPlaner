@@ -185,6 +185,10 @@ namespace KaPlanerServer.Logic
 
 
 
+
+
+
+
             }
             else
             {
@@ -354,7 +358,7 @@ namespace KaPlanerServer.Logic
                 }
                 else if (read == "2")
                 {
-                    //TODO logic
+                    //TODO logc? eigentlich net
                     break;
                 }
                 else
@@ -371,8 +375,6 @@ namespace KaPlanerServer.Logic
 
                 if (read == "Y")
                 {
-                    //TODO Logic Verbindung
-
                     break;
                 }
                 else if (read == "N")
@@ -420,13 +422,6 @@ namespace KaPlanerServer.Logic
                     package = send(package, IPAddress.Parse(read));
 
 
-
-
-
-
-
-
-
                 }
             }
 
@@ -453,7 +448,7 @@ namespace KaPlanerServer.Logic
                     Package package = new Package();
                     package.sourceServer = Data.ServerConfig.host.ToString();
                     package.hierarchie = new HierarchiePackage();
-                    //package.hierarchie.hierarchieRequest = HierarchieRequest.NewServer;
+                    package.hierarchie.HierarchieRequest = HierarchieRequest.NewServer;
 
                     if (IPAddress.TryParse(read, out IPAddress address))
                     {
@@ -471,13 +466,17 @@ namespace KaPlanerServer.Logic
                         //Logic
                         Data.ServerConfig.root = address;
 
+
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
-                        //package.hierarchie ????????????
-                        //IPAddress connectServer = IPAddress.Parse(package.hierarchie. ???? wo die Adresse steht);
-                        //package = send(package, connectServer);
+                        package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
+                        package.hierarchie.serveradress = Data.ServerConfig.host.ToString();
 
+                        IPAddress connectServer = IPAddress.Parse(package.hierarchie.serveradress);
+                        package = send(package, connectServer);
+                        Data.ServerConfig.serverID = package.hierarchie.serverID;
                         //Datenbankeintrag
-
+                        if(package != null)
+                            database.newServerEntry(package.hierarchie.serveradress, package.hierarchie.destinationID);
 
                         break;
                     }
@@ -486,17 +485,6 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine("Server nicht verfügbar oder irgendwas ist schief gelaufen");
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
 
 
