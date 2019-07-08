@@ -451,13 +451,13 @@ namespace KaPlanerServer.Logic
                     read = Console.ReadLine();
 
                     Package package = new Package();
-
+                    package.sourceServer = Data.ServerConfig.host.ToString();
                     package.hierarchie = new HierarchiePackage();
-                    package.hierarchie.hierarchieRequest = HierarchieRequest.NewServer;
+                    //package.hierarchie.hierarchieRequest = HierarchieRequest.NewServer;
 
                     if (IPAddress.TryParse(read, out IPAddress address))
                     {
-                        package = send(package, IPAddress.Parse(read));
+                        package = send(package, address);
                     }
                     else
                     {
@@ -468,6 +468,17 @@ namespace KaPlanerServer.Logic
                     
                     if(package != null)
                     {
+                        //Logic
+                        Data.ServerConfig.root = address;
+
+                        //Zu wem muss ich mich verbinden? bzw. Registrieren
+                        //package.hierarchie ????????????
+                        //IPAddress connectServer = IPAddress.Parse(package.hierarchie. ???? wo die Adresse steht);
+                        //package = send(package, connectServer);
+
+                        //Datenbankeintrag
+
+
                         break;
                     }
                     else
