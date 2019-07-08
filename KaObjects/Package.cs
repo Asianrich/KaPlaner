@@ -24,17 +24,19 @@ namespace KaObjects
         public User user;
 
         public P2PPackage p2p;
-        public Package packageReference;
+        //public Package packageReference;
         public HierarchiePackage hierarchie;
 
         public string passwordConfirm;
         public List<string> Connections = new List<string>();
-        //P2P? aufschreiben, wo das Paket durchgelaufen ist
-        public List<string> visitedPlace = new List<string>();
+
 
         //nicht beachten
         public bool isForwarding;
 
+        /// <summary>
+        /// Wer schickt das?
+        /// </summary>
         public string sourceServer;
 
         public List<KaEvent> kaEvents;

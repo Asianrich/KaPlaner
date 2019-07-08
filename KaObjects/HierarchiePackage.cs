@@ -6,17 +6,36 @@ using System.Threading.Tasks;
 
 namespace KaObjects
 {
-    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite}
+    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin}
     [Serializable]
     public class HierarchiePackage
     {
+        /// <summary>
+        /// DestinationID
+        /// </summary>
         public int destinationID;
         
         public HierarchieRequest HierarchieRequest;
         private Guid packageID; //Package ID? braucht man das? just in case
+
+        /// <summary>
+        /// ServerID
+        /// </summary>
         public int serverID;
+        
+        /// <summary>
+        /// Destination adress
+        /// </summary>
         public string serveradress;
+
+        /// <summary>
+        /// Die Anwort auf eine registriation-Anfrage.
+        /// </summary>
         public int anzUser = -1;
+
+        /// <summary>
+        /// Die Antwort auf einen Server-Verbindungsanfrage
+        /// </summary>
         public int anzConnection = -1;
 
 
