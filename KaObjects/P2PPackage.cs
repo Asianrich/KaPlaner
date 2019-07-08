@@ -21,12 +21,12 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         private int anzUser = -1; // -1 Soll andeuten, das noch keine Aenderungen kam!
-        private string server;
+        private string server; //
         private string originIPAddress; //has to be string to be able to serialize
         //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
         public string returnIPAddress;
         //public IPAddress returnIPAddress;
-
+        
         public P2PPackage()
         {
             GeneratePID();

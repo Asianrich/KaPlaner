@@ -126,9 +126,22 @@ namespace KaPlanerServer.Logic
 
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
-
-            receive = client.Start(package);
-
+            bool send = true;
+            foreach(string visited in package.visitedPlace)
+            {
+                if(visited == iPAddress.ToString())
+                {
+                    send = false;
+                }
+            }
+            if (send)
+            {
+                receive = client.Start(package);
+            }
+            else
+            {
+                receive = null;
+            }
 
 
             return receive;
@@ -153,7 +166,7 @@ namespace KaPlanerServer.Logic
             {
                 isResolving = resolveP2P(package.p2p);
                 package.visitedPlace.Add(Data.ServerConfig.host.ToString());
-
+                
                 if (package.p2p.getTTL() != 0)
                 {
                     //Ipadressen rauslesen
@@ -326,7 +339,8 @@ namespace KaPlanerServer.Logic
         public void Settings()
         {
             string read;
-
+            bool isP2P = false;
+            bool isBoss = false;
             Console.WriteLine("Machen wir P2P(1) oder Hierarchie(2)?");
             while (true)
             {
@@ -335,6 +349,7 @@ namespace KaPlanerServer.Logic
                 if (read == "1")
                 {
                     //TODO Logic
+                    isP2P = true;
                     break;
                 }
                 else if (read == "2")
@@ -357,13 +372,12 @@ namespace KaPlanerServer.Logic
                 if (read == "Y")
                 {
                     //TODO Logic Verbindung
-                    P2PSettings();
 
                     break;
                 }
                 else if (read == "N")
                 {
-                    //TODO logic
+                    isBoss = true;
                     break;
                 }
                 else
@@ -371,17 +385,109 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine("Falsche Eingabe");
                 }
             }
+            if (isP2P)
+            {
+                P2PSettings(isBoss);
+            }
+            else
+            {
+                HierarchieSettings(isBoss);
+            }
+
+        }
+
+        private void P2PSettings(bool isWellKnown)
+        {
+            if(isWellKnown)
+            {
+                Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
+
+
+            }
+            else
+            {
+                string read;
+                while (true)
+                {
+                    Console.WriteLine("Bitte geben sie eine Wellknown-Server an");
+                    read = Console.ReadLine();
+                    Package package = new Package();
+                    package.p2p = new P2PPackage();
+                    package.p2p.P2Prequest = P2PRequest.NewServer;
+                    package.sourceServer = Data.ServerConfig.host.ToString();
+
+
+                    package = send(package, IPAddress.Parse(read));
+
+
+
+
+
+
+
+
+
+                }
+            }
+
+
 
 
         }
 
-        private void P2PSettings()
+        private void HierarchieSettings(bool isRoot)
         {
 
-        }
+            if(isRoot)
+            {
+                Data.ServerConfig.root = Data.ServerConfig.host;
+            }
+            else
+            {
+                string read;
+                while (true)
+                {
+                    Console.WriteLine("Bitte geben sie Adresse von Root ein");
+                    read = Console.ReadLine();
 
-        private void HierarchieSettings()
-        {
+                    Package package = new Package();
+
+                    package.hierarchie = new HierarchiePackage();
+                    package.hierarchie.hierarchieRequest = HierarchieRequest.NewServer;
+
+                    if (IPAddress.TryParse(read, out IPAddress address))
+                    {
+                        package = send(package, IPAddress.Parse(read));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Etwas ist schief gelaufen in der IP-Adresse eingabe");
+                    }
+
+
+                    
+                    if(package != null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Server nicht verfügbar oder irgendwas ist schief gelaufen");
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+            }
+
 
         }
         /// <summary>
