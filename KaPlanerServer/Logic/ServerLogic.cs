@@ -223,18 +223,19 @@ namespace KaPlanerServer.Logic
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
 
                     // Server prueft, ist das Paket fuer rechten Kindserver
-                    if(true)
+                    if(neighbours[0].ToString()  == package.destinationAdress)
                     {
-
+                        //sendHierarchie(package, neighbours[0]);
                     }
                     // Server prueft, ist das Paket fuer linken Kindserver
-                    else if (true)
+                    else if (neighbours[1].ToString() == package.destinationAdress)
                     {
-
+                        //sendHierarchie(package, neighbours[0]);
                     }
                     else
                     {
-                        //Fehler im Paket
+                        //sendHierarchie(package, neighbours[0]);
+                        //sendHierarchie(package, neighbours[1]);
                     }
                     break;
                 case HierarchieRequest.NewServer:
