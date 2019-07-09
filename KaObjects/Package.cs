@@ -28,11 +28,6 @@ namespace KaObjects
         public HierarchiePackage hierarchie;
 
         public string passwordConfirm;
-        public List<string> Connections = new List<string>();
-
-
-        //nicht beachten
-        public bool isForwarding;
 
         /// <summary>
         /// Wer schickt das?

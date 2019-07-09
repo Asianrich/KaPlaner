@@ -10,10 +10,7 @@ namespace KaObjects
     [Serializable]
     public class HierarchiePackage
     {
-        /// <summary>
-        /// DestinationID
-        /// </summary>
-        public int destinationID;
+
         
         public HierarchieRequest HierarchieRequest;
         private Guid packageID; //Package ID? braucht man das? just in case
@@ -21,12 +18,22 @@ namespace KaObjects
         /// <summary>
         /// ServerID
         /// </summary>
-        public int serverID;
-        
+        public int sourceID;
+
+        /// <summary>
+        /// ServerQuelle
+        /// </summary>
+        public string sourceAdress;
+
         /// <summary>
         /// Destination adress
         /// </summary>
-        public string serveradress;
+        public string destinationAdress;
+
+        /// <summary>
+        /// DestinationID
+        /// </summary>
+        public int destinationID;
 
         /// <summary>
         /// Die Anwort auf eine registriation-Anfrage.
@@ -38,6 +45,10 @@ namespace KaObjects
         /// </summary>
         public int anzConnection = -1;
 
+        /// <summary>
+        /// Username Existent!!!!!
+        /// </summary>
+        public string login;
 
 
 
@@ -64,6 +75,7 @@ namespace KaObjects
         public void AddChild()
         {
 
+            
 
         }
 
