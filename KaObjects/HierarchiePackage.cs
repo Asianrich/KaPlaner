@@ -6,44 +6,87 @@ using System.Threading.Tasks;
 
 namespace KaObjects
 {
+    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin}
     [Serializable]
     public class HierarchiePackage
     {
-        public int parent;          //root-server
-        public int child;           //Kinder-Knoten
-        public int number;          // jedes Kind hat ne Kennung
-        public int level;           // Ebene-Erweiterung
+        /// <summary>
+        /// DestinationID
+        /// </summary>
+        public int destinationID;
+        
+        public HierarchieRequest HierarchieRequest;
+        private Guid packageID; //Package ID? braucht man das? just in case
 
-        public int test = 0;
+        /// <summary>
+        /// ServerID
+        /// </summary>
+        public int serverID;
+        
+        /// <summary>
+        /// Destination adress
+        /// </summary>
+        public string serveradress;
+
+        /// <summary>
+        /// Die Anwort auf eine registriation-Anfrage.
+        /// </summary>
+        public int anzUser = -1;
+
+        /// <summary>
+        /// Die Antwort auf einen Server-Verbindungsanfrage
+        /// </summary>
+        public int anzConnection = -1;
+
+
+
+
+
+
+
 
         public HierarchiePackage()
         {
-            
+            GeneratePID();
         }
+
+        private void GeneratePID()
+        {
+            packageID = Guid.NewGuid();
+        }
+
+        public Guid GetPackageID()
+        {
+            return packageID;
+        }
+
 
         public void AddChild()
         {
 
+
         }
 
-        public void FindRoute()                     // Root finden
-        {
-            // start with this as root
-                            //MyObject root = this;
-            // get the parent
-                            //MyObject parent = this.Parent;
 
-            // keep going until no more parents
-            //while (parent != null)
-            //{
-                // save the parent
-                //root = parent;
-                // get the parent of the parent
-                //parent = parent.Parent;
-            //}
 
-            //return root;
-        }
+        //public void FindRoute()                     // Root finden
+        //{
+        //    // start with this as root
+        //                    //MyObject root = this;
+        //    // get the parent
+        //                    //MyObject parent = this.Parent;
+
+        //    // keep going until no more parents
+        //    //while (parent != null)
+        //    //{
+        //        // save the parent
+        //        //root = parent;
+        //        // get the parent of the parent
+        //        //parent = parent.Parent;
+        //    //}
+
+        //    //return root;
+        //}
 
 
 

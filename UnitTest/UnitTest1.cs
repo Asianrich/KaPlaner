@@ -263,9 +263,16 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void globaltest()
+        public void ServerEntrytest()
         {
-            
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlanerServer\\KaPlanerServer\\Data\\KaPlaner.mdf;Integrated Security=True";
+
+            Database db = new Database(connectionString);
+
+            db.newServerEntry("192.168.1.5", 110);
+
+
+
         }
     }
 }

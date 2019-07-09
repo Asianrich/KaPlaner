@@ -62,6 +62,7 @@ namespace KaPlanerServer.Logic
 
             if (!isPresent)
             {
+
                 switch (package.P2Prequest)
                 {
                     case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
@@ -127,9 +128,9 @@ namespace KaPlanerServer.Logic
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
             bool send = true;
-            foreach (string visited in package.visitedPlace)
+            foreach(string visited in package.p2p.visitedPlace)
             {
-                if (visited == iPAddress.ToString())
+                if(visited == iPAddress.ToString())
                 {
                     send = false;
                 }
@@ -165,8 +166,8 @@ namespace KaPlanerServer.Logic
             if (package.p2p != null)
             {
                 isResolving = resolveP2P(package.p2p);
-                package.visitedPlace.Add(Data.ServerConfig.host.ToString());
-
+                package.p2p.visitedPlace.Add(Data.ServerConfig.host.ToString());
+                
                 if (package.p2p.getTTL() != 0)
                 {
                     //Ipadressen rauslesen
@@ -181,6 +182,10 @@ namespace KaPlanerServer.Logic
             }
             else if (package.hierarchie != null)
             {
+                isResolving = resolveHierarchie(package);
+
+
+
 
 
 
@@ -198,6 +203,46 @@ namespace KaPlanerServer.Logic
 
 
             return package;
+        }
+
+        private bool resolveHierarchie(Package package)
+        {
+            bool isResolve = false;
+
+            //BRAUCHT DAS MICH ZU INTERESSIEREN?!?!?!?!?!?! NUR ERST BEI INVITE!!!!
+            //
+            if (package.hierarchie.serveradress != Data.ServerConfig.host.ToString())
+            {
+
+
+
+
+            }
+
+            switch(package.hierarchie.HierarchieRequest)
+            {
+                case HierarchieRequest.Invite:
+                    //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
+                    break;
+                case HierarchieRequest.NewServer:
+                    break;
+                case HierarchieRequest.RegisterServer:
+                    break;
+                case HierarchieRequest.RegisterUser:
+                    break;
+                case HierarchieRequest.UserLogin:
+                    
+                    break;
+                default:
+                    break;
+
+            }
+
+
+
+
+
+            return isResolve;
         }
 
         /// <summary>
@@ -350,11 +395,13 @@ namespace KaPlanerServer.Logic
                 {
                     //TODO Logic
                     isP2P = true;
+                    Data.ServerConfig.structure = Data.structure.P2P;
                     break;
                 }
                 else if (read == "2")
                 {
-                    //TODO logic
+                    Data.ServerConfig.structure = Data.structure.HIERARCHY;
+                    //TODO logc? eigentlich net
                     break;
                 }
                 else
@@ -371,8 +418,6 @@ namespace KaPlanerServer.Logic
 
                 if (read == "Y")
                 {
-                    //TODO Logic Verbindung
-
                     break;
                 }
                 else if (read == "N")
@@ -398,82 +443,27 @@ namespace KaPlanerServer.Logic
 
         private void P2PSettings(bool isWellKnown)
         {
-            string read;
-            if (isWellKnown)
+            if(isWellKnown)
             {
                 Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
-                Console.WriteLine("Gibt es noch andere Well-Knowns? Y/N");
-
-                while (true)
-                {
-                    read = Console.ReadLine();
-                    if (read == "Y")
-                    {
-
-
-
-
-
-
-
-                        break;
-                    }
-                    else if (read == "N")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Falsche EIngabe. Es wird nur Y oder N akzeptiert!");
-                    }
-                }
 
 
             }
             else
             {
-
+                string read;
                 while (true)
                 {
-                    Console.WriteLine("Bitte geben sie einen Wellknown-Server an");
+                    Console.WriteLine("Bitte geben sie eine Wellknown-Server an");
                     read = Console.ReadLine();
                     Package package = new Package();
                     package.p2p = new P2PPackage();
                     package.p2p.P2Prequest = P2PRequest.NewServer;
                     package.sourceServer = Data.ServerConfig.host.ToString();
 
-                    if (IPAddress.TryParse(read, out IPAddress address))
-                    {
-                        package = send(package, address);
-                        List<string> serverlist = package.p2p.serverList;
-                        package.sourceServer = Data.ServerConfig.host.ToString(); //Kann sein das dass zurückgesendete Paket die Addresse vom anderen hat
-                        package.p2p.P2Prequest = P2PRequest.RegisterServer;
 
-                        foreach(string s in serverlist)
-                        {
-                            IPAddress iP = IPAddress.Parse(s);
-                            Package receive = send(package, iP);
+                    package = send(package, IPAddress.Parse(read));
 
-                            if(receive == null)
-                            {
-                                Console.WriteLine("Etwas könnte schiefgelaufen sein");
-                            }
-                            else
-                            {
-                                if(receive.p2p.P2PAnswer == P2PAnswer.Success)
-                                {
-                                    Data.ServerConfig.addServer(iP);
-                                }
-                            }
-
-
-                        }
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("Es gab einen Problem bei der Uebersetzung von deiner IpAdresse");
-                    }
 
                 }
             }
@@ -486,7 +476,7 @@ namespace KaPlanerServer.Logic
         private void HierarchieSettings(bool isRoot)
         {
 
-            if (isRoot)
+            if(isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
             }
@@ -501,7 +491,7 @@ namespace KaPlanerServer.Logic
                     Package package = new Package();
                     package.sourceServer = Data.ServerConfig.host.ToString();
                     package.hierarchie = new HierarchiePackage();
-                    //package.hierarchie.hierarchieRequest = HierarchieRequest.NewServer;
+                    package.hierarchie.HierarchieRequest = HierarchieRequest.NewServer;
 
                     if (IPAddress.TryParse(read, out IPAddress address))
                     {
@@ -513,19 +503,23 @@ namespace KaPlanerServer.Logic
                     }
 
 
-
-                    if (package != null)
+                    
+                    if(package != null)
                     {
                         //Logic
                         Data.ServerConfig.root = address;
 
+
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
-                        //package.hierarchie ????????????
-                        //IPAddress connectServer = IPAddress.Parse(package.hierarchie. ???? wo die Adresse steht);
-                        //package = send(package, connectServer);
+                        package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
+                        package.hierarchie.serveradress = Data.ServerConfig.host.ToString();
 
+                        IPAddress connectServer = IPAddress.Parse(package.hierarchie.serveradress);
+                        package = send(package, connectServer);
+                        Data.ServerConfig.serverID = package.hierarchie.serverID;
                         //Datenbankeintrag
-
+                        if(package != null)
+                            database.newServerEntry(package.hierarchie.serveradress, package.hierarchie.destinationID);
 
                         break;
                     }
@@ -534,17 +528,6 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine("Server nicht verfügbar oder irgendwas ist schief gelaufen");
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
 
 
@@ -560,30 +543,30 @@ namespace KaPlanerServer.Logic
 
             switch (package.P2Prequest)
             {
-                case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
-                    //-1. Ist es eine Antwort auf meine Anfrage?
-                    if (package.GetOriginIPAddress() == GetLocalIPAddress()) //oder ipString
-                    {
-                        HandleReturn(package);
-                        break;
-                    }
-                    //0. Gab es die Anfrage schon?
-                    if (!AddPackage(package))
-                        break;
-                    //1. Anzahl Verbindungen (s. neighbours)
-                    if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-                    {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                        package.anzConn = neighbours.Count;
-                        //2. Antwort zurücksenden (P2PPackage.originIPAddress)
-                        returnList.Add(package.GetOriginIPAddress());
-                    }
-                    package.returnIPAddress = GetLocalIPAddress().ToString();
-                    //3. TTL --
-                    if (package.DecrementTTL() == 0)
-                        break;
-                    //4. Falls TTL > 0 weiterleiten
-                    returnList.AddRange(neighbours); // Flooding
-                    break;
+            //    case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
+            //        //-1. Ist es eine Antwort auf meine Anfrage?
+            //        if (package.GetOriginIPAddress() == GetLocalIPAddress()) //oder ipString
+            //        {
+            //            HandleReturn(package);
+            //            break;
+            //        }
+            //        //0. Gab es die Anfrage schon?
+            //        if (!AddPackage(package))
+            //            break;
+            //        //1. Anzahl Verbindungen (s. neighbours)
+            //        if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
+            //        {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+            //            package.anzConn = neighbours.Count;
+            //            //2. Antwort zurücksenden (P2PPackage.originIPAddress)
+            //            returnList.Add(package.GetOriginIPAddress());
+            //        }
+            //        package.returnIPAddress = GetLocalIPAddress().ToString();
+            //        //3. TTL --
+            //        if (package.DecrementTTL() == 0)
+            //            break;
+            //        //4. Falls TTL > 0 weiterleiten
+            //        returnList.AddRange(neighbours); // Flooding
+            //        break;
             }
 
             return returnList;

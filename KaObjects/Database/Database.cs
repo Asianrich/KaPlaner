@@ -222,6 +222,30 @@ namespace KaObjects.Storage
             return ka;
         }
 
+        public void newServerEntry(string ip, int id)
+        {
+            //TODO UnitTests
+
+            SqlConnection con = new SqlConnection(connectionString);
+
+            con.Open();
+
+            string ins = String.Format("INSERT INTO ServerList(ServerID, IPAdresse) VALUES (@serverid, @ip)");
+
+            SqlCommand cmd_insert = new SqlCommand(ins, con);
+            cmd_insert.Parameters.AddWithValue("@serverid", id);
+            cmd_insert.Parameters.AddWithValue("@ip", ip);
+
+            cmd_insert.ExecuteNonQuery();
+            con.Close();
+
+        }
+
+
+
+
+
+
         public LinkedList<string> GetWellKnownPeers()
         {
             throw new NotImplementedException();

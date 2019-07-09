@@ -26,7 +26,7 @@ namespace KaObjects.Storage
         int getUserCount();
         bool getUser(User user);
 
-
+        void newServerEntry(string ip, int id);
 
 
 
