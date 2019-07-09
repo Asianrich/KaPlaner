@@ -226,12 +226,28 @@ namespace KaPlanerServer.Logic
             {
                 case HierarchieRequest.Invite:
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
+
+                    // Server prueft, ist das Paket fuer rechten Kindserver
+                    if(true)
+                    {
+
+                    }
+                    // Server prueft, ist das Paket fuer linken Kindserver
+                    else if (true)
+                    {
+
+                    }
+                    else
+                    {
+                        //Fehler im Paket
+                    }
                     break;
                 case HierarchieRequest.NewServer:
 
                     //Muss ich weiterleiten an die Unter mir? oder Nicht? entsprechende Antwort schicken
                     break;
                 case HierarchieRequest.RegisterServer:
+
                     break;
                 case HierarchieRequest.RegisterUser:
                     break;
