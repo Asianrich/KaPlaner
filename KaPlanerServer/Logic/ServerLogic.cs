@@ -11,6 +11,13 @@ using KaPlaner.Networking;
 
 namespace KaPlanerServer.Logic
 {
+    class stateEintrag
+    {
+        
+
+
+    }
+
 
     class ServerLogic : IServerLogic
     {
@@ -186,10 +193,6 @@ namespace KaPlanerServer.Logic
 
 
 
-
-
-
-
             }
             else
             {
@@ -225,6 +228,8 @@ namespace KaPlanerServer.Logic
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
                     break;
                 case HierarchieRequest.NewServer:
+
+                    //Muss ich weiterleiten an die Unter mir? oder Nicht? entsprechende Antwort schicken
                     break;
                 case HierarchieRequest.RegisterServer:
                     break;

@@ -91,6 +91,8 @@ namespace KaPlanerServer.Networking
 
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
+
+
                 while (true)
                 {
                     allDone.Reset();

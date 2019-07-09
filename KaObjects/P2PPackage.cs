@@ -9,7 +9,7 @@ using System.Net;
 namespace KaObjects
 {
     public enum P2PRequest { NewServer, RegisterServer, RegisterUser, Login, Invite }
-
+    public enum P2PAnswer { Success, Failure, Error, Visited}
     [Serializable]
     public class P2PPackage
     {
@@ -17,9 +17,13 @@ namespace KaObjects
         static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
 
         public P2PRequest P2Prequest;
+        public P2PAnswer P2PAnswer;
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
+
+
+
 
         /// <summary>
         /// Standard auf -1, => Noch Keine Aenderungen
