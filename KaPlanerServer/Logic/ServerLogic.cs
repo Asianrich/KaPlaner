@@ -127,9 +127,9 @@ namespace KaPlanerServer.Logic
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
             bool send = true;
-            foreach(string visited in package.visitedPlace)
+            foreach (string visited in package.visitedPlace)
             {
-                if(visited == iPAddress.ToString())
+                if (visited == iPAddress.ToString())
                 {
                     send = false;
                 }
@@ -166,7 +166,7 @@ namespace KaPlanerServer.Logic
             {
                 isResolving = resolveP2P(package.p2p);
                 package.visitedPlace.Add(Data.ServerConfig.host.ToString());
-                
+
                 if (package.p2p.getTTL() != 0)
                 {
                     //Ipadressen rauslesen
@@ -398,34 +398,82 @@ namespace KaPlanerServer.Logic
 
         private void P2PSettings(bool isWellKnown)
         {
-            if(isWellKnown)
+            string read;
+            if (isWellKnown)
             {
                 Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
+                Console.WriteLine("Gibt es noch andere Well-Knowns? Y/N");
+
+                while (true)
+                {
+                    read = Console.ReadLine();
+                    if (read == "Y")
+                    {
+
+
+
+
+
+
+
+                        break;
+                    }
+                    else if (read == "N")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Falsche EIngabe. Es wird nur Y oder N akzeptiert!");
+                    }
+                }
 
 
             }
             else
             {
-                string read;
+
                 while (true)
                 {
-                    Console.WriteLine("Bitte geben sie eine Wellknown-Server an");
+                    Console.WriteLine("Bitte geben sie einen Wellknown-Server an");
                     read = Console.ReadLine();
                     Package package = new Package();
                     package.p2p = new P2PPackage();
                     package.p2p.P2Prequest = P2PRequest.NewServer;
                     package.sourceServer = Data.ServerConfig.host.ToString();
 
+                    if (IPAddress.TryParse(read, out IPAddress address))
+                    {
+                        package = send(package, address);
+                        List<string> serverlist = package.p2p.serverList;
+                        package.sourceServer = Data.ServerConfig.host.ToString(); //Kann sein das dass zurückgesendete Paket die Addresse vom anderen hat
+                        package.p2p.P2Prequest = P2PRequest.RegisterServer;
 
-                    package = send(package, IPAddress.Parse(read));
+                        foreach(string s in serverlist)
+                        {
+                            IPAddress iP = IPAddress.Parse(s);
+                            Package receive = send(package, iP);
+
+                            if(receive == null)
+                            {
+                                Console.WriteLine("Etwas könnte schiefgelaufen sein");
+                            }
+                            else
+                            {
+                                if(receive.p2p.P2PAnswer == P2PAnswer.Success)
+                                {
+                                    Data.ServerConfig.addServer(iP);
+                                }
+                            }
 
 
+                        }
 
-
-
-
-
-
+                    }
+                    else
+                    {
+                        Console.WriteLine("Es gab einen Problem bei der Uebersetzung von deiner IpAdresse");
+                    }
 
                 }
             }
@@ -438,7 +486,7 @@ namespace KaPlanerServer.Logic
         private void HierarchieSettings(bool isRoot)
         {
 
-            if(isRoot)
+            if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
             }
@@ -465,8 +513,8 @@ namespace KaPlanerServer.Logic
                     }
 
 
-                    
-                    if(package != null)
+
+                    if (package != null)
                     {
                         //Logic
                         Data.ServerConfig.root = address;
