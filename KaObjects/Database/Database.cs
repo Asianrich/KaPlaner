@@ -241,8 +241,10 @@ namespace KaObjects.Storage
 
         }
 
-
-        public int anzahlKindserver(int ServerID)
+        /// <summary>
+        /// Ermittelt die Anzahl an vorhandenen Kindservern
+        /// </summary>
+        public int AnzahlKindserver(int ServerID)
         {
             int anzahl = 0;
             string selection;
@@ -255,9 +257,40 @@ namespace KaObjects.Storage
 
             SqlCommand selectcommand = new SqlCommand(selection, con);
 
-            SqlDataReader reader = selectcommand.ExecuteReader();
+           SqlDataReader reader = selectcommand.ExecuteReader();
+
+            anzahl = reader.GetInt32(0);
+
+            con.Close();
 
             return anzahl;
+        }
+
+        /// <summary>
+        /// Prueft ob ein User ueberhaupt existiert
+        /// </summary>
+        public bool UserExist (int ServerID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+
+            con.Open();
+
+            string check = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+
+            SqlCommand checkcommand = new SqlCommand(check, con);
+
+            SqlDataReader reader = checkcommand.ExecuteReader();
+
+            con.Close();
+
+            if (reader.GetString(0) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
 
