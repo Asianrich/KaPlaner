@@ -242,6 +242,23 @@ namespace KaObjects.Storage
         }
 
 
+        public int anzahlKindserver(int ServerID)
+        {
+            int anzahl = 0;
+            string selection;
+
+            SqlConnection con = new SqlConnection(connectionString);
+
+            con.Open();
+
+            selection = String.Format("SELECT anzVerbindungen FROM Serverlist WHERE 'Linker Kinderserver' != NULL AND 'Rechter Kinderserver != NULL AND ServerID == '{0}'", ServerID);
+
+            SqlCommand selectcommand = new SqlCommand(selection, con);
+
+            SqlDataReader reader = selectcommand.ExecuteReader();
+
+            return anzahl;
+        }
 
 
 
