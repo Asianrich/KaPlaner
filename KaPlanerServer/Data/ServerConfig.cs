@@ -10,7 +10,7 @@ namespace KaPlanerServer.Data
     public static class ServerConfig
     {
         public static List<IPAddress> ipAddress = new List<IPAddress>();
-
+        private static readonly int LIMIT = 10;
         //HIerarchie
         public static IPAddress root; // = new IPAddress(); <--- richtige Root-Adresse eintragen
         public static int serverID;
@@ -26,33 +26,20 @@ namespace KaPlanerServer.Data
         static readonly object _object = new object();
 
 
-        public static bool getPackageID(Guid packageID)
+        public static bool CheckPackageID(Guid packageID)
         {
             //Ein Thread hintereinander und nicht alle gleichzeitig
             lock (_object)
             {
-                bool isThere = false;
-                for (int i = 0; i < 10; i++)
-                {
-                    if (packageIDs[i] == packageID)
-                    {
-                        isThere = true;
-                    }
-                }
+                if (packageIDs.Exists(x => x == packageID))
+                    return false;//Das package wurde bereits bearbeitet.
 
+                packageIDs.Add(packageID);
 
-                if (!isThere)
-                {
-                    if (packageIDs.Count == 10)
-                    {
-                        //immer das oberste löschen
-                        packageIDs.RemoveAt(0);
-                    }
+                if (packageIDs.Count > LIMIT) //Wir brauchen eine Art Limit o.ä. um zu verhindern, dass die Liste übermäßig lang wird.
+                    packageIDs.Remove(packageIDs.First());
 
-                    packageIDs.Add(packageID);
-                }
-
-                return isThere;
+                return true;//Das package kann bearbeitet werden.
             }
         }
 

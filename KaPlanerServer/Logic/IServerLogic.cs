@@ -16,7 +16,6 @@ namespace KaPlanerServer.Logic
 
         //string IpString { get; set; }
         //void ResolvePackage(Package package);
-        List<System.Net.IPAddress> ResolvePackage(P2PPackage package);
         //List<string> resolvePackage(HPackage package);
         Package Forwarding(Package package);
         void Settings();
