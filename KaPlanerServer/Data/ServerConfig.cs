@@ -71,12 +71,16 @@ namespace KaPlanerServer.Data
         }
 
 
-
-
-
         public static void removeServer(IPAddress ip)
         {
-            ipAddress.Remove(ip);
+            try
+            {
+                ipAddress.Remove(ip);
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }

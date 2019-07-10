@@ -230,7 +230,7 @@ namespace KaPlanerServer.Logic
                     // Server prueft, ist das Paket fuer linken Kindserver
                     else if (neighbours[1].ToString() == package.destinationAdress)
                     {
-                        //sendHierarchie(package, neighbours[0]);
+                        //sendHierarchie(package, neighbours[1]);
                     }
                     else
                     {
@@ -238,6 +238,7 @@ namespace KaPlanerServer.Logic
                         //sendHierarchie(package, neighbours[1]);
                     }
                     break;
+
                 case HierarchieRequest.NewServer:
 
                     if (anzConnection > 0)
