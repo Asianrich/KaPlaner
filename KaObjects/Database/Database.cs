@@ -122,6 +122,10 @@ namespace KaObjects.Storage
         // Termine in Datenbank speichern 
         public void SaveEvent(KaEvent kaEvent)
         {
+
+            // TOFIX: Zur Überprüfung ob Memberliste leer ist, die Methode
+            // CheckMemberList hier aufrufen
+
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
@@ -290,6 +294,51 @@ namespace KaObjects.Storage
                 return true;
             }
         }
+
+        /// <summary>
+        /// Prueft ob MemberListe leer ist
+        /// </summary>
+        public int CheckMemberList()
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string Check = string.Format("SELECT COUNT(TerminID) FROM Memberlist");
+            int read = 0;
+
+            if (Check != "")
+            {
+                SqlCommand checkCommand = new SqlCommand(Check, con);
+
+                SqlDataReader reader = checkCommand.ExecuteReader();
+
+                read = reader.GetInt32(0);
+            }
+
+            con.Close();
+
+            return read;
+        }
+
+
+        /// <summary>
+        /// Speichert Mitglieder eines Termins in der Memberlist
+        /// </summary>
+        public void SaveInvites (List<Package> member, int TerminID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            int i = member.Count();
+
+            while(i >= 0)
+            {
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES (@TerminID, @member[i])");
+
+                SqlCommand checkCommand = new SqlCommand(saveEvent, con);
+            }
+        }
+
 
 
         public string getServer(int serverID)
