@@ -20,22 +20,35 @@ namespace KaObjects
     [XmlInclude(typeof(P2PPackage))]
     public class Package
     {
+        /// <summary>
+        /// Anfrage vom User
+        /// </summary>
         public Request request;
+
+        /// <summary>
+        /// Userdaten, welche uebermittelt wurde
+        /// </summary>
         public User user;
 
+        /// <summary>
+        /// P2P-Packet
+        /// </summary>
         public P2PPackage p2p;
         //public Package packageReference;
+        /// <summary>
+        /// HierarchiePacket
+        /// </summary>
         public HierarchiePackage hierarchie;
 
         public string passwordConfirm;
 
         /// <summary>
-        /// Wer schickt das?
+        /// Antwort FUER DEN CLIENT!
         /// </summary>
         public string sourceServer;
 
         public List<KaEvent> kaEvents;
-
+        public List<KaEvent> invites;
         public Package(Request request, User user)
         {
             this.request = request;

@@ -123,7 +123,12 @@ namespace KaPlanerServer.Logic
 
 
                         break;
+                    case P2PRequest.Login:
 
+                        break;
+                    case P2PRequest.Invite:
+
+                        break;
                     default:
                         break;
                 }
@@ -222,13 +227,13 @@ namespace KaPlanerServer.Logic
 
             return package;
         }
-
+        enum toDo {Info, Send }
         private HierarchiePackage resolveHierarchie(HierarchiePackage package)
         {
             int anzConnection = database.getServerCount();
             string ip = Data.ServerConfig.host.ToString();
             int id = Data.ServerConfig.serverID;
-
+            
 
             //BRAUCHT DAS MICH ZU INTERESSIEREN?!?!?!?!?!?! NUR ERST BEI INVITE!!!!
             //
@@ -267,7 +272,7 @@ namespace KaPlanerServer.Logic
                     {
                         //Eigene Send funktion machen
                         //Auch parallel
-                        sendHierarchie();
+                        //sendHierarchie();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
 
                         foreach(HierarchiePackage c in child)
@@ -304,8 +309,8 @@ namespace KaPlanerServer.Logic
                     if (anzConnection > 0)
                     {
                         //Eigene Send funktion machen
-                        //Auch parallel
-                        sendHierarchie();
+                        //Soll parallel ablaufen
+                        //sendHierarchie();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
 
                         foreach (HierarchiePackage c in child)
@@ -329,7 +334,7 @@ namespace KaPlanerServer.Logic
                     }
                     else
                     {
-                        //Auflösen der ID, wohin
+                        //sendHierarchie(getAdress(package.destinationID));
                     }
 
 
@@ -342,12 +347,10 @@ namespace KaPlanerServer.Logic
 
             string getAdress(int ask)
             {
-                ask = 100;
                 int numberask = GetDigitCount(ask);
-                id = 101;
                 int numberid = GetDigitCount(id);
                 bool isUp = false;
-
+                int child = 0;
                 if (numberid >= numberask)
                 {
                     isUp = true;
@@ -366,7 +369,7 @@ namespace KaPlanerServer.Logic
                     else
                     {
 
-                        int child = (int)(ask / Math.Pow(10, dif - 1));
+                        child = (int)(ask / Math.Pow(10, dif - 1));
                         
 
                     }
@@ -374,19 +377,19 @@ namespace KaPlanerServer.Logic
                 }
 
                 string address = "";
+                int addressid = id;
                 if(isUp)
                 {
-                    id = id / 10;
-                    address = database.getServer(id);
+                    addressid = addressid / 10;
                 }
                 else
                 {
-
-                    //address =
+                    addressid = child;
                 }
-
+                address = database.getServer(id);
                 return address;
             }
+
             int GetDigitCount(int number)
             {
                 if (number != 0)
@@ -397,10 +400,19 @@ namespace KaPlanerServer.Logic
                 else { return 1; }
             }
 
-            void sendHierarchie()
-            {
+            //Package sendHierarchie(string ipadress, toDo _toDo)
+            //{
+            //    //An beide Childs
+            //    if(_toDo == toDo.Info)
+            //    {
 
-            }
+            //    }
+            //    else if(_toDo == toDo.Send) //nur an einer gewissen Server
+            //    {
+            //        send(package, ipadress);
+            //    }
+
+            //}
 
             return package;
         }
