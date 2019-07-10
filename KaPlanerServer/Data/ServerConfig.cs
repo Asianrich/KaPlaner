@@ -53,7 +53,7 @@ namespace KaPlanerServer.Data
             }
             catch(Exception ex)
             {
-               
+                Console.WriteLine("Server added");
             }
         }
 
@@ -66,7 +66,7 @@ namespace KaPlanerServer.Data
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine("Server removed");
             }
         }
     }
