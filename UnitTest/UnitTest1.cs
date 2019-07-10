@@ -338,9 +338,13 @@ namespace UnitTest
 
 
         [TestMethod]
-        public void SaveSaveInvitesPruefung()
+        public void SaveInvitesPruefung()
         {
-            Database test = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            int testtermin = 7;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            List<Package> testlist = new List<Package>();
+
+            testdb.SaveInvites(testlist, testtermin);
         }
     }
 }

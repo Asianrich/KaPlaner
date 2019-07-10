@@ -306,14 +306,15 @@ namespace KaObjects.Storage
             string Check = string.Format("SELECT COUNT(TerminID) FROM Memberlist");
             int read = 0;
 
-            if (Check != "")
-            {
+           
                 SqlCommand checkCommand = new SqlCommand(Check, con);
 
                 SqlDataReader reader = checkCommand.ExecuteReader();
 
+                if (reader.Read())
+                { 
                 read = reader.GetInt32(0);
-            }
+                }
 
             con.Close();
 
@@ -329,13 +330,16 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            int i = member.Count();
+            int index = member.Count();
 
-            while(i >= 0)
+            for ( int i = 0; i < member.Count(); i++)
             {
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES (@TerminID, @member[i])");
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, member[index].user.name.ToString());
 
-                SqlCommand checkCommand = new SqlCommand(saveEvent, con);
+                SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
+
+                saveEventCommand.Parameters.AddWithValue("@TerminID", TerminID);
+                saveEventCommand.Parameters.AddWithValue("@User", member[i].user.name.ToString());
             }
         }
 
