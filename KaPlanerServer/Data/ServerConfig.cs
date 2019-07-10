@@ -53,17 +53,21 @@ namespace KaPlanerServer.Data
             }
             catch(Exception ex)
             {
-               
+                Console.WriteLine("Server added");
             }
         }
 
 
-
-
-
         public static void removeServer(IPAddress ip)
         {
-            ipAddress.Remove(ip);
+            try
+            {
+                ipAddress.Remove(ip);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Server removed");
+            }
         }
     }
 }

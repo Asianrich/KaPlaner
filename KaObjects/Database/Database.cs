@@ -122,6 +122,10 @@ namespace KaObjects.Storage
         // Termine in Datenbank speichern 
         public void SaveEvent(KaEvent kaEvent)
         {
+
+            // TOFIX: Zur Überprüfung ob Memberliste leer ist, die Methode
+            // CheckMemberList hier aufrufen
+
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
@@ -291,6 +295,82 @@ namespace KaObjects.Storage
             }
         }
 
+        /// <summary>
+        /// Prueft ob MemberListe leer ist
+        /// </summary>
+        public int CheckMemberList()
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string Check = string.Format("SELECT COUNT(TerminID) FROM Memberlist");
+            int read = 0;
+
+           
+                SqlCommand checkCommand = new SqlCommand(Check, con);
+
+                SqlDataReader reader = checkCommand.ExecuteReader();
+
+                if (reader.Read())
+                { 
+                read = reader.GetInt32(0);
+                }
+
+            con.Close();
+
+            return read;
+        }
+
+
+        /// <summary>
+        /// Speichert Mitglieder eines Termins in der Memberlist
+        /// </summary>
+        public void SaveInvites (List<Package> member, int TerminID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            int index = member.Count();
+
+            for ( int i = 0; i < member.Count(); i++)
+            {
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, member[index].user.name.ToString());
+
+                SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
+
+                saveEventCommand.Parameters.AddWithValue("@TerminID", TerminID);
+                saveEventCommand.Parameters.AddWithValue("@User", member[i].user.name.ToString());
+            }
+        }
+
+
+        public void ReadInvites(string user)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            List<KaEvent> test = new List<KaEvent>();
+            int index = 0;
+            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User == '{0}'", user);
+
+            SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
+
+            SqlDataReader reader = readEventCommand.ExecuteReader();
+
+            while(reader.Read())
+            {
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", );
+                test[index].TerminID = reader["TerminID"];
+
+                index++;
+            }
+
+        }
+
+        private void ReadSingleRow(IDataRecord reader)
+        {
+            throw new NotImplementedException();
+        }
 
         public string getServer(int serverID)
         {

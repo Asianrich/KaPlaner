@@ -70,6 +70,10 @@
       <Project>{b5deb1ff-0ceb-4d12-a3e2-65ad037a5938}</Project>
       <Name>KaObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KaPlanerServer\KaPlanerServer.csproj">
+      <Project>{72a67887-013f-4f16-89f5-394ee844a69e}</Project>
+      <Name>KaPlanerServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

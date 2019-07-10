@@ -55,23 +55,22 @@ namespace UnitTest
 
         }
 
-        [TestMethod]
-        public void sendObjects()
-        {
-            ClientConnection client = new ClientConnection();
+        //[TestMethod]
+        //public void sendObjects()
+        //{
+        //    ClientConnection client = new ClientConnection();
 
-            Package state = new Package
-            {
-                user = new User("Richard", "test"),
-                request = Request.Test
-            };
+        //    Package state = new Package
+        //    {
+        //        user = new User("Richard", "test"),
+        //        request = Request.Test
+        //    };
 
-            Package asd = client.Start(state);
+        //    Package asd = client.Start(state);
 
-            Assert.IsTrue(true);
+        //    Assert.IsTrue(true);
+        //}
 
-
-        }
 
         [TestMethod]
         public void writer()
@@ -164,16 +163,16 @@ namespace UnitTest
         }
 
 
-        [TestMethod]
-        public void readandwrite()
-        {
-            ClientConnection cc = new ClientConnection();
+        //[TestMethod]
+        //public void readandwrite()
+        //{
+        //    ClientConnection cc = new ClientConnection();
 
-            User user = new User("aaa", "sss");
+        //    User user = new User("aaa", "sss");
 
 
-            Assert.IsTrue(true);
-        }
+        //    Assert.IsTrue(true);
+        //}
 
         [TestMethod]
         public void listviewtest()
@@ -325,5 +324,27 @@ namespace UnitTest
             else { return 1; }
         }
 
+
+
+        [TestMethod]
+        public void MemberListPuefung()
+        {
+            Database test = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            int i = 0;
+            i = test.CheckMemberList();
+
+            Console.WriteLine("Listeneintraege: {0}", i);
+        }
+
+
+        [TestMethod]
+        public void SaveInvitesPruefung()
+        {
+            int testtermin = 7;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            List<Package> testlist = new List<Package>();
+
+            testdb.SaveInvites(testlist, testtermin);
+        }
     }
 }

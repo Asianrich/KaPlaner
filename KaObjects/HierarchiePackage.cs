@@ -72,16 +72,14 @@ namespace KaObjects
         }
 
 
-        public void AddChild()
-        {
-
-            
-
-        }
+       // public void AddChild()
 
 
-
-        //public void FindRoute()                     // Root finden
+        //public void FindRoute()                     
+        
+        // Root finden
+        
+        
         //{
         //    // start with this as root
         //                    //MyObject root = this;
