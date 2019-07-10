@@ -291,6 +291,24 @@ namespace KaObjects.Storage
             }
         }
 
+
+        public string getServer(int serverID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID == '{0}'", serverID);
+
+            SqlCommand readCommand = new SqlCommand(readID, con);
+
+            SqlDataReader reader = readCommand.ExecuteReader();
+
+            string read = reader.GetString(0);
+
+            con.Close();
+            return read;
+        }
+
         /// <summary>
         /// ID des "linken" Kindservers auslesen
         /// </summary>

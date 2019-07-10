@@ -280,35 +280,49 @@ namespace UnitTest
         [TestMethod]
         public void DoMath()
         {
-            double ask = 100;
-            double number = Math.Log10(ask);
-            double id = 101;
-            
+            int ask = 100;
+            int numberask = GetDigitCount(ask);
+            int id = 101;
+            int numberid = GetDigitCount(id);
+            bool isUp = false;
 
-            if(Math.Log10(id) >= number )
+            if(numberid >= numberask )
             {
+                isUp = true;
                 //Selbe Ebene oder höhere muss ich eh Hochschicken oO
             }
             else
             {
 
-                double dif = number - Math.Log10(id);
-                
+                int dif = (int)(numberask - numberid);
+                int level = (int)(ask / Math.Pow(10, dif));
 
-
-
+                //Bin ich das?
+                if (level != id)
+                {
+                    isUp = true;
+                }
+                else
+                {
+                    int child = (int)(ask / Math.Pow(10, dif - 1));
+                    //get IP
+                    Assert.IsTrue(true);
+                }
 
                 //Senden
             }
 
+            Assert.AreEqual(2, 1);
 
-
-
-
-
-
-            Assert.AreEqual(2, number);
-
+        }
+        public int GetDigitCount(int number)
+        {
+            if (number != 0)
+            {
+                double baseExp = Math.Log10(Math.Abs(number));
+                return Convert.ToInt32(Math.Floor(baseExp) + 1);
+            }
+            else { return 1; }
         }
 
     }
