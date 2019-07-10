@@ -344,6 +344,33 @@ namespace KaObjects.Storage
         }
 
 
+        public void ReadInvites(string user)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            List<KaEvent> test = new List<KaEvent>();
+            int index = 0;
+            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User == '{0}'", user);
+
+            SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
+
+            SqlDataReader reader = readEventCommand.ExecuteReader();
+
+            while(reader.Read())
+            {
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", );
+                test[index].TerminID = reader["TerminID"];
+
+                index++;
+            }
+
+        }
+
+        private void ReadSingleRow(IDataRecord reader)
+        {
+            throw new NotImplementedException();
+        }
 
         public string getServer(int serverID)
         {
