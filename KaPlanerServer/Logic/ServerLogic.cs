@@ -8,13 +8,47 @@ using KaObjects.Storage;
 using System.Net;
 using System.Net.Sockets;
 using KaPlaner.Networking;
+using System.Threading;
+
 
 namespace KaPlanerServer.Logic
 {
     class stateEintrag
     {
-        
 
+        private ManualResetEvent allDone = new ManualResetEvent(false);
+        private int counter = 0;
+
+
+        /// <summary>
+        /// Setzt den Zaehler auf einen gewissen Wert
+        /// </summary>
+        /// <param name="count">Counter</param>
+        public void setCounter(int count)
+        {
+            counter = count;
+        }
+
+
+        /// <summary>
+        /// Dekrementiert den Zaehler
+        /// </summary>
+        public void decrementCounter()
+        {
+            counter--;
+            if(counter == 0)
+            {
+                allDone.Set();
+            }
+        }
+        /// <summary>
+        /// Warten bis der Counter auf 0 ist
+        /// </summary>
+        public void wait()
+        {
+            allDone.WaitOne();
+        }
+        
 
     }
 
@@ -46,7 +80,6 @@ namespace KaPlanerServer.Logic
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
         private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
-        private List<P2PPackage> recievedPackages = new List<P2PPackage>();
         public static string _ipString;
 
 
@@ -61,41 +94,23 @@ namespace KaPlanerServer.Logic
 
 
         //P2P Paket handlen
-        private bool resolveP2P(P2PPackage package)
+        private P2PPackage resolveP2P(P2PPackage package)
         {
-
-            bool isPresent = false;
-            isPresent = Data.ServerConfig.getPackageID(package.GetPackageID());
-
-            if (!isPresent)
+            if (Data.ServerConfig.CheckPackageID(package.GetPackageID()))
             {
 
                 switch (package.P2Prequest)
                 {
-                    case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
-                                               //-1. Ist es eine Antwort auf meine Anfrage?
-                                               //if (package.GetOriginIPAddress() == GetLocalIPAddress())
-                                               //{
-                                               //    HandleReturn(package);
-                                               //    break;
-                                               //}
-                                               ////0. Gab es die Anfrage schon?
-                                               //if (!AddPackage(package))
-                                               //    break;
-                                               ////1. Anzahl Verbindungen (s. neighbours)
-                                               //if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-                                               //{//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                                               //    package.anzConn = neighbours.Count;
-                                               //    //2. Antwort zurücksenden (P2PPackage.originIPAddress)
-                                               //    returnList.Add(package.GetOriginIPAddress());
-                                               //}
-                                               //package.returnIPAddress = GetLocalIPAddress();
-                                               ////3. TTL --
-                                               //if (package.DecrementTTL() == 0)
-                                               //    break;
-                                               ////4. Falls TTL > 0 weiterleiten
-                                               //returnList.AddRange(neighbours); // Flooding
-                                               //break;
+                    case P2PRequest.NewServer:
+                        //1. Anzahl Verbindungen (s. neighbours)
+                        if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
+                        {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                            package.anzConn = neighbours.Count;
+                            package.lastIP = Data.ServerConfig.host.ToString();
+                        }
+                        //2. Forking to other servers via flooding
+                        Forward();
+                        break;
 
                     case P2PRequest.RegisterServer:
 
@@ -112,15 +127,26 @@ namespace KaPlanerServer.Logic
                     default:
                         break;
                 }
-
-
-
-
+            }
+            else
+            {
+                package.P2PAnswer = P2PAnswer.Visited;
             }
 
-            package.DecrementTTL();
 
-            return isPresent;
+            return package;
+
+            async Task<bool> Forward()
+            {
+                if (package.DecrementTTL() == 0)
+                    return false;
+
+
+                //await Task.Run(() => send(package, ));
+                //Hier gehört der Sendeaufruf hin.
+                //Danach muss die Antwort gehandled werden.
+                return true;
+            }
         }
 
 
@@ -135,9 +161,9 @@ namespace KaPlanerServer.Logic
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
             bool send = true;
-            foreach(string visited in package.p2p.visitedPlace)
+            foreach (string visited in package.p2p.visitedPlace)
             {
-                if(visited == iPAddress.ToString())
+                if (visited == iPAddress.ToString())
                 {
                     send = false;
                 }
@@ -172,15 +198,12 @@ namespace KaPlanerServer.Logic
             bool isResolving = false;
             if (package.p2p != null)
             {
-                isResolving = resolveP2P(package.p2p);
                 package.p2p.visitedPlace.Add(Data.ServerConfig.host.ToString());
-                
-                if (package.p2p.getTTL() != 0)
-                {
-                    //Ipadressen rauslesen
-                    //packages.Add(send(package,));
-                }
-                //
+
+                package.p2p = resolveP2P(package.p2p);
+
+
+
                 if (packages.Count > 0)
                 {
                     package = resolveAll(packages);
@@ -318,7 +341,62 @@ namespace KaPlanerServer.Logic
 
             }
 
+            string getAdress(int ask)
+            {
+                ask = 100;
+                int numberask = GetDigitCount(ask);
+                id = 101;
+                int numberid = GetDigitCount(id);
+                bool isUp = false;
 
+                if (numberid >= numberask)
+                {
+                    isUp = true;
+                }
+                else
+                {
+
+                    int dif = (int)(numberask - numberid);
+                    int level = (int)(ask / Math.Pow(10, dif));
+
+                    //Bin ich das?
+                    if (level != id)
+                    {
+                        isUp = true;
+                    }
+                    else
+                    {
+
+                        int child = (int)(ask / Math.Pow(10, dif - 1));
+                        
+
+                    }
+
+                }
+
+                string address = "";
+                if(isUp)
+                {
+                    id = id / 10;
+                    address = database.getServer(id);
+                }
+                else
+                {
+
+                    //address =
+                }
+
+                return address;
+            }
+            int GetDigitCount(int number)
+            {
+                if (number != 0)
+                {
+                    double baseExp = Math.Log10(Math.Abs(number));
+                    return Convert.ToInt32(Math.Floor(baseExp) + 1);
+                }
+                else { return 1; }
+            }
 
             void sendHierarchie()
             {
@@ -416,15 +494,15 @@ namespace KaPlanerServer.Logic
                     break;
             }
 
+
+
+            return package;
+
             void writeResult(Request request, string line)
             {
                 Console.WriteLine(line);
                 package.request = request;
             }
-
-
-            return package;
-
         }
 
         public Package resolvePackages(List<Package> packages)
@@ -526,7 +604,7 @@ namespace KaPlanerServer.Logic
 
         private void P2PSettings(bool isWellKnown)
         {
-            if(isWellKnown)
+            if (isWellKnown)
             {
                 Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
 
@@ -559,7 +637,7 @@ namespace KaPlanerServer.Logic
         private void HierarchieSettings(bool isRoot)
         {
 
-            if(isRoot)
+            if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
             }
@@ -586,8 +664,8 @@ namespace KaPlanerServer.Logic
                     }
 
 
-                    
-                    if(package != null)
+
+                    if (package != null)
                     {
                         //Logic
                         Data.ServerConfig.root = address;
@@ -615,55 +693,17 @@ namespace KaPlanerServer.Logic
 
 
         }
-        /// <summary>
-        /// Resolves and modifies P2PPackages. Returns a list of addresses to forward to.
-        /// </summary>
-        /// <param name="package"></param>
-        /// <returns>List to which further packages are sent.</returns>
-        List<IPAddress> IServerLogic.ResolvePackage(P2PPackage package)
-        {
-            List<IPAddress> returnList = new List<IPAddress>();
-
-            switch (package.P2Prequest)
-            {
-            //    case P2PRequest.NewServer: //TODO: Es fehlt die Unterscheidung ob es sich um eine Antwort handelt oder nicht. Extra Request? Dann brauchen wir seperate Behandlung der IP Adressen...
-            //        //-1. Ist es eine Antwort auf meine Anfrage?
-            //        if (package.GetOriginIPAddress() == GetLocalIPAddress()) //oder ipString
-            //        {
-            //            HandleReturn(package);
-            //            break;
-            //        }
-            //        //0. Gab es die Anfrage schon?
-            //        if (!AddPackage(package))
-            //            break;
-            //        //1. Anzahl Verbindungen (s. neighbours)
-            //        if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-            //        {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-            //            package.anzConn = neighbours.Count;
-            //            //2. Antwort zurücksenden (P2PPackage.originIPAddress)
-            //            returnList.Add(package.GetOriginIPAddress());
-            //        }
-            //        package.returnIPAddress = GetLocalIPAddress().ToString();
-            //        //3. TTL --
-            //        if (package.DecrementTTL() == 0)
-            //            break;
-            //        //4. Falls TTL > 0 weiterleiten
-            //        returnList.AddRange(neighbours); // Flooding
-            //        break;
-            }
-
-            return returnList;
-        }
+        
 
         private bool AddPackage(P2PPackage package)
         {
-            if (recievedPackages.Exists(x => x.GetPackageID() == package.GetPackageID()))
-                return false;
+            //if (recievedPackages.Exists(x => x.GetPackageID() == package.GetPackageID()))
+            //    return false;
 
-            recievedPackages.Add(package);
+            //recievedPackages.Add(package);
 
-            if (recievedPackages.Count > recievedListLimit) //Wir brauchen eine Art Limit o.ä. um zu verhindern, dass die Liste übermäßig lang wird.
-                recievedPackages.Remove(recievedPackages.First());
+            //if (recievedPackages.Count > recievedListLimit) //Wir brauchen eine Art Limit o.ä. um zu verhindern, dass die Liste übermäßig lang wird.
+            //    recievedPackages.Remove(recievedPackages.First());
 
             return true;
         }
@@ -671,24 +711,6 @@ namespace KaPlanerServer.Logic
         private void HandleReturn(P2PPackage package)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gibt eine geroutete IPAdresse des Hosts zurück.
-        /// Handling von mehreren IPAdressen könnte ein Problem sein.
-        /// </summary>
-        /// <returns></returns>
-        private IPAddress GetLocalIPAddress()
-        {
-            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip;
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
         List<string> IServerLogic.resolvePackage(P2PPackage package)

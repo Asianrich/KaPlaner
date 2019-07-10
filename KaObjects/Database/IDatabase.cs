@@ -28,6 +28,8 @@ namespace KaObjects.Storage
 
         void newServerEntry(string ip, int id);
 
+        string getServer(int serverID);
+
         int getServerCount();
 
         bool UserExist(int ServerID);

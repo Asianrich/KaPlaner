@@ -22,7 +22,10 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
 
-
+        /// <summary>
+        /// IP des letzten Knoten, der die niedrigsten Verbindungen aufweist.
+        /// </summary>
+        public string lastIP;
 
 
         /// <summary>
