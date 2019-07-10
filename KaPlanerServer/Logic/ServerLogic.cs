@@ -339,7 +339,7 @@ namespace KaPlanerServer.Logic
                     break;
 
             }
-
+            
 
 
             void sendHierarchie()

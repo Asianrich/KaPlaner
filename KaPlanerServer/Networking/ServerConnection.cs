@@ -234,18 +234,18 @@ namespace KaPlanerServer.Networking
 
         }
 
-        public static List<Package> communicateServer(Package package)
-        {
-            ClientConnection client = new ClientConnection();
-            List<Package> packages = new List<Package>();
-            for (int i = 0; i < package.Connections.Count; i++)
-            {
-                client.changeIP(package.Connections[i]);
-                packages.Add(client.Start(package));
-            }
+        //public static List<Package> communicateServer(Package package)
+        //{
+        //    //ClientConnection client = new ClientConnection();
+        //    //List<Package> packages = new List<Package>();
+        //    //for (int i = 0; i < package.Connections.Count; i++)
+        //    //{
+        //    //    client.changeIP(package.Connections[i]);
+        //    //    packages.Add(client.Start(package));
+        //    //}
 
-            return packages;
-        }
+        //    return packages;
+        //}
 
 
 

@@ -351,5 +351,10 @@ namespace KaObjects.Storage
         {
             throw new NotImplementedException();
         }
+
+        public int getServerCount()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

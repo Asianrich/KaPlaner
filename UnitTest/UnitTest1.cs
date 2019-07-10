@@ -269,10 +269,47 @@ namespace UnitTest
 
             Database db = new Database(connectionString);
 
-            db.newServerEntry("192.168.1.5", 110);
+            //db.newServerEntry("192.168.1.5", 110);
 
 
 
         }
+
+
+
+        [TestMethod]
+        public void DoMath()
+        {
+            double ask = 100;
+            double number = Math.Log10(ask);
+            double id = 101;
+            
+
+            if(Math.Log10(id) >= number )
+            {
+                //Selbe Ebene oder höhere muss ich eh Hochschicken oO
+            }
+            else
+            {
+
+                double dif = number - Math.Log10(id);
+                
+
+
+
+
+                //Senden
+            }
+
+
+
+
+
+
+
+            Assert.AreEqual(2, number);
+
+        }
+
     }
 }
