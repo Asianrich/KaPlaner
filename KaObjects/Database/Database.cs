@@ -241,10 +241,101 @@ namespace KaObjects.Storage
 
         }
 
+        /// <summary>
+        /// Ermittelt die Anzahl an vorhandenen Kindservern
+        /// </summary>
+        public int AnzahlKindserver(int ServerID)
+        {
+            int anzahl = 0;
+            string selection;
+
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            selection = String.Format("SELECT anzVerbindungen FROM Serverlist WHERE 'Linker Kinderserver' != NULL AND 'Rechter Kinderserver != NULL AND ServerID == '{0}'", ServerID);
+
+            SqlCommand selectcommand = new SqlCommand(selection, con);
+
+           SqlDataReader reader = selectcommand.ExecuteReader();
+
+            anzahl = reader.GetInt32(0);
+
+            con.Close();
+
+            return anzahl;
+        }
+
+        /// <summary>
+        /// Prueft ob ein User ueberhaupt existiert
+        /// </summary>
+        public bool UserExist (int ServerID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string check = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+
+            SqlCommand checkcommand = new SqlCommand(check, con);
+
+            SqlDataReader reader = checkcommand.ExecuteReader();
+
+            con.Close();
+
+            if (reader.GetString(0) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// ID des "linken" Kindservers auslesen
+        /// </summary>
+        public int GetIDlinkerKindserver (int ServerID)
+        {
+            int ID = 0;
+
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string readID = String.Format("SELECT 'IDlinks' FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+
+            SqlCommand readCommand = new SqlCommand(readID, con);
+
+            SqlDataReader reader = readCommand.ExecuteReader();
+
+            ID = reader.GetInt32(0);
+
+            con.Close();
+            return ID;
+        }
 
 
+        /// <summary>
+        /// ID des "rechten" Kindservers auslesen
+        /// </summary>
+        public int GetIDrechterKindserver(int ServerID)
+        {
+            int ID = 0;
 
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
 
+            string readID = String.Format("SELECT 'IDrechts' FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+
+            SqlCommand readCommand = new SqlCommand(readID, con);
+
+            SqlDataReader reader = readCommand.ExecuteReader();
+
+            return ID;
+        }
+
+        /// <summary>
+        /// ID des "linken" Kindservers auslesen
+        /// </summary>
 
         public LinkedList<string> GetWellKnownPeers()
         {

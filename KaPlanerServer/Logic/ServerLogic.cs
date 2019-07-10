@@ -212,17 +212,9 @@ namespace KaPlanerServer.Logic
             }
             else if (package.hierarchie != null)
             {
-                isResolving = resolveHierarchie(package);
-
-
-
+                package.hierarchie = resolveHierarchie(package.hierarchie);
             }
             else
-            {
-                isResolving = true;
-            }
-
-            if (isResolving)
             {
                 package = resolvePackage(package);
             }
@@ -231,13 +223,16 @@ namespace KaPlanerServer.Logic
             return package;
         }
 
-        private bool resolveHierarchie(Package package)
+        private HierarchiePackage resolveHierarchie(HierarchiePackage package)
         {
-            bool isResolve = false;
+            int anzConnection = database.getServerCount();
+            string ip = Data.ServerConfig.host.ToString();
+            int id = Data.ServerConfig.serverID;
+
 
             //BRAUCHT DAS MICH ZU INTERESSIEREN?!?!?!?!?!?! NUR ERST BEI INVITE!!!!
             //
-            if (package.hierarchie.serveradress != Data.ServerConfig.host.ToString())
+            if (package.destinationAdress != Data.ServerConfig.host.ToString())
             {
 
 
@@ -245,20 +240,99 @@ namespace KaPlanerServer.Logic
 
             }
 
-            switch (package.hierarchie.HierarchieRequest)
+            switch(package.HierarchieRequest)
             {
                 case HierarchieRequest.Invite:
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
+
+                    // Server prueft, ist das Paket fuer rechten Kindserver
+                    if(neighbours[0].ToString()  == package.destinationAdress)
+                    {
+                        //sendHierarchie(package, neighbours[0]);
+                    }
+                    // Server prueft, ist das Paket fuer linken Kindserver
+                    else if (neighbours[1].ToString() == package.destinationAdress)
+                    {
+                        //sendHierarchie(package, neighbours[0]);
+                    }
+                    else
+                    {
+                        //sendHierarchie(package, neighbours[0]);
+                        //sendHierarchie(package, neighbours[1]);
+                    }
                     break;
                 case HierarchieRequest.NewServer:
+
+                    if (anzConnection > 0)
+                    {
+                        //Eigene Send funktion machen
+                        //Auch parallel
+                        sendHierarchie();
+                        List<HierarchiePackage> child = new List<HierarchiePackage>();
+
+                        foreach(HierarchiePackage c in child)
+                        {
+                            if(c.anzConnection <= anzConnection)
+                            {
+                                anzConnection = c.anzConnection;
+                                ip = c.destinationAdress;
+                                id = c.destinationID;
+                            }
+                        }
+                    }
+                    package.destinationID = id;
+                    package.destinationAdress = ip;
+                    package.anzConnection = anzConnection;
 
                     //Muss ich weiterleiten an die Unter mir? oder Nicht? entsprechende Antwort schicken
                     break;
                 case HierarchieRequest.RegisterServer:
+                    //Sollte immer durch newServer abgefragt werden!
+                    int newId = Data.ServerConfig.serverID * 10;
+                    
+                    if(database.getServerCount() == 0)
+                    {
+                        newId += 1;
+                    }
+
+                    database.newServerEntry(package.sourceAdress, newId);
+
                     break;
                 case HierarchieRequest.RegisterUser:
+                    int anzUser = database.getUserCount();
+
+                    if (anzConnection > 0)
+                    {
+                        //Eigene Send funktion machen
+                        //Auch parallel
+                        sendHierarchie();
+                        List<HierarchiePackage> child = new List<HierarchiePackage>();
+
+                        foreach (HierarchiePackage c in child)
+                        {
+                            if (c.anzUser <= anzUser)
+                            {
+                                anzUser = c.anzUser;
+                                ip = c.destinationAdress;
+                                id = c.destinationID;
+                            }
+                        }
+                    }
+                    package.destinationID = id;
+                    package.destinationAdress = ip;
+                    package.anzUser = anzUser;
                     break;
                 case HierarchieRequest.UserLogin:
+                    if(package.destinationID == id)
+                    {
+                        //database.isUserExistent();
+                    }
+                    else
+                    {
+                        //Auflösen der ID, wohin
+                    }
+
+
 
                     break;
                 default:
@@ -268,9 +342,12 @@ namespace KaPlanerServer.Logic
 
 
 
+            void sendHierarchie()
+            {
 
+            }
 
-            return isResolve;
+            return package;
         }
 
         /// <summary>
@@ -540,14 +617,14 @@ namespace KaPlanerServer.Logic
 
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
-                        package.hierarchie.serveradress = Data.ServerConfig.host.ToString();
+                        package.hierarchie.destinationAdress = Data.ServerConfig.host.ToString();
 
-                        IPAddress connectServer = IPAddress.Parse(package.hierarchie.serveradress);
+                        IPAddress connectServer = IPAddress.Parse(package.hierarchie.destinationAdress);
                         package = send(package, connectServer);
-                        Data.ServerConfig.serverID = package.hierarchie.serverID;
+                        Data.ServerConfig.serverID = package.hierarchie.sourceID;
                         //Datenbankeintrag
-                        if (package != null)
-                            database.newServerEntry(package.hierarchie.serveradress, package.hierarchie.destinationID);
+                        if(package != null)
+                            database.newServerEntry(package.hierarchie.destinationAdress, package.hierarchie.destinationID);
 
                         break;
                     }
