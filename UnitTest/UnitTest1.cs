@@ -346,5 +346,17 @@ namespace UnitTest
 
             testdb.SaveInvites(testlist, testtermin);
         }
+
+
+        [TestMethod]
+        public void ReadInvitesPruefung()
+        {
+            List<KaEvent> test = new List<KaEvent>();
+            List<KaEvent> test2 = new List<KaEvent>();
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            string user = "TestUser";
+
+            test2 = testdb.ReadInvites(user, test);
+        }
     }
 }
