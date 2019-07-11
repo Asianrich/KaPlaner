@@ -345,15 +345,22 @@ namespace KaObjects.Storage
             }
         }
 
-
-        public void ReadInvites(string user)
+        /// <summary>
+        /// Liest die Termine von den ausgewaehlten Mitgliedern aus der Memberlist
+        /// und gibt sie zurueck.
+        /// </summary>
+        public List<KaEvent> ReadInvites(string user)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
             List<KaEvent> test = new List<KaEvent>();
             int index = 0;
+
+            //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
             string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User == '{0}'", user);
+
+            //string exist = "SELECT TerminID FROM Memberlist WHERE EXISTS(SELECT * FROM Memberlist WHERE User = {0}", user);";
 
             SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
 
@@ -361,12 +368,19 @@ namespace KaObjects.Storage
 
             while(reader.Read())
             {
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", );
-                test[index].TerminID = reader["TerminID"];
+                // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", reader.GetInt32(index));
+
+                SqlCommand read = new SqlCommand(readDates, con);
+                SqlDataReader reader2 = read.ExecuteReader();
+
+
 
                 index++;
             }
+            con.Close();
 
+            return test;
         }
 
         private void ReadSingleRow(IDataRecord reader)
