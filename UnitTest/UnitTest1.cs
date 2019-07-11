@@ -15,6 +15,7 @@ using KaPlaner.GUI;
 using KaObjects.Storage;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UnitTest
 {
@@ -345,6 +346,17 @@ namespace UnitTest
             List<Package> testlist = new List<Package>();
 
             testdb.SaveInvites(testlist, testtermin);
+        }
+
+
+
+
+        public void asynctest()
+        {
+
+
+
+
         }
     }
 }

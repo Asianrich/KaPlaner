@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 namespace KaObjects
 {
     public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin}
+    public enum HierarchieAnswer { Success, Failure, Error}
     [Serializable]
     public class HierarchiePackage
     {
 
-        
+        public HierarchieAnswer HierarchieAnswer;
         public HierarchieRequest HierarchieRequest;
         private Guid packageID; //Package ID? braucht man das? just in case
-
+        public KaEvent invite; // Später anschauen
         /// <summary>
         /// ServerID
         /// </summary>
@@ -50,8 +51,10 @@ namespace KaObjects
         /// </summary>
         public string login;
 
-
-
+        /// <summary>
+        /// Ist die Antwort von einem Server.
+        /// </summary>
+        public string serverAnswer;
 
 
 

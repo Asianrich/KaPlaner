@@ -274,6 +274,8 @@ namespace KaObjects.Storage
         /// </summary>
         public bool UserExist (int ServerID)
         {
+
+            //Warum brauche ich eine ServerID für einen User?
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
