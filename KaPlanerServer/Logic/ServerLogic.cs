@@ -196,7 +196,7 @@ namespace KaPlanerServer.Logic
             {
                 receive = client.Start(package);
             }
-
+            
 
             return receive;
         }
@@ -751,16 +751,29 @@ namespace KaPlanerServer.Logic
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
 
                         IPAddress connectServer = IPAddress.Parse(package.hierarchie.destinationAdress);
-                        package = send(package, connectServer);
-
-                        //Datenbankeintrag
-                        if (package != null)
+                        Package receive = new Package();
+                        while (true)
                         {
-                            Console.WriteLine("SourceID: " + package.hierarchie.sourceID);
-                            Data.ServerConfig.serverID = package.hierarchie.sourceID;
-                            database.newServerEntry(package.hierarchie.destinationAdress, package.hierarchie.destinationID);
-                            Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
-                            Console.WriteLine("ID: " + package.hierarchie.destinationID);
+                            try
+                            {
+
+                                receive = send(package, connectServer);
+                                Task.Delay(1000);
+                                break;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
+                        }
+                        //Datenbankeintrag
+                        if (receive != null)
+                        {
+                            Console.WriteLine("SourceID: " + receive.hierarchie.sourceID);
+                            Data.ServerConfig.serverID = receive.hierarchie.sourceID;
+                            database.newServerEntry(receive.hierarchie.destinationAdress, receive.hierarchie.destinationID);
+                            Console.WriteLine("Adresse: " + receive.hierarchie.destinationAdress);
+                            Console.WriteLine("ID: " + receive.hierarchie.destinationID);
                             break;
                         }
                         else

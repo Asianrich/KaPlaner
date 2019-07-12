@@ -472,12 +472,15 @@ namespace KaObjects.Storage
             con.Open();
 
             string readCount = String.Format("SELECT COUNT(ServerID) FROM ServerList");
-
+            int Count = 0;
             SqlCommand readCommand = new SqlCommand(readCount, con);
 
             SqlDataReader reader = readCommand.ExecuteReader();
 
-            int Count = reader.GetInt32(0);
+            if(reader.Read())
+            {
+                Count = reader.GetInt32(0);
+            }
 
             con.Close();
 
