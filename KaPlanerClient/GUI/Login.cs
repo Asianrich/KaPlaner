@@ -24,8 +24,8 @@ namespace WindowsFormsApp1
         private Button BTN_offline;
         private TextBox tb_log_benutzername;
         private TextBox tb_log_passwort;
-        private TextBox tb_log_IP;
-        private Label lbl_log_IP;
+        private TextBox tb_log_ID;
+        private Label lbl_log_ID;
         private Label lbl_log_passwort;
 
         public Wdw_login()
@@ -44,8 +44,8 @@ namespace WindowsFormsApp1
             this.BTN_offline = new System.Windows.Forms.Button();
             this.tb_log_benutzername = new System.Windows.Forms.TextBox();
             this.tb_log_passwort = new System.Windows.Forms.TextBox();
-            this.tb_log_IP = new System.Windows.Forms.TextBox();
-            this.lbl_log_IP = new System.Windows.Forms.Label();
+            this.tb_log_ID = new System.Windows.Forms.TextBox();
+            this.lbl_log_ID = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_login
@@ -54,7 +54,7 @@ namespace WindowsFormsApp1
             this.lbl_login.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_login.Location = new System.Drawing.Point(183, 64);
             this.lbl_login.Name = "lbl_login";
-            this.lbl_login.Size = new System.Drawing.Size(128, 49);
+            this.lbl_login.Size = new System.Drawing.Size(159, 61);
             this.lbl_login.TabIndex = 0;
             this.lbl_login.Text = "Login";
             // 
@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
             this.lbl_log_benutzername.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_log_benutzername.Location = new System.Drawing.Point(36, 196);
             this.lbl_log_benutzername.Name = "lbl_log_benutzername";
-            this.lbl_log_benutzername.Size = new System.Drawing.Size(135, 23);
+            this.lbl_log_benutzername.Size = new System.Drawing.Size(176, 28);
             this.lbl_log_benutzername.TabIndex = 3;
             this.lbl_log_benutzername.Text = "Benutzername";
             // 
@@ -74,7 +74,7 @@ namespace WindowsFormsApp1
             this.lbl_log_passwort.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_log_passwort.Location = new System.Drawing.Point(36, 228);
             this.lbl_log_passwort.Name = "lbl_log_passwort";
-            this.lbl_log_passwort.Size = new System.Drawing.Size(93, 23);
+            this.lbl_log_passwort.Size = new System.Drawing.Size(117, 28);
             this.lbl_log_passwort.TabIndex = 4;
             this.lbl_log_passwort.Text = "Passwort";
             // 
@@ -126,38 +126,38 @@ namespace WindowsFormsApp1
             // 
             this.tb_log_benutzername.Location = new System.Drawing.Point(192, 193);
             this.tb_log_benutzername.Name = "tb_log_benutzername";
-            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 26);
+            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 30);
             this.tb_log_benutzername.TabIndex = 9;
             // 
             // tb_log_passwort
             // 
             this.tb_log_passwort.Location = new System.Drawing.Point(192, 225);
             this.tb_log_passwort.Name = "tb_log_passwort";
-            this.tb_log_passwort.Size = new System.Drawing.Size(230, 26);
+            this.tb_log_passwort.Size = new System.Drawing.Size(230, 30);
             this.tb_log_passwort.TabIndex = 10;
             // 
-            // tb_log_IP
+            // tb_log_ID
             // 
-            this.tb_log_IP.Location = new System.Drawing.Point(192, 257);
-            this.tb_log_IP.Name = "tb_log_IP";
-            this.tb_log_IP.Size = new System.Drawing.Size(230, 26);
-            this.tb_log_IP.TabIndex = 11;
+            this.tb_log_ID.Location = new System.Drawing.Point(192, 257);
+            this.tb_log_ID.Name = "tb_log_ID";
+            this.tb_log_ID.Size = new System.Drawing.Size(230, 30);
+            this.tb_log_ID.TabIndex = 11;
             // 
-            // lbl_log_IP
+            // lbl_log_ID
             // 
-            this.lbl_log_IP.AutoSize = true;
-            this.lbl_log_IP.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_log_IP.Location = new System.Drawing.Point(36, 260);
-            this.lbl_log_IP.Name = "lbl_log_IP";
-            this.lbl_log_IP.Size = new System.Drawing.Size(109, 23);
-            this.lbl_log_IP.TabIndex = 12;
-            this.lbl_log_IP.Text = "IP-Adresse";
+            this.lbl_log_ID.AutoSize = true;
+            this.lbl_log_ID.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_log_ID.Location = new System.Drawing.Point(36, 260);
+            this.lbl_log_ID.Name = "lbl_log_ID";
+            this.lbl_log_ID.Size = new System.Drawing.Size(108, 28);
+            this.lbl_log_ID.TabIndex = 12;
+            this.lbl_log_ID.Text = "ServerID";
             // 
             // Wdw_login
             // 
-            this.ClientSize = new System.Drawing.Size(459, 421);
-            this.Controls.Add(this.lbl_log_IP);
-            this.Controls.Add(this.tb_log_IP);
+            this.ClientSize = new System.Drawing.Size(457, 413);
+            this.Controls.Add(this.lbl_log_ID);
+            this.Controls.Add(this.tb_log_ID);
             this.Controls.Add(this.tb_log_passwort);
             this.Controls.Add(this.tb_log_benutzername);
             this.Controls.Add(this.BTN_offline);
@@ -186,18 +186,29 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+
+                bool containsSearchResult = tb_log_benutzername.ToString().Contains("#");
+
+                if (!containsSearchResult)
                 {
-                    Form open_calendar = new wdw_calendar(true);
-                    open_calendar.Show();
-                    tb_log_benutzername.Text = "";
-                    tb_log_passwort.Text = "";
-                }
-                else
+                    if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+                    {
+                        Form open_calendar = new wdw_calendar(true);
+                        open_calendar.Show();
+                        tb_log_benutzername.Text = "";
+                        tb_log_passwort.Text = "";
+                    }
+                    else
+                    {
+                        tb_log_benutzername.Text = "";
+                        tb_log_passwort.Text = "";
+                    }
+                } else
                 {
-                    tb_log_benutzername.Text = "";
-                    tb_log_passwort.Text = "";
+                    MessageBox.Show("Der Benutzername darf keine # enthalten.");
                 }
+
+
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
