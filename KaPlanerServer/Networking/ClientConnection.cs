@@ -256,7 +256,7 @@ namespace KaPlaner.Networking
 
                 Send(client, package);
                 sendDone.WaitOne();
-
+                Thread.Sleep(1000);
                 receive(client);
                 if (!receiveDone.WaitOne())
                 {
