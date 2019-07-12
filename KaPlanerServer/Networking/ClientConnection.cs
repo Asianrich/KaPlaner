@@ -67,7 +67,7 @@ namespace KaPlaner.Networking
                 IPEndPoint remoteEP = new IPEndPoint(iPAddress, 11000);
                 Socket client = new Socket(iPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-                if (!connectDone.WaitOne(10000))
+                if (!connectDone.WaitOne())
                 {
                     throw new Exception("Konnte keine Verbindung aufbauen nach 10 Sekunden");
                 }
@@ -96,6 +96,7 @@ namespace KaPlaner.Networking
             catch (Exception ex)
 #pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
+                Console.WriteLine("Probleme beim Senden" + ex.Message);
                 return;
             }
         }
@@ -132,7 +133,8 @@ namespace KaPlaner.Networking
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("Probleme beim Empfangen");
+                Console.WriteLine(e.Message);
                 return;
             }
         }
@@ -256,7 +258,7 @@ namespace KaPlaner.Networking
 
                 Send(client, package);
                 sendDone.WaitOne();
-                Thread.Sleep(1000);
+                
                 receive(client);
                 if (!receiveDone.WaitOne())
                 {
@@ -271,6 +273,7 @@ namespace KaPlaner.Networking
             {
                 if (client != null)
                 {
+                    //Hier probleme?
                     Disconnect(client);
                 }
                 throw ex;
