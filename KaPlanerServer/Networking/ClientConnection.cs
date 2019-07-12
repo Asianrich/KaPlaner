@@ -64,8 +64,8 @@ namespace KaPlaner.Networking
 
                 //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
                 //IPAddress ip = iPHost.AddressList[1];
-                IPEndPoint remoteEP = new IPEndPoint(ip, 11000);
-                Socket client = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                IPEndPoint remoteEP = new IPEndPoint(iPAddress, 11000);
+                Socket client = new Socket(iPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
                 if (!connectDone.WaitOne(10000))
                 {
@@ -257,7 +257,7 @@ namespace KaPlaner.Networking
                 sendDone.WaitOne();
 
                 receive(client);
-                if (!receiveDone.WaitOne(10000))
+                if (!receiveDone.WaitOne())
                 {
                     throw new Exception("Keine Antwort vom Server");
                 }

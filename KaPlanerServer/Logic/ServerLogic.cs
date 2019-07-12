@@ -724,6 +724,7 @@ namespace KaPlanerServer.Logic
 
                     Package package = new Package();
                     package.sourceServer = Data.ServerConfig.host.ToString();
+
                     package.hierarchie = new HierarchiePackage();
                     package.hierarchie.HierarchieRequest = HierarchieRequest.NewServer;
 
