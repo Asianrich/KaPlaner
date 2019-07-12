@@ -170,7 +170,8 @@ namespace KaPlaner.Networking
         private void Disconnect(Socket client)
         {
             client.Shutdown(SocketShutdown.Both);
-            client.Close();
+            client.Disconnect(true);
+            client.Close(1000);
         }
 
 
