@@ -468,19 +468,26 @@ namespace KaObjects.Storage
 
         public int getServerCount()
         {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
+            int Count = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                con.Open();
 
-            string readCount = String.Format("SELECT COUNT(ServerID) FROM ServerList");
+                string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM ServerList");
 
-            SqlCommand readCommand = new SqlCommand(readCount, con);
+                SqlCommand readCommand = new SqlCommand(readCount, con);
 
-            SqlDataReader reader = readCommand.ExecuteReader();
+                SqlDataReader reader = readCommand.ExecuteReader();
 
-            int Count = reader.GetInt32(0);
+                Count = reader.GetInt32(0);
 
-            con.Close();
+                con.Close();
+            }
+            catch (Exception)
+            {
 
+            }
             return Count;
         }
     }

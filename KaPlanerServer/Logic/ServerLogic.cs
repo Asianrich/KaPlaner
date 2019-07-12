@@ -325,12 +325,15 @@ namespace KaPlanerServer.Logic
                     //Sollte immer durch newServer abgefragt werden!
                     Console.WriteLine("Ein neuer Servereintrag. bzw. Child");
                     int newId = Data.ServerConfig.serverID * 10;
-
+                    if(Data.ServerConfig.host == Data.ServerConfig.root)
+                    {
+                        newId += 10;
+                    }
                     if (database.getServerCount() == 0)
                     {
                         newId += 1;
                     }
-
+                    package.sourceID = newId;
                     database.newServerEntry(package.sourceAdress, newId);
 
                     break;
