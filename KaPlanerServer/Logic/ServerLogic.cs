@@ -288,11 +288,13 @@ namespace KaPlanerServer.Logic
                         //Eigene Send funktion machen
                         //Auch parallel
                         //sendHierarchie();
+                        Console.WriteLine("Auf der SUche nach einem passenden Server");
                         stateEintrag stateEintrag = new stateEintrag();
 
                         stateEintrag.setCounter(database.getServerCount());
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
+                            Console.WriteLine("Dieser Server hat Kinder");
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
                             Task.Run(() => sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
 
@@ -321,6 +323,7 @@ namespace KaPlanerServer.Logic
                     break;
                 case HierarchieRequest.RegisterServer:
                     //Sollte immer durch newServer abgefragt werden!
+                    Console.WriteLine("Ein neuer Servereintrag. bzw. Child");
                     int newId = Data.ServerConfig.serverID * 10;
 
                     if (database.getServerCount() == 0)
@@ -704,10 +707,12 @@ namespace KaPlanerServer.Logic
 
         private void HierarchieSettings(bool isRoot)
         {
-
+            Data.ServerConfig.structure = Data.structure.HIERARCHY;
+            Console.WriteLine("HierarchieSettings");
             if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
+                
             }
             else
             {
@@ -735,10 +740,11 @@ namespace KaPlanerServer.Logic
 
                     if (package != null)
                     {
+                        Console.WriteLine("Packet ist angekommen");
                         //Logic
                         Data.ServerConfig.root = address;
-
-
+                        Console.WriteLine("Adresse: " +package.hierarchie.destinationAdress);
+                        
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
@@ -749,9 +755,11 @@ namespace KaPlanerServer.Logic
                         //Datenbankeintrag
                         if (package != null)
                         {
+                            Console.WriteLine("SourceID: " + package.hierarchie.sourceID);
                             Data.ServerConfig.serverID = package.hierarchie.sourceID;
                             database.newServerEntry(package.hierarchie.destinationAdress, package.hierarchie.destinationID);
-
+                            Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
+                            Console.WriteLine("ID: " + package.hierarchie.destinationID);
                             break;
                         }
                         else
