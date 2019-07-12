@@ -759,9 +759,9 @@ namespace KaPlanerServer.Logic
                         {
                             try
                             {
-
+                                Thread.Sleep(1000);
                                 receive = send(package, connectServer);
-                                Task.Delay(1000);
+                                Thread.Sleep(1000);
                                 break;
                             }
                             catch (Exception ex)
