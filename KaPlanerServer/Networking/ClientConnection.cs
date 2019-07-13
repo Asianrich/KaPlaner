@@ -92,9 +92,7 @@ namespace KaPlaner.Networking
                 // Signal that all bytes have been sent.  
                 sendDone.Set();
             }
-#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex)
-#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 Console.WriteLine("Probleme beim Senden" + ex.Message);
                 StateObject state = (StateObject)ar.AsyncState;
@@ -174,7 +172,9 @@ namespace KaPlaner.Networking
             try
             {
                 byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
+                Console.WriteLine("Vor Begin Send");
                 client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+                Console.WriteLine("Nach Begin Send");
             }
             catch (Exception ex)
             {
@@ -276,6 +276,7 @@ namespace KaPlaner.Networking
 
                 Send(client, package);
                 sendDone.WaitOne();
+
                 receive(client);
                 if (!receiveDone.WaitOne())
                 {

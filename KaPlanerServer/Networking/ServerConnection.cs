@@ -27,7 +27,8 @@ namespace KaPlanerServer.Networking
         public StringBuilder sb = new StringBuilder();
         public string[] delimiter = { "<EOF>" };
         Package package = new Package();
-
+        public ManualResetEvent sendDone = new ManualResetEvent(false);
+        public ManualResetEvent receiveDone = new ManualResetEvent(false);
     }
 
     class ServerConnection
@@ -87,10 +88,29 @@ namespace KaPlanerServer.Networking
             {
                 //Server einstellen. P2P oder Hierarchie inklusive 
                 serverLogic.Settings();
-
-
+                byte[] bytes = new Byte[1024];
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
+
+
+                //while(true)
+                //{
+                //    Console.WriteLine("Waiting for a Connection");
+                //    Socket handler = listener.Accept();
+                //    Package receive = new Package();
+
+
+                //    while(true)
+                //    {
+                //        int bytesRec = handler.Receive(bytes);
+
+                //    }
+
+
+
+                //}
+
+
 
 
                 while (true)
@@ -116,7 +136,7 @@ namespace KaPlanerServer.Networking
 
                 // Signal the main thread to continue.  
                 allDone.Set();
-                Console.Write("Connection to Client success");
+                Console.WriteLine("Connection to Client success");
                 StateObject state = new StateObject();
 
                 // Get the socket that handles the client request.  
@@ -165,7 +185,7 @@ namespace KaPlanerServer.Networking
                 Socket handler = state.workSocket;
                 // Complete receiving the data from the remote device.  
                 int bytesReceive = handler.EndReceive(ar);
-
+                Console.WriteLine("Received Bytes: " + bytesReceive.ToString());
                 //If there is actually something to read
                 if (bytesReceive > 0)
                 {
@@ -180,7 +200,7 @@ namespace KaPlanerServer.Networking
                     {
 
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
-                        
+
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
                         //Joshuas ResolvePackages
@@ -192,17 +212,6 @@ namespace KaPlanerServer.Networking
 
                         //Überprüfen des Packetes
                         //userPackage = serverLogic.Forwarding(userPackage);
-
-                        //if (userPackage.isForwarding)
-                        //{
-                        //    List<Package> packages = communicateServer(userPackage);
-                        //    //Anfrage an andere Server
-                        //    userPackage = serverLogic.resolvePackages(packages);
-                        //}
-                        //else
-                        //{
-                        //    userPackage = serverLogic.resolvePackage(userPackage);
-                        //}
 
                         userPackage = serverLogic.resolving(userPackage);
 
