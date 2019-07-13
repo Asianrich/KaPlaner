@@ -87,7 +87,7 @@ namespace KaPlaner.Networking
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = socket.EndSend(ar);
-                
+
 
                 // Signal that all bytes have been sent.  
                 sendDone.Set();
@@ -158,19 +158,28 @@ namespace KaPlaner.Networking
             }
         }
 
+        static object _send = new object();
         //Sending Packages
         private void Send(Socket client, Package send)
         {
 
-            byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
-            client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+            try
+            {
+                byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
+                client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
         }
 
         //Successfully disconnecting and closing the Sockets
         private void Disconnect(Socket client)
         {
+
             client.Shutdown(SocketShutdown.Both);
-            client.Disconnect(true);
             client.Close(1000);
         }
 
@@ -247,6 +256,7 @@ namespace KaPlaner.Networking
         /// <returns></returns>
         public Package Start(Package package)
         {
+
             Socket client = null;
             try
             {
@@ -256,7 +266,6 @@ namespace KaPlaner.Networking
 
                 Send(client, package);
                 sendDone.WaitOne();
-                Thread.Sleep(1000);
                 receive(client);
                 if (!receiveDone.WaitOne())
                 {

@@ -490,5 +490,10 @@ namespace KaObjects.Storage
             }
             return Count;
         }
+
+        public int AnzahlKindserver(int ServerID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
