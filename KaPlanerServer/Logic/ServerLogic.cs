@@ -194,7 +194,9 @@ namespace KaPlanerServer.Logic
             }
             else if (package.hierarchie != null)
             {
+                //Hier Probleme
                 receive = client.Start(package);
+                Thread.Sleep(1000);
             }
             
 
@@ -759,7 +761,7 @@ namespace KaPlanerServer.Logic
                         {
                             try
                             {
-                                Thread.Sleep(1000);
+                                
                                 receive = send(package, connectServer);
                                 Thread.Sleep(1000);
                                 break;

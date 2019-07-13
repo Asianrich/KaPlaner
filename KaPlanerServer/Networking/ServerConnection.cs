@@ -129,7 +129,7 @@ namespace KaPlanerServer.Networking
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message);
+                Console.WriteLine(ex.Message);
                 return;
             }
         }
@@ -144,11 +144,13 @@ namespace KaPlanerServer.Networking
                 int bytesSent = handler.EndSend(ar);
 
                 handler.Shutdown(SocketShutdown.Both);
+                handler.Disconnect(true);
                 handler.Close();
                 Console.WriteLine("Success at closing");
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Probleme beim Schließen der Sockets");
                 return;
             }
         }
