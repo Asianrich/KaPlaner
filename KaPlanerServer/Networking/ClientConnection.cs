@@ -160,7 +160,7 @@ namespace KaPlaner.Networking
             }
         }
 
-        static object _send = new object();
+        
         //Sending Packages
         private void Send(Socket client, Package send)
         {
@@ -251,6 +251,7 @@ namespace KaPlaner.Networking
             ip = IPAddress.Parse(ipAddress);
         }
 
+        static object _send = new object();
         /// <summary>
         /// Starts Connecting, Sending Package, and receiving Response-Package from Server
         /// </summary>
@@ -258,13 +259,14 @@ namespace KaPlaner.Networking
         /// <returns></returns>
         public Package Start(Package package)
         {
-
-            Socket client = null;
-            try
+            lock (_send)
             {
-                client = connectServer();
-                Package recObject;
-                string[] delimiter = { "<EOF>" };
+                Socket client = null;
+                try
+                {
+                    client = connectServer();
+                    Package recObject;
+                    string[] delimiter = { "<EOF>" };
 
                 Send(client, package);
                 sendDone.WaitOne();
@@ -275,18 +277,19 @@ namespace KaPlaner.Networking
                     throw new Exception("Keine Antwort vom Server");
                 }
 
-                recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]);
-                Disconnect(client);
-                return recObject;
-            }
-            catch (Exception ex)
-            {
-                if (client != null)
-                {
-                    //Hier probleme?
+                    recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]);
                     Disconnect(client);
+                    return recObject;
                 }
-                throw ex;
+                catch (Exception ex)
+                {
+                    if (client != null)
+                    {
+                        //Hier probleme?
+                        Disconnect(client);
+                    }
+                    throw ex;
+                }
             }
         }
     }
