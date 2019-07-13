@@ -199,11 +199,11 @@ namespace KaPlanerServer.Networking
 
                     content = state.sb.ToString();
 
-
+                    Console.WriteLine(content);
                     //If the End of File Tag is in there.
                     if (content.IndexOf("<EOF>") > -1)
                     {
-
+                        Console.WriteLine("Bin ich am arbeiten?");
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
 
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
@@ -226,13 +226,23 @@ namespace KaPlanerServer.Networking
                     }
                     else
                     {
+                        Console.WriteLine("Weitere Nachrichten");
                         //Not everything was received, trying to receive new Data.
                         handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Chef Hier ist das Problem");
+
+                    state.workSocket.Close();
+                    //handler.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
+
+                }
             }
             catch (Exception e)
             {
+                Console.WriteLine("Irgendwas ist hier schief gelaufen beim receiveCallback");
                 Console.WriteLine(e.ToString());
                 StateObject state = (StateObject)ar.AsyncState;
                 //state.workSocket.Shutdown(SocketShutdown.Both);
