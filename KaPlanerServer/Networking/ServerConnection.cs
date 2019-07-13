@@ -150,6 +150,9 @@ namespace KaPlanerServer.Networking
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                StateObject state = (StateObject)ar.AsyncState;
+                //state.workSocket.Shutdown(SocketShutdown.Both);
+                state.workSocket.Close();
                 return;
             }
         }
@@ -164,13 +167,15 @@ namespace KaPlanerServer.Networking
                 int bytesSent = handler.EndSend(ar);
 
                 handler.Shutdown(SocketShutdown.Both);
-                handler.Disconnect(true);
                 handler.Close();
                 Console.WriteLine("Success at closing");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Probleme beim Schließen der Sockets");
+                StateObject state = (StateObject)ar.AsyncState;
+                //state.workSocket.Shutdown(SocketShutdown.Both);
+                state.workSocket.Close();
                 return;
             }
         }
@@ -230,7 +235,7 @@ namespace KaPlanerServer.Networking
             {
                 Console.WriteLine(e.ToString());
                 StateObject state = (StateObject)ar.AsyncState;
-                state.workSocket.Shutdown(SocketShutdown.Both);
+                //state.workSocket.Shutdown(SocketShutdown.Both);
                 state.workSocket.Close();
                 return;
             }
@@ -239,10 +244,19 @@ namespace KaPlanerServer.Networking
         //Sending Packages
         public static void Send(Socket handler, Package package)
         {
-            byte[] byteData = Encoding.ASCII.GetBytes(Serialize<Package>(package) + "<EOF>");
+            try
+            {
+                Console.WriteLine("Sende Daten");
+                byte[] byteData = Encoding.ASCII.GetBytes(Serialize<Package>(package) + "<EOF>");
 
-            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
-
+                handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Probleme beim Senden");
+                //handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+            }
         }
 
         //public static List<Package> communicateServer(Package package)

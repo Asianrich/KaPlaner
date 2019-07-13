@@ -137,7 +137,7 @@ namespace KaPlaner.Networking
                 Console.WriteLine("Probleme beim Empfangen");
                 Console.WriteLine(e.Message);
                 StateObject state = (StateObject)ar.AsyncState;
-                state.workSocket.Shutdown(SocketShutdown.Both);
+                //state.workSocket.Shutdown(SocketShutdown.Both);
                 state.workSocket.Close();
                 return;
             }
@@ -292,7 +292,7 @@ namespace KaPlaner.Networking
                     if (client != null)
                     {
                         //Hier probleme?
-                        Disconnect(client);
+                        client.Close();
                     }
                     throw ex;
                 }
