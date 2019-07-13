@@ -97,6 +97,9 @@ namespace KaPlaner.Networking
 #pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 Console.WriteLine("Probleme beim Senden" + ex.Message);
+                StateObject state = (StateObject)ar.AsyncState;
+                state.workSocket.Shutdown(SocketShutdown.Both);
+                state.workSocket.Close();
                 return;
             }
         }
@@ -135,6 +138,9 @@ namespace KaPlaner.Networking
             {
                 Console.WriteLine("Probleme beim Empfangen");
                 Console.WriteLine(e.Message);
+                StateObject state = (StateObject)ar.AsyncState;
+                state.workSocket.Shutdown(SocketShutdown.Both);
+                state.workSocket.Close();
                 return;
             }
         }
@@ -182,7 +188,7 @@ namespace KaPlaner.Networking
         {
 
             client.Shutdown(SocketShutdown.Both);
-            client.Close(1000);
+            client.Close();
         }
 
 
@@ -271,7 +277,6 @@ namespace KaPlaner.Networking
                 Send(client, package);
                 sendDone.WaitOne();
                 receive(client);
-                receiveDone.WaitOne();
                 if (!receiveDone.WaitOne())
                 {
                     throw new Exception("Keine Antwort vom Server");

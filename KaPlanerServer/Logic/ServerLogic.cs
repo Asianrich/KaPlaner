@@ -771,6 +771,8 @@ namespace KaPlanerServer.Logic
                             }
                             catch (Exception ex)
                             {
+                                Console.WriteLine("Es gab ein Problem. Y fuer nochmal");
+                                Console.ReadLine();
                                 Console.WriteLine(ex);
                             }
                         }
