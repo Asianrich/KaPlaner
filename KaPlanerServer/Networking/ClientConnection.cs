@@ -173,6 +173,8 @@ namespace KaPlaner.Networking
             {
                 byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
                 Console.WriteLine("Vor Begin Send");
+
+                Console.WriteLine(Encoding.ASCII.GetString(msg));
                 client.BeginSend(msg, 0, msg.Length, 0, new AsyncCallback(SendCallback), client);
                 Console.WriteLine("Nach Begin Send");
             }
