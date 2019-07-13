@@ -67,7 +67,7 @@ namespace KaPlaner.Networking
                 IPEndPoint remoteEP = new IPEndPoint(iPAddress, 11000);
                 Socket client = new Socket(iPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-                if (!connectDone.WaitOne())
+                if (!connectDone.WaitOne(10000))
                 {
                     throw new Exception("Konnte keine Verbindung aufbauen nach 10 Sekunden");
                 }
@@ -123,6 +123,7 @@ namespace KaPlaner.Networking
                 }
                 else
                 {
+                    Console.WriteLine("Lade ich was runter noch?");
                     // All the data has arrived; put it in response.  
                     if (state.sb.Length > 1)
                     {
@@ -164,7 +165,7 @@ namespace KaPlaner.Networking
             }
         }
 
-        
+
         //Sending Packages
         private void Send(Socket client, Package send)
         {
@@ -270,20 +271,24 @@ namespace KaPlaner.Networking
             lock (_send)
             {
                 Socket client = null;
+                connectDone.Reset();
+                receiveDone.Reset();
+                sendDone.Reset();
                 try
                 {
                     client = connectServer();
                     Package recObject;
                     string[] delimiter = { "<EOF>" };
+                    Console.WriteLine("Methodenaufruf Send");
+                    Send(client, package);
+                    sendDone.WaitOne();
 
-                Send(client, package);
-                sendDone.WaitOne();
-
-                receive(client);
-                if (!receiveDone.WaitOne())
-                {
-                    throw new Exception("Keine Antwort vom Server");
-                }
+                    receive(client);
+                    Console.WriteLine("Waiting");
+                    if (!receiveDone.WaitOne())
+                    {
+                        throw new Exception("Keine Antwort vom Server");
+                    }
 
                     recObject = DeSerialize<Package>(response.Split(delimiter, StringSplitOptions.None)[0]);
                     Disconnect(client);
