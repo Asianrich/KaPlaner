@@ -269,6 +269,7 @@ namespace KaPlaner.Networking
                 Send(client, package);
                 sendDone.WaitOne();
                 receive(client);
+                receiveDone.WaitOne();
                 if (!receiveDone.WaitOne())
                 {
                     throw new Exception("Keine Antwort vom Server");

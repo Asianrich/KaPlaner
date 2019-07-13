@@ -755,6 +755,9 @@ namespace KaPlanerServer.Logic
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
 
+                        Console.WriteLine("Verbindung zum Root aufbauen? Y");
+                        Console.ReadLine();
+
                         IPAddress connectServer = IPAddress.Parse(package.hierarchie.destinationAdress);
                         Package receive = new Package();
                         while (true)
