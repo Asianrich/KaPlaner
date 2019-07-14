@@ -19,7 +19,7 @@ namespace KaObjects.Storage
 
         List<KaEvent> read(string owner);
 
-        void Delete_date();
+        void Delete_date(int TerminID);
 
         bool ServerExist(int ServerID);
 
@@ -35,24 +35,10 @@ namespace KaObjects.Storage
 
         int getUserCount();
 
-        int GetServerCount();
+        int getServerCount();
 
         LinkedList<string> GetWellKnownPeers();
     
         void newServerEntry(string ip, int id);
-
-        
-
-
-
-       
-
-        
-
-        
-
-        
-
-       ;
     }
 }
