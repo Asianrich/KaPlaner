@@ -90,10 +90,6 @@ namespace KaPlanerServer.Logic
         private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
         public static string _ipString;
 
-
-        public string typeofServer = "P2P";
-
-
         IDatabase database = new Database(connectionString);
 
         string IServerLogic.ipString { get => _ipString; set => _ipString = value; }
@@ -121,31 +117,44 @@ namespace KaPlanerServer.Logic
                         break;
 
                     case P2PRequest.RegisterServer:
-
-
+                        //1. Nimm Server in neighbours auf.
+                        //2. Lege einen Datenbankeintrag an.
 
                         break;
-                    case P2PRequest.RegisterUser:
+
+                    case P2PRequest.NewUser:
+                        //1. Anzahl User
                         int anzUser = database.getUserCount();
+                        if (package.anzUser == P2PPackage.AnzUserInit || package.anzUser >= anzUser)
+                        {//2. siehe case NewServer
 
+                        }
+                        break;
 
+                    case P2PRequest.RegisterUser:
 
                         break;
+
                     case P2PRequest.Login:
-
+                        //1. Check Datenbank nach user
+                        //2. Wenn nicht gefunden => weiterleiten
                         break;
+
                     case P2PRequest.Invite:
 
                         break;
+
                     default:
+
                         break;
                 }
             }
             else
             {
-                package.P2PAnswer = P2PAnswer.Visited;
+                package.P2PAnswer = P2PAnswer.Visited; //Node wurde bereits angefragt, keine Aktion nötig
             }
 
+            
 
             return package;
 
