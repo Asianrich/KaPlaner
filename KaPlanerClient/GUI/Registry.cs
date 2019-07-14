@@ -175,9 +175,9 @@ namespace WindowsFormsApp1
                 {
                     user = clientLogic.GetUser();
                     MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
-                    + Environment.NewLine + "Username:" + user.name
-                    + Environment.NewLine + "Passwort"+ user.password
-                    + Environment.NewLine +"ServerID" + user.serverID);
+                    + Environment.NewLine + "Username: " + user.name
+                    + Environment.NewLine + "Passwort: "+ user.password
+                    + Environment.NewLine +"ServerID: " + user.serverID);
                     
                     Form open_calendar = new wdw_calendar(true);
                     open_calendar.Show();
