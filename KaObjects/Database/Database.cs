@@ -442,6 +442,7 @@ namespace KaObjects.Storage
             if (reader.Read())
             {
                 read = reader.GetString(0);
+                read.Trim();
             }
             con.Close();
             return read;
