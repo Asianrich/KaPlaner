@@ -13,7 +13,7 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete }; // Success and Failure are responses from the server
+    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete, changeServer }; // Success and Failure are responses from the server
 
 
     [Serializable, XmlRoot("Package")]
@@ -27,9 +27,13 @@ namespace KaObjects
         public Request request;
 
         /// <summary>
+        /// Es wurde ein Serveranfrage gemacht worden.
+        /// </summary>
+        public bool serverSwitched;
+
+        /// <summary>
         /// Userdaten, welche uebermittelt wurde
         /// </summary>
-
         public User user;
 
         /// <summary>

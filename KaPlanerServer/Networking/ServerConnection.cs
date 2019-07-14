@@ -88,30 +88,8 @@ namespace KaPlanerServer.Networking
             {
                 //Server einstellen. P2P oder Hierarchie inklusive 
                 serverLogic.Settings();
-                byte[] bytes = new Byte[1024];
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
-
-
-                //while(true)
-                //{
-                //    Console.WriteLine("Waiting for a Connection");
-                //    Socket handler = listener.Accept();
-                //    Package receive = new Package();
-
-
-                //    while(true)
-                //    {
-                //        int bytesRec = handler.Receive(bytes);
-
-                //    }
-
-
-
-                //}
-
-
-
 
                 while (true)
                 {
@@ -207,16 +185,6 @@ namespace KaPlanerServer.Networking
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
 
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
-
-                        //Joshuas ResolvePackages
-                        //Forwarden oder net?
-                        //1. Paket  empfangen
-                        //2. resolve
-                        //3. weiterleiten
-
-
-                        //Überprüfen des Packetes
-                        //userPackage = serverLogic.Forwarding(userPackage);
 
                         userPackage = serverLogic.resolving(userPackage);
 

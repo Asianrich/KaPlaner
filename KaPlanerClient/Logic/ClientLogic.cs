@@ -101,7 +101,19 @@ namespace KaPlaner.Logic
 
             returnPackage = clientConnection.Start(loginPackage);
 
-            eventList = returnPackage.kaEvents;
+            if (returnPackage.request == Request.changeServer)
+            {
+                clientConnection.changeIP(returnPackage.sourceServer);
+                loginPackage.serverSwitched = true;
+                returnPackage = clientConnection.Start(loginPackage);
+            }
+
+
+
+            if (returnPackage.kaEvents != null)
+            {
+                eventList = returnPackage.kaEvents;
+            }
 
             return RequestResolve(returnPackage);
         }
@@ -140,9 +152,16 @@ namespace KaPlaner.Logic
         {
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm);
-
+            registerPackage.serverSwitched = false;
             returnPackage = clientConnection.Start(registerPackage);
 
+            if (returnPackage.request == Request.changeServer)
+            {
+                clientConnection.changeIP(returnPackage.sourceServer);
+                registerPackage.serverSwitched = true;
+                returnPackage = clientConnection.Start(registerPackage);
+            }
+            
             if (RequestResolve(returnPackage))
             {
                 currentUser = user;
@@ -196,6 +215,7 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         bool RequestResolve(Package package)
         {
+
             if (package.request == Request.Success)
                 return true;
             else

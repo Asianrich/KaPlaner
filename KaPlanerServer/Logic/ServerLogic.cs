@@ -381,19 +381,22 @@ namespace KaPlanerServer.Logic
                 case HierarchieRequest.UserLogin:
                     if (package.destinationID == id)
                     {
-                        //if (database.UserExist())
-                        //{
-                        //    package.destinationAdress = Data.ServerConfig.host.ToString();
-                        //    package.HierarchieAnswer = HierarchieAnswer.Success;
-                        //}
-                        //else
-                        //{
-                        //    package.HierarchieAnswer = HierarchieAnswer.Failure;
-                        //}
+                        if (database.UserExist(package.login))
+                        {
+                            package.destinationAdress = Data.ServerConfig.host.ToString();
+                            package.HierarchieAnswer = HierarchieAnswer.Success;
+                        }
+                        else
+                        {
+                            package.HierarchieAnswer = HierarchieAnswer.Failure;
+                        }
                     }
                     else
                     {
-                        Task.Run(() => sendHierarchie(getAdress(package.destinationID), toDo.Send, null));
+                        Task.Run(async () => package = await sendHierarchie(getAdress(package.destinationID), toDo.Send, null));
+
+
+
                     }
 
 
@@ -494,16 +497,45 @@ namespace KaPlanerServer.Logic
                 /// In case of Login Request try to login to the server database and set Request accordingly
                 case Request.Login:
                     Console.WriteLine(LoginRequest);
-                    if (database.login(package.user))
+                    if (package.serverSwitched)
                     {
-                        List<KaEvent> kaEvents;
-                        kaEvents = database.read(package.user.name);
-                        package.kaEvents = kaEvents;
-                        writeResult(Request.Success, LoginSuccess);
+                        if (database.login(package.user))
+                        {
+                            List<KaEvent> kaEvents;
+                            kaEvents = database.read(package.user.name);
+                            package.kaEvents = kaEvents;
+                            writeResult(Request.Success, LoginSuccess);
+                        }
+                        else
+                        {
+                            writeResult(Request.Failure, LoginFail);
+                        }
                     }
                     else
                     {
-                        writeResult(Request.Failure, LoginFail);
+                        if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                        {
+                            HierarchiePackage hierarchie = new HierarchiePackage();
+                            hierarchie.HierarchieRequest = HierarchieRequest.UserLogin;
+                            hierarchie.login = package.user.name;
+                            hierarchie.destinationID = package.user.serverID;
+                            hierarchie = resolveHierarchie(hierarchie);
+                            if (hierarchie.HierarchieAnswer == HierarchieAnswer.Success)
+                            {
+                                package.sourceServer = hierarchie.destinationAdress;
+                                writeResult(Request.changeServer, "ChangeServer");
+                            }
+                            else
+                            {
+                                writeResult(Request.Failure, LoginFail);
+                            }
+
+                        }
+                        else if (Data.ServerConfig.structure == Data.structure.P2P)
+                        {
+
+                        }
+                        writeResult(Request.changeServer, "ChangeServer");
                     }
                     break;
                 /// In case of Register Request try to login to the server database and set Request accordingly
@@ -511,13 +543,33 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(RegisterRequest);
                     try
                     {
-                        if (database.registerUser(package.user, package.passwordConfirm))
+                        if (package.serverSwitched)
                         {
-                            writeResult(Request.Success, RegisterSuccess);
+                            if (database.registerUser(package.user, package.passwordConfirm))
+                            {
+                                writeResult(Request.Success, RegisterSuccess);
+                            }
+                            else
+                            {
+                                writeResult(Request.Failure, RegisterFail);
+                            }
                         }
                         else
                         {
-                            writeResult(Request.Failure, RegisterFail);
+                            if(Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                            {
+                                HierarchiePackage hierarchie = new HierarchiePackage();
+                                hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
+                                hierarchie = resolveHierarchie(hierarchie);
+                                package.sourceServer = hierarchie.destinationAdress;
+                                
+
+                            }
+                            else if(Data.ServerConfig.structure == Data.structure.P2P)
+                            {
+
+                            }
+                            writeResult(Request.changeServer, "ChangeServer");
                         }
                     }
                     catch (Exception e)
