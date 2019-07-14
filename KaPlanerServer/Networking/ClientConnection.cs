@@ -41,7 +41,7 @@ namespace KaPlaner.Networking
         public ClientConnection()
         {
             //Anfangshost oder sonst wer
-            ip = IPAddress.Parse("192.168.56.1");
+            iPAddress = IPAddress.Parse("192.168.56.1");
         }
 
         public ClientConnection(IPAddress iPAddress)
@@ -257,7 +257,7 @@ namespace KaPlaner.Networking
         /// <param name="ipAddress"></param>
         public void changeIP(string ipAddress)
         {
-            ip = IPAddress.Parse(ipAddress);
+            iPAddress = IPAddress.Parse(ipAddress);
         }
 
         static object _send = new object();

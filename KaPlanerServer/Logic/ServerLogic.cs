@@ -688,12 +688,12 @@ namespace KaPlanerServer.Logic
 
         private void ipInitialize()
         {
-            LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
-            List<string> neighbours = new List<string>
-            {
-                listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
-                listOfWellKnownPeers.Find(_ipString).Next.ToString()
-            };
+            //LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
+            //List<string> neighbours = new List<string>
+            //{
+            //    listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
+            //    listOfWellKnownPeers.Find(_ipString).Next.ToString()
+            //};
         }
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!
