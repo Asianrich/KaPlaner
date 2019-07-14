@@ -300,27 +300,30 @@ namespace KaPlanerServer.Logic
                         //sendHierarchie();
                         Console.WriteLine("Auf der SUche nach einem passenden Server");
                         stateEintrag stateEintrag = new stateEintrag();
-
+                        List<HierarchiePackage> child = new List<HierarchiePackage>();
                         stateEintrag.setCounter(database.getServerCount());
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
                             Console.WriteLine("Dieser Server hat Kinder");
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
-                            Task.Run(() => sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
 
                         }
                         //wartet auf die anderen. hoffentlich
-                        stateEintrag.wait();
-                        List<HierarchiePackage> child = new List<HierarchiePackage>();
+                        //stateEintrag.wait();
+                        
                         if (child.Count > 0)
                         {
                             foreach (HierarchiePackage c in child)
                             {
-                                if (c.anzConnection <= anzConnection)
+                                if (c != null)
                                 {
-                                    anzConnection = c.anzConnection;
-                                    ip = c.destinationAdress;
-                                    id = c.destinationID;
+                                    if (c.anzConnection <= anzConnection)
+                                    {
+                                        anzConnection = c.anzConnection;
+                                        ip = c.destinationAdress;
+                                        id = c.destinationID;
+                                    }
                                 }
                             }
                         }
@@ -374,11 +377,14 @@ namespace KaPlanerServer.Logic
                             child = stateEintrag.child;
                             foreach (HierarchiePackage c in child)
                             {
-                                if (c.anzUser <= anzUser)
+                                if (c != null)
                                 {
-                                    anzUser = c.anzUser;
-                                    ip = c.destinationAdress;
-                                    id = c.destinationID;
+                                    if (c.anzUser <= anzUser)
+                                    {
+                                        anzUser = c.anzUser;
+                                        ip = c.destinationAdress;
+                                        id = c.destinationID;
+                                    }
                                 }
                             }
                         }
