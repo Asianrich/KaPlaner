@@ -176,7 +176,7 @@ namespace KaPlaner.Logic
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm);
             registerPackage.serverSwitched = false;
-            clientConnection.changeIP("192.168.0.6");
+            clientConnection.changeIP("192.168.0.6"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.changeServer)
@@ -188,7 +188,8 @@ namespace KaPlaner.Logic
             
             if (RequestResolve(returnPackage))
             {
-                currentUser = user;
+                currentUser = returnPackage.user;
+
                 return true;
             }
             else

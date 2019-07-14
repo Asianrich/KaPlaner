@@ -570,6 +570,7 @@ namespace KaPlanerServer.Logic
                             if (database.registerUser(package.user, package.passwordConfirm))
                             {
                                 writeResult(Request.Success, RegisterSuccess);
+                                package.user.serverID = Data.ServerConfig.serverID;
                             }
                             else
                             {
