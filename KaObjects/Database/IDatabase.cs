@@ -21,25 +21,38 @@ namespace KaObjects.Storage
 
         void Delete_date();
 
-        LinkedList<string> GetWellKnownPeers();
+        bool ServerExist(int ServerID);
 
-        int getUserCount();
-        bool getUser(User user);
-
-        void newServerEntry(string ip, int id);
-
-        string getServer(int serverID);
-
-        int getServerCount();
-
-        bool UserExist(int ServerID);
-
-        //int AnzahlKindserver(int ServerID);
+        bool UserExist(User user);
 
         int CheckMemberList();
 
         void SaveInvites(List<Package> member, int TerminID);
 
         List<KaEvent> ReadInvites(string user);
+
+        string getServer(int serverID);
+
+        int getUserCount();
+
+        int GetServerCount();
+
+        LinkedList<string> GetWellKnownPeers();
+    
+        void newServerEntry(string ip, int id);
+
+        
+
+
+
+       
+
+        
+
+        
+
+        
+
+       ;
     }
 }

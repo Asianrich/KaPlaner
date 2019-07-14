@@ -349,15 +349,34 @@ namespace UnitTest
         }
 
 
-        [TestMethod]
-        public void ReadInvitesPruefung()
-        {
-            List<KaEvent> test = new List<KaEvent>();
-            List<KaEvent> test2 = new List<KaEvent>();
-            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            string user = "TestUser";
+        /*   [TestMethod]
+             public void readinvitespruefung()
+              {
+                  list<kaevent> test = new list<kaevent>();
+                  list<kaevent> test2 = new list<kaevent>();
+                  database testdb = new database("data source=(localdb)\\mssqllocaldb;attachdbfilename=|datadirectory|\\data\\user_calendar.mdf;integrated security = true");
+                  string user = "testuser";
 
-            test2 = testdb.ReadInvites(user, test);
+                  test2 = testdb.readinvites(user, test);
+              }*/
+
+        [TestMethod]
+        public void GetServerPruefung()
+        {
+            int testSeverID = 2;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            testdb.getServer(testSeverID);
+        }
+
+
+
+        [TestMethod]
+        public void GetServerCountPruefung()
+        {
+            int count = 0;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            count = testdb.getServerCount();
+            Console.WriteLine(count);
         }
     }
 }
