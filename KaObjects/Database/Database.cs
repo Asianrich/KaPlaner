@@ -430,6 +430,7 @@ namespace KaObjects.Storage
         /// <returns>IP-Adresse des gesuchten Servers</returns>
         public string getServer(int ServerID)
         {
+            string read = "";
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
@@ -438,9 +439,10 @@ namespace KaObjects.Storage
             SqlCommand readCommand = new SqlCommand(readID, con);
 
             SqlDataReader reader = readCommand.ExecuteReader();
-
-            string read = reader.GetString(0);
-
+            if (reader.Read())
+            {
+                read = reader.GetString(0);
+            }
             con.Close();
             return read;
         }
