@@ -57,11 +57,15 @@ namespace KaPlaner.GUI
             
             foreach (KaEvent ka in ListEvents)
             {
-
+                List<string> users = new List<string>();
+                foreach(User u in ka.members)
+                {
+                    users.Add(u.name);
+                }
                 if (ka.members != null)
                 {
                     //Eingeladene Termine angezeigt bekommen.
-                    if (invite(ka.members.ToArray(), user.name))  
+                    if (invite(users.ToArray(), user.name))  
                     {
                         row[0] = ka.Titel;
                         row[1] = ka.Ort;

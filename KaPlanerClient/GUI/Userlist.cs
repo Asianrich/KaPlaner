@@ -39,17 +39,17 @@ namespace KaPlaner.GUI
 
         }
 
-        public void Save_usergroup(KaEvent list, int index)
-        {
-            list.members = new List<string>();
-            for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
-            {
-                for (int spalte = 0; spalte < LV_users.Columns.Count; spalte++)
-                {
-                    list.members[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
-                }
-            }
-        }
+        //public void Save_usergroup(KaEvent list, int index)
+        //{
+        //    list.members = new List<User>();
+        //    for (int zeile = 0; zeile < LV_users.Items.Count; zeile++)
+        //    {
+        //        for (int spalte = 0; spalte < LV_users.Columns.Count; spalte++)
+        //        {
+        //            list.members[zeile] += LV_users.Items[zeile].SubItems[spalte].ToString();
+        //        }
+        //    }
+        //}
 
         private void BTN_add_user_Click(object sender, EventArgs e)
         {

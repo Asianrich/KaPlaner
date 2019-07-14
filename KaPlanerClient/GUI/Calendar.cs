@@ -262,20 +262,20 @@ namespace WindowsFormsApp1
         private void BT_Request_Click(object sender, EventArgs e)
         {
 
-            KaEvent[] kaEvents = new KaEvent[3];
+            //KaEvent[] kaEvents = new KaEvent[3];
 
-            for (int i = 0; i < 3; i++)
-            {
-                kaEvents[i] = new KaEvent();
-                kaEvents[i].Titel = "Titel" + i;
-                kaEvents[i].Beginn = DateTime.Now;
-                kaEvents[i].Ende = DateTime.Now;
-                kaEvents[i].Ort = "Ort" + i;
-                kaEvents[i].owner = new User("Name " + i, "Password");
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    kaEvents[i] = new KaEvent();
+            //    kaEvents[i].Titel = "Titel" + i;
+            //    kaEvents[i].Beginn = DateTime.Now;
+            //    kaEvents[i].Ende = DateTime.Now;
+            //    kaEvents[i].Ort = "Ort" + i;
+            //    kaEvents[i].owner = new User("Name " + i, "Password");
+            //}
 
-            kaEvents[2].members = new List<string>();
-            kaEvents[2].members.Add("asd");
+            //kaEvents[2].members = new List<string>();
+            //kaEvents[2].members.Add("asd");
 
             using (var form = new RequestList(invites, client.currentUser))
             {

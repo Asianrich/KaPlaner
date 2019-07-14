@@ -138,7 +138,16 @@ namespace KaPlaner.GUI
                     var results = form.ShowDialog();
 
                     KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
-                    FocusEvent.members = form.listStringreturn;
+                    List<User> users = new List<User>();
+
+                    foreach(string s in form.listStringreturn)
+                    {
+                        User user = new User(s);
+                        users.Add(user);
+                    }
+
+
+                    FocusEvent.members = users;
 
                     clientLogic.sendInvites(FocusEvent);
                 }

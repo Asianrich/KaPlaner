@@ -489,5 +489,15 @@ namespace KaObjects.Storage
         {
             throw new NotImplementedException();
         }
+
+        public bool UserExist(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveInvites(List<Package> member, int TerminID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

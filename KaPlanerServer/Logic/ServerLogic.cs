@@ -623,9 +623,9 @@ namespace KaPlanerServer.Logic
                         //Bin ich das?
                         if (package.user.serverID == Data.ServerConfig.serverID)
                         {
-                            List <string> list = package.kaEvents[0].members;
+                            List <User> list = package.kaEvents[0].members;
 
-                            foreach(string member in list)
+                            foreach(User member in list)
                             {
 
                             }
