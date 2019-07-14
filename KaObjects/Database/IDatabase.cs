@@ -32,7 +32,7 @@ namespace KaObjects.Storage
 
         int getServerCount();
 
-        bool UserExist(int ServerID);
+        bool UserExist(string user);
 
         //int AnzahlKindserver(int ServerID);
 

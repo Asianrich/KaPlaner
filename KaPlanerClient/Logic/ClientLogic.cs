@@ -110,7 +110,10 @@ namespace KaPlaner.Logic
 
 
 
-            eventList = returnPackage.kaEvents;
+            if (returnPackage.kaEvents != null)
+            {
+                eventList = returnPackage.kaEvents;
+            }
 
             return RequestResolve(returnPackage);
         }

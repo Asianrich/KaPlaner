@@ -272,7 +272,7 @@ namespace KaObjects.Storage
         /// <summary>
         /// Prueft ob ein User ueberhaupt existiert
         /// </summary>
-        public bool UserExist (int ServerID)
+        public bool UserExist (string user)
         {
 
             //Warum brauche ich eine ServerID für einen User?

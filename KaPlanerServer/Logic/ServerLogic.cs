@@ -381,15 +381,15 @@ namespace KaPlanerServer.Logic
                 case HierarchieRequest.UserLogin:
                     if (package.destinationID == id)
                     {
-                        //if (database.getUser())
-                        //{
-                        //    package.destinationAdress = Data.ServerConfig.host.ToString();
-                        //    package.HierarchieAnswer = HierarchieAnswer.Success;
-                        //}
-                        //else
-                        //{
-                        //    package.HierarchieAnswer = HierarchieAnswer.Failure;
-                        //}
+                        if (database.UserExist(package.login))
+                        {
+                            package.destinationAdress = Data.ServerConfig.host.ToString();
+                            package.HierarchieAnswer = HierarchieAnswer.Success;
+                        }
+                        else
+                        {
+                            package.HierarchieAnswer = HierarchieAnswer.Failure;
+                        }
                     }
                     else
                     {
@@ -520,8 +520,15 @@ namespace KaPlanerServer.Logic
                             hierarchie.login = package.user.name;
                             hierarchie.destinationID = package.user.serverID;
                             hierarchie = resolveHierarchie(hierarchie);
-                            package.sourceServer = hierarchie.destinationAdress;
-
+                            if (hierarchie.HierarchieAnswer == HierarchieAnswer.Success)
+                            {
+                                package.sourceServer = hierarchie.destinationAdress;
+                                writeResult(Request.changeServer, "ChangeServer");
+                            }
+                            else
+                            {
+                                writeResult(Request.Failure, LoginFail);
+                            }
 
                         }
                         else if (Data.ServerConfig.structure == Data.structure.P2P)
