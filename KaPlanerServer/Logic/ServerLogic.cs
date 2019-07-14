@@ -623,9 +623,9 @@ namespace KaPlanerServer.Logic
                         //Bin ich das?
                         if (package.user.serverID == Data.ServerConfig.serverID)
                         {
-                            List <string> list = package.kaEvents[0].members;
+                            List <User> list = package.kaEvents[0].members;
 
-                            foreach(string member in list)
+                            foreach(User member in list)
                             {
 
                             }
@@ -688,12 +688,12 @@ namespace KaPlanerServer.Logic
 
         private void ipInitialize()
         {
-            LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
-            List<string> neighbours = new List<string>
-            {
-                listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
-                listOfWellKnownPeers.Find(_ipString).Next.ToString()
-            };
+            //LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
+            //List<string> neighbours = new List<string>
+            //{
+            //    listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
+            //    listOfWellKnownPeers.Find(_ipString).Next.ToString()
+            //};
         }
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!

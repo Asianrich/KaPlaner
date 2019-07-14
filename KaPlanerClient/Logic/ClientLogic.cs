@@ -176,6 +176,7 @@ namespace KaPlaner.Logic
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm);
             registerPackage.serverSwitched = false;
+            clientConnection.changeIP("192.168.0.6");
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.changeServer)
