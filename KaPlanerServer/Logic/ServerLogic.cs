@@ -259,7 +259,6 @@ namespace KaPlanerServer.Logic
             string ip = Data.ServerConfig.host.ToString();
             int id = Data.ServerConfig.serverID;
 
-
             //BRAUCHT DAS MICH ZU INTERESSIEREN?!?!?!?!?!?! NUR ERST BEI INVITE!!!!
             //
             if (package.destinationAdress != Data.ServerConfig.host.ToString())
@@ -475,10 +474,10 @@ namespace KaPlanerServer.Logic
             HierarchiePackage sendHierarchie(string ipadress, toDo _toDo, stateEintrag state)
             {
                 Package hierarchie = new Package();
+                hierarchie.hierarchie = package;
                 //An beide Childs
                 if (_toDo == toDo.Info)
                 {
-
 
                     hierarchie = send(hierarchie, IPAddress.Parse(ipadress));
                     state.decrementCounter();
