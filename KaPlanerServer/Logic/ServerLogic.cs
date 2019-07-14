@@ -623,7 +623,15 @@ namespace KaPlanerServer.Logic
                         //Bin ich das?
                         if (package.user.serverID == Data.ServerConfig.serverID)
                         {
-                            database.SaveInvites(package.kaEvents)
+                            List <string> list = package.kaEvents[0].members;
+
+                            foreach(string member in list)
+                            {
+
+                            }
+
+
+                            //database.SaveInvites(package.kaEvents)
 
 
 

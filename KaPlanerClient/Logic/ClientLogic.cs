@@ -95,9 +95,10 @@ namespace KaPlaner.Logic
         public void sendInvites(KaEvent kaEvent)
         {
 
-            //database.SaveInvites();
+            Package package = new Package();
+            package.kaEvents.Add(kaEvent);
 
-
+            clientConnection.Start(package);
 
         }
 
