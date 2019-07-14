@@ -207,7 +207,7 @@ namespace KaPlanerServer.Logic
                 receive = client.Start(package);
                 Thread.Sleep(1000);
             }
-            
+
 
             return receive;
         }
@@ -336,7 +336,7 @@ namespace KaPlanerServer.Logic
                     //Sollte immer durch newServer abgefragt werden!
                     Console.WriteLine("Ein neuer Servereintrag. bzw. Child");
                     int newId = Data.ServerConfig.serverID * 10;
-                    if(Data.ServerConfig.host == Data.ServerConfig.root)
+                    if (Data.ServerConfig.host == Data.ServerConfig.root)
                     {
                         newId += 10;
                     }
@@ -346,6 +346,7 @@ namespace KaPlanerServer.Logic
                     }
                     package.sourceID = newId;
                     database.newServerEntry(package.sourceAdress, newId);
+                    
 
                     break;
                 case HierarchieRequest.RegisterUser:
@@ -358,17 +359,17 @@ namespace KaPlanerServer.Logic
                         //Soll parallel ablaufen
                         //sendHierarchie();
                         stateEintrag stateEintrag = new stateEintrag();
-
+                        List<HierarchiePackage> child = new List<HierarchiePackage>();
                         stateEintrag.setCounter(database.getServerCount());
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
-                            Task.Run(async () => await sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
 
                         }
                         //wartet auf die anderen. hoffentlich
-                        stateEintrag.wait();
-                        List<HierarchiePackage> child = new List<HierarchiePackage>();
+
+                        
                         if (child.Count > 0)
                         {
                             child = stateEintrag.child;
@@ -402,7 +403,7 @@ namespace KaPlanerServer.Logic
                     }
                     else
                     {
-                        Task.Run(async () => package = await sendHierarchie(getAdress(package.destinationID), toDo.Send, null));
+                        package = sendHierarchie(getAdress(package.destinationID), toDo.Send, null);
 
 
 
@@ -471,7 +472,7 @@ namespace KaPlanerServer.Logic
                 else { return 1; }
             }
 
-            async Task<HierarchiePackage> sendHierarchie(string ipadress, toDo _toDo, stateEintrag state)
+            HierarchiePackage sendHierarchie(string ipadress, toDo _toDo, stateEintrag state)
             {
                 Package hierarchie = new Package();
                 //An beide Childs
@@ -479,7 +480,7 @@ namespace KaPlanerServer.Logic
                 {
 
 
-                    await Task.Run(() => hierarchie = send(hierarchie, IPAddress.Parse(ipadress)));
+                    hierarchie = send(hierarchie, IPAddress.Parse(ipadress));
                     state.decrementCounter();
                     state.child.Add(hierarchie.hierarchie);
                 }
@@ -513,6 +514,7 @@ namespace KaPlanerServer.Logic
                             List<KaEvent> kaEvents;
                             kaEvents = database.read(package.user.name);
                             package.kaEvents = kaEvents;
+                            package.invites = database.ReadInvites(package.user.name);
                             writeResult(Request.Success, LoginSuccess);
                         }
                         else
@@ -565,16 +567,16 @@ namespace KaPlanerServer.Logic
                         }
                         else
                         {
-                            if(Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                            if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                             {
                                 HierarchiePackage hierarchie = new HierarchiePackage();
                                 hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
                                 hierarchie = resolveHierarchie(hierarchie);
                                 package.sourceServer = hierarchie.destinationAdress;
-                                
+
 
                             }
-                            else if(Data.ServerConfig.structure == Data.structure.P2P)
+                            else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
 
                             }
@@ -625,7 +627,34 @@ namespace KaPlanerServer.Logic
                 case Request.Test:
                     Console.WriteLine(RequestTest);
                     break;
+                case Request.Invite:
+                    if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                    {
+                        //Bin ich das?
+                        if (package.user.serverID == Data.ServerConfig.serverID)
+                        {
+                            List <User> list = package.kaEvents[0].members;
 
+                            foreach(User member in list)
+                            {
+
+                            }
+
+
+                            //database.SaveInvites(package.kaEvents)
+
+
+
+                        }
+                        else
+                        {
+                            //Nope such den server für mich
+
+                        }
+                    }
+
+
+                    break;
                 default:
                     Console.WriteLine(RequestUnknown);
                     break;
@@ -669,12 +698,12 @@ namespace KaPlanerServer.Logic
 
         private void ipInitialize()
         {
-            LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
-            List<string> neighbours = new List<string>
-            {
-                listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
-                listOfWellKnownPeers.Find(_ipString).Next.ToString()
-            };
+            //LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
+            //List<string> neighbours = new List<string>
+            //{
+            //    listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
+            //    listOfWellKnownPeers.Find(_ipString).Next.ToString()
+            //};
         }
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!
@@ -778,7 +807,8 @@ namespace KaPlanerServer.Logic
             if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
-                
+                Data.ServerConfig.serverID = 1;
+
             }
             else
             {
@@ -810,8 +840,8 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine("Packet ist angekommen");
                         //Logic
                         Data.ServerConfig.root = address;
-                        Console.WriteLine("Adresse: " +package.hierarchie.destinationAdress);
-                        
+                        Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
+
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
@@ -825,7 +855,7 @@ namespace KaPlanerServer.Logic
                         {
                             try
                             {
-                                
+
                                 receive = send(package, connectServer);
                                 Thread.Sleep(1000);
                                 break;

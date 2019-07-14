@@ -25,6 +25,8 @@ namespace KaPlaner.Logic
 
         void SaveRemote(KaEvent kaEvent);
 
+        void sendInvites(KaEvent kaEvent);
+
         List<KaEvent> LoadEventsLocal(DateTime month);
 
         List<KaEvent> LoadEventsRemote(DateTime month);

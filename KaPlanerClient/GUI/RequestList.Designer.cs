@@ -34,10 +34,11 @@
             this.Beginn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Ende = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Einlader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.BT_Close = new System.Windows.Forms.Button();
-            this.Bt_Accept = new System.Windows.Forms.Button();
             this.Zustand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.BT_Close = new System.Windows.Forms.Button();
+            this.Bt_Open = new System.Windows.Forms.Button();
             this.Bt_Decline = new System.Windows.Forms.Button();
+            this.BT_Accept = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LV_Dates
@@ -77,6 +78,10 @@
             // 
             this.Einlader.Text = "Einlader";
             // 
+            // Zustand
+            // 
+            this.Zustand.Text = "Zustand";
+            // 
             // BT_Close
             // 
             this.BT_Close.Location = new System.Drawing.Point(12, 378);
@@ -87,19 +92,15 @@
             this.BT_Close.UseVisualStyleBackColor = true;
             this.BT_Close.Click += new System.EventHandler(this.BT_Close_Click);
             // 
-            // Bt_Accept
+            // Bt_Open
             // 
-            this.Bt_Accept.Location = new System.Drawing.Point(125, 378);
-            this.Bt_Accept.Name = "Bt_Accept";
-            this.Bt_Accept.Size = new System.Drawing.Size(107, 34);
-            this.Bt_Accept.TabIndex = 2;
-            this.Bt_Accept.Text = "Annehmen";
-            this.Bt_Accept.UseVisualStyleBackColor = true;
-            this.Bt_Accept.Click += new System.EventHandler(this.Bt_Open_Click);
-            // 
-            // Zustand
-            // 
-            this.Zustand.Text = "Zustand";
+            this.Bt_Open.Location = new System.Drawing.Point(125, 378);
+            this.Bt_Open.Name = "Bt_Open";
+            this.Bt_Open.Size = new System.Drawing.Size(107, 34);
+            this.Bt_Open.TabIndex = 2;
+            this.Bt_Open.Text = "Öffnen";
+            this.Bt_Open.UseVisualStyleBackColor = true;
+            this.Bt_Open.Click += new System.EventHandler(this.Bt_Open_Click);
             // 
             // Bt_Decline
             // 
@@ -109,14 +110,26 @@
             this.Bt_Decline.TabIndex = 3;
             this.Bt_Decline.Text = "Ablehnen";
             this.Bt_Decline.UseVisualStyleBackColor = true;
+            this.Bt_Decline.Click += new System.EventHandler(this.Bt_Decline_Click);
+            // 
+            // BT_Accept
+            // 
+            this.BT_Accept.Location = new System.Drawing.Point(351, 377);
+            this.BT_Accept.Name = "BT_Accept";
+            this.BT_Accept.Size = new System.Drawing.Size(107, 34);
+            this.BT_Accept.TabIndex = 4;
+            this.BT_Accept.Text = "Annehmen";
+            this.BT_Accept.UseVisualStyleBackColor = true;
+            this.BT_Accept.Click += new System.EventHandler(this.BT_Accept_Click);
             // 
             // RequestList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 423);
+            this.Controls.Add(this.BT_Accept);
             this.Controls.Add(this.Bt_Decline);
-            this.Controls.Add(this.Bt_Accept);
+            this.Controls.Add(this.Bt_Open);
             this.Controls.Add(this.BT_Close);
             this.Controls.Add(this.LV_Dates);
             this.Name = "RequestList";
@@ -134,8 +147,9 @@
         private System.Windows.Forms.ColumnHeader Ende;
         private System.Windows.Forms.ColumnHeader Einlader;
         private System.Windows.Forms.Button BT_Close;
-        private System.Windows.Forms.Button Bt_Accept;
+        private System.Windows.Forms.Button Bt_Open;
         private System.Windows.Forms.ColumnHeader Zustand;
         private System.Windows.Forms.Button Bt_Decline;
+        private System.Windows.Forms.Button BT_Accept;
     }
 }

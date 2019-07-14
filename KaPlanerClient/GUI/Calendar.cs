@@ -20,9 +20,9 @@ namespace WindowsFormsApp1
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
         ClientLogic client;
-#pragma warning disable CS0169 // The field 'wdw_calendar.kaEvents' is never used
+
         List<KaEvent> kaEvents;
-#pragma warning restore CS0169 // The field 'wdw_calendar.kaEvents' is never used
+        List<KaEvent> invites;
 
         
 
@@ -57,6 +57,7 @@ namespace WindowsFormsApp1
             else
             {
                 kaEvents = clientLogic.GetEventList();
+                invites = clientLogic.GetEventList();
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
                 BT_Request.Visible = true;
@@ -261,22 +262,22 @@ namespace WindowsFormsApp1
         private void BT_Request_Click(object sender, EventArgs e)
         {
 
-            KaEvent[] kaEvents = new KaEvent[3];
+            //KaEvent[] kaEvents = new KaEvent[3];
 
-            for (int i = 0; i < 3; i++)
-            {
-                kaEvents[i] = new KaEvent();
-                kaEvents[i].Titel = "Titel" + i;
-                kaEvents[i].Beginn = DateTime.Now;
-                kaEvents[i].Ende = DateTime.Now;
-                kaEvents[i].Ort = "Ort" + i;
-                kaEvents[i].owner = new User("Name " + i, "Password");
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    kaEvents[i] = new KaEvent();
+            //    kaEvents[i].Titel = "Titel" + i;
+            //    kaEvents[i].Beginn = DateTime.Now;
+            //    kaEvents[i].Ende = DateTime.Now;
+            //    kaEvents[i].Ort = "Ort" + i;
+            //    kaEvents[i].owner = new User("Name " + i, "Password");
+            //}
 
-            kaEvents[2].members = new List<string>();
-            kaEvents[2].members.Add("asd");
+            //kaEvents[2].members = new List<string>();
+            //kaEvents[2].members.Add("asd");
 
-            using (var form = new RequestList(kaEvents.ToList<KaEvent>(), client.currentUser))
+            using (var form = new RequestList(invites, client.currentUser))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

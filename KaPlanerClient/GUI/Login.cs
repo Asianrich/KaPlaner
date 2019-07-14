@@ -54,7 +54,7 @@ namespace WindowsFormsApp1
             this.lbl_login.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_login.Location = new System.Drawing.Point(183, 64);
             this.lbl_login.Name = "lbl_login";
-            this.lbl_login.Size = new System.Drawing.Size(159, 61);
+            this.lbl_login.Size = new System.Drawing.Size(128, 49);
             this.lbl_login.TabIndex = 0;
             this.lbl_login.Text = "Login";
             // 
@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
             this.lbl_log_benutzername.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_log_benutzername.Location = new System.Drawing.Point(36, 196);
             this.lbl_log_benutzername.Name = "lbl_log_benutzername";
-            this.lbl_log_benutzername.Size = new System.Drawing.Size(176, 28);
+            this.lbl_log_benutzername.Size = new System.Drawing.Size(135, 23);
             this.lbl_log_benutzername.TabIndex = 3;
             this.lbl_log_benutzername.Text = "Benutzername";
             // 
@@ -74,7 +74,7 @@ namespace WindowsFormsApp1
             this.lbl_log_passwort.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_log_passwort.Location = new System.Drawing.Point(36, 228);
             this.lbl_log_passwort.Name = "lbl_log_passwort";
-            this.lbl_log_passwort.Size = new System.Drawing.Size(117, 28);
+            this.lbl_log_passwort.Size = new System.Drawing.Size(93, 23);
             this.lbl_log_passwort.TabIndex = 4;
             this.lbl_log_passwort.Text = "Passwort";
             // 
@@ -126,22 +126,23 @@ namespace WindowsFormsApp1
             // 
             this.tb_log_benutzername.Location = new System.Drawing.Point(192, 193);
             this.tb_log_benutzername.Name = "tb_log_benutzername";
-            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 30);
+            this.tb_log_benutzername.Size = new System.Drawing.Size(230, 26);
             this.tb_log_benutzername.TabIndex = 9;
             // 
             // tb_log_passwort
             // 
             this.tb_log_passwort.Location = new System.Drawing.Point(192, 225);
             this.tb_log_passwort.Name = "tb_log_passwort";
-            this.tb_log_passwort.Size = new System.Drawing.Size(230, 30);
+            this.tb_log_passwort.Size = new System.Drawing.Size(230, 26);
             this.tb_log_passwort.TabIndex = 10;
             // 
             // tb_log_ID
             // 
             this.tb_log_ID.Location = new System.Drawing.Point(192, 257);
             this.tb_log_ID.Name = "tb_log_ID";
-            this.tb_log_ID.Size = new System.Drawing.Size(230, 30);
+            this.tb_log_ID.Size = new System.Drawing.Size(230, 26);
             this.tb_log_ID.TabIndex = 11;
+            this.tb_log_ID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_log_ID_KeyPress);
             // 
             // lbl_log_ID
             // 
@@ -149,13 +150,13 @@ namespace WindowsFormsApp1
             this.lbl_log_ID.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_log_ID.Location = new System.Drawing.Point(36, 260);
             this.lbl_log_ID.Name = "lbl_log_ID";
-            this.lbl_log_ID.Size = new System.Drawing.Size(108, 28);
+            this.lbl_log_ID.Size = new System.Drawing.Size(88, 23);
             this.lbl_log_ID.TabIndex = 12;
             this.lbl_log_ID.Text = "ServerID";
             // 
             // Wdw_login
             // 
-            this.ClientSize = new System.Drawing.Size(457, 413);
+            this.ClientSize = new System.Drawing.Size(459, 422);
             this.Controls.Add(this.lbl_log_ID);
             this.Controls.Add(this.tb_log_ID);
             this.Controls.Add(this.tb_log_passwort);
@@ -191,25 +192,35 @@ namespace WindowsFormsApp1
 
                 if (!containsSearchResult)
                 {
-                    if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text)))
+                    if (Int32.TryParse(tb_log_ID.Text, out int result))
                     {
-                        Form open_calendar = new wdw_calendar(true);
-                        open_calendar.Show();
-                        tb_log_benutzername.Text = "";
-                        tb_log_passwort.Text = "";
+                        if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text, result)))
+                        {
+                            Form open_calendar = new wdw_calendar(true);
+                            open_calendar.Show();
+                            tb_log_benutzername.Text = "";
+                            tb_log_passwort.Text = "";
+
+                        }
+                        else
+                        {
+                            tb_log_benutzername.Text = "";
+                            tb_log_passwort.Text = "";
+                        }
                     }
                     else
                     {
-                        tb_log_benutzername.Text = "";
-                        tb_log_passwort.Text = "";
+                        MessageBox.Show("Fehler beim ServerID, bitte überprüfen");
                     }
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Der Benutzername darf keine # enthalten.");
                 }
 
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -221,7 +232,8 @@ namespace WindowsFormsApp1
             {
                 Form open_registry = new Wdw_registrierung(clientLogic);
                 open_registry.Show();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -249,6 +261,20 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Tb_log_ID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            //if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            //{
+            //    e.Handled = true;
+            //}
         }
     }
 }

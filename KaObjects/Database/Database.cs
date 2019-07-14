@@ -278,7 +278,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkServer = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+            string checkServer = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand checkCommand = new SqlCommand(checkServer, con);
 
@@ -306,12 +306,12 @@ namespace KaObjects.Storage
         /// ausgelesen werden kann.
         /// true, in allen anderen Faellen
         /// </returns>
-        public bool UserExist(User user)
+        public bool UserExist(string user)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername == '{0}'", user.name.ToString());
+            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}'", user);
 
             SqlCommand checkCommand = new SqlCommand(checkUser, con);
 
@@ -366,21 +366,19 @@ namespace KaObjects.Storage
         /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
         /// <param name="TerminID">ID des behandelten Termins</param>
         /// <returns>Keine Rueckgabewerte</returns>
-        public void SaveInvites (List<Package> member, int TerminID)
+        public void SaveInvites (string user, int TerminID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            int index = member.Count();
-
-            for ( int i = 0; i < member.Count(); i++)
+            if(UserExist(user))
             {
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, member[index].user.name.ToString());
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, user);
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
                 saveEventCommand.Parameters.AddWithValue("@TerminID", TerminID);
-                saveEventCommand.Parameters.AddWithValue("@User", member[i].user.name.ToString());
+                saveEventCommand.Parameters.AddWithValue("@User", user);
             }
         }
 
@@ -400,7 +398,7 @@ namespace KaObjects.Storage
             int index = 0;
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
-            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User == '{0}'", user);
+            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User = '{0}'", user);
 
             //string exist = "SELECT TerminID FROM Memberlist WHERE EXISTS(SELECT * FROM Memberlist WHERE User = {0}", user);";
 
@@ -411,12 +409,10 @@ namespace KaObjects.Storage
             while(reader.Read())
             {
                 // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", reader.GetInt32(index));
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(index));
 
                 SqlCommand read = new SqlCommand(readDates, con);
                 SqlDataReader reader2 = read.ExecuteReader();
-
-
 
                 index++;
             }
@@ -437,7 +433,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+            string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand readCommand = new SqlCommand(readID, con);
 
@@ -449,11 +445,45 @@ namespace KaObjects.Storage
             return read;
         }
 
+        /// <summary>
+        /// Gitbt die Anzahl an registrierten User auf einem Server zureuck.
+        /// </summary>
+        /// <param >Kein Uebergabeparameter</param>
+        /// <returns>Anzahl User pro Server</returns>
         public int getUserCount()
         {
-            throw new NotImplementedException();
+            int anzahl = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                con.Open();
+
+                string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM Registry");
+
+                SqlCommand readCommand = new SqlCommand(readCount, con);
+
+                SqlDataReader reader = readCommand.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    anzahl = reader.GetInt32(0);
+                }
+                con.Close();
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return anzahl;
         }
 
+
+        /// <summary>
+        /// Gibt die Anzahl an Kindservern zurueck aus der Serverlist zurueck.
+        /// </summary>
+        /// <param >Kein Uebergabeparameter</param>
+        /// <returns>Anzahl Kindserver </returns>
         public int getServerCount()
         {
             int Count = 0;
@@ -468,8 +498,10 @@ namespace KaObjects.Storage
 
                 SqlDataReader reader = readCommand.ExecuteReader();
 
-                Count = reader.GetInt32(0);
-
+                if (reader.Read())
+                {
+                    Count = reader.GetInt32(0);
+                }
                 con.Close();
             }
             catch (Exception)
@@ -479,19 +511,14 @@ namespace KaObjects.Storage
             return Count;
         }
 
-        public int AnzahlKindserver(int ServerID)
-        {
-            throw new NotImplementedException();
-        }
+        //public LinkedList<string> GetWellKnownPeers()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public LinkedList<string> GetWellKnownPeers()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ReadSingleRow(IDataRecord reader)
-        {
-            throw new NotImplementedException();
-        }
+        //private void ReadSingleRow(IDataRecord reader)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

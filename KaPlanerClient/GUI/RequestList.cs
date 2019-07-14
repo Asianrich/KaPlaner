@@ -34,13 +34,38 @@ namespace KaPlaner.GUI
             LV_Dates.Items.Clear();
             indexes.Clear();
             int i = 0;
+
+            //ListEvents.ForEach(x =>
+            //{
+            //    if (x.members != null)
+            //    {
+            //        //Eingeladene Termine angezeigt bekommen.
+            //        if (invite(x.members.ToArray(), user.name))
+            //        {
+            //            row[0] = x.Titel;
+            //            row[1] = x.Ort;
+            //            row[2] = x.Beginn.ToString();
+            //            row[3] = x.Ende.ToString();
+            //            indexes.Add(i);
+            //            ListViewItem lvi = new ListViewItem(row);
+
+            //            LV_Dates.Items.Add(lvi);
+            //        }
+            //    }
+            //    i++;
+            //});
+            
             foreach (KaEvent ka in ListEvents)
             {
-
+                List<string> users = new List<string>();
+                foreach(User u in ka.members)
+                {
+                    users.Add(u.name);
+                }
                 if (ka.members != null)
                 {
                     //Eingeladene Termine angezeigt bekommen.
-                    if (invite(ka.members.ToArray(), user.name))  
+                    if (invite(users.ToArray(), user.name))  
                     {
                         row[0] = ka.Titel;
                         row[1] = ka.Ort;
@@ -125,6 +150,16 @@ namespace KaPlaner.GUI
             /// Beispiel Funktion fuer das Oeffnen eines Date.cs/ oder Kaevents-Fenster
             /// Wenn man das Oeffnet sollte mit bestehenden Daten befuellt werden. 
             /// Konstruktor wird zuerst mit Wdw_KaEvent(Clientlog clientlogic, KaEvent ereignis) siehe Date.cs
+        }
+
+        private void Bt_Decline_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BT_Accept_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

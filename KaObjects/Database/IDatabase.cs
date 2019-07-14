@@ -23,11 +23,11 @@ namespace KaObjects.Storage
 
         bool ServerExist(int ServerID);
 
-        bool UserExist(User user);
+        bool UserExist(string user);
 
         int CheckMemberList();
 
-        void SaveInvites(List<Package> member, int TerminID);
+        void SaveInvites(string user, int TerminID);
 
         List<KaEvent> ReadInvites(string user);
 
@@ -37,7 +37,7 @@ namespace KaObjects.Storage
 
         int getServerCount();
 
-        LinkedList<string> GetWellKnownPeers();
+        //LinkedList<string> GetWellKnownPeers();
     
         void newServerEntry(string ip, int id);
     }
