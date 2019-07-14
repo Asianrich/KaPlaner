@@ -278,7 +278,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkServer = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+            string checkServer = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand checkCommand = new SqlCommand(checkServer, con);
 
@@ -311,7 +311,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername == '{0}'", user);
+            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}'", user);
 
             SqlCommand checkCommand = new SqlCommand(checkUser, con);
 
@@ -398,7 +398,7 @@ namespace KaObjects.Storage
             int index = 0;
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
-            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User == '{0}'", user);
+            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User = '{0}'", user);
 
             //string exist = "SELECT TerminID FROM Memberlist WHERE EXISTS(SELECT * FROM Memberlist WHERE User = {0}", user);";
 
@@ -409,7 +409,7 @@ namespace KaObjects.Storage
             while(reader.Read())
             {
                 // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID == '{0}'", reader.GetInt32(index));
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(index));
 
                 SqlCommand read = new SqlCommand(readDates, con);
                 SqlDataReader reader2 = read.ExecuteReader();
@@ -433,7 +433,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID == '{0}'", ServerID);
+            string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand readCommand = new SqlCommand(readID, con);
 
