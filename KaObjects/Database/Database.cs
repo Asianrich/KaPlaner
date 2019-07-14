@@ -445,11 +445,35 @@ namespace KaObjects.Storage
             return read;
         }
 
+        /// <summary>
+        /// Gitbt die Anzahl an registrierten User auf einem Server zureuck.
+        /// </summary>
+        /// <param >Kein Uebergabeparameter</param>
+        /// <returns>Anzahl User pro Server</returns>
         public int getUserCount()
         {
-            throw new NotImplementedException();
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM Registry");
+
+            SqlCommand readCommand = new SqlCommand(readCount, con);
+
+            SqlDataReader reader = readCommand.ExecuteReader();
+
+            int anzahl = reader.GetInt32(0);
+
+            con.Close();
+
+            return anzahl;
         }
 
+
+        /// <summary>
+        /// Gibt die Anzahl an Kindservern zurueck aus der Serverlist zurueck.
+        /// </summary>
+        /// <param >Kein Uebergabeparameter</param>
+        /// <returns>Anzahl Kindserver </returns>
         public int getServerCount()
         {
             int Count = 0;
