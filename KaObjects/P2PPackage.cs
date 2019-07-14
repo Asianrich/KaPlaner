@@ -8,19 +8,21 @@ using System.Net;
 
 namespace KaObjects
 {
-    public enum P2PRequest { NewServer, RegisterServer, RegisterUser, Login, Invite }
+    public enum P2PRequest { NewServer, RegisterServer, NewUser, RegisterUser, Login, Invite }
     public enum P2PAnswer { Success, Failure, Error, Visited}
     [Serializable]
     public class P2PPackage
     {
         static public readonly int TTLinit = 5;
         static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
+        static public readonly int AnzUserInit = -1; //siehe AnzConnInit
 
         public P2PRequest P2Prequest;
         public P2PAnswer P2PAnswer;
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
+        public int anzUser = AnzUserInit;
 
         /// <summary>
         /// IP des letzten Knoten, der die niedrigsten Verbindungen aufweist.
