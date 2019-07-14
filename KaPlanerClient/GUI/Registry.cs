@@ -173,10 +173,12 @@ namespace WindowsFormsApp1
                 User user = new User(rTB_benutzername.Text, rTB_passwort.Text);
                 if (clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
                 {
+                    user = clientLogic.GetUser();
                     MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
                     + Environment.NewLine + "Username:" + user.name
                     + Environment.NewLine + "Passwort"+ user.password
                     + Environment.NewLine +"ServerID" + user.serverID);
+                    
                     Form open_calendar = new wdw_calendar(true);
                     open_calendar.Show();
                     Close();

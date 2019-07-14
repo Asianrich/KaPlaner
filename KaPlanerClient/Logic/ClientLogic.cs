@@ -41,7 +41,10 @@ namespace KaPlaner.Logic
         {
             return eventList;
         }
-
+        public User GetUser()
+        {
+            return currentUser;
+        }
         /// <summary>
         /// Läd eine Liste an Events für einen Monat lokal von der Datenbank
         /// Nutzt das Datenbankinterface
