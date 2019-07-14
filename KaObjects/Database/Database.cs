@@ -464,8 +464,10 @@ namespace KaObjects.Storage
 
                 SqlDataReader reader = readCommand.ExecuteReader();
 
-                anzahl = reader.GetInt32(0);
-
+                if (reader.Read())
+                {
+                    anzahl = reader.GetInt32(0);
+                }
                 con.Close();
 
             }
@@ -496,8 +498,10 @@ namespace KaObjects.Storage
 
                 SqlDataReader reader = readCommand.ExecuteReader();
 
-                Count = reader.GetInt32(0);
-
+                if (reader.Read())
+                {
+                    Count = reader.GetInt32(0);
+                }
                 con.Close();
             }
             catch (Exception)

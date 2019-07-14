@@ -337,6 +337,7 @@ namespace KaPlanerServer.Logic
                     }
                     package.sourceID = newId;
                     database.newServerEntry(package.sourceAdress, newId);
+                    
 
                     break;
                 case HierarchieRequest.RegisterUser:
