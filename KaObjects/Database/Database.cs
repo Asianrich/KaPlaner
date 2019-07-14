@@ -452,19 +452,27 @@ namespace KaObjects.Storage
         /// <returns>Anzahl User pro Server</returns>
         public int getUserCount()
         {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
+            int anzahl = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                con.Open();
 
-            string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM Registry");
+                string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM Registry");
 
-            SqlCommand readCommand = new SqlCommand(readCount, con);
+                SqlCommand readCommand = new SqlCommand(readCount, con);
 
-            SqlDataReader reader = readCommand.ExecuteReader();
+                SqlDataReader reader = readCommand.ExecuteReader();
 
-            int anzahl = reader.GetInt32(0);
+                anzahl = reader.GetInt32(0);
 
-            con.Close();
+                con.Close();
 
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return anzahl;
         }
 
