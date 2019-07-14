@@ -306,7 +306,10 @@ namespace KaPlanerServer.Logic
                         {
                             Console.WriteLine("Dieser Server hat Kinder");
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
-                            child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            if (database.ServerExist(childID))
+                            {
+                                child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            }
 
                         }
                         //wartet auf die anderen. hoffentlich
@@ -366,7 +369,10 @@ namespace KaPlanerServer.Logic
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
                             int childID = (Data.ServerConfig.serverID * 10) + 1 - i; //Weil HierarchieID's!
-                            child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            if (database.ServerExist(childID))
+                            {
+                                child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            }
 
                         }
                         //wartet auf die anderen. hoffentlich

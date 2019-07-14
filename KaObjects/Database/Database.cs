@@ -286,13 +286,13 @@ namespace KaObjects.Storage
 
             con.Close();
 
-            if (reader.GetString(0) == null)
+            if (reader.Read())
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
