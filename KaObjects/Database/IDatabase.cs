@@ -37,7 +37,7 @@ namespace KaObjects.Storage
 
         int getServerCount();
 
-        LinkedList<string> GetWellKnownPeers();
+        //LinkedList<string> GetWellKnownPeers();
     
         void newServerEntry(string ip, int id);
     }
