@@ -336,10 +336,10 @@ namespace KaPlanerServer.Logic
                     //Sollte immer durch newServer abgefragt werden!
                     Console.WriteLine("Ein neuer Servereintrag. bzw. Child");
                     int newId = Data.ServerConfig.serverID * 10;
-                    if (Data.ServerConfig.host == Data.ServerConfig.root)
-                    {
-                        newId += 10;
-                    }
+                    //if (Data.ServerConfig.host == Data.ServerConfig.root)
+                    //{
+                    //    newId += 10;
+                    //}
                     if (database.getServerCount() == 0)
                     {
                         newId += 1;
@@ -363,7 +363,7 @@ namespace KaPlanerServer.Logic
                         stateEintrag.setCounter(database.getServerCount());
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
-                            int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
+                            int childID = (Data.ServerConfig.serverID * 10) + 1 - i; //Weil HierarchieID's!
                             child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
 
                         }
@@ -458,7 +458,7 @@ namespace KaPlanerServer.Logic
                 {
                     addressid = child;
                 }
-                address = database.getServer(id);
+                address = database.getServer(addressid);
                 return address;
             }
 
