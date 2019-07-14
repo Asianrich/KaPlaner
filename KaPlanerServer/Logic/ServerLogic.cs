@@ -350,17 +350,17 @@ namespace KaPlanerServer.Logic
                         //Soll parallel ablaufen
                         //sendHierarchie();
                         stateEintrag stateEintrag = new stateEintrag();
-
+                        List<HierarchiePackage> child = new List<HierarchiePackage>();
                         stateEintrag.setCounter(database.getServerCount());
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
-                            Task.Run(async () => await sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                            child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
 
                         }
                         //wartet auf die anderen. hoffentlich
-                        stateEintrag.wait();
-                        List<HierarchiePackage> child = new List<HierarchiePackage>();
+
+                        
                         if (child.Count > 0)
                         {
                             child = stateEintrag.child;
@@ -394,7 +394,7 @@ namespace KaPlanerServer.Logic
                     }
                     else
                     {
-                        Task.Run(async () => package = await sendHierarchie(getAdress(package.destinationID), toDo.Send, null));
+                        package = sendHierarchie(getAdress(package.destinationID), toDo.Send, null);
 
 
 
@@ -463,7 +463,7 @@ namespace KaPlanerServer.Logic
                 else { return 1; }
             }
 
-            async Task<HierarchiePackage> sendHierarchie(string ipadress, toDo _toDo, stateEintrag state)
+            HierarchiePackage sendHierarchie(string ipadress, toDo _toDo, stateEintrag state)
             {
                 Package hierarchie = new Package();
                 //An beide Childs
@@ -471,7 +471,7 @@ namespace KaPlanerServer.Logic
                 {
 
 
-                    await Task.Run(() => hierarchie = send(hierarchie, IPAddress.Parse(ipadress)));
+                    hierarchie = send(hierarchie, IPAddress.Parse(ipadress));
                     state.decrementCounter();
                     state.child.Add(hierarchie.hierarchie);
                 }
@@ -798,6 +798,7 @@ namespace KaPlanerServer.Logic
             if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
+                Data.ServerConfig.serverID = 1;
 
             }
             else
