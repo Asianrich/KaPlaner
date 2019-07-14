@@ -31,10 +31,6 @@ namespace KaObjects
 
 
         /// <summary>
-        /// Standard auf -1, => Noch Keine Aenderungen
-        /// </summary>
-        //private int anzUser = -1; 
-        /// <summary>
         /// Dies soll immer weitergeleitet werden, dadurch kann man herausfinden wo das Packet durchgelaufen ist
         /// </summary>
         public List<string> visitedPlace = new List<string>();
