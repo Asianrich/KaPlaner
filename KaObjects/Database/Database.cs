@@ -366,20 +366,26 @@ namespace KaObjects.Storage
         /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
         /// <param name="TerminID">ID des behandelten Termins</param>
         /// <returns>Keine Rueckgabewerte</returns>
-        public void SaveInvites (string user, int TerminID)
+        public void SaveInvites (string user, KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
             if(UserExist(user))
             {
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, user);
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", kaEvent.TerminID, user);
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
-                saveEventCommand.Parameters.AddWithValue("@TerminID", TerminID);
+                saveEventCommand.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
                 saveEventCommand.Parameters.AddWithValue("@User", user);
             }
+
+            con.Close();
+
+            //TODO Auf der Kalendarliste den Termin eintragen.
+
+
         }
 
 

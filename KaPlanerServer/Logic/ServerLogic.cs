@@ -154,7 +154,7 @@ namespace KaPlanerServer.Logic
                 package.P2PAnswer = P2PAnswer.Visited; //Node wurde bereits angefragt, keine Aktion nötig
             }
 
-            
+
 
             return package;
 
@@ -259,36 +259,30 @@ namespace KaPlanerServer.Logic
             string ip = Data.ServerConfig.host.ToString();
             int id = Data.ServerConfig.serverID;
 
-            //BRAUCHT DAS MICH ZU INTERESSIEREN?!?!?!?!?!?! NUR ERST BEI INVITE!!!!
-            //
-            if (package.destinationAdress != Data.ServerConfig.host.ToString())
-            {
-
-
-
-
-            }
-
             switch (package.HierarchieRequest)
             {
                 case HierarchieRequest.Invite:
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
-
-                    // Server prueft, ist das Paket fuer rechten Kindserver
-                    if (neighbours[0].ToString() == package.destinationAdress)
+                    if(package.destinationID != Data.ServerConfig.serverID)
                     {
-                        //sendHierarchie(package, neighbours[0]);
-                    }
-                    // Server prueft, ist das Paket fuer linken Kindserver
-                    else if (neighbours[1].ToString() == package.destinationAdress)
-                    {
-                        //sendHierarchie(package, neighbours[1]);
+                        //weitersenden
                     }
                     else
                     {
-                        //sendHierarchie(package, neighbours[0]);
-                        //sendHierarchie(package, neighbours[1]);
+                        //Schau erstmal nach ob der User existiert
+                        if(database.UserExist(package.login))
+                        {
+                            database.SaveInvites(package.login, package.invite);
+
+
+
+                        }
+
+
+
                     }
+
+
                     break;
 
                 case HierarchieRequest.NewServer:
@@ -314,7 +308,7 @@ namespace KaPlanerServer.Logic
                         }
                         //wartet auf die anderen. hoffentlich
                         //stateEintrag.wait();
-                        
+
                         if (child.Count > 0)
                         {
                             foreach (HierarchiePackage c in child)
@@ -330,6 +324,7 @@ namespace KaPlanerServer.Logic
                                 }
                             }
                         }
+
                     }
                     package.destinationID = id;
                     package.destinationAdress = ip;
@@ -351,7 +346,7 @@ namespace KaPlanerServer.Logic
                     }
                     package.sourceID = newId;
                     database.newServerEntry(package.sourceAdress, newId);
-                    
+
 
                     break;
                 case HierarchieRequest.RegisterUser:
@@ -377,7 +372,7 @@ namespace KaPlanerServer.Logic
                         }
                         //wartet auf die anderen. hoffentlich
 
-                        
+
                         if (child.Count > 0)
                         {
                             child = stateEintrag.child;
@@ -645,9 +640,9 @@ namespace KaPlanerServer.Logic
                         //Bin ich das?
                         if (package.user.serverID == Data.ServerConfig.serverID)
                         {
-                            List <User> list = package.kaEvents[0].members;
+                            List<User> list = package.kaEvents[0].members;
 
-                            foreach(User member in list)
+                            foreach (User member in list)
                             {
 
                             }

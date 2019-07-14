@@ -27,7 +27,7 @@ namespace KaObjects.Storage
 
         int CheckMemberList();
 
-        void SaveInvites(string user, int TerminID);
+        void SaveInvites(string user, KaEvent kaEvent);
 
         List<KaEvent> ReadInvites(string user);
 
