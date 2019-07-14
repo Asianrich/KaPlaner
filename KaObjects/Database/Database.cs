@@ -306,12 +306,12 @@ namespace KaObjects.Storage
         /// ausgelesen werden kann.
         /// true, in allen anderen Faellen
         /// </returns>
-        public bool UserExist(User user)
+        public bool UserExist(string user)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername == '{0}'", user.name.ToString());
+            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername == '{0}'", user);
 
             SqlCommand checkCommand = new SqlCommand(checkUser, con);
 
@@ -366,21 +366,19 @@ namespace KaObjects.Storage
         /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
         /// <param name="TerminID">ID des behandelten Termins</param>
         /// <returns>Keine Rueckgabewerte</returns>
-        public void SaveInvites (List<Package> member, int TerminID)
+        public void SaveInvites (string user, int TerminID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            int index = member.Count();
-
-            for ( int i = 0; i < member.Count(); i++)
+            if(UserExist(user))
             {
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, member[index].user.name.ToString());
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", TerminID, user);
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
                 saveEventCommand.Parameters.AddWithValue("@TerminID", TerminID);
-                saveEventCommand.Parameters.AddWithValue("@User", member[i].user.name.ToString());
+                saveEventCommand.Parameters.AddWithValue("@User", user);
             }
         }
 
@@ -415,8 +413,6 @@ namespace KaObjects.Storage
 
                 SqlCommand read = new SqlCommand(readDates, con);
                 SqlDataReader reader2 = read.ExecuteReader();
-
-
 
                 index++;
             }
