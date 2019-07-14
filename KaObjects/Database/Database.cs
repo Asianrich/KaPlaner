@@ -475,19 +475,14 @@ namespace KaObjects.Storage
             return Count;
         }
 
-        public int AnzahlKindserver(int ServerID)
-        {
-            throw new NotImplementedException();
-        }
+        //public LinkedList<string> GetWellKnownPeers()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public LinkedList<string> GetWellKnownPeers()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ReadSingleRow(IDataRecord reader)
-        {
-            throw new NotImplementedException();
-        }
+        //private void ReadSingleRow(IDataRecord reader)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
