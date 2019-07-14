@@ -20,9 +20,9 @@ namespace WindowsFormsApp1
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
         ClientLogic client;
-#pragma warning disable CS0169 // The field 'wdw_calendar.kaEvents' is never used
+
         List<KaEvent> kaEvents;
-#pragma warning restore CS0169 // The field 'wdw_calendar.kaEvents' is never used
+        List<KaEvent> invites;
 
         
 
@@ -57,6 +57,7 @@ namespace WindowsFormsApp1
             else
             {
                 kaEvents = clientLogic.GetEventList();
+                invites = clientLogic.GetEventList();
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
                 BT_Request.Visible = true;
@@ -276,7 +277,7 @@ namespace WindowsFormsApp1
             kaEvents[2].members = new List<string>();
             kaEvents[2].members.Add("asd");
 
-            using (var form = new RequestList(kaEvents.ToList<KaEvent>(), client.currentUser))
+            using (var form = new RequestList(invites, client.currentUser))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

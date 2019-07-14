@@ -31,7 +31,12 @@ namespace KaPlaner.Logic
         public User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
         public List<KaEvent> eventList = new List<KaEvent>();
-
+        public List<KaEvent> inviteList = new List<KaEvent>();
+        
+        public List<KaEvent> getInvites()
+        {
+            return inviteList;
+        }
         public List<KaEvent> GetEventList()
         {
             return eventList;
@@ -85,6 +90,19 @@ namespace KaPlaner.Logic
             return database.login(currentUser);
         }
 
+
+
+        public void sendInvites(KaEvent kaEvent)
+        {
+
+            //database.SaveInvites();
+
+
+
+        }
+
+
+
         /// <summary>
         /// Login mit Nutzernamen und Passwort
         /// Benutzt das Networkinterface
@@ -113,6 +131,10 @@ namespace KaPlaner.Logic
             if (returnPackage.kaEvents != null)
             {
                 eventList = returnPackage.kaEvents;
+            }
+            if(returnPackage.invites != null)
+            {
+                inviteList = returnPackage.invites;
             }
 
             return RequestResolve(returnPackage);

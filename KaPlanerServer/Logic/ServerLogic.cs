@@ -198,7 +198,7 @@ namespace KaPlanerServer.Logic
                 receive = client.Start(package);
                 Thread.Sleep(1000);
             }
-            
+
 
             return receive;
         }
@@ -327,7 +327,7 @@ namespace KaPlanerServer.Logic
                     //Sollte immer durch newServer abgefragt werden!
                     Console.WriteLine("Ein neuer Servereintrag. bzw. Child");
                     int newId = Data.ServerConfig.serverID * 10;
-                    if(Data.ServerConfig.host == Data.ServerConfig.root)
+                    if (Data.ServerConfig.host == Data.ServerConfig.root)
                     {
                         newId += 10;
                     }
@@ -504,6 +504,7 @@ namespace KaPlanerServer.Logic
                             List<KaEvent> kaEvents;
                             kaEvents = database.read(package.user.name);
                             package.kaEvents = kaEvents;
+                            package.invites = database.ReadInvites(package.user.name);
                             writeResult(Request.Success, LoginSuccess);
                         }
                         else
@@ -556,16 +557,16 @@ namespace KaPlanerServer.Logic
                         }
                         else
                         {
-                            if(Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                            if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                             {
                                 HierarchiePackage hierarchie = new HierarchiePackage();
                                 hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
                                 hierarchie = resolveHierarchie(hierarchie);
                                 package.sourceServer = hierarchie.destinationAdress;
-                                
+
 
                             }
-                            else if(Data.ServerConfig.structure == Data.structure.P2P)
+                            else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
 
                             }
@@ -616,7 +617,26 @@ namespace KaPlanerServer.Logic
                 case Request.Test:
                     Console.WriteLine(RequestTest);
                     break;
+                case Request.Invite:
+                    if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
+                    {
+                        //Bin ich das?
+                        if (package.user.serverID == Data.ServerConfig.serverID)
+                        {
+                            database.SaveInvites(package.kaEvents)
 
+
+
+                        }
+                        else
+                        {
+                            //Nope such den server für mich
+
+                        }
+                    }
+
+
+                    break;
                 default:
                     Console.WriteLine(RequestUnknown);
                     break;
@@ -769,7 +789,7 @@ namespace KaPlanerServer.Logic
             if (isRoot)
             {
                 Data.ServerConfig.root = Data.ServerConfig.host;
-                
+
             }
             else
             {
@@ -801,8 +821,8 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine("Packet ist angekommen");
                         //Logic
                         Data.ServerConfig.root = address;
-                        Console.WriteLine("Adresse: " +package.hierarchie.destinationAdress);
-                        
+                        Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
+
                         //Zu wem muss ich mich verbinden? bzw. Registrieren
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
@@ -816,7 +836,7 @@ namespace KaPlanerServer.Logic
                         {
                             try
                             {
-                                
+
                                 receive = send(package, connectServer);
                                 Thread.Sleep(1000);
                                 break;

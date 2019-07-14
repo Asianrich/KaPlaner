@@ -139,6 +139,8 @@ namespace KaPlaner.GUI
 
                     KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
                     FocusEvent.members = form.listStringreturn;
+
+                    clientLogic.sendInvites(FocusEvent);
                 }
             }
             catch (Exception ex)
