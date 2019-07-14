@@ -349,16 +349,16 @@ namespace UnitTest
         }
 
 
-        /*   [TestMethod]
-             public void readinvitespruefung()
-              {
-                  list<kaevent> test = new list<kaevent>();
-                  list<kaevent> test2 = new list<kaevent>();
-                  database testdb = new database("data source=(localdb)\\mssqllocaldb;attachdbfilename=|datadirectory|\\data\\user_calendar.mdf;integrated security = true");
-                  string user = "testuser";
+        [TestMethod]
+        public void ReadInvitesPruefung()
+        {
+            List<KaEvent> test = new List<KaEvent>();
+            List<KaEvent> test2 = new List<KaEvent>();
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            string user = "TestUser";
 
-                  test2 = testdb.readinvites(user, test);
-              }*/
+            //test2 = testdb.ReadInvites(user, test);
+        }
 
         [TestMethod]
         public void GetServerPruefung()
