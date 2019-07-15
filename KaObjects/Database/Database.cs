@@ -133,7 +133,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.UserID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
             SqlCommand cmd_insert = new SqlCommand(ins3, con);
 
