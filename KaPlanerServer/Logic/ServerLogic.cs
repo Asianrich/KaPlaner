@@ -259,6 +259,7 @@ namespace KaPlanerServer.Logic
             bool isResolving = false;
             if (package.p2p != null)
             {
+                //P2P Server-Server
                 package.p2p.visitedPlace.Add(Data.ServerConfig.host.ToString());
 
                 package.p2p = resolveP2P(package.p2p);
@@ -271,12 +272,14 @@ namespace KaPlanerServer.Logic
             }
             else if (package.hierarchie != null)
             {
+                //Hierarchie Server-Server
                 package.hierarchie = resolveHierarchie(package.hierarchie);
                 package.sourceServer = package.hierarchie.destinationAdress;
 
             }
             else
             {
+                //CLient-Server
                 package = resolvePackage(package);
             }
 
@@ -594,6 +597,11 @@ namespace KaPlanerServer.Logic
                         }
                         else if (Data.ServerConfig.structure == Data.structure.P2P)
                         {
+                            //P2PLogic fürs Login
+
+
+
+
 
                         }
                         writeResult(Request.changeServer, "ChangeServer");
@@ -629,6 +637,9 @@ namespace KaPlanerServer.Logic
                             }
                             else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
+
+
+
 
                             }
                             writeResult(Request.changeServer, "ChangeServer");
@@ -714,6 +725,16 @@ namespace KaPlanerServer.Logic
 
 
                         //database.SaveInvites(package.kaEvents)
+
+                    }
+                    else if(Data.ServerConfig.structure == Data.structure.P2P)
+                    {
+
+                        //Logik P2P Invite
+
+
+
+
 
                     }
 
