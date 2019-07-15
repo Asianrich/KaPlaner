@@ -94,6 +94,11 @@ namespace KaObjects
             this.kaEvents.Add(kaEvent);
         }
 
+        public Package(P2PPackage p2PPackage)
+        {
+            this.p2p = p2PPackage;
+        }
+
         public Package() { }
     }
 }

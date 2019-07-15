@@ -81,7 +81,7 @@ namespace KaPlanerServer.Logic
         //Connection String ... in VS config auslagern?
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
-        private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
+        private List<IPAddress> neighbours = Data.ServerConfig.ipAddress; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
         public static string _ipString; //deprecated => Data.ServerConfig.host.ToString()
 
         IDatabase database = new Database(connectionString);
@@ -169,8 +169,6 @@ namespace KaPlanerServer.Logic
                             break;
                     }
 
-                    package.P2PAnswer = P2PAnswer.Success;
-
                 }
                 catch (Exception)
                 {
@@ -184,8 +182,6 @@ namespace KaPlanerServer.Logic
                 package.P2PAnswer = P2PAnswer.Visited; //Node wurde bereits angefragt, keine Aktion nötig
             }
 
-
-
             return package;
 
             P2PAnswer Forward()
@@ -193,16 +189,22 @@ namespace KaPlanerServer.Logic
                 if (package.DecrementTTL() == 0)
                     return P2PAnswer.Timeout;
 
+                Package sendPackage = new Package(package);
+                Package recievePackage = new Package();
 
-                //send(package, ));
-                //Hier gehört der Sendeaufruf hin.
-                //Danach muss die Antwort gehandled werden.
-                return P2PAnswer.Success;
+                foreach (IPAddress iPAddress in neighbours)
+                {
+                    recievePackage = Send(sendPackage, iPAddress);
+                    if (recievePackage.p2p.P2PAnswer == P2PAnswer.Success)
+                        return recievePackage.p2p.P2PAnswer;
+                }
+
+                return recievePackage.p2p.P2PAnswer;
             }
         }
 
 
-        private Package send(Package package, IPAddress iPAddress)
+        private Package Send(Package package, IPAddress iPAddress)
         {
             Package receive = new Package();
             ClientConnection client = new ClientConnection(iPAddress);
@@ -530,13 +532,13 @@ namespace KaPlanerServer.Logic
                 if (_toDo == toDo.Info)
                 {
 
-                    hierarchie = send(hierarchie, IPAddress.Parse(ipadress));
+                    hierarchie = Send(hierarchie, IPAddress.Parse(ipadress));
                     state.decrementCounter();
                     state.child.Add(hierarchie.hierarchie);
                 }
                 else if (_toDo == toDo.Send) //nur an einer gewissen Server
                 {
-                    hierarchie = send(hierarchie, IPAddress.Parse(ipadress));
+                    hierarchie = Send(hierarchie, IPAddress.Parse(ipadress));
                 }
 
                 return hierarchie.hierarchie;
@@ -859,7 +861,7 @@ namespace KaPlanerServer.Logic
                     package.sourceServer = Data.ServerConfig.host.ToString();
 
 
-                    package = send(package, IPAddress.Parse(read));
+                    package = Send(package, IPAddress.Parse(read));
 
 
                 }
@@ -896,7 +898,7 @@ namespace KaPlanerServer.Logic
 
                     if (IPAddress.TryParse(read, out IPAddress address))
                     {
-                        package = send(package, address);
+                        package = Send(package, address);
                     }
                     else
                     {
@@ -926,7 +928,7 @@ namespace KaPlanerServer.Logic
                             try
                             {
 
-                                receive = send(package, connectServer);
+                                receive = Send(package, connectServer);
                                 Thread.Sleep(1000);
                                 break;
                             }
