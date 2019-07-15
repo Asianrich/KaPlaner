@@ -28,6 +28,9 @@ namespace KaPlaner.Logic
 
         void sendInvites(KaEvent kaEvent);
 
+        void answerInvite(KaEvent kaEvent, bool choice);
+
+        List<KaEvent> getInvites();
         List<KaEvent> LoadEventsLocal(DateTime month);
 
         List<KaEvent> LoadEventsRemote(DateTime month);

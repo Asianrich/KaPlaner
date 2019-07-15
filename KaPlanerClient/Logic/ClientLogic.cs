@@ -32,7 +32,7 @@ namespace KaPlaner.Logic
 
         public List<KaEvent> eventList = new List<KaEvent>();
         public List<KaEvent> inviteList = new List<KaEvent>();
-        
+
         public List<KaEvent> getInvites()
         {
             return inviteList;
@@ -136,7 +136,7 @@ namespace KaPlaner.Logic
             {
                 eventList = returnPackage.kaEvents;
             }
-            if(returnPackage.invites != null)
+            if (returnPackage.invites != null)
             {
                 inviteList = returnPackage.invites;
             }
@@ -188,7 +188,7 @@ namespace KaPlaner.Logic
                 registerPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(registerPackage);
             }
-            
+
             if (RequestResolve(returnPackage))
             {
                 currentUser = returnPackage.user;
@@ -248,6 +248,17 @@ namespace KaPlaner.Logic
                 return true;
             else
                 return false;
+        }
+
+        public void answerInvite(KaEvent kaEvent, bool choice)
+        {
+            Package package = new Package();
+
+            package.user = currentUser;
+            package.answerInvite = choice;
+            package.kaEvents.Add(kaEvent);
+            clientConnection.Start(package);
+
         }
     }
 

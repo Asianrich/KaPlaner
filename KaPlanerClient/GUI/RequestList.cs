@@ -10,12 +10,13 @@ using System.Windows.Forms;
 using KaObjects;
 using KaPlaner.GUI;
 using WindowsFormsApp1;
-
+using KaPlaner.Logic;
 namespace KaPlaner.GUI
 {
     public partial class RequestList : Form
     {
-        private List<int> indexes;
+        IClientLogic clientLogic = ClientActivator.clientLogic;
+        private List<int> indexes; //Brauche ich das bei einer Invite liste wenn es woanders steht?
         public List<KaEvent> ListEvents;
         private User user;
         public RequestList(List<KaEvent> kaEvents, User user)
@@ -154,12 +155,17 @@ namespace KaPlaner.GUI
 
         private void Bt_Decline_Click(object sender, EventArgs e)
         {
+            int index = LV_Dates.FocusedItem.Index;
+            try
+            {
 
+                clientLogic.answerInvite(, false);
+            }
         }
 
         private void BT_Accept_Click(object sender, EventArgs e)
         {
-
+            clientLogic.answerInvite(, false);
         }
     }
 }
