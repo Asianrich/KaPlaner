@@ -99,8 +99,9 @@ namespace KaPlaner.Logic
         {
 
             Package package = new Package();
+            package.kaEvents = new List<KaEvent>();
             package.kaEvents.Add(kaEvent);
-
+            package.request = Request.Invite;
             clientConnection.Start(package);
 
         }
@@ -179,7 +180,7 @@ namespace KaPlaner.Logic
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm);
             registerPackage.serverSwitched = false;
-            clientConnection.changeIP("192.168.0.3"); // für Root und so muss mans ändern
+            clientConnection.changeIP("192.168.0.6"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.changeServer)

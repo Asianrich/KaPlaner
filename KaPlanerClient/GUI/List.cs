@@ -23,7 +23,7 @@ namespace KaPlaner.GUI
         public List<KaEvent> ListEvents;
         bool isOnline;
 
-        public Wdw_date_list(List<KaEvent>kaEvents, DateTime date, bool isOnline)
+        public Wdw_date_list(List<KaEvent> kaEvents, DateTime date, bool isOnline)
         {
             InitializeComponent();
             this.isOnline = isOnline;
@@ -77,27 +77,27 @@ namespace KaPlaner.GUI
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
-                { 
-                        kaEvent = form.returnValue;
+                {
+                    kaEvent = form.returnValue;
                 }
                 else
                 {
-                        MessageBox.Show("Ne ne ne So funktionierts nicht");
-                        isNewElement = false;
-                    }
-                }
-
-                if (isNewElement)
-                {
-                    ListEvents.Add(kaEvent);
-                    update();
-                }
-                else
-                {
-                    ListEvents[index - 1] = kaEvent;
+                    MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    isNewElement = false;
                 }
             }
-        
+
+            if (isNewElement)
+            {
+                ListEvents.Add(kaEvent);
+                update();
+            }
+            else
+            {
+                ListEvents[index - 1] = kaEvent;
+            }
+        }
+
 
         private void BTN_oeffnen_Click(object sender, EventArgs e)
         {
@@ -139,10 +139,19 @@ namespace KaPlaner.GUI
 
                     KaEvent FocusEvent = ListEvents[LV_dates.FocusedItem.Index];
                     List<User> users = new List<User>();
+                    char[] delim = { '#' };
 
-                    foreach(string s in form.listStringreturn)
+                    foreach (string s in form.listStringreturn)
                     {
-                        User user = new User(s);
+                        string[] parts = s.Split(delim);
+                        User user = new User(parts[0]);
+                        if (parts[1] != null)
+                        {
+                            if (Int32.TryParse(parts[1], out int result))
+                            {
+                                user.serverID = result;
+                            }
+                        }
                         users.Add(user);
                     }
 
@@ -159,7 +168,7 @@ namespace KaPlaner.GUI
         }
 
         private void BTN_delete_Click(object sender, EventArgs e)
-        { 
+        {
             try
             {
                 ListEvents.RemoveAt(indexes[LV_dates.FocusedItem.Index]);

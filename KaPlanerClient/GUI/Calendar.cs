@@ -277,7 +277,7 @@ namespace WindowsFormsApp1
             //kaEvents[2].members = new List<string>();
             //kaEvents[2].members.Add("asd");
 
-            using (var form = new RequestList(invites, client.currentUser))
+            using (var form = new RequestList(invites, clientLogic.GetUser()))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
