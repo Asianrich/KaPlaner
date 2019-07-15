@@ -159,13 +159,17 @@ namespace KaPlaner.GUI
             try
             {
 
-                clientLogic.answerInvite(, false);
+                //clientLogic.answerInvite(, false);
+            }
+            catch(Exception ex)
+            {
+
             }
         }
 
         private void BT_Accept_Click(object sender, EventArgs e)
         {
-            clientLogic.answerInvite(, false);
+            //clientLogic.answerInvite(, false);
         }
     }
 }
