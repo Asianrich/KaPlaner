@@ -363,10 +363,16 @@ namespace KaPlanerServer.Logic
                     //{
                     //    newId += 10;
                     //}
-                    if (database.getServerCount() == 0)
+                    //if (database.getServerCount() == 0)
+                    //{
+                    //    newId += 1;
+                    //}
+                    if(!database.ServerExist(newId + 1))
                     {
                         newId += 1;
                     }
+
+
                     package.sourceID = newId;
                     database.newServerEntry(package.sourceAdress, newId);
 
@@ -384,7 +390,7 @@ namespace KaPlanerServer.Logic
                         stateEintrag stateEintrag = new stateEintrag();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
                         stateEintrag.setCounter(database.getServerCount());
-                        for (int i = 0; i < database.getServerCount(); i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             int childID = (Data.ServerConfig.serverID * 10) + 1 - i; //Weil HierarchieID's!
                             if (database.ServerExist(childID))
