@@ -253,7 +253,7 @@ namespace KaPlaner.Logic
         public void answerInvite(KaEvent kaEvent, bool choice)
         {
             Package package = new Package();
-
+            package.kaEvents = new List<KaEvent>();
             package.user = currentUser;
             package.answerInvite = choice;
             package.kaEvents.Add(kaEvent);

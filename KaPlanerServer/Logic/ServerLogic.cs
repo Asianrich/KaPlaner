@@ -367,7 +367,7 @@ namespace KaPlanerServer.Logic
                     //{
                     //    newId += 1;
                     //}
-                    if(!database.ServerExist(newId + 1))
+                    if (!database.ServerExist(newId + 1))
                     {
                         newId += 1;
                     }
