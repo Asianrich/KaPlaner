@@ -9,7 +9,7 @@ using System.Net;
 namespace KaObjects
 {
     public enum P2PRequest { NewServer, RegisterServer, NewUser, RegisterUser, Login, Invite }
-    public enum P2PAnswer { Success, Failure, Error, Visited}
+    public enum P2PAnswer { Success, Failure, Error, Visited, Timeout}
     [Serializable]
     public class P2PPackage
     {
@@ -23,6 +23,18 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         public int anzUser = AnzUserInit;
+        private string Username;
+
+        public string GetUsername()
+        {
+            return Username;
+        }
+
+
+        public P2PPackage(string Username)
+        {
+            this.Username = Username;
+        }
 
         /// <summary>
         /// IP des letzten Knoten, der die niedrigsten Verbindungen aufweist.
@@ -49,6 +61,7 @@ namespace KaObjects
         /// ZielAdresse
         /// </summary>
         private string destination;
+
         //public IPAddress returnIPAddress;
 
         public P2PPackage()
