@@ -145,7 +145,7 @@ namespace WindowsFormsApp1
             this.btn_reg_schließen.Text = "Schließen";
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
             this.btn_reg_schließen.Click += new System.EventHandler(this.Btn_reg_quit_Click);
-            
+
             /// 
             /// Wdw_registrierung
             /// 
@@ -170,12 +170,19 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (clientLogic.RegisterRemote(new User(rTB_benutzername.Text, rTB_passwort.Text), rTB_passwort_bestaetigen.Text))
+                User user = new User(rTB_benutzername.Text, rTB_passwort.Text);
+                if (clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
                 {
+                    user = clientLogic.GetUser();
+                    MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
+                    + Environment.NewLine + "Username: " + user.name
+                    + Environment.NewLine + "Passwort: "+ user.password
+                    + Environment.NewLine +"ServerID: " + user.serverID);
+                    
                     Form open_calendar = new wdw_calendar(true);
                     open_calendar.Show();
                     Close();
-                    MessageBox.Show("Registrierung erfolgreich-Willkommen");
+
                 }
                 else
                 {
@@ -188,7 +195,7 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(ex.Message);
             }
-        }   
+        }
 
         private void Btn_reg_quit_Click(object sender, EventArgs e)
         {

@@ -13,6 +13,7 @@ namespace KaPlaner.Logic
     /// </summary>
     public interface IClientLogic
     {
+        User GetUser();
         bool LoginLocal(User user);
 
         bool LoginRemote(User user);

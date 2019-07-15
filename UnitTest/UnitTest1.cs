@@ -378,5 +378,13 @@ namespace UnitTest
             count = testdb.getServerCount();
             Console.WriteLine(count);
         }
+
+
+
+        [TestMethod]
+        public void trimspace()
+        {
+
+        }
     }
 }
