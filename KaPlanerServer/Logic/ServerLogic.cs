@@ -863,10 +863,19 @@ namespace KaPlanerServer.Logic
 
         private void P2PSettings(bool isWellKnown)
         {
+            //Durch Jans Parser, Wellknows rausholen und dann die auf Data.ServerConfig.ListofWellKnown eintragen
+
+
+
             if (isWellKnown)
             {
                 Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
-
+                foreach(IPAddress ipAddress in Data.ServerConfig.ListofWellKnown)
+                {
+                    if(ipAddress != Data.ServerConfig.host)
+                        Data.ServerConfig.ipAddress.Add(ipAddress);
+                }
+                
 
             }
             else
@@ -939,7 +948,7 @@ namespace KaPlanerServer.Logic
                         package.hierarchie.HierarchieRequest = HierarchieRequest.RegisterServer;
                         package.hierarchie.sourceAdress = Data.ServerConfig.host.ToString();
 
-                        Console.WriteLine("Verbindung zum Root aufbauen? Y");
+                        Console.WriteLine("Verbindung zum Server aufbauen? Y");
                         Console.ReadLine();
 
                         IPAddress connectServer = IPAddress.Parse(package.hierarchie.destinationAdress);
