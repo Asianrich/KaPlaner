@@ -374,7 +374,7 @@ namespace KaObjects.Storage
 
             if (UserExist(user))
             {
-                string exist = string.Format("Select * from calendar where TerminID = {0} AND Benutzername = {0}", kaEvent.TerminID, kaEvent.owner);
+                string exist = string.Format("Select * from calendar where TerminID = {0} AND Benutzername = '{1}'", kaEvent.TerminID, kaEvent.owner.name);
                 SqlCommand exist_com = new SqlCommand(exist, con);
                 SqlDataReader read = exist_com.ExecuteReader();
                 if (!read.Read())
@@ -386,7 +386,7 @@ namespace KaObjects.Storage
                 con = new SqlConnection(connectionString);
                 con.Open();
 
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", kaEvent.TerminID, user);
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, [User]) VALUES ({0}, '{1}')", kaEvent.TerminID, user);
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
@@ -426,7 +426,7 @@ namespace KaObjects.Storage
             int index = 0;
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
-            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE User = '{0}'", user);
+            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE [User] = '{0}'", user);
 
             //string exist = "SELECT TerminID FROM Memberlist WHERE EXISTS(SELECT * FROM Memberlist WHERE User = {0}", user);";
 
