@@ -738,7 +738,7 @@ namespace KaPlanerServer.Logic
                         //database.SaveInvites(package.kaEvents)
 
                     }
-                    else if(Data.ServerConfig.structure == Data.structure.P2P)
+                    else if (Data.ServerConfig.structure == Data.structure.P2P)
                     {
 
                         //Logik P2P Invite
@@ -879,12 +879,22 @@ namespace KaPlanerServer.Logic
             if (isWellKnown)
             {
                 Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
-                foreach(IPAddress ipAddress in Data.ServerConfig.ListofWellKnown)
+                foreach (IPAddress ipAddress in Data.ServerConfig.ListofWellKnown)
                 {
-                    if(ipAddress != Data.ServerConfig.host)
-                        Data.ServerConfig.ipAddress.Add(ipAddress);
+                    if (ipAddress != Data.ServerConfig.host)
+                    {
+                        Package package = new Package();
+                        package.p2p = new P2PPackage();
+                        package.p2p.P2Prequest = P2PRequest.RegisterServer;
+                        package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
+                        Package receive = Send(package, ipAddress);
+                        if (receive != null)
+                        {
+                            Data.ServerConfig.ipAddress.Add(ipAddress);
+                        }
+                    }
                 }
-                
+
 
             }
             else
@@ -902,7 +912,7 @@ namespace KaPlanerServer.Logic
 
                     package = Send(package, IPAddress.Parse(read));
 
-                    if(package != null)
+                    if (package != null)
                     {
 
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
