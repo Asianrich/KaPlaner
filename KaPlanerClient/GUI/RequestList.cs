@@ -158,18 +158,27 @@ namespace KaPlaner.GUI
             int index = LV_Dates.FocusedItem.Index;
             try
             {
-
-                //clientLogic.answerInvite(, false);
+                
+                clientLogic.answerInvite(ListEvents[index], false);
             }
             catch(Exception ex)
             {
-
+                MessageBox.Show("Etwas ist schief gelaufen");
             }
         }
 
         private void BT_Accept_Click(object sender, EventArgs e)
         {
-            //clientLogic.answerInvite(, false);
+            int index = LV_Dates.FocusedItem.Index;
+            try
+            {
+
+                clientLogic.answerInvite(ListEvents[index], true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Etwas ist schief gelaufen");
+            }
         }
     }
 }
