@@ -113,13 +113,16 @@ namespace KaPlanerServer.Logic
                             }
                             //2. Forking to other servers via flooding
                             returnList = Forward();
-                            //Comparing answers
-                            foreach(P2PPackage p in returnList)
+                            if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                             {
-                                if (package.anzConn >= p.anzConn)
+                                //Comparing answers
+                                foreach (P2PPackage p in returnList)
                                 {
-                                    package.anzConn = p.anzConn;
-                                    package.lastIP = p.lastIP;
+                                    if (package.anzConn >= p.anzConn)
+                                    {
+                                        package.anzConn = p.anzConn;
+                                        package.lastIP = p.lastIP;
+                                    }
                                 }
                             }
                             break;
@@ -144,13 +147,16 @@ namespace KaPlanerServer.Logic
                             }
                             //2. Forking to other servers via flooding
                             returnList = Forward();
-                            //Comparing answers
-                            foreach (P2PPackage p in returnList)
+                            if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                             {
-                                if (package.anzUser >= p.anzUser)
+                                //Comparing answers
+                                foreach (P2PPackage p in returnList)
                                 {
-                                    package.anzUser = p.anzUser;
-                                    package.lastIP = p.lastIP;
+                                    if (package.anzUser >= p.anzUser)
+                                    {
+                                        package.anzUser = p.anzUser;
+                                        package.lastIP = p.lastIP;
+                                    }
                                 }
                             }
                             break;
@@ -165,10 +171,13 @@ namespace KaPlanerServer.Logic
                             if (!database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
                             {
                                 returnList = Forward();
-                                foreach (P2PPackage p in returnList)
+                                if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                                 {
-                                    if (p.P2PAnswer == P2PAnswer.Success)
-                                        package.lastIP = p.lastIP;
+                                    foreach (P2PPackage p in returnList)
+                                    {
+                                        if (p.P2PAnswer == P2PAnswer.Success)
+                                            package.lastIP = p.lastIP;
+                                    }
                                 }
                             }
                             else
