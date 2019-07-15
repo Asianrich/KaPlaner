@@ -205,8 +205,9 @@ namespace KaObjects.Storage
                     temp.Ort = reader.GetString(2);
                     temp.Beginn = reader.GetDateTime(4);
                     temp.Ende = reader.GetDateTime(5);
-                    temp.Beschreibung = reader.GetString(7);
-
+                    temp.Beschreibung = reader.GetString(6);
+                    temp.owner = new User(reader.GetString(7));
+                    
                     Console.WriteLine(temp.Titel);
                     ka.Add(temp);
 
@@ -422,7 +423,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            List<KaEvent> test = new List<KaEvent>();
+            List<KaEvent> invites = new List<KaEvent>();
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
             string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE [User] = '{0}'", user);
@@ -430,18 +431,29 @@ namespace KaObjects.Storage
             SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
 
             SqlDataReader reader = readEventCommand.ExecuteReader();
-
-            try
+            List<int> id = new List<int>();
+            if(reader.HasRows)
             {
-                while (reader.Read())
+                while(reader.Read())
                 {
-                    // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
-                    string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(0));
+                    id.Add(reader.GetInt32(0));
+                }
+            }
 
-                    SqlCommand read = new SqlCommand(readDates, con);
-                    SqlDataReader reader2 = read.ExecuteReader();
+            reader.Close();
+            con.Close();
 
-                    test.Add(new KaEvent()
+            foreach(int termin in id)
+            {
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0}", termin);
+                con = new SqlConnection(connectionString);
+                con.Open();
+                SqlCommand read = new SqlCommand(readDates, con);
+                SqlDataReader reader2 = read.ExecuteReader();
+
+                if (reader2.Read())
+                {
+                    invites.Add(new KaEvent()
                     {
                         TerminID = reader2.GetInt32(0),
                         Titel = reader2.GetString(1),
@@ -449,23 +461,38 @@ namespace KaObjects.Storage
                         Beginn = reader2.GetDateTime(4),
                         Ende = reader2.GetDateTime(5),
                         Beschreibung = reader2.GetString(6),
+                        owner = new User(reader2.GetString(7))
 
-                        //owner = reader2. ...;
                     });
-                    reader2.Close();
                 }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                reader.Close();
+
+                reader2.Close();
                 con.Close();
             }
+            //try
+            //{
+            //    while (reader.Read())
+            //    {
+            //        // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
 
-            return test;
+            //        SqlCommand read = new SqlCommand(readDates, con);
+            //        SqlDataReader reader2 = read.ExecuteReader();
+
+
+            //        reader2.Close();
+            //    }
+            //}
+            //catch (SqlException ex)
+            //{
+            //    //MessageBox.Show(ex.Message);
+            //}
+            //finally
+            //{
+            //    reader.Close();
+            //    con.Close();
+            //}
+
+            return invites;
         }
 
 
@@ -583,7 +610,7 @@ namespace KaObjects.Storage
 
             }
 
-            string del_Com = String.Format("Delete from memberlist where TerminID = {0} AND User = {0}", kaEvent.TerminID, user);
+            string del_Com = String.Format("Delete from memberlist where TerminID = {0} AND [User] = '{0}'", kaEvent.TerminID, user);
 
             SqlCommand delInvite = new SqlCommand(del_Com, con);
 

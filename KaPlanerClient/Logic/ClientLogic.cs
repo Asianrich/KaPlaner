@@ -257,6 +257,7 @@ namespace KaPlaner.Logic
             package.kaEvents = new List<KaEvent>();
             package.user = currentUser;
             package.answerInvite = choice;
+            package.request = Request.answerInvite;
             package.kaEvents.Add(kaEvent);
             clientConnection.Start(package);
 

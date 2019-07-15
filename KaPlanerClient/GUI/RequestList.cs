@@ -32,8 +32,8 @@ namespace KaPlaner.GUI
         public void update()
         {
             string[] row = new string[5];
-            LV_Dates.Items.Clear();
-            indexes.Clear();
+            //LV_Dates.Items.Clear();
+            //indexes.Clear();
             int i = 0;
 
             //ListEvents.ForEach(x =>
@@ -58,27 +58,35 @@ namespace KaPlaner.GUI
             
             foreach (KaEvent ka in ListEvents)
             {
-                List<string> users = new List<string>();
-                foreach(User u in ka.members)
-                {
-                    users.Add(u.name);
-                }
-                if (ka.members != null)
-                {
-                    //Eingeladene Termine angezeigt bekommen.
-                    if (invite(users.ToArray(), user.name))  
-                    {
-                        row[0] = ka.Titel;
-                        row[1] = ka.Ort;
-                        row[2] = ka.Beginn.ToString();
-                        row[3] = ka.Ende.ToString();
-                        indexes.Add(i);
-                        ListViewItem lvi = new ListViewItem(row);
 
-                        LV_Dates.Items.Add(lvi);
-                    }
-                }
-                i++;
+
+
+
+
+
+
+
+                //List<string> users = new List<string>();
+                //foreach(User u in ka.members)
+                //{
+                //    users.Add(u.name);
+                //}
+                //if (ka.members != null)
+                //{
+                //    //Eingeladene Termine angezeigt bekommen.
+                //    if (invite(users.ToArray(), user.name))  
+                //    {
+                row[0] = ka.Titel;
+                row[1] = ka.Ort;
+                row[2] = ka.Beginn.ToString();
+                row[3] = ka.Ende.ToString();
+                //indexes.Add(i);
+                ListViewItem lvi = new ListViewItem(row);
+
+                LV_Dates.Items.Add(lvi);
+                //    }
+                //}
+                //i++;
             }
         }
 
@@ -103,7 +111,9 @@ namespace KaPlaner.GUI
         {
             try
             {
-                int index = LV_Dates.FocusedItem.Index;                
+                int index = LV_Dates.FocusedItem.Index;
+                
+
             }
             catch (Exception ex)
             {
@@ -135,7 +145,7 @@ namespace KaPlaner.GUI
                 }
                 else
                 {
-                    MessageBox.Show("Ne ne ne So funktionierts nicht");
+                    
                 }
             }
 
