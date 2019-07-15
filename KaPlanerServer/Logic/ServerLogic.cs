@@ -600,11 +600,20 @@ namespace KaPlanerServer.Logic
                         else if (Data.ServerConfig.structure == Data.structure.P2P)
                         {
                             //P2PLogic fürs Login
-
-
-
-
-
+                            P2PPackage p2p = new P2PPackage(package.user.name)
+                            {
+                                P2Prequest = P2PRequest.Login
+                            };
+                            p2p = resolveP2P(p2p);
+                            if (p2p.P2PAnswer == P2PAnswer.Success)
+                            {
+                                package.sourceServer = p2p.lastIP;
+                                writeResult(Request.changeServer, "ChangeServer");
+                            }
+                            else
+                            {
+                                writeResult(Request.Failure, LoginFail);
+                            }
                         }
                         writeResult(Request.changeServer, "ChangeServer");
                     }
@@ -639,10 +648,10 @@ namespace KaPlanerServer.Logic
                             }
                             else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
-
-
-
-
+                                P2PPackage p2p = new P2PPackage();
+                                p2p.P2Prequest = P2PRequest.NewUser;
+                                p2p = resolveP2P(p2p);
+                                package.sourceServer = p2p.lastIP;
                             }
                             writeResult(Request.changeServer, "ChangeServer");
                         }
