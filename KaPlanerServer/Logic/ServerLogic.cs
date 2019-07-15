@@ -78,13 +78,7 @@ namespace KaPlanerServer.Logic
         static readonly string RequestTest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
-        static readonly int recievedListLimit = 20; //chosen limit for packages to check against
-
-        //Connection String muss noch angepasst werden
-        //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+        //Connection String ... in VS config auslagern?
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
         private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
@@ -102,52 +96,73 @@ namespace KaPlanerServer.Logic
         {
             if (Data.ServerConfig.CheckPackageID(package.GetPackageID()))
             {
-
-                switch (package.P2Prequest)
+                try
                 {
-                    case P2PRequest.NewServer:
-                        //1. Anzahl Verbindungen (s. neighbours)
-                        if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn >= neighbours.Count)
-                        {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                            package.anzConn = neighbours.Count;
-                            package.lastIP = Data.ServerConfig.host.ToString();
-                        }
-                        //2. Forking to other servers via flooding
-                        Forward();
-                        break;
+                    switch (package.P2Prequest)
+                    {
+                        case P2PRequest.NewServer:
+                            //1. Anzahl Verbindungen (s. neighbours)
+                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > neighbours.Count)
+                            {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                                package.anzConn = neighbours.Count;
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                            }
+                            else if (package.anzConn == neighbours.Count)
+                            {
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                            }
+                            //2. Forking to other servers via flooding
+                            Forward();
+                            break;
 
-                    case P2PRequest.RegisterServer:
-                        //1. Nimm Server in neighbours auf.
-                        //2. Lege einen Datenbankeintrag an.
+                        case P2PRequest.RegisterServer:
+                            //1. Nimm Server in neighbours auf.
+                            neighbours.Add(IPAddress.Parse(package.GetSource()));
+                            break;
 
-                        break;
+                        case P2PRequest.NewUser:
+                            //1. Anzahl User
+                            int anzUser = database.getUserCount();
+                            if (package.anzUser == P2PPackage.AnzUserInit || package.anzUser > anzUser)
+                            {// siehe case NewServer
+                                package.anzUser = anzUser;
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                            }
+                            else if (package.anzUser == anzUser)
+                            {
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                            }
+                            //2. Forking to other servers via flooding
+                            Forward();
+                            break;
 
-                    case P2PRequest.NewUser:
-                        //1. Anzahl User
-                        int anzUser = database.getUserCount();
-                        if (package.anzUser == P2PPackage.AnzUserInit || package.anzUser >= anzUser)
-                        {//2. siehe case NewServer
+                        case P2PRequest.RegisterUser:
+                            //Client should connect directly to register.
+                            break;
 
-                        }
-                        break;
+                        case P2PRequest.Login:
+                            //1. Check Datenbank nach user
+                            //database.UserExist();
+                            //2. Wenn nicht gefunden => weiterleiten
+                            break;
 
-                    case P2PRequest.RegisterUser:
+                        case P2PRequest.Invite:
 
-                        break;
+                            break;
 
-                    case P2PRequest.Login:
-                        //1. Check Datenbank nach user
-                        //2. Wenn nicht gefunden => weiterleiten
-                        break;
+                        default:
 
-                    case P2PRequest.Invite:
+                            break;
+                    }
 
-                        break;
-
-                    default:
-
-                        break;
+                    package.P2PAnswer = P2PAnswer.Success;
                 }
+                catch (Exception)
+                {
+                    package.P2PAnswer = P2PAnswer.Error;
+                    //throw;
+                }
+
             }
             else
             {
