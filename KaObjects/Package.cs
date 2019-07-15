@@ -13,7 +13,7 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete, changeServer }; // Success and Failure are responses from the server
+    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete, changeServer, answerInvite }; // Success and Failure are responses from the server
 
 
     [Serializable, XmlRoot("Package")]
@@ -47,7 +47,7 @@ namespace KaObjects
         public HierarchiePackage hierarchie;
 
         public string passwordConfirm;
-
+        public bool answerInvite = false;
         /// <summary>
         /// Antwort FUER DEN CLIENT!
         /// </summary>

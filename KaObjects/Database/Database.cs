@@ -13,7 +13,8 @@ using System.Data.SqlTypes;
 
 namespace KaObjects.Storage
 {
-    public class Database : IDatabase {
+    public class Database : IDatabase
+    {
 
         string connectionString;
 
@@ -68,7 +69,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="TerminID"></param>
         /// <returns></returns>
-        public bool registerUser(User user,string password_bestaetigen)
+        public bool registerUser(User user, string password_bestaetigen)
         {
             if (String.IsNullOrEmpty(user.name) || String.IsNullOrEmpty(user.password) || String.IsNullOrEmpty(password_bestaetigen))
             {
@@ -132,10 +133,10 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername)  VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.UserID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
             SqlCommand cmd_insert = new SqlCommand(ins3, con);
-            
+
             cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
             cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);
             cmd_insert.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
@@ -145,7 +146,9 @@ namespace KaObjects.Storage
 
             Console.WriteLine(cmd_insert.CommandText);//debugging  
 
-            cmd_insert.ExecuteNonQuery();
+            int id = (int)cmd_insert.ExecuteScalar();
+
+            kaEvent.TerminID = id;
             con.Close();
             return; //Können wir überprüfen ob es geklappt hat?
         }
@@ -230,12 +233,12 @@ namespace KaObjects.Storage
 
             string delete = ("DELETE oescht einen Termin mit der TerminID aus FROM Calendar WHERE TerminID = @TerminID");
             DecoderReplacementFallback Datenbank;
-            
+
             SqlCommand cmd_delete = new SqlCommand(delete, con);
-            
+
             cmd_delete.ExecuteNonQuery();
             MessageBox.Show("Termin wurde erfolgreich geloescht");
-       
+
             con.Close();
         }
 
@@ -273,7 +276,7 @@ namespace KaObjects.Storage
         /// false, wenn aus der Datenbank keine IP fuer die ServerID ausgelesen werden kann.
         /// true, in allen anderen Faellen
         /// </returns>
-        public bool ServerExist (int ServerID)
+        public bool ServerExist(int ServerID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -311,7 +314,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string checkUser= String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}'", user);
+            string checkUser = String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}'", user);
 
             SqlCommand checkCommand = new SqlCommand(checkUser, con);
 
@@ -344,15 +347,15 @@ namespace KaObjects.Storage
 
             string Check = string.Format("SELECT COUNT(TerminID) FROM Memberlist");
             int read = 0;
-           
-                SqlCommand checkCommand = new SqlCommand(Check, con);
 
-                SqlDataReader reader = checkCommand.ExecuteReader();
+            SqlCommand checkCommand = new SqlCommand(Check, con);
 
-                if (reader.Read())
-                { 
-                    read = reader.GetInt32(0);
-                }
+            SqlDataReader reader = checkCommand.ExecuteReader();
+
+            if (reader.Read())
+            {
+                read = reader.GetInt32(0);
+            }
 
             con.Close();
 
@@ -366,27 +369,48 @@ namespace KaObjects.Storage
         /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
         /// <param name="TerminID">ID des behandelten Termins</param>
         /// <returns>Keine Rueckgabewerte</returns>
-        public void SaveInvites (string user, KaEvent kaEvent)
+        public void SaveInvites(string user, KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            if(UserExist(user))
+            if (UserExist(user))
             {
+                string exist = string.Format("Select * from calendar where TerminID = {0} AND Benutzername = {0}", kaEvent.TerminID, kaEvent.owner);
+                SqlCommand exist_com = new SqlCommand(exist, con);
+                SqlDataReader read = exist_com.ExecuteReader();
+                if (!read.Read())
+                {
+                    SaveEvent(kaEvent);
+                }
+                con.Close();
+
+                con = new SqlConnection(connectionString);
+                con.Open();
+
                 string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, User) VALUES ({0}, {0})", kaEvent.TerminID, user);
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
-                saveEventCommand.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
-                saveEventCommand.Parameters.AddWithValue("@User", user);
+                //saveEventCommand.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
+                //saveEventCommand.Parameters.AddWithValue("@User", user);
+
+                saveEventCommand.ExecuteNonQuery();
+
+
+
+
             }
 
             con.Close();
-
-            //TODO Auf der Kalendarliste den Termin eintragen.
-
-
         }
+
+
+
+
+
+
+
 
 
         /// <summary>
@@ -412,7 +436,7 @@ namespace KaObjects.Storage
 
             SqlDataReader reader = readEventCommand.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
                 // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
                 string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(index));
@@ -480,7 +504,7 @@ namespace KaObjects.Storage
                 con.Close();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -518,6 +542,38 @@ namespace KaObjects.Storage
 
             }
             return Count;
+        }
+
+        /// <summary>
+        /// Eine Einladung akzeptieren oder nicht
+        /// </summary>
+        /// <param name="kaEvent">Den jeweiligen Termin</param>
+        /// <param name="user">Der jeweilige eingeladene</param>
+        /// <param name="choice">True=Accept, False = Ablehnen</param>
+        public void answerInvite(KaEvent kaEvent, string user, bool choice)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+
+            if (choice)
+            {
+                User newOwner = new User();
+                newOwner.name = user;
+                kaEvent.owner = newOwner;
+
+                SaveEvent(kaEvent);
+                //Dann aus der EInladungsliste löschen
+
+            }
+
+            string del_Com = String.Format("Delete from memberlist where TerminID = {0} AND User = {0}", kaEvent.TerminID, user);
+
+            SqlCommand delInvite = new SqlCommand(del_Com, con);
+
+            delInvite.ExecuteNonQuery();
+            con.Close();
+
+
         }
 
         //public LinkedList<string> GetWellKnownPeers()

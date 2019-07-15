@@ -263,23 +263,17 @@ namespace KaPlanerServer.Logic
             {
                 case HierarchieRequest.Invite:
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
-                    if(package.destinationID != Data.ServerConfig.serverID)
+                    if (package.destinationID != Data.ServerConfig.serverID)
                     {
-                        //weitersenden
+                        sendHierarchie(getAdress(package.destinationID), toDo.Send, null);
                     }
                     else
                     {
                         //Schau erstmal nach ob der User existiert
-                        if(database.UserExist(package.login))
+                        if (database.UserExist(package.login))
                         {
                             database.SaveInvites(package.login, package.invite);
-
-
-
                         }
-
-
-
                     }
 
 
@@ -296,34 +290,48 @@ namespace KaPlanerServer.Logic
                         stateEintrag stateEintrag = new stateEintrag();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
                         stateEintrag.setCounter(database.getServerCount());
+                        int childcount = 0;
                         for (int i = 0; i < database.getServerCount(); i++)
                         {
                             Console.WriteLine("Dieser Server hat Kinder");
                             int childID = Data.ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
                             if (database.ServerExist(childID))
                             {
-                                child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                                try
+                                {
+                                    child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
+                                    childcount++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("Etwas ist schief gelaufen beim KindServer");
+                                }
                             }
 
                         }
                         //wartet auf die anderen. hoffentlich
                         //stateEintrag.wait();
-
-                        if (child.Count > 0)
+                        if (childcount != 1) // wenn der Server nur ein Kind hat, so hat er das Sorgerecht für das Kind
                         {
-                            foreach (HierarchiePackage c in child)
+                            //Wenn überhaupt was reingebracht wurde
+                            if (child.Count > 0)
                             {
-                                if (c != null)
+                                foreach (HierarchiePackage c in child)
                                 {
-                                    if (c.anzConnection <= anzConnection)
+                                    //wenn zuverlässigerweise was schief gelaufen ist, wird das ignoriert
+                                    if (c != null)
                                     {
-                                        anzConnection = c.anzConnection;
-                                        ip = c.destinationAdress;
-                                        id = c.destinationID;
+                                        if (c.anzConnection <= anzConnection)
+                                        {
+                                            anzConnection = c.anzConnection;
+                                            ip = c.destinationAdress;
+                                            id = c.destinationID;
+                                        }
                                     }
                                 }
                             }
                         }
+
 
                     }
                     package.destinationID = id;
@@ -637,31 +645,49 @@ namespace KaPlanerServer.Logic
                 case Request.Invite:
                     if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                     {
-                        //Bin ich das?
-                        if (package.user.serverID == Data.ServerConfig.serverID)
-                        {
-                            List<User> list = package.kaEvents[0].members;
+                        /*
+                         * Hier ist nur Client-Server.
+                         * Wenn Server-Server Invite message ist, wird es bei resolveHierarchie erledigt
+                         * Das hier sollte wenn möglich als Asynchron, bzw. nach art Fire und Forget. 
+                         * Wenn mehrere User eingetragen wird, hat der Server eine lange Anschreibezeit
+                         * */
 
-                            foreach (User member in list)
+                        List<User> list = package.kaEvents[0].members;
+
+                        foreach (User member in list)
+                        {
+                            if (member.serverID == Data.ServerConfig.serverID)
+                            {
+                                if (database.UserExist(member.name))
+                                    database.SaveInvites(member.name, package.kaEvents[0]);
+                            }
+                            else
                             {
 
+                                HierarchiePackage hierarchie = new HierarchiePackage();
+                                hierarchie.HierarchieRequest = HierarchieRequest.Invite;
+                                hierarchie.invite = package.kaEvents[0];
+                                hierarchie.login = member.name;
+                                hierarchie.destinationID = member.serverID;
+                                resolveHierarchie(hierarchie);
+
+
+                                //User im anderen Server
                             }
-
-
-                            //database.SaveInvites(package.kaEvents)
-
-
-
                         }
-                        else
-                        {
-                            //Nope such den server für mich
 
-                        }
+
+                        //database.SaveInvites(package.kaEvents)
+
                     }
 
 
                     break;
+                case Request.answerInvite:
+
+                    database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
+                    break;
+
                 default:
                     Console.WriteLine(RequestUnknown);
                     break;

@@ -40,5 +40,10 @@ namespace KaObjects.Storage
         //LinkedList<string> GetWellKnownPeers();
     
         void newServerEntry(string ip, int id);
+
+
+        void answerInvite(KaEvent kaEvent, string user, bool choice);
+
+
     }
 }
