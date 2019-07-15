@@ -902,7 +902,15 @@ namespace KaPlanerServer.Logic
 
                     package = Send(package, IPAddress.Parse(read));
 
+                    if(package != null)
+                    {
 
+                        //2 Server mit denen ich mich verbinde und bei denen Registriere
+
+
+
+                        break;
+                    }
                 }
             }
 
