@@ -423,28 +423,47 @@ namespace KaObjects.Storage
             con.Open();
 
             List<KaEvent> test = new List<KaEvent>();
-            int index = 0;
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
             string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE [User] = '{0}'", user);
-
-            //string exist = "SELECT TerminID FROM Memberlist WHERE EXISTS(SELECT * FROM Memberlist WHERE User = {0}", user);";
 
             SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
 
             SqlDataReader reader = readEventCommand.ExecuteReader();
 
-            while (reader.Read())
+            try
             {
-                // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(index));
+                while (reader.Read())
+                {
+                    // Liest die Termine mit den zuvor ermittelten TerminIDs aus der Tabelle calendar
+                    string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = '{0}'", reader.GetInt32(0));
 
-                SqlCommand read = new SqlCommand(readDates, con);
-                SqlDataReader reader2 = read.ExecuteReader();
+                    SqlCommand read = new SqlCommand(readDates, con);
+                    SqlDataReader reader2 = read.ExecuteReader();
 
-                index++;
+                    test.Add(new KaEvent()
+                    {
+                        TerminID = reader2.GetInt32(0),
+                        Titel = reader2.GetString(1),
+                        Ort = reader2.GetString(2),
+                        Beginn = reader2.GetDateTime(4),
+                        Ende = reader2.GetDateTime(5),
+                        Beschreibung = reader2.GetString(6),
+
+                        //owner = reader2. ...;
+                    });
+                    reader2.Close();
+                }
             }
-            con.Close();
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                reader.Close();
+                con.Close();
+            }
 
             return test;
         }
