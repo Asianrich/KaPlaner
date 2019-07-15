@@ -35,6 +35,8 @@
             this.LBL_username = new System.Windows.Forms.Label();
             this.BTN_delete_user = new System.Windows.Forms.Button();
             this.BTN_Close = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LV_users
@@ -58,7 +60,7 @@
             // 
             // TB_add_user
             // 
-            this.TB_add_user.Location = new System.Drawing.Point(584, 155);
+            this.TB_add_user.Location = new System.Drawing.Point(584, 152);
             this.TB_add_user.Name = "TB_add_user";
             this.TB_add_user.Size = new System.Drawing.Size(204, 20);
             this.TB_add_user.TabIndex = 1;
@@ -78,7 +80,7 @@
             // 
             this.LBL_username.AutoSize = true;
             this.LBL_username.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.LBL_username.Location = new System.Drawing.Point(580, 133);
+            this.LBL_username.Location = new System.Drawing.Point(580, 130);
             this.LBL_username.Name = "LBL_username";
             this.LBL_username.Size = new System.Drawing.Size(127, 19);
             this.LBL_username.TabIndex = 3;
@@ -106,11 +108,33 @@
             this.BTN_Close.UseVisualStyleBackColor = true;
             this.BTN_Close.Click += new System.EventHandler(this.BTN_Close_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(580, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(78, 19);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Eingabe:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(580, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(196, 19);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Benutzername#ServerID";
+            // 
             // Wdw_user_list
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.BTN_Close);
             this.Controls.Add(this.BTN_delete_user);
             this.Controls.Add(this.LBL_username);
@@ -133,5 +157,7 @@
         private System.Windows.Forms.Button BTN_delete_user;
         private System.Windows.Forms.ColumnHeader Gaste;
         private System.Windows.Forms.Button BTN_Close;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

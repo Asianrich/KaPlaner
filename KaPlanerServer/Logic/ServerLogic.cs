@@ -724,6 +724,7 @@ namespace KaPlanerServer.Logic
                     database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
                     break;
 
+
                 default:
                     Console.WriteLine(RequestUnknown);
                     break;

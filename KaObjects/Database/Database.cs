@@ -320,16 +320,14 @@ namespace KaObjects.Storage
 
             SqlDataReader reader = checkCommand.ExecuteReader();
 
-            con.Close();
 
-            if (reader.GetString(0) == null)
+            bool read = false;
+            if (reader.Read())
             {
-                return false;
+                read = true;
             }
-            else
-            {
-                return true;
-            }
+            con.Close();
+            return read;
         }
 
 
