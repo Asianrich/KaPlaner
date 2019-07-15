@@ -82,7 +82,7 @@ namespace KaPlanerServer.Logic
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
         private List<IPAddress> neighbours; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
-        public static string _ipString;
+        public static string _ipString; //deprecated => Data.ServerConfig.host.ToString()
 
         IDatabase database = new Database(connectionString);
 
@@ -112,12 +112,13 @@ namespace KaPlanerServer.Logic
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
                             //2. Forking to other servers via flooding
-                            Forward();
+                            package.P2PAnswer = Forward();
                             break;
 
                         case P2PRequest.RegisterServer:
                             //1. Nimm Server in neighbours auf.
                             neighbours.Add(IPAddress.Parse(package.GetSource()));
+                            package.P2PAnswer = P2PAnswer.Success;
                             break;
 
                         case P2PRequest.NewUser:
@@ -133,21 +134,34 @@ namespace KaPlanerServer.Logic
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
                             //2. Forking to other servers via flooding
-                            Forward();
+                            package.P2PAnswer = Forward();
                             break;
-
+                        /*
                         case P2PRequest.RegisterUser:
                             //Client should connect directly to register.
                             break;
+                        */
 
                         case P2PRequest.Login:
                             //1. Check Datenbank nach user
-                            //database.UserExist();
-                            //2. Wenn nicht gefunden => weiterleiten
+                            if (!database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
+                                package.P2PAnswer = Forward();
+                            else
+                            {
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                                package.P2PAnswer = P2PAnswer.Success;
+                            }
                             break;
 
                         case P2PRequest.Invite:
-
+                            //1. Check Datenbank nach user
+                            if (!database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
+                                package.P2PAnswer = Forward();
+                            else
+                            {
+                                package.lastIP = Data.ServerConfig.host.ToString();
+                                package.P2PAnswer = P2PAnswer.Success;
+                            }
                             break;
 
                         default:
@@ -156,6 +170,7 @@ namespace KaPlanerServer.Logic
                     }
 
                     package.P2PAnswer = P2PAnswer.Success;
+
                 }
                 catch (Exception)
                 {
@@ -173,16 +188,16 @@ namespace KaPlanerServer.Logic
 
             return package;
 
-            async Task<bool> Forward()
+            P2PAnswer Forward()
             {
                 if (package.DecrementTTL() == 0)
-                    return false;
+                    return P2PAnswer.Timeout;
 
 
-                //await Task.Run(() => send(package, ));
+                //send(package, ));
                 //Hier gehört der Sendeaufruf hin.
                 //Danach muss die Antwort gehandled werden.
-                return true;
+                return P2PAnswer.Success;
             }
         }
 
@@ -945,20 +960,6 @@ namespace KaPlanerServer.Logic
             }
 
 
-        }
-
-
-        private bool AddPackage(P2PPackage package)
-        {
-            //if (recievedPackages.Exists(x => x.GetPackageID() == package.GetPackageID()))
-            //    return false;
-
-            //recievedPackages.Add(package);
-
-            //if (recievedPackages.Count > recievedListLimit) //Wir brauchen eine Art Limit o.ä. um zu verhindern, dass die Liste übermäßig lang wird.
-            //    recievedPackages.Remove(recievedPackages.First());
-
-            return true;
         }
 
         private void HandleReturn(P2PPackage package)
