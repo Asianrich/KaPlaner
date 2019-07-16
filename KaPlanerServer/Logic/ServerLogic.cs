@@ -953,6 +953,7 @@ namespace KaPlanerServer.Logic
                         },
                         sourceServer = Data.ServerConfig.host.ToString()
                     };
+                    package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                     package = Send(package, Data.ServerConfig.ListofWellKnown[0]);//muss noch randomized werden!!!
 
                     if (package != null)
@@ -969,6 +970,7 @@ namespace KaPlanerServer.Logic
                                     },
                                     sourceServer = Data.ServerConfig.host.ToString()
                                 };
+                                package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                                 package = Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
                                 if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
                                 {
