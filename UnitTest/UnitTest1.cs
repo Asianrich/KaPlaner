@@ -430,5 +430,16 @@ namespace UnitTest
             Console.WriteLine(check.ToString());
         }
 
+        public void CheckRegistry()
+        {
+            string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+
+            //User testUser2 = new User("Musterfrau, Maxia", "passwort1234", 10);
+            //Database testDatabase = new Database(connectionString);
+            //bool check = false;
+            //check = testDatabase.login(testUser2);
+            //Console.WriteLine(check.ToString());
+
+        }
     }
 }
