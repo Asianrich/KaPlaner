@@ -76,6 +76,12 @@
     <Compile Include="GUI\Date.designer.cs">
       <DependentUpon>Date.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Vorschaufenster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Vorschaufenster.Designer.cs">
+      <DependentUpon>Vorschaufenster.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\RequestList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Date.resx">
       <DependentUpon>Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Vorschaufenster.resx">
+      <DependentUpon>Vorschaufenster.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\RequestList.resx">
       <DependentUpon>RequestList.cs</DependentUpon>
