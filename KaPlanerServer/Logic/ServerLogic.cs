@@ -111,7 +111,13 @@ namespace KaPlanerServer.Logic
                             {
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            //2. Forking to other servers via flooding
+                            //2. Test on TTL
+                            if (package.DecrementTTL() == 0)
+                            {
+                                package.P2PAnswer = P2PAnswer.Timeout;
+                                break;
+                            }
+                            //3. Forking to other servers via flooding
                             returnList = Forward();
                             if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                             {
@@ -145,7 +151,13 @@ namespace KaPlanerServer.Logic
                             {
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            //2. Forking to other servers via flooding
+                            //2. Test on TTL
+                            if (package.DecrementTTL() == 0)
+                            {
+                                package.P2PAnswer = P2PAnswer.Timeout;
+                                break;
+                            }
+                            //3. Forking to other servers via flooding
                             returnList = Forward();
                             if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                             {
@@ -193,6 +205,7 @@ namespace KaPlanerServer.Logic
                                 returnList = Forward();
                             else
                             {
+                                database.SaveInvites(package.GetUsername(), package.GetInvite());
                                 package.lastIP = Data.ServerConfig.host.ToString();
                                 package.P2PAnswer = P2PAnswer.Success;
                             }
@@ -221,12 +234,6 @@ namespace KaPlanerServer.Logic
             List<P2PPackage> Forward()
             {
                 Package sendPackage = new Package(package);
-
-                if (package.DecrementTTL() == 0)
-                {
-                    sendPackage.p2p.P2PAnswer = P2PAnswer.Timeout;
-                    return new List<P2PPackage>() { sendPackage.p2p };
-                }
                 
                 Package recievePackage = new Package();
                 List<P2PPackage> returnList = new List<P2PPackage>();
@@ -298,7 +305,7 @@ namespace KaPlanerServer.Logic
         {
             List<Package> packages = new List<Package>();
             //Muss ich das Paket abaendern oder nicht?
-            bool isResolving = false;
+            //bool isResolving = false;
             if (package.p2p != null)
             {
                 //P2P Server-Server
@@ -377,7 +384,7 @@ namespace KaPlanerServer.Logic
                                     child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
                                     childcount++;
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     Console.WriteLine("Etwas ist schief gelaufen beim KindServer");
                                 }
@@ -780,10 +787,26 @@ namespace KaPlanerServer.Logic
                     }
                     else if (Data.ServerConfig.structure == Data.structure.P2P)
                     {
-
                         //Logik P2P Invite
 
+                        List<User> list = package.kaEvents[0].members;
 
+                        foreach (User member in list)
+                        {
+                            if (database.UserExist(member.name))
+                            {
+                                database.SaveInvites(member.name, package.kaEvents[0]);
+                            }
+                            else
+                            {
+                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0]);
+                                p2p.P2Prequest = P2PRequest.Invite;
+                                resolveP2P(p2p);
+
+
+                                //User im anderen Server
+                            }
+                        }
 
 
 
