@@ -24,17 +24,17 @@ namespace KaObjects
         [XmlElement]
         public P2PAnswer P2PAnswer = P2PAnswer.Failure;
         [XmlElement]
-        private Guid packageID; //unique ID of this package
+        public Guid packageID; //unique ID of this package
         [XmlElement]
-        private int ttl = TTLinit; //time to live of this package
+        public int ttl = TTLinit; //time to live of this package
         [XmlElement]
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         [XmlElement]
         public int anzUser = AnzUserInit;
         [XmlElement]
-        private readonly string Username;
+        public readonly string Username;
         [XmlElement]
-        private readonly KaEvent Invite;
+        public readonly KaEvent Invite;
 
         public string GetUsername()
         {
@@ -61,7 +61,7 @@ namespace KaObjects
         /// SourceServer
         /// </summary>
         [XmlElement]
-        private string source;
+        public string source;
         //has to be string to be able to serialize
         //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
         /// <summary>
