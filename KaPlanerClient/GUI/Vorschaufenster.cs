@@ -20,5 +20,10 @@ namespace KaPlaner.GUI
             InitializeComponent();
             rTB_Terminvorschau.Text = "test";
         }
+
+        private void LV_dates_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
