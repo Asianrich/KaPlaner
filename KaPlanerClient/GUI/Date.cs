@@ -175,7 +175,7 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    clientLogic.SaveRemote(returnValue);
+                    returnValue = clientLogic.SaveRemote(returnValue);
                 }
                 this.DialogResult = DialogResult.OK;
                 this.Close();

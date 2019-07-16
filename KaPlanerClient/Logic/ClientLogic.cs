@@ -180,7 +180,7 @@ namespace KaPlaner.Logic
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm);
             registerPackage.serverSwitched = false;
-            clientConnection.changeIP("192.168.0.6"); // für Root und so muss mans ändern
+            clientConnection.changeIP("192.168.56.1"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.changeServer)
@@ -218,13 +218,14 @@ namespace KaPlaner.Logic
         /// Benutzt das Datenbankinterface
         /// </summary>
         /// <param name="kaEvent"></param>
-        public void SaveRemote(KaEvent kaEvent)
+        public KaEvent SaveRemote(KaEvent kaEvent)
         {
             kaEvent.owner = currentUser;
 
             Package savePackage = new Package(Request.Save, kaEvent);
 
-            clientConnection.Start(savePackage);
+            Package returnpackage = clientConnection.Start(savePackage);
+            return returnpackage.kaEvents[0];
         }
 
         /// <summary>
