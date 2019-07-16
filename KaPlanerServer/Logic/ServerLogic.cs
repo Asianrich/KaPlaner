@@ -238,11 +238,12 @@ namespace KaPlanerServer.Logic
                 foreach (IPAddress iPAddress in Data.ServerConfig.ipAddress)
                 {
                     recievePackage = Send(sendPackage, iPAddress);
-                    if (recievePackage != null) {
+                    if (recievePackage != null)
+                    {
                         if (recievePackage != null && recievePackage.p2p.P2PAnswer == P2PAnswer.Success)
                             return new List<P2PPackage>() { recievePackage.p2p };
-                            }
-                    returnList.Add(recievePackage.p2p);
+                        returnList.Add(recievePackage.p2p);
+                    }
                 }
 
                 return returnList;
