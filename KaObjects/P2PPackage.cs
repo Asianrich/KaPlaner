@@ -13,17 +13,27 @@ namespace KaObjects
     [Serializable]
     public class P2PPackage
     {
+        [XmlElement]
         static public readonly int TTLinit = 5;
+        [XmlElement]
         static public readonly int AnzConnInit = -1; //Unser 'unendlich'. Könnte auch über ein Maximum realisiert werden (denke an RIP).
+        [XmlElement]
         static public readonly int AnzUserInit = -1; //siehe AnzConnInit
-
+        [XmlElement]
         public P2PRequest P2Prequest;
+        [XmlElement]
         public P2PAnswer P2PAnswer = P2PAnswer.Failure;
+        [XmlElement]
         private Guid packageID; //unique ID of this package
+        [XmlElement]
         private int ttl = TTLinit; //time to live of this package
+        [XmlElement]
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
+        [XmlElement]
         public int anzUser = AnzUserInit;
+        [XmlElement]
         private readonly string Username;
+        [XmlElement]
         private readonly KaEvent Invite;
 
         public string GetUsername()
@@ -48,19 +58,23 @@ namespace KaObjects
         }
 
         /// <summary>
+        /// SourceServer
+        /// </summary>
+        [XmlElement]
+        private string source;
+        //has to be string to be able to serialize
+        //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
+        /// <summary>
         /// IP des letzten Knoten, der die niedrigsten Verbindungen aufweist.
         /// </summary>
+        [XmlElement]
         public string lastIP;
         /// <summary>
         /// Dies soll immer weitergeleitet werden, dadurch kann man herausfinden wo das Packet durchgelaufen ist
         /// </summary>
+        [XmlElement]
         public List<string> visitedPlace = new List<string>();
-        /// <summary>
-        /// SourceServer
-        /// </summary>
-        private string source;
-        //has to be string to be able to serialize
-        //private IPAddress originIPAddress; //this is best an Net.IPAddress so we can check on correct form
+
 
         /// <summary>
         /// ZielAdresse
