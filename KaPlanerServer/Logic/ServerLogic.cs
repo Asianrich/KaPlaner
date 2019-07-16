@@ -226,8 +226,8 @@ namespace KaPlanerServer.Logic
             List<P2PPackage> Forward()
             {
                 Package sendPackage = new Package(package);
-                
-                Package recievePackage = new Package();
+
+                Package recievePackage;
                 List<P2PPackage> returnList = new List<P2PPackage>();
 
                 foreach (IPAddress iPAddress in Data.ServerConfig.ipAddress)

@@ -47,7 +47,7 @@ namespace KaObjects
         }
 
 
-        public P2PPackage(string Username)
+        public P2PPackage(string Username) : this()
         {
             this.Username = Username;
         }
