@@ -84,7 +84,6 @@ namespace KaPlanerServer.Logic
         //Connection String ... in VS config auslagern?
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
-        private List<IPAddress> neighbours = Data.ServerConfig.ipAddress; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
         public static string _ipString; //deprecated => Data.ServerConfig.host.ToString()
 
         IDatabase database = new Database(connectionString);
@@ -105,12 +104,12 @@ namespace KaPlanerServer.Logic
                     {
                         case P2PRequest.NewServer:
                             //1. Anzahl Verbindungen (s. neighbours)
-                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > neighbours.Count)
+                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > Data.ServerConfig.ipAddress.Count)
                             {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                                package.anzConn = neighbours.Count;
+                                package.anzConn = Data.ServerConfig.ipAddress.Count;
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            else if (package.anzConn == neighbours.Count)
+                            else if (package.anzConn == Data.ServerConfig.ipAddress.Count)
                             {
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
@@ -135,7 +134,7 @@ namespace KaPlanerServer.Logic
 
                         case P2PRequest.RegisterServer:
                             //1. Nimm Server in neighbours auf.
-                            neighbours.Add(IPAddress.Parse(package.GetSource()));
+                            Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.GetSource()));
                             package.P2PAnswer = P2PAnswer.Success;
                             break;
 
@@ -234,7 +233,7 @@ namespace KaPlanerServer.Logic
                 Package recievePackage = new Package();
                 List<P2PPackage> returnList = new List<P2PPackage>();
 
-                foreach (IPAddress iPAddress in neighbours)
+                foreach (IPAddress iPAddress in Data.ServerConfig.ipAddress)
                 {
                     recievePackage = Send(sendPackage, iPAddress);
                     if (recievePackage.p2p.P2PAnswer == P2PAnswer.Success)
@@ -964,7 +963,7 @@ namespace KaPlanerServer.Logic
                                 package = Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
                                 if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
                                 {
-                                    neighbours.Add(IPAddress.Parse(package.p2p.lastIP));
+                                    Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.p2p.lastIP));
                                     Console.WriteLine(RegisterSuccess);
                                 }
                                 else
