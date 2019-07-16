@@ -15,18 +15,13 @@ using System.IO;
 
 namespace KaObjects
 {
-    class Parser
+    public static class Parser
     {
-        public Parser()
-        {
-
-        }
-
         /// <summary>
         /// TO FIX: WAS SOLL IN DIE TEXTDATEI GESCHRIEBEN WERDEN???
         /// </summary>
         /// <param name="irgendwas"></param>
-        public void Write(string irgendwas)
+        public static void Write(string irgendwas)
         {
             var path = @"C:\Users\Malak\Desktop\Test.txt";
 
@@ -39,16 +34,21 @@ namespace KaObjects
         /// <summary>
         /// TO FIX: WAS SOLL AUS DER TEXTDATEI GELESEN WERDEN???
         /// </summary>
-        public void Read()
+        public static List<string> Read()
         {
             var path = @"C:\Users\Malak\Desktop\Test.txt";
 
             StreamReader reader = new StreamReader(path);
-
-            var input = reader.ReadToEnd();
-            Console.WriteLine(input);
+            List<string> lines = new List<string>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                lines.Add(line);
+            }
 
             reader.Close();
+
+            return lines;
         }
     }
 }
