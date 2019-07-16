@@ -130,7 +130,7 @@ namespace UnitTest
         [TestMethod]
         public void Write()
         {
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+            string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
             IDatabase db = new Database(connectionString);
             KaEvent ka = new KaEvent();
@@ -153,7 +153,7 @@ namespace UnitTest
         [TestMethod]
         public void SQLREAD()
         {
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\Source\\Repos\\KaPlaner2\\KaPlanerServer\\Data\\User_Calendar.mdf;Integrated Security=True";
+            string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
 
             Database db = new Database(connectionString);
@@ -430,5 +430,29 @@ namespace UnitTest
             Console.WriteLine(check.ToString());
         }
 
+        [TestMethod]
+        public void CheckRegistry()
+        {
+            //string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+
+            //User testUser2 = new User("Musterfrau, Maxia", "passwort1234", 10);
+            //Database testDatabase = new Database(connectionString);
+            //bool check = false;
+            //check = testDatabase.registerUser(testUser2, "passwort1234");
+            //Console.WriteLine(check.ToString());
+
+        }
+
+        [TestMethod]
+        public void SaveEventsPruefung()
+        {
+            int test = 6;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            List<Package> testlist = new List<Package>();
+
+            //testdb.SaveInvites(testlist, testtermin);
+        }
+
+        
     }
 }
