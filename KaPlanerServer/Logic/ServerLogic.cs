@@ -133,8 +133,9 @@ namespace KaPlanerServer.Logic
                             break;
 
                         case P2PRequest.RegisterServer:
-                            //1. Nimm Server in neighbours auf.
-                            Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.GetSource()));
+                            //1. Nimm Server in neighbours auf. (Falls noch nicht existent)
+                            if (!Data.ServerConfig.ipAddress.Exists(x => x.ToString() == package.GetSource()))
+                                Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.GetSource()));
                             package.P2PAnswer = P2PAnswer.Success;
                             break;
 
@@ -932,7 +933,9 @@ namespace KaPlanerServer.Logic
                         package.p2p.P2Prequest = P2PRequest.RegisterServer;
                         package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                         Package receive = Send(package, ipAddress);
-                        if (receive != null)
+
+                        //Nur hinzufügen wenn noch nicht existent
+                        if (receive != null && !Data.ServerConfig.ipAddress.Exists(x => x.ToString() == ipAddress.ToString()))
                         {
                             Data.ServerConfig.ipAddress.Add(ipAddress);
                         }
@@ -951,6 +954,7 @@ namespace KaPlanerServer.Logic
                         },
                         sourceServer = Data.ServerConfig.host.ToString()
                     };
+                    package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                     package = Send(package, Data.ServerConfig.ListofWellKnown[0]);//muss noch randomized werden!!!
 
                     if (package != null)
@@ -967,6 +971,7 @@ namespace KaPlanerServer.Logic
                                     },
                                     sourceServer = Data.ServerConfig.host.ToString()
                                 };
+                                package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                                 package = Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
                                 if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
                                 {
