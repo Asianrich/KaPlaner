@@ -974,13 +974,16 @@ namespace KaPlanerServer.Logic
                                 };
                                 package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                                 package = Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
-                                if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
+                                if (package != null)
                                 {
-                                    Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.p2p.lastIP));
-                                    Console.WriteLine(RegisterSuccess);
+                                    if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
+                                    {
+                                        Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.p2p.lastIP));
+                                        Console.WriteLine(RegisterSuccess);
+                                    }
+                                    else
+                                        Console.WriteLine(RegisterFail);
                                 }
-                                else
-                                    Console.WriteLine(RegisterFail);
                                 break;
                             default:
                                 Console.WriteLine("No Success.");
