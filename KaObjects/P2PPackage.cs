@@ -23,17 +23,28 @@ namespace KaObjects
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         public int anzUser = AnzUserInit;
-        private string Username;
+        private readonly string Username;
+        private readonly KaEvent Invite;
 
         public string GetUsername()
         {
             return Username;
         }
 
+        public KaEvent GetInvite()
+        {
+            return Invite;
+        }
+
 
         public P2PPackage(string Username)
         {
             this.Username = Username;
+        }
+
+        public P2PPackage(string Username, KaEvent Invite) : this(Username)
+        {
+            this.Invite = Invite;
         }
 
         /// <summary>
