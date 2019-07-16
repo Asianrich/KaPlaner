@@ -80,6 +80,7 @@ namespace KaPlaner.GUI
                 row[1] = ka.Ort;
                 row[2] = ka.Beginn.ToString();
                 row[3] = ka.Ende.ToString();
+                row[4] = ka.owner.name;
                 //indexes.Add(i);
                 ListViewItem lvi = new ListViewItem(row);
 
@@ -112,7 +113,10 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_Dates.FocusedItem.Index;
-                
+                using (var form = new Vorschaufenster(ListEvents[index]))
+                {
+                    form.ShowDialog();
+                }
 
             }
             catch (Exception ex)
@@ -168,7 +172,6 @@ namespace KaPlaner.GUI
             int index = LV_Dates.FocusedItem.Index;
             try
             {
-                
                 clientLogic.answerInvite(ListEvents[index], false);
             }
             catch(Exception ex)
@@ -182,7 +185,6 @@ namespace KaPlaner.GUI
             int index = LV_Dates.FocusedItem.Index;
             try
             {
-
                 clientLogic.answerInvite(ListEvents[index], true);
             }
             catch (Exception ex)
