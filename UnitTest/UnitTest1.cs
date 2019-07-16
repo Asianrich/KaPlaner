@@ -430,18 +430,20 @@ namespace UnitTest
             Console.WriteLine(check.ToString());
         }
 
+        [TestMethod]
         public void CheckRegistry()
         {
-            string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            //string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
             //User testUser2 = new User("Musterfrau, Maxia", "passwort1234", 10);
             //Database testDatabase = new Database(connectionString);
             //bool check = false;
-            //check = testDatabase.login(testUser2);
+            //check = testDatabase.registerUser(testUser2, "passwort1234");
             //Console.WriteLine(check.ToString());
 
         }
 
+        [TestMethod]
         public void SaveEventsPruefung()
         {
             int test = 6;
@@ -450,5 +452,7 @@ namespace UnitTest
 
             //testdb.SaveInvites(testlist, testtermin);
         }
+
+        
     }
 }
