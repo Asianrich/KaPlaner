@@ -441,5 +441,14 @@ namespace UnitTest
             //Console.WriteLine(check.ToString());
 
         }
+
+        public void SaveEventsPruefung()
+        {
+            int test = 6;
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            List<Package> testlist = new List<Package>();
+
+            //testdb.SaveInvites(testlist, testtermin);
+        }
     }
 }
