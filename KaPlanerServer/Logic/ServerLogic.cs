@@ -256,32 +256,38 @@ namespace KaPlanerServer.Logic
 
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
-            if (package.p2p != null)
+            try
             {
-                bool send = true;
-                foreach (string visited in package.p2p.visitedPlace)
+                if (package.p2p != null)
                 {
-                    if (visited == iPAddress.ToString())
+                    bool send = true;
+                    foreach (string visited in package.p2p.visitedPlace)
                     {
-                        send = false;
+                        if (visited == iPAddress.ToString())
+                        {
+                            send = false;
+                        }
+                    }
+                    if (send)
+                    {
+                        receive = client.Start(package);
+                    }
+                    else
+                    {
+                        receive = null;
                     }
                 }
-                if (send)
+                else if (package.hierarchie != null)
                 {
+                    //Hier Probleme
                     receive = client.Start(package);
+                    Thread.Sleep(1000);
                 }
-                else
-                {
-                    receive = null;
-                }
-            }
-            else if (package.hierarchie != null)
+            }catch(Exception ex)
             {
-                //Hier Probleme
-                receive = client.Start(package);
-                Thread.Sleep(1000);
+                Console.WriteLine(ex.Message);
+                receive = null;
             }
-
 
             return receive;
         }
@@ -918,7 +924,7 @@ namespace KaPlanerServer.Logic
                 //Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
                 foreach (IPAddress ipAddress in Data.ServerConfig.ListofWellKnown)
                 {
-                    if (ipAddress != Data.ServerConfig.host)
+                    if (ipAddress.ToString() != Data.ServerConfig.host.ToString())
                     {
                         Package package = new Package();
                         package.p2p = new P2PPackage();
