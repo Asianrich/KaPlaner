@@ -28,16 +28,9 @@ namespace KaObjects
         /// <param name="irgendwas"></param>
         public void Write(string irgendwas)
         {
-            //Der absolute Ausgangspfad
-            string startPath = @"C:\Malak\";
+            var path = @"C:\Users\Malak\Desktop\Test.txt";
 
-            //Der relative Pfad
-            string relative = @"..\Desktop\Test.txt";
-
-            //Die ermittlung eines absoluten Pfades
-            string absolut = Path.GetFullPath(Path.Combine(startPath, relative));
-
-            StreamWriter writer = new StreamWriter(absolut);   
+            StreamWriter writer = new StreamWriter(path, true);
 
             writer.Write(irgendwas);
             writer.Close();
@@ -48,18 +41,13 @@ namespace KaObjects
         /// </summary>
         public void Read()
         {
-            //Der absolute Ausgangspfad
-            string startPath = @"C:\Malak\";
+            var path = @"C:\Users\Malak\Desktop\Test.txt";
 
-            //Der relative Pfad
-            string relative = @"..\Desktop\Test.txt";
-
-            //Die ermittlung eines absoluten Pfades
-            string absolut = Path.GetFullPath(Path.Combine(startPath, relative));
-
-            StreamReader reader = new StreamReader(absolut);
+            StreamReader reader = new StreamReader(path);
 
             var input = reader.ReadToEnd();
+            Console.WriteLine(input);
+
             reader.Close();
         }
     }
