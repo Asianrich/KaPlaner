@@ -276,6 +276,16 @@ namespace UnitTest
         }
 
 
+        public void DeleteDatePruefung()
+        {
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlanerServer\\KaPlanerServer\\Data\\KaPlaner.mdf;Integrated Security=True";
+
+            Database db = new Database(connectionString);
+   
+
+        }
+
+
 
         [TestMethod]
         public void DoMath()
@@ -379,12 +389,46 @@ namespace UnitTest
             Console.WriteLine(count);
         }
 
+        [TestMethod]
+        public void AnswerInvitePruefung()
+        {
 
+            List<KaEvent> test = new List<KaEvent>();
+            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+
+            User newOwner = new User();
+            // newOwner.name = user;
+            // kaEvent.owner = newOwner;
+           
+
+
+
+
+            // User newOwner = new User()
+            // newOwner.name = user;
+            // kaEvent.owner = newOwner;
+
+            //string user = "TestUser";
+            // SaveEvent(kaEvent);
+
+        }
 
         [TestMethod]
         public void trimspace()
         {
 
         }
+        [TestMethod]
+        public void CheckLogin()
+        {
+            string connectionString = ("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+
+            User testUser = new User("Mustermann, Max", "passwort123", 10);
+            Database testDatabase = new Database(connectionString);
+            bool check = false;
+            check = testDatabase.login(testUser);
+            Console.WriteLine(check.ToString());
+        }
+
     }
 }
