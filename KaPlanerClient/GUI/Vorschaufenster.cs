@@ -15,15 +15,16 @@ namespace KaPlaner.GUI
 {
     public partial class Vorschaufenster : Form
     {
-        public Vorschaufenster()
+        public Vorschaufenster(KaEvent kaEvent)
         {
             InitializeComponent();
-            rTB_Terminvorschau.Text = "test";
+            TB_Title.Text = kaEvent.Titel;
+            TB_Place.Text = kaEvent.Ort;
+            tB_Beginn.Text = kaEvent.Beginn.ToString();
+            tb_Ende.Text = kaEvent.Ende.ToString();
+            rTB_Beschreibung.Text = kaEvent.Beschreibung;
+            tb_Verantwortlicher.Text = kaEvent.owner.name;
         }
 
-        private void LV_dates_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
