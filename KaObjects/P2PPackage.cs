@@ -18,16 +18,22 @@ namespace KaObjects
         static public readonly int AnzUserInit = -1; //siehe AnzConnInit
 
         public P2PRequest P2Prequest;
-        public P2PAnswer P2PAnswer;
+        public P2PAnswer P2PAnswer = P2PAnswer.Failure;
         private Guid packageID; //unique ID of this package
         private int ttl = TTLinit; //time to live of this package
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
         public int anzUser = AnzUserInit;
-        private string Username;
+        private readonly string Username;
+        private readonly KaEvent Invite;
 
         public string GetUsername()
         {
             return Username;
+        }
+
+        public KaEvent GetInvite()
+        {
+            return Invite;
         }
 
 
@@ -36,20 +42,19 @@ namespace KaObjects
             this.Username = Username;
         }
 
+        public P2PPackage(string Username, KaEvent Invite) : this(Username)
+        {
+            this.Invite = Invite;
+        }
+
         /// <summary>
         /// IP des letzten Knoten, der die niedrigsten Verbindungen aufweist.
         /// </summary>
         public string lastIP;
-
-
         /// <summary>
         /// Dies soll immer weitergeleitet werden, dadurch kann man herausfinden wo das Packet durchgelaufen ist
         /// </summary>
         public List<string> visitedPlace = new List<string>();
-        /// <summary>
-        /// Dies soll als Antwort dienen, heisst wenn NewServer-Anfrage kommt, soll dies als Antwort dienen
-        /// </summary>
-        private string server; //
         /// <summary>
         /// SourceServer
         /// </summary>
@@ -60,38 +65,13 @@ namespace KaObjects
         /// <summary>
         /// ZielAdresse
         /// </summary>
-        private string destination;
-
-        //public IPAddress returnIPAddress;
+        //private string destination;
 
         public P2PPackage()
         {
             GeneratePID();
             //base.packageReference = this;
         }
-
-
-
-        public int getTTL()
-        {
-            return ttl;
-        }
-
-
-        /// <summary>
-        /// Diese Methode soll die Sachen hier abaendern
-        /// </summary>
-        /// <param name="anzUserServer"></param>
-        /// <param name="server"></param>
-        public void setAnzUser(int anzUserServer, string server)
-        {
-            if (anzUser == -1 || anzUser > anzUserServer)
-            {
-                anzUser = anzUserServer;
-                this.server = server;
-            }
-        }
-
 
         private void GeneratePID()
         {
