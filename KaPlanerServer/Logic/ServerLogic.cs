@@ -84,12 +84,7 @@ namespace KaPlanerServer.Logic
         //Connection String ... in VS config auslagern?
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
-        public static string _ipString; //deprecated => Data.ServerConfig.host.ToString()
-
         IDatabase database = new Database(connectionString);
-
-        string IServerLogic.IpString { get => _ipString; set => _ipString = value; }
-        //string IServerLogic.ipString { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //P2P Paket handlen
         private P2PPackage ResolveP2P(P2PPackage package)

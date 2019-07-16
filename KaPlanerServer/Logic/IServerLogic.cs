@@ -10,7 +10,6 @@ namespace KaPlanerServer.Logic
 {
     interface IServerLogic
     {
-        string IpString { get; set; }
         Package ResolvePackage(Package package);
         void Settings();
         Package resolving(Package package);
