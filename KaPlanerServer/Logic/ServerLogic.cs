@@ -212,8 +212,9 @@ namespace KaPlanerServer.Logic
                             break;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     package.P2PAnswer = P2PAnswer.Error;
                     //throw;
                 }
