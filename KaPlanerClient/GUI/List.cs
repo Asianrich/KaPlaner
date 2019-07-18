@@ -82,7 +82,6 @@ namespace KaPlaner.GUI
                 }
                 else
                 {
-                    MessageBox.Show("Ne ne ne So funktionierts nicht");
                     isNewElement = false;
                 }
             }
