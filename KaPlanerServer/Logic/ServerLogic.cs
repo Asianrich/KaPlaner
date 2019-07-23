@@ -331,6 +331,8 @@ namespace KaPlanerServer.Logic
                     //Ab hier soll man wissen, an WEN ES GEHEN SOLL UND MUSS!
                     if (package.destinationID != Data.ServerConfig.serverID)
                     {
+                        
+                        
                         sendHierarchie(getAdress(package.destinationID), toDo.Send, null);
                     }
                     else
@@ -732,6 +734,7 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(RequestTest);
                     break;
                 case Request.Invite:
+                    //Prüfung ServerID
                     if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                     {
                         /*
@@ -892,6 +895,7 @@ namespace KaPlanerServer.Logic
             }
             if (isP2P)
             {
+                
                 P2PSettings(isBoss);
             }
             else
