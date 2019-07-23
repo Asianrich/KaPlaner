@@ -75,22 +75,19 @@ namespace KaPlanerServer.Logic
         static readonly string LoadRequest = "Load Requested.";
         static readonly string LoadSuccess = "Load Success.";
         static readonly string LoadFail = "Load Failed.";
-        static readonly string RequestTest = "Test requested.";
+        static readonly string InviteRequest = "Invite Requested.";
+        static readonly string InviteSuccess = "Invite Success.";
+        static readonly string InviteFail = "Invite Failed.";
+        static readonly string TestRequest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
 
         //Connection String ... in VS config auslagern?
         static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
 
-        private List<IPAddress> neighbours = Data.ServerConfig.ipAddress; //Liste der IP Adressen, der Verbindungen (muss min. 2 sein)
-        public static string _ipString; //deprecated => Data.ServerConfig.host.ToString()
-
         IDatabase database = new Database(connectionString);
 
-        string IServerLogic.ipString { get => _ipString; set => _ipString = value; }
-        //string IServerLogic.ipString { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         //P2P Paket handlen
-        private P2PPackage resolveP2P(P2PPackage package)
+        private P2PPackage ResolveP2P(P2PPackage package)
         {
             if (Data.ServerConfig.CheckPackageID(package.GetPackageID()))
             {
@@ -102,19 +99,25 @@ namespace KaPlanerServer.Logic
                     {
                         case P2PRequest.NewServer:
                             //1. Anzahl Verbindungen (s. neighbours)
-                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > neighbours.Count)
+                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > Data.ServerConfig.ipAddress.Count)
                             {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                                package.anzConn = neighbours.Count;
+                                package.anzConn = Data.ServerConfig.ipAddress.Count;
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            else if (package.anzConn == neighbours.Count)
+                            else if (package.anzConn == Data.ServerConfig.ipAddress.Count)
                             {
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            //2. Forking to other servers via flooding
+                            //2. Test on TTL
+                            if (package.DecrementTTL() == 0)
+                            {
+                                package.P2PAnswer = P2PAnswer.Timeout;
+                                break;
+                            }
+                            //3. Forking to other servers via flooding
                             returnList = Forward();
                             //Comparing answers
-                            foreach(P2PPackage p in returnList)
+                            foreach (P2PPackage p in returnList)
                             {
                                 if (package.anzConn >= p.anzConn)
                                 {
@@ -125,8 +128,9 @@ namespace KaPlanerServer.Logic
                             break;
 
                         case P2PRequest.RegisterServer:
-                            //1. Nimm Server in neighbours auf.
-                            neighbours.Add(IPAddress.Parse(package.GetSource()));
+                            //1. Nimm Server in neighbours auf. (Falls noch nicht existent)
+                            if (!Data.ServerConfig.ipAddress.Exists(x => x.ToString() == package.GetSource()))
+                                Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.GetSource()));
                             package.P2PAnswer = P2PAnswer.Success;
                             break;
 
@@ -142,7 +146,13 @@ namespace KaPlanerServer.Logic
                             {
                                 package.lastIP = Data.ServerConfig.host.ToString();
                             }
-                            //2. Forking to other servers via flooding
+                            //2. Test on TTL
+                            if (package.DecrementTTL() == 0)
+                            {
+                                package.P2PAnswer = P2PAnswer.Timeout;
+                                break;
+                            }
+                            //3. Forking to other servers via flooding
                             returnList = Forward();
                             //Comparing answers
                             foreach (P2PPackage p in returnList)
@@ -165,10 +175,13 @@ namespace KaPlanerServer.Logic
                             if (!database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
                             {
                                 returnList = Forward();
-                                foreach (P2PPackage p in returnList)
+                                if (returnList.Count != 1 || returnList.First().P2PAnswer != P2PAnswer.Timeout)
                                 {
-                                    if (p.P2PAnswer == P2PAnswer.Success)
-                                        package.lastIP = p.lastIP;
+                                    foreach (P2PPackage p in returnList)
+                                    {
+                                        if (p.P2PAnswer == P2PAnswer.Success)
+                                            package.lastIP = p.lastIP;
+                                    }
                                 }
                             }
                             else
@@ -178,12 +191,13 @@ namespace KaPlanerServer.Logic
                             }
                             break;
 
-                        case P2PRequest.Invite://TODO
+                        case P2PRequest.Invite:
                             //1. Check Datenbank nach user
                             if (!database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
                                 returnList = Forward();
                             else
                             {
+                                database.SaveInvites(package.GetUsername(), package.GetInvite());
                                 package.lastIP = Data.ServerConfig.host.ToString();
                                 package.P2PAnswer = P2PAnswer.Success;
                             }
@@ -194,8 +208,9 @@ namespace KaPlanerServer.Logic
                             break;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     package.P2PAnswer = P2PAnswer.Error;
                     //throw;
                 }
@@ -204,7 +219,6 @@ namespace KaPlanerServer.Logic
             else
             {
                 package.P2PAnswer = P2PAnswer.Visited; //Node wurde bereits angefragt, keine Aktion nötig
-                return package;
             }
 
             return package;
@@ -213,21 +227,18 @@ namespace KaPlanerServer.Logic
             {
                 Package sendPackage = new Package(package);
 
-                if (package.DecrementTTL() == 0)
-                {
-                    sendPackage.p2p.P2PAnswer = P2PAnswer.Timeout;
-                    return new List<P2PPackage>() { sendPackage.p2p };
-                }
-                
-                Package recievePackage = new Package();
+                Package recievePackage;
                 List<P2PPackage> returnList = new List<P2PPackage>();
 
-                foreach (IPAddress iPAddress in neighbours)
+                foreach (IPAddress iPAddress in Data.ServerConfig.ipAddress)
                 {
                     recievePackage = Send(sendPackage, iPAddress);
-                    if (recievePackage.p2p.P2PAnswer == P2PAnswer.Success)
-                        return new List<P2PPackage>() { recievePackage.p2p };
-                    returnList.Add(recievePackage.p2p);
+                    if (recievePackage != null)
+                    {
+                        if (recievePackage != null && recievePackage.p2p.P2PAnswer == P2PAnswer.Success)
+                            return new List<P2PPackage>() { recievePackage.p2p };
+                        returnList.Add(recievePackage.p2p);
+                    }
                 }
 
                 return returnList;
@@ -245,32 +256,38 @@ namespace KaPlanerServer.Logic
 
             //Man muss noch überprüfen ob man das Ende ist oder nicht. bzw. wenn TTL 0 ist
             //Wenn ja dann einfach ein null wert zurückgeben
-            if (package.p2p != null)
+            try
             {
-                bool send = true;
-                foreach (string visited in package.p2p.visitedPlace)
+                if (package.p2p != null)
                 {
-                    if (visited == iPAddress.ToString())
+                    bool send = true;
+                    foreach (string visited in package.p2p.visitedPlace)
                     {
-                        send = false;
+                        if (visited == iPAddress.ToString())
+                        {
+                            send = false;
+                        }
+                    }
+                    if (send)
+                    {
+                        receive = client.Start(package);
+                    }
+                    else
+                    {
+                        receive = null;
                     }
                 }
-                if (send)
+                else if (package.hierarchie != null)
                 {
+                    //Hier Probleme
                     receive = client.Start(package);
+                    Thread.Sleep(1000);
                 }
-                else
-                {
-                    receive = null;
-                }
-            }
-            else if (package.hierarchie != null)
+            }catch(Exception ex)
             {
-                //Hier Probleme
-                receive = client.Start(package);
-                Thread.Sleep(1000);
+                Console.WriteLine(ex.Message);
+                receive = null;
             }
-
 
             return receive;
         }
@@ -289,13 +306,12 @@ namespace KaPlanerServer.Logic
         {
             List<Package> packages = new List<Package>();
             //Muss ich das Paket abaendern oder nicht?
-            bool isResolving = false;
+            //bool isResolving = false;
             if (package.p2p != null)
             {
                 //P2P Server-Server
                 package.p2p.visitedPlace.Add(Data.ServerConfig.host.ToString());
-
-                package.p2p = resolveP2P(package.p2p);
+                package.p2p = ResolveP2P(package.p2p);
 
                 if (packages.Count > 0)
                 {
@@ -313,7 +329,7 @@ namespace KaPlanerServer.Logic
             else
             {
                 //CLient-Server
-                package = resolvePackage(package);
+                package = ResolvePackage(package);
             }
 
             return package;
@@ -370,7 +386,7 @@ namespace KaPlanerServer.Logic
                                     child.Add(sendHierarchie(getAdress(childID), toDo.Info, stateEintrag));
                                     childcount++;
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     Console.WriteLine("Etwas ist schief gelaufen beim KindServer");
                                 }
@@ -476,6 +492,7 @@ namespace KaPlanerServer.Logic
                     package.destinationAdress = ip;
                     package.anzUser = anzUser;
                     break;
+
                 case HierarchieRequest.UserLogin:
                     if (package.destinationID == id)
                     {
@@ -587,7 +604,7 @@ namespace KaPlanerServer.Logic
         /// Resolve Acquired Packages and trigger corresponding requests. For Client
         /// </summary>
         /// <param name="package"></param>
-        public Package resolvePackage(Package package)
+        public Package ResolvePackage(Package package)
         {
 
             switch (package.request)
@@ -637,7 +654,7 @@ namespace KaPlanerServer.Logic
                             {
                                 P2Prequest = P2PRequest.Login
                             };
-                            p2p = resolveP2P(p2p);
+                            p2p = ResolveP2P(p2p);
                             if (p2p.P2PAnswer == P2PAnswer.Success)
                             {
                                 package.sourceServer = p2p.lastIP;
@@ -683,7 +700,7 @@ namespace KaPlanerServer.Logic
                             {
                                 P2PPackage p2p = new P2PPackage();
                                 p2p.P2Prequest = P2PRequest.NewUser;
-                                p2p = resolveP2P(p2p);
+                                p2p = ResolveP2P(p2p);
                                 package.sourceServer = p2p.lastIP;
                             }
                             writeResult(Request.changeServer, "ChangeServer");
@@ -731,10 +748,11 @@ namespace KaPlanerServer.Logic
                     break;
 
                 case Request.Test:
-                    Console.WriteLine(RequestTest);
+                    Console.WriteLine(TestRequest);
                     break;
                 case Request.Invite:
                     //Prüfung ServerID
+                    Console.WriteLine(InviteRequest);
                     if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                     {
                         /*
@@ -774,10 +792,40 @@ namespace KaPlanerServer.Logic
                     }
                     else if (Data.ServerConfig.structure == Data.structure.P2P)
                     {
-
                         //Logik P2P Invite
+                        List<User> list = package.kaEvents[0].members;
 
+                        foreach (User member in list)
+                        {
+                            if (database.UserExist(member.name))
+                            {
+                                database.SaveInvites(member.name, package.kaEvents[0]);
+                            }
+                            else
+                            {
+                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0]);
+                                p2p.P2Prequest = P2PRequest.Invite;
+                                p2p = ResolveP2P(p2p);
 
+                                switch (p2p.P2PAnswer)
+                                {
+                                    case P2PAnswer.Success:
+                                        writeResult(Request.Success, InviteSuccess);
+                                        break;
+                                    case P2PAnswer.Timeout:
+                                        writeResult(Request.Success, InviteSuccess);
+                                        break;
+                                    case P2PAnswer.Failure:
+                                        writeResult(Request.Failure, InviteFail);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                    
+
+                                //User im anderen Server
+                            }
+                        }
 
 
 
@@ -807,40 +855,6 @@ namespace KaPlanerServer.Logic
             }
         }
 
-        public Package resolvePackages(List<Package> packages)
-        {
-            //Eventuell original mitnehmen?
-            Package userPackage = new Package();
-            //if(packages[0].p2p != null)
-            //{
-            //    //resolvePackage()
-            //}
-
-
-            return userPackage;
-        }
-
-        private void resolvePackage(P2PPackage package)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Package Forwarding(Package package)
-        {
-
-
-            return package;
-        }
-
-        private void ipInitialize()
-        {
-            //LinkedList<string> listOfWellKnownPeers = database.GetWellKnownPeers();
-            //List<string> neighbours = new List<string>
-            //{
-            //    listOfWellKnownPeers.Find(_ipString).Previous.ToString(),
-            //    listOfWellKnownPeers.Find(_ipString).Next.ToString()
-            //};
-        }
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!
         /// </summary>
@@ -908,60 +922,76 @@ namespace KaPlanerServer.Logic
         private void P2PSettings(bool isWellKnown)
         {
             //Durch Jans Parser, Wellknows rausholen und dann die auf Data.ServerConfig.ListofWellKnown eintragen
-
-
-
             if (isWellKnown)
             {
-                Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
+                //Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
                 foreach (IPAddress ipAddress in Data.ServerConfig.ListofWellKnown)
                 {
-                    if (ipAddress != Data.ServerConfig.host)
+                    if (ipAddress.ToString() != Data.ServerConfig.host.ToString())
                     {
                         Package package = new Package();
                         package.p2p = new P2PPackage();
                         package.p2p.P2Prequest = P2PRequest.RegisterServer;
                         package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
                         Package receive = Send(package, ipAddress);
-                        if (receive != null)
+
+                        //Nur hinzufügen wenn noch nicht existent
+                        if (receive != null && !Data.ServerConfig.ipAddress.Exists(x => x.ToString() == ipAddress.ToString()))
                         {
                             Data.ServerConfig.ipAddress.Add(ipAddress);
                         }
                     }
                 }
-
-
             }
             else
             {
-                string read;
-                while (true)
+                for (int i=2; i>0; i--) //'i' represents number of connections to create.
                 {
-                    Console.WriteLine("Bitte geben sie eine Wellknown-Server an");
-                    read = Console.ReadLine();
-                    Package package = new Package();
-                    package.p2p = new P2PPackage();
-                    package.p2p.P2Prequest = P2PRequest.NewServer;
-                    package.sourceServer = Data.ServerConfig.host.ToString();
-
-
-                    package = Send(package, IPAddress.Parse(read));
+                    Package package = new Package
+                    {
+                        p2p = new P2PPackage
+                        {
+                            P2Prequest = P2PRequest.NewServer
+                        },
+                        sourceServer = Data.ServerConfig.host.ToString()
+                    };
+                    package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
+                    package = Send(package, Data.ServerConfig.ListofWellKnown[0]);//muss noch randomized werden!!!
 
                     if (package != null)
                     {
-
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
-
-
-
-                        break;
+                        switch (package.p2p.P2PAnswer)
+                        {
+                            case P2PAnswer.Success:
+                                Package registerPackage = new Package
+                                {
+                                    p2p = new P2PPackage
+                                    {
+                                        P2Prequest = P2PRequest.NewServer
+                                    },
+                                    sourceServer = Data.ServerConfig.host.ToString()
+                                };
+                                package.p2p.SetOriginIPAddress(Data.ServerConfig.host.ToString());
+                                package = Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
+                                if (package != null)
+                                {
+                                    if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
+                                    {
+                                        Data.ServerConfig.ipAddress.Add(IPAddress.Parse(package.p2p.lastIP));
+                                        Console.WriteLine(RegisterSuccess);
+                                    }
+                                    else
+                                        Console.WriteLine(RegisterFail);
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("No Success.");
+                                break;
+                        }
                     }
                 }
             }
-
-
-
-
         }
 
         private void HierarchieSettings(bool isRoot)
@@ -1052,18 +1082,6 @@ namespace KaPlanerServer.Logic
                     }
                 }
             }
-
-
-        }
-
-        private void HandleReturn(P2PPackage package)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<string> IServerLogic.resolvePackage(P2PPackage package)
-        {
-            throw new NotImplementedException();
         }
     }
 }

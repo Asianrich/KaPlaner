@@ -24,7 +24,7 @@ namespace KaPlaner.Logic
 
         void SaveLocal(KaEvent kaEvent);
 
-        void SaveRemote(KaEvent kaEvent);
+        KaEvent SaveRemote(KaEvent kaEvent);
 
         void sendInvites(KaEvent kaEvent);
 
