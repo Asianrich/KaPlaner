@@ -12,7 +12,7 @@ namespace KaPlanerServer.Data
         public static List<IPAddress> ipAddress = new List<IPAddress>();
         private static readonly int LIMIT = 10;
         //HIerarchie
-        public static IPAddress root; // = new IPAddress(); <--- richtige Root-Adresse eintragen
+        public static IPAddress root = IPAddress.Parse("192.168.0.42"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
         public static int serverID = 0; // Standardbelegung (0 verweist auf P2P)
 
 

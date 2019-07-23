@@ -226,8 +226,8 @@ namespace KaPlanerServer.Logic
             List<P2PPackage> Forward()
             {
                 Package sendPackage = new Package(package);
-
                 Package recievePackage;
+
                 List<P2PPackage> returnList = new List<P2PPackage>();
 
                 foreach (IPAddress iPAddress in Data.ServerConfig.ipAddress)
@@ -245,7 +245,12 @@ namespace KaPlanerServer.Logic
             }
         }
 
-
+        /// <summary>
+        /// Auf null return überprüfen!!!
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="iPAddress"></param>
+        /// <returns></returns>
         private Package Send(Package package, IPAddress iPAddress)
         {
             Package receive = new Package();
@@ -690,16 +695,37 @@ namespace KaPlanerServer.Logic
                                 HierarchiePackage hierarchie = new HierarchiePackage();
                                 hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
                                 hierarchie = resolveHierarchie(hierarchie);
+
+
+
                                 package.sourceServer = hierarchie.destinationAdress;
-
-
                             }
                             else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
+                                //P2P Teil
                                 P2PPackage p2p = new P2PPackage();
                                 p2p.P2Prequest = P2PRequest.NewUser;
                                 p2p = ResolveP2P(p2p);
-                                package.sourceServer = p2p.lastIP;
+
+                                //Hierarchie Teil
+                                HierarchiePackage hierarchie = new HierarchiePackage();
+                                hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
+
+                                //Sende Teil
+                                Package sendPackage = new Package(hierarchie);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, Data.ServerConfig.root);
+                                if (recievePackage != null)
+                                {
+                                    if (p2p.anzUser < recievePackage.hierarchie.anzUser)
+                                        package.sourceServer = p2p.lastIP;
+                                    else
+                                        package.sourceServer = recievePackage.hierarchie.destinationAdress;
+                                }
+                                else
+                                {
+                                    package.sourceServer = p2p.lastIP;
+                                }
                             }
                             writeResult(Request.changeServer, "ChangeServer");
                         }
@@ -782,10 +808,7 @@ namespace KaPlanerServer.Logic
                                 //User im anderen Server
                             }
                         }
-
-
                         //database.SaveInvites(package.kaEvents)
-
                     }
                     else if (Data.ServerConfig.structure == Data.structure.P2P)
                     {
@@ -818,17 +841,9 @@ namespace KaPlanerServer.Logic
                                     default:
                                         break;
                                 }
-                                    
-
-                                //User im anderen Server
                             }
                         }
-
-
-
                     }
-
-
                     break;
                 case Request.answerInvite:
 

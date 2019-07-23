@@ -99,6 +99,11 @@ namespace KaObjects
             this.p2p = p2PPackage;
         }
 
+        public Package(HierarchiePackage hierarchiePackage)
+        {
+            this.hierarchie = hierarchiePackage;
+        }
+
         public Package() { }
     }
 }
