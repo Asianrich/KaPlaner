@@ -694,13 +694,34 @@ namespace KaPlanerServer.Logic
                         {
                             if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                             {
+                                //Hierarchie Teil
                                 HierarchiePackage hierarchie = new HierarchiePackage();
                                 hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
                                 hierarchie = resolveHierarchie(hierarchie);
 
+                                //P2P Teil
+                                P2PPackage p2p = new P2PPackage();
+                                p2p.P2Prequest = P2PRequest.NewUser;
+                                p2p = ResolveP2P(p2p);
 
+                                //Sende Teil
+                                Package sendPackage = new Package(p2p);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, Data.ServerConfig.host);
 
-                                package.sourceServer = hierarchie.destinationAdress;
+                                if(recievePackage != null)
+                                {
+                                    if (recievePackage.hierarchie.anzUser < p2p.anzUser)
+                                        package.sourceServer = hierarchie.destinationAdress;
+                                    else
+                                        package.sourceServer = recievePackage.p2p.lastIP;
+                                }
+                                else
+                                {
+                                    package.sourceServer = hierarchie.destinationAdress;
+                                }
+
+                                writeResult(Request.changeServer, "ChangeServer");
                             }
                             else if (Data.ServerConfig.structure == Data.structure.P2P)
                             {
