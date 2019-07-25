@@ -25,14 +25,10 @@ namespace KaPlaner.Networking
 
     public class ClientConnection : IClientConnection
     {
-        //public int port { get => _port; set => _port = value; }
-
         private static readonly ManualResetEvent connectDone = new ManualResetEvent(false);
         private static readonly ManualResetEvent sendDone = new ManualResetEvent(false);
         private static readonly ManualResetEvent receiveDone = new ManualResetEvent(false);
-        //public static readonly string SerialDelimiter = "<EOF>";
 
-        //private int _port;
         private static string response;
         IPAddress ip;
 
