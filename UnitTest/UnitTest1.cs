@@ -23,7 +23,7 @@ namespace UnitTest
     public class UnitTest1
     {
          [TestMethod]
-        public void writer()
+        public void Writer()
         {
             User user = new User("Man", "123");
 
@@ -60,16 +60,18 @@ namespace UnitTest
         
 
         [TestMethod]
-        public void listviewtest()
+        public void ListViewTest()
         {
 
             KaEvent[] kaEvents = new KaEvent[5];
 
             for (int i = 0; i < 3; i++)
             {
-                kaEvents[i] = new KaEvent();
-                kaEvents[i].Titel = "Titetl " + i;
-                kaEvents[i].Ort = "Ort " + i;
+                kaEvents[i] = new KaEvent
+                {
+                    Titel = "Titetl " + i,
+                    Ort = "Ort " + i
+                };
             }
 
             //Form open_list = new Wdw_List(kaEvents);
@@ -79,50 +81,11 @@ namespace UnitTest
         }
 
 
-
-        private string Serialize<T>(T myObject)
-        {
-            string msg;
-            List<Type> extra = new List<Type>();
-            extra.Add(typeof(P2PPackage));
-            using (var sw = new StringWriter())
-            {
-                using (var xw = XmlWriter.Create(sw))
-                {
-                    XmlSerializer xs = new XmlSerializer(myObject.GetType(), extra.ToArray());
-                    xs.Serialize(xw, myObject);
-                }
-                msg = sw.ToString();
-            }
-            return msg;
-        }
-
-
-        private T DeSerialize<T>(string msg)
-        {
-            T myObject;
-            List<Type> extra = new List<Type>();
-            extra.Add(typeof(P2PPackage));
-            using (var sr = new StringReader(msg))
-            {
-                using (var xr = XmlReader.Create(sr))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(T),extra.ToArray());
-                    myObject = (T)xs.Deserialize(xr);
-
-
-                }
-            }
-            return myObject;
-        }
-
-
         [TestMethod]
         public void ServerEntrytest()
         {
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlanerServer\\KaPlanerServer\\Data\\KaPlaner.mdf;Integrated Security=True";
-
-            Database db = new Database(connectionString);
+            _ = new Database(connectionString);
 
             //db.newServerEntry("192.168.1.5", 110);
         }
@@ -132,7 +95,7 @@ namespace UnitTest
         {
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlanerServer\\KaPlanerServer\\Data\\KaPlaner.mdf;Integrated Security=True";
 
-            Database db = new Database(connectionString);
+            _ = new Database(connectionString);
         }
 
 
@@ -140,8 +103,8 @@ namespace UnitTest
         public void CheckMemberList()
         {
             Database test = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            int i = 0;
-            i = test.CheckMemberList();
+
+            int i = test.CheckMemberList();
 
             Console.WriteLine("Listeneintraege: {0}", i);
         }
@@ -151,8 +114,8 @@ namespace UnitTest
         public void CheckSaveInvites()
         {
             //int testtermin = 7;
-            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            List<Package> testlist = new List<Package>();
+            _ = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            _ = new List<Package>();
 
             //testdb.SaveInvites(testlist, testtermin);
         }
@@ -161,9 +124,9 @@ namespace UnitTest
         [TestMethod]
         public void CheckReadInvites()
         {
-            List<KaEvent> test = new List<KaEvent>();
-            List<KaEvent> test2 = new List<KaEvent>();
-            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            _ = new List<KaEvent>();
+            _ = new List<KaEvent>();
+            _ = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
             //string user = "TestUser";
 
             //test2 = testdb.ReadInvites(user, test);
@@ -182,9 +145,8 @@ namespace UnitTest
         [TestMethod]
         public void CheckGetServerCount()
         {
-            int count = 0;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            count = testdb.getServerCount();
+            int count = testdb.getServerCount();
             Console.WriteLine(count);
         }
 
@@ -192,10 +154,10 @@ namespace UnitTest
         public void AnswerInvitePruefung()
         {
 
-            List<KaEvent> test = new List<KaEvent>();
-            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
+            _ = new List<KaEvent>();
+            _ = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
-            User newOwner = new User();
+            _ = new User();
             // newOwner.name = user;
             // kaEvent.owner = newOwner;
 
@@ -216,8 +178,7 @@ namespace UnitTest
 
             User testUser = new User("Mustermann, Max", "passwort123", 10);
             Database testDatabase = new Database(connectionString);
-            bool check = false;
-            check = testDatabase.login(testUser);
+            bool check = testDatabase.login(testUser);
             Console.WriteLine(check.ToString());
         }
 
@@ -271,9 +232,8 @@ namespace UnitTest
         {
             User testUser = new User("Mustermann, Maja", "passwort123", 101);
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            List<KaEvent> testList = new List<KaEvent>();
-            
-            testList = testdb.read(testUser.name);
+
+            _ = testdb.read(testUser.name);
         }
 
         [TestMethod]
