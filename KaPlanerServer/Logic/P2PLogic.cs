@@ -25,8 +25,10 @@ namespace KaPlanerServer.Logic
                 {
                     if (ipAddress.ToString() != ServerConfig.host.ToString())
                     {
-                        Package package = new Package();
-                        package.p2p = new P2PPackage();
+                        Package package = new Package
+                        {
+                            p2p = new P2PPackage()
+                        };
                         package.p2p.P2Prequest = P2PRequest.RegisterServer;
                         package.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
                         Package receive = ServerLogic.Send(package, ipAddress);

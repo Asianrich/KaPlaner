@@ -156,10 +156,12 @@ namespace KaPlanerServer.Logic
                         if (ServerConfig.structure == Structure.HIERARCHY)
                         {
                             //Hierarchie Login
-                            HierarchiePackage hierarchie = new HierarchiePackage();
-                            hierarchie.HierarchieRequest = HierarchieRequest.UserLogin;
-                            hierarchie.login = package.user.name;
-                            hierarchie.destinationID = package.user.serverID;
+                            HierarchiePackage hierarchie = new HierarchiePackage
+                            {
+                                HierarchieRequest = HierarchieRequest.UserLogin,
+                                login = package.user.name,
+                                destinationID = package.user.serverID
+                            };
                             hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
                             if (hierarchie.HierarchieAnswer == HierarchieAnswer.Success)
                             {
@@ -215,13 +217,17 @@ namespace KaPlanerServer.Logic
                             if (ServerConfig.structure == Structure.HIERARCHY)
                             {
                                 //Hierarchie Teil
-                                HierarchiePackage hierarchie = new HierarchiePackage();
-                                hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
+                                HierarchiePackage hierarchie = new HierarchiePackage
+                                {
+                                    HierarchieRequest = HierarchieRequest.RegisterUser
+                                };
                                 hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
 
                                 //P2P Teil
-                                P2PPackage p2p = new P2PPackage();
-                                p2p.P2Prequest = P2PRequest.NewUser;
+                                P2PPackage p2p = new P2PPackage
+                                {
+                                    P2Prequest = P2PRequest.NewUser
+                                };
 
                                 //Sende Teil
                                 Package sendPackage = new Package(p2p);
@@ -245,13 +251,17 @@ namespace KaPlanerServer.Logic
                             else if (ServerConfig.structure == Structure.P2P)
                             {
                                 //P2P Teil
-                                P2PPackage p2p = new P2PPackage();
-                                p2p.P2Prequest = P2PRequest.NewUser;
+                                P2PPackage p2p = new P2PPackage
+                                {
+                                    P2Prequest = P2PRequest.NewUser
+                                };
                                 p2p = P2PLogic.ResolveP2P(p2p);
 
                                 //Hierarchie Teil
-                                HierarchiePackage hierarchie = new HierarchiePackage();
-                                hierarchie.HierarchieRequest = HierarchieRequest.RegisterUser;
+                                HierarchiePackage hierarchie = new HierarchiePackage
+                                {
+                                    HierarchieRequest = HierarchieRequest.RegisterUser
+                                };
 
                                 //Sende Teil
                                 Package sendPackage = new Package(hierarchie);
@@ -342,11 +352,13 @@ namespace KaPlanerServer.Logic
                             }
                             else
                             {
-                                HierarchiePackage hierarchie = new HierarchiePackage();
-                                hierarchie.HierarchieRequest = HierarchieRequest.Invite;
-                                hierarchie.invite = package.kaEvents[0];
-                                hierarchie.login = member.name;
-                                hierarchie.destinationID = member.serverID;
+                                HierarchiePackage hierarchie = new HierarchiePackage
+                                {
+                                    HierarchieRequest = HierarchieRequest.Invite,
+                                    invite = package.kaEvents[0],
+                                    login = member.name,
+                                    destinationID = member.serverID
+                                };
                                 HierarchyLogic.ResolveHierarchie(hierarchie);
 
                                 switch (hierarchie.HierarchieAnswer)
@@ -355,6 +367,7 @@ namespace KaPlanerServer.Logic
                                         writeResult(Request.Success, InviteSuccess);
                                         break;
                                     default:
+                                        //P2P Teil
                                         writeResult(Request.Failure, InviteFail);
                                         break;
                                 }
@@ -375,8 +388,10 @@ namespace KaPlanerServer.Logic
                             }
                             else
                             {
-                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0]);
-                                p2p.P2Prequest = P2PRequest.Invite;
+                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
+                                {
+                                    P2Prequest = P2PRequest.Invite
+                                };
                                 p2p = P2PLogic.ResolveP2P(p2p);
 
                                 switch (p2p.P2PAnswer)
@@ -385,6 +400,12 @@ namespace KaPlanerServer.Logic
                                         writeResult(Request.Success, InviteSuccess);
                                         break;
                                     default:
+                                        //Hierarchie Teil
+                                        /*new Package(hierarchie)
+                                         * recvPackage = Send(hieararchie, root)
+                                         * if (recvPackage!=null)
+                                         * switch(recvPackage.hierarchie.Answer)
+                                         */
                                         writeResult(Request.Failure, InviteFail);
                                         break;
                                 }
@@ -393,7 +414,7 @@ namespace KaPlanerServer.Logic
                     }
                     break;
                 case Request.answerInvite:
-
+                    //TODO für P2P und Hierarchisch
                     database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
                     break;
 

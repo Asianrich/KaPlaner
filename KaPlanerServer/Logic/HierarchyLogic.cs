@@ -12,11 +12,11 @@ namespace KaPlanerServer.Logic
 {
     class StateEintrag
     {
-        private ManualResetEvent allDone = new ManualResetEvent(false);
+        private readonly ManualResetEvent allDone = new ManualResetEvent(false);
         private int counter = 0;
 
         public List<HierarchiePackage> child = new List<HierarchiePackage>();
-        object _lock = new object();
+        readonly object _lock = new object();
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace KaPlanerServer.Logic
         /// <summary>
         /// Warten bis der Counter auf 0 ist
         /// </summary>
-        public void wait()
+        public void Wait()
         {
             allDone.WaitOne();
         }
@@ -75,10 +75,12 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine("Bitte geben sie Adresse von Root ein");
                     read = Console.ReadLine();
 
-                    Package package = new Package();
-                    package.sourceServer = ServerConfig.host.ToString();
+                    Package package = new Package
+                    {
+                        sourceServer = ServerConfig.host.ToString(),
 
-                    package.hierarchie = new HierarchiePackage();
+                        hierarchie = new HierarchiePackage()
+                    };
                     package.hierarchie.HierarchieRequest = HierarchieRequest.NewServer;
 
                     if (IPAddress.TryParse(read, out IPAddress address))
@@ -107,12 +109,11 @@ namespace KaPlanerServer.Logic
                         Console.ReadLine();
 
                         IPAddress connectServer = IPAddress.Parse(package.hierarchie.destinationAdress);
-                        Package receive = new Package();
+                        Package receive;
                         while (true)
                         {
                             try
                             {
-
                                 receive = ServerLogic.Send(package, connectServer);
                                 Thread.Sleep(1000);
                                 break;
@@ -352,7 +353,7 @@ namespace KaPlanerServer.Logic
                 int addressid = id;
                 if (isUp)
                 {
-                    addressid = addressid / 10;
+                    addressid /= 10;
                 }
                 else
                 {
@@ -374,8 +375,10 @@ namespace KaPlanerServer.Logic
 
             HierarchiePackage sendHierarchie(string ipadress, ToDo _toDo, StateEintrag state)
             {
-                Package hierarchie = new Package();
-                hierarchie.hierarchie = package;
+                Package hierarchie = new Package
+                {
+                    hierarchie = package
+                };
                 //An beide Childs
                 if (_toDo == ToDo.Info)
                 {
