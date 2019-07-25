@@ -8,7 +8,7 @@ using System.Net;
 
 namespace KaObjects
 {
-    public enum P2PRequest { NewServer, RegisterServer, NewUser, RegisterUser, Login, Invite }
+    public enum P2PRequest { NewServer, RegisterServer, NewUser, Login, Invite }
     public enum P2PAnswer { Success, Failure, Error, Visited, Timeout}
     [Serializable]
     public class P2PPackage
@@ -23,16 +23,31 @@ namespace KaObjects
         public P2PRequest P2Prequest;
         [XmlElement]
         public P2PAnswer P2PAnswer = P2PAnswer.Failure;
+        /// <summary>
+        /// Wird gebraucht um festzustellen ob Anfrage bereits da war.
+        /// </summary>
         [XmlElement]
         public Guid packageID; //unique ID of this package
         [XmlElement]
         public int ttl = TTLinit; //time to live of this package
+        /// <summary>
+        /// Anzahl Connections zu anderen. Anz. Neighbours.
+        /// </summary>
         [XmlElement]
         public int anzConn = AnzConnInit; //Vorbelegung mit 'unendlich' oder einem Maximum
+        /// <summary>
+        /// Anzahl User. Wird gebraucht um festzustellen wer am wenigsten belastet ist.
+        /// </summary>
         [XmlElement]
         public int anzUser = AnzUserInit;
+        /// <summary>
+        /// Name des gesuchten Users. Wird für Invites/Logins gebraucht.
+        /// </summary>
         [XmlElement]
         public readonly string Username;
+        /// <summary>
+        /// Wird für Invites gebraucht.
+        /// </summary>
         [XmlElement]
         public readonly KaEvent Invite;
 
@@ -46,6 +61,10 @@ namespace KaObjects
             return Invite;
         }
 
+        public P2PPackage()
+        {
+            this.packageID = Guid.NewGuid();
+        }
 
         public P2PPackage(string Username) : this()
         {
@@ -70,27 +89,10 @@ namespace KaObjects
         [XmlElement]
         public string lastIP;
         /// <summary>
-        /// Dies soll immer weitergeleitet werden, dadurch kann man herausfinden wo das Packet durchgelaufen ist
+        /// Dies soll immer weitergeleitet werden, dadurch kann man herausfinden wo das Paket durchgelaufen ist
         /// </summary>
         [XmlElement]
         public List<string> visitedPlace = new List<string>();
-
-
-        /// <summary>
-        /// ZielAdresse
-        /// </summary>
-        //private string destination;
-
-        public P2PPackage()
-        {
-            GeneratePID();
-            //base.packageReference = this;
-        }
-
-        private void GeneratePID()
-        {
-            packageID = Guid.NewGuid();
-        }
 
         public Guid GetPackageID()
         {
@@ -111,8 +113,5 @@ namespace KaObjects
         {
             source = iPAddress;
         }
-
-
-
     }
 }

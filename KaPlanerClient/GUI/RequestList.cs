@@ -34,7 +34,7 @@ namespace KaPlaner.GUI
             string[] row = new string[5];
             //LV_Dates.Items.Clear();
             //indexes.Clear();
-            int i = 0;
+            //int i = 0;
 
             //ListEvents.ForEach(x =>
             //{
@@ -174,7 +174,7 @@ namespace KaPlaner.GUI
             {
                 clientLogic.answerInvite(ListEvents[index], false);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Etwas ist schief gelaufen");
             }
@@ -187,7 +187,7 @@ namespace KaPlaner.GUI
             {
                 clientLogic.answerInvite(ListEvents[index], true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Etwas ist schief gelaufen");
             }

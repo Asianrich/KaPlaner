@@ -18,14 +18,14 @@ namespace KaPlanerServer.Networking
 {
 
     //Netztwerkintern. Verschickt die serialisierte Packete
-
+    
     class StateObject
     {
         public Socket workSocket = null;
         public const int BufferSize = 1024;
         public byte[] buffer = new byte[BufferSize];
         public StringBuilder sb = new StringBuilder();
-        public string[] delimiter = { "<EOF>" };
+        public string[] delimiter = { Serial.Delimiter };
         Package package = new Package();
         public ManualResetEvent sendDone = new ManualResetEvent(false);
         public ManualResetEvent receiveDone = new ManualResetEvent(false);
@@ -51,7 +51,6 @@ namespace KaPlanerServer.Networking
             //ipAddress.AddressFamily = AddressFamily.InterNetwork;
             localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
         }
 
         private string GetAddress(IPAddress[] iPAddresses)
@@ -81,7 +80,7 @@ namespace KaPlanerServer.Networking
         /// <summary>
         /// Aufruf um den Server zu Starten
         /// </summary>
-        public void start()
+        public void Start()
         {
             try
             {
@@ -110,7 +109,6 @@ namespace KaPlanerServer.Networking
         {
             try
             {
-
                 // Signal the main thread to continue.  
                 allDone.Set();
                 Console.WriteLine("Connection to Client success");
@@ -147,7 +145,7 @@ namespace KaPlanerServer.Networking
                 handler.Close();
                 Console.WriteLine("Success at closing");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Probleme beim Schließen der Sockets");
                 StateObject state = (StateObject)ar.AsyncState;
@@ -171,14 +169,13 @@ namespace KaPlanerServer.Networking
                 //If there is actually something to read
                 if (bytesReceive > 0)
                 {
-
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesReceive));
 
                     content = state.sb.ToString();
 
                     Console.WriteLine(content);
                     //If the End of File Tag is in there.
-                    if (content.IndexOf("<EOF>") > -1)
+                    if (content.IndexOf(Serial.Delimiter) > -1)
                     {
                         Console.WriteLine("Bin ich am arbeiten?");
                         //string[] msg = content.Split(state.delimiter, StringSplitOptions.None);
@@ -189,7 +186,6 @@ namespace KaPlanerServer.Networking
 
                         //Sende Antwort
                         Send(state.workSocket, userPackage);
-
                     }
                     else
                     {
@@ -217,8 +213,11 @@ namespace KaPlanerServer.Networking
                 return;
             }
         }
-
-        //Sending Packages
+        /// <summary>
+        /// Sending Packages
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <param name="package"></param>
         public static void Send(Socket handler, Package package)
         {
             try
@@ -228,7 +227,7 @@ namespace KaPlanerServer.Networking
 
                 handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Console.WriteLine("Probleme beim Senden");
                 //handler.Shutdown(SocketShutdown.Both);

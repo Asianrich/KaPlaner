@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="Data\ServerConfig.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Logic\HierarchyLogic.cs" />
+    <Compile Include="Logic\P2PLogic.cs" />
     <Compile Include="Logic\IServerLogic.cs" />
     <Compile Include="Logic\ServerLogic.cs" />
     <Compile Include="Networking\ClientConnection.cs" />

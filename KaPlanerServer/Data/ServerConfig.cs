@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using System.Net;
 namespace KaPlanerServer.Data
 {
-    public enum structure {P2P = 0, HIERARCHY }
+    public enum Structure {P2P, HIERARCHY}
     public static class ServerConfig
     {
-        public static List<IPAddress> ipAddress = new List<IPAddress>();
+        /// <summary>
+        /// P2P neighbours
+        /// </summary>
+        public static List<IPAddress> neighbours = new List<IPAddress>();
         private static readonly int LIMIT = 10;
         //HIerarchie
         public static IPAddress root = IPAddress.Parse("192.168.0.42"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
@@ -23,10 +26,13 @@ namespace KaPlanerServer.Data
             IPAddress.Parse("192.168.0.4"),
             IPAddress.Parse("192.168.0.10")
         };
-        //dieser Server
+        
+        /// <summary>
+        /// Dieser Server
+        /// </summary>
         public static IPAddress host;
         private static List<Guid> packageIDs = new List<Guid>();
-        public static structure structure = 0;
+        public static Structure structure = 0;
 
         static readonly object _object = new object();
 
@@ -46,6 +52,22 @@ namespace KaPlanerServer.Data
 
                 return true;//Das package kann bearbeitet werden.
             }
+        }
+
+        /// <summary>
+        /// Zufälliger Eintrag aus einer Liste.
+        /// Die Liste sollte nicht leer sein.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="EntryList"></param>
+        /// <returns>default(T) bei leerer Liste</returns>
+        public static T GetRandomEntry<T>(List<T> EntryList)
+        {
+            if (EntryList.Count == 0) //Check bevor wir falsch indexieren.
+                return default;
+            Random random = new Random();
+            //Random Zahl zwischen 0/1 und EntryList.Count
+            return EntryList[random.Next(0, EntryList.Count)];
         }
     }
 }

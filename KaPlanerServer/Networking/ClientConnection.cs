@@ -14,6 +14,10 @@ using System.IO;
 
 namespace KaPlaner.Networking
 {
+    public static class Serial
+    {
+        public static string Delimiter = "<EOF>";
+    }
     class StateObject
     {
         public Socket workSocket = null;
@@ -21,21 +25,18 @@ namespace KaPlaner.Networking
         public byte[] buffer = new byte[BufferSize];
         public StringBuilder sb = new StringBuilder();
         Package package = new Package();
-
-
     }
 
     public class ClientConnection : IClientConnection
     {
-        public int port { get => _port; set => _port = value; }
+        //public int port { get => _port; set => _port = value; }
 
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
 
-        private int _port;
+        //private int _port;
         private static string response;
-        IPAddress ip;
         private IPAddress iPAddress;
 
         public ClientConnection()
@@ -166,13 +167,17 @@ namespace KaPlaner.Networking
         }
 
 
-        //Sending Packages
+        /// <summary>
+        /// Send Packages.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="send"></param>
         private void Send(Socket client, Package send)
         {
 
             try
             {
-                byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + "<EOF>");
+                byte[] msg = Encoding.ASCII.GetBytes(Serialize(send) + Serial.Delimiter);
                 Console.WriteLine("Vor Begin Send");
 
                 Console.WriteLine(Encoding.ASCII.GetString(msg));
@@ -195,7 +200,12 @@ namespace KaPlaner.Networking
         }
 
 
-
+        /// <summary>
+        /// Serialisierung eines Objektes in einen String.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="myObject"></param>
+        /// <returns></returns>
         private string Serialize<T>(T myObject)
         {
             string msg;
@@ -214,6 +224,12 @@ namespace KaPlaner.Networking
 
         }
 
+        /// <summary>
+        /// Deserialisierung eines Objektes aus einem String.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="msg"></param>
+        /// <returns></returns>
         private T DeSerialize<T>(string msg)
         {
             T myObject;
@@ -223,19 +239,17 @@ namespace KaPlaner.Networking
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(T));
                     myObject = (T)xs.Deserialize(xr);
-
-
                 }
             }
-
-
             return myObject;
-
         }
 
 
-        //Receiving Packages
-        private void receive(Socket client)
+        /// <summary>
+        /// Receive Packages.
+        /// </summary>
+        /// <param name="client"></param>
+        private void Receive(Socket client)
         {
             try
             {
@@ -278,12 +292,12 @@ namespace KaPlaner.Networking
                 {
                     client = connectServer();
                     Package recObject;
-                    string[] delimiter = { "<EOF>" };
+                    string[] delimiter = { Serial.Delimiter };
                     Console.WriteLine("Methodenaufruf Send");
                     Send(client, package);
                     sendDone.WaitOne();
 
-                    receive(client);
+                    Receive(client);
                     Console.WriteLine("Waiting");
                     if (!receiveDone.WaitOne())
                     {

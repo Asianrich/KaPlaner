@@ -19,7 +19,7 @@ namespace WindowsFormsApp1
     {
         IClientLogic clientLogic = ClientActivator.clientLogic;
 
-        ClientLogic client;
+        //ClientLogic client;
 
         List<KaEvent> kaEvents;
         List<KaEvent> invites;

@@ -61,22 +61,9 @@ namespace KaObjects
         [XmlElement]
         public string login;
 
-        /// <summary>
-        /// Ist die Antwort von einem Server.
-        /// </summary>
-        public string serverAnswer;
-
-
-
-
         public HierarchiePackage()
         {
-            GeneratePID();
-        }
-
-        private void GeneratePID()
-        {
-            packageID = Guid.NewGuid();
+            this.packageID = Guid.NewGuid();
         }
 
         public Guid GetPackageID()
@@ -110,17 +97,5 @@ namespace KaObjects
 
         //    //return root;
         //}
-
-
-
-
-
-
-
     }
-
-
-
-
-
 }

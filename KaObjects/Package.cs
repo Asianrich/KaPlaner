@@ -17,7 +17,7 @@ namespace KaObjects
 
 
     [Serializable, XmlRoot("Package")]
-    [XmlInclude(typeof(P2PPackage))]
+    [XmlInclude(typeof(P2PPackage))]//was soll das?
     public class Package
     {
         /// <summary>
@@ -37,12 +37,11 @@ namespace KaObjects
         public User user;
 
         /// <summary>
-        /// P2P-Packet
+        /// P2P-Packet. Null wenn nicht P2P.
         /// </summary>
         public P2PPackage p2p;
-        //public Package packageReference;
         /// <summary>
-        /// HierarchiePacket
+        /// HierarchiePacket. Null wenn nicht Hierarchisch.
         /// </summary>
         public HierarchiePackage hierarchie;
 

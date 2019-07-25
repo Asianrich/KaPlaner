@@ -150,7 +150,7 @@ namespace UnitTest
         [TestMethod]
         public void CheckSaveInvites()
         {
-            int testtermin = 7;
+            //int testtermin = 7;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
             List<Package> testlist = new List<Package>();
 
@@ -164,7 +164,7 @@ namespace UnitTest
             List<KaEvent> test = new List<KaEvent>();
             List<KaEvent> test2 = new List<KaEvent>();
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            string user = "TestUser";
+            //string user = "TestUser";
 
             //test2 = testdb.ReadInvites(user, test);
         }
