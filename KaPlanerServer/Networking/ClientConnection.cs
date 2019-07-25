@@ -24,18 +24,14 @@ namespace KaPlaner.Networking
         public const int BufferSize = 1024;
         public byte[] buffer = new byte[BufferSize];
         public StringBuilder sb = new StringBuilder();
-        Package package = new Package();
     }
 
     public class ClientConnection : IClientConnection
     {
-        //public int port { get => _port; set => _port = value; }
+        private static readonly ManualResetEvent connectDone = new ManualResetEvent(false);
+        private static readonly ManualResetEvent sendDone = new ManualResetEvent(false);
+        private static readonly ManualResetEvent receiveDone = new ManualResetEvent(false);
 
-        private static ManualResetEvent connectDone = new ManualResetEvent(false);
-        private static ManualResetEvent sendDone = new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone = new ManualResetEvent(false);
-
-        //private int _port;
         private static string response;
         private IPAddress iPAddress;
 
@@ -50,21 +46,10 @@ namespace KaPlaner.Networking
             this.iPAddress = iPAddress;
         }
 
-        private Socket connectServer()
+        private Socket ConnectServer()
         {
             try
             {
-                //Lokal Host
-                //IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
-                //IPAddress ip = ipHost.AddressList[0];
-
-                //Externer Host
-
-                //Muss man irgendwie anders machen. 
-                //IPAddress ip = IPAddress.Parse("192.168.56.1");
-
-                //IPHostEntry iPHost = Dns.GetHostEntry("192.168.0.3");
-                //IPAddress ip = iPHost.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(iPAddress, 11000);
                 Socket client = new Socket(iPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
@@ -253,8 +238,10 @@ namespace KaPlaner.Networking
         {
             try
             {
-                StateObject state = new StateObject();
-                state.workSocket = client;
+                StateObject state = new StateObject
+                {
+                    workSocket = client
+                };
 
                 client.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReceiveCallback), state);
             }
@@ -274,7 +261,7 @@ namespace KaPlaner.Networking
             iPAddress = IPAddress.Parse(ipAddress);
         }
 
-        static object _send = new object();
+        static readonly object _send = new object();
         /// <summary>
         /// Starts Connecting, Sending Package, and receiving Response-Package from Server
         /// </summary>
@@ -290,7 +277,7 @@ namespace KaPlaner.Networking
                 sendDone.Reset();
                 try
                 {
-                    client = connectServer();
+                    client = ConnectServer();
                     Package recObject;
                     string[] delimiter = { Serial.Delimiter };
                     Console.WriteLine("Methodenaufruf Send");

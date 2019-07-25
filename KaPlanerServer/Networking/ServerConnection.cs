@@ -26,19 +26,18 @@ namespace KaPlanerServer.Networking
         public byte[] buffer = new byte[BufferSize];
         public StringBuilder sb = new StringBuilder();
         public string[] delimiter = { Serial.Delimiter };
-        Package package = new Package();
         public ManualResetEvent sendDone = new ManualResetEvent(false);
         public ManualResetEvent receiveDone = new ManualResetEvent(false);
     }
 
     class ServerConnection
     {
-        static IServerLogic serverLogic = new ServerLogic(); //needs to be static because it is used in a static method
+        static readonly IServerLogic serverLogic = new ServerLogic(); //needs to be static because it is used in a static method
 
-        private IPHostEntry ipHostInfo;
-        private IPAddress ipAddress;
-        private IPEndPoint localEndPoint;
-        private Socket listener;
+        private readonly IPHostEntry ipHostInfo;
+        private readonly IPAddress ipAddress;
+        private readonly IPEndPoint localEndPoint;
+        private readonly Socket listener;
 
         public static ManualResetEvent allDone = new ManualResetEvent(false);
 
@@ -234,23 +233,6 @@ namespace KaPlanerServer.Networking
                 handler.Close();
             }
         }
-
-        //public static List<Package> communicateServer(Package package)
-        //{
-        //    //ClientConnection client = new ClientConnection();
-        //    //List<Package> packages = new List<Package>();
-        //    //for (int i = 0; i < package.Connections.Count; i++)
-        //    //{
-        //    //    client.changeIP(package.Connections[i]);
-        //    //    packages.Add(client.Start(package));
-        //    //}
-
-        //    return packages;
-        //}
-
-
-
-
 
         //Serializing
         public static string Serialize<T>(T myObject)
