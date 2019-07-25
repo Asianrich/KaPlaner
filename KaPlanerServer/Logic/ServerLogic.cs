@@ -636,6 +636,7 @@ namespace KaPlanerServer.Logic
                     {
                         if (Data.ServerConfig.structure == Data.structure.HIERARCHY)
                         {
+                            //Hierarchie Login
                             HierarchiePackage hierarchie = new HierarchiePackage();
                             hierarchie.HierarchieRequest = HierarchieRequest.UserLogin;
                             hierarchie.login = package.user.name;
