@@ -17,17 +17,9 @@ namespace KaPlaner.Logic
     public class ClientLogic : IClientLogic
     {
         // Connection String muss noch angepasst werden
-        //static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Yoshi\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Malak\\source\\repos\\Asianrich\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Swathi_Su\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Richard\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        //static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\manhk\\source\\repos\\KaPlaner\\KaPlanerClient\\Data\\User_Calendar.mdf;Integrated Security=True";
-        static string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
-
-
-
-        IDatabase database = new Database(connectionString);
-        IClientConnection clientConnection = new ClientConnection();
+        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
+        readonly IDatabase database = new Database(connectionString);
+        readonly IClientConnection clientConnection = new ClientConnection();
         public User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
         public List<KaEvent> eventList = new List<KaEvent>();
@@ -65,13 +57,13 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public List<KaEvent> LoadEventsRemote(DateTime month)
         {
-            KaEvent eventMonth = new KaEvent();
-            eventMonth.Beginn = month;
+            KaEvent eventMonth = new KaEvent
+            {
+                Beginn = month
+            };
 
-            Package returnPackage;
             Package loadPackage = new Package(Request.Load, currentUser, eventMonth);
-
-            returnPackage = clientConnection.Start(loadPackage);
+            Package returnPackage = clientConnection.Start(loadPackage);
 
             if (returnPackage.request == Request.Success)
                 return returnPackage.kaEvents;
@@ -98,8 +90,10 @@ namespace KaPlaner.Logic
         public void sendInvites(KaEvent kaEvent)
         {
 
-            Package package = new Package();
-            package.kaEvents = new List<KaEvent>();
+            Package package = new Package
+            {
+                kaEvents = new List<KaEvent>()
+            };
             package.kaEvents.Add(kaEvent);
             package.request = Request.Invite;
             clientConnection.Start(package);
@@ -126,12 +120,10 @@ namespace KaPlaner.Logic
 
             if (returnPackage.request == Request.changeServer)
             {
-                clientConnection.changeIP(returnPackage.sourceServer);
+                clientConnection.ChangeIP(returnPackage.sourceServer);
                 loginPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(loginPackage);
             }
-
-
 
             if (returnPackage.kaEvents != null)
             {
@@ -178,14 +170,16 @@ namespace KaPlaner.Logic
         public bool RegisterRemote(User user, string passwordConfirm)
         {
             Package returnPackage;
-            Package registerPackage = new Package(user, passwordConfirm);
-            registerPackage.serverSwitched = false;
-            clientConnection.changeIP("192.168.0.3"); // für Root und so muss mans ändern
+            Package registerPackage = new Package(user, passwordConfirm)
+            {
+                serverSwitched = false
+            };
+            clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.changeServer)
             {
-                clientConnection.changeIP(returnPackage.sourceServer);
+                clientConnection.ChangeIP(returnPackage.sourceServer);
                 registerPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(registerPackage);
             }
@@ -254,11 +248,13 @@ namespace KaPlaner.Logic
 
         public void answerInvite(KaEvent kaEvent, bool choice)
         {
-            Package package = new Package();
-            package.kaEvents = new List<KaEvent>();
-            package.user = currentUser;
-            package.answerInvite = choice;
-            package.request = Request.answerInvite;
+            Package package = new Package
+            {
+                kaEvents = new List<KaEvent>(),
+                user = currentUser,
+                answerInvite = choice,
+                request = Request.answerInvite
+            };
             package.kaEvents.Add(kaEvent);
             clientConnection.Start(package);
 
