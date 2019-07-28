@@ -452,27 +452,24 @@ namespace KaPlanerServer.Logic
 
                                         if (recievePackage != null)
                                         {
-                                            if (recievePackage.hierarchie.Answer)
-                                        //    {
-
-                                        //    }
-                                        //    else
-                                        //    {
-
-                                        //    }
-                                        //}
-                                        //else
-                                        //{
-
-                                        //}
-
-                                        //    switch (recievePackage.hierarchie.HierarchieAnswer)
-                                        //    {
-                                        //    case HierarchieAnswer.Failure:
-                                        //    writeResult(Request.Failure, InviteFail);
-                                        //    break;
-                                        //    }
-
+                                            switch (recievePackage.hierarchie.Answer)
+                                            {
+                                                
+                                                 case P2PAnswer.Success:
+                                                    writeResult(Request.Success, InviteSuccess);
+                                                    break;
+                                                case P2PAnswer.Failure:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                                default:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                        writeResult(Request.Error, Error);
+                                        }
                                         break;
                                 }
                             }
