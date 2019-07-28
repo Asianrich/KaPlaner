@@ -430,35 +430,27 @@ namespace KaPlanerServer.Logic
                                         break;
                                     default:
                                         //Hierarchie Teil
-                                        /*new Package(hierarchie)
-                                         * recvPackage = Send(hieararchie, root)
-                                         * if (recvPackage!=null)
-                                         * switch(recvPackage.hierarchie.Answer)
-                                         */
-
                                         HierarchiePackage hierarchie = new HierarchiePackage
                                         {
                                             HierarchieRequest = HierarchieRequest.Invite,
                                             invite = package.kaEvents[0],
                                             login = member.name,
                                             destinationID = member.serverID
-                                           
                                         };
                                         
-
                                         Package sendPackage = new Package(hierarchie);
                                         Package recievePackage;
                                         recievePackage = Send(sendPackage, ServerConfig.root);
 
                                         if (recievePackage != null)
                                         {
-                                            switch (recievePackage.hierarchie.Answer)
+                                            switch (recievePackage.hierarchie.HierarchieAnswer)
                                             {
                                                 
-                                                 case P2PAnswer.Success:
+                                                case HierarchieAnswer.Success:
                                                     writeResult(Request.Success, InviteSuccess);
                                                     break;
-                                                case P2PAnswer.Failure:
+                                                case HierarchieAnswer.Failure:
                                                     writeResult(Request.Failure, InviteFail);
                                                     break;
                                                 default:
