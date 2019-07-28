@@ -259,7 +259,7 @@ namespace KaPlaner.Networking
         /// ändert die Ip-Adresse
         /// </summary>
         /// <param name="ipAddress"></param>
-        public void changeIP(string ipAddress)
+        public void ChangeIP(string ipAddress)
         {
             ip = IPAddress.Parse(ipAddress);
         }
