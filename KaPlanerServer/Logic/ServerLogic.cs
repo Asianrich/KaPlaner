@@ -436,39 +436,40 @@ namespace KaPlanerServer.Logic
                                          * switch(recvPackage.hierarchie.Answer)
                                          */
 
-                                        //HierarchiePackage hierarchie = new HierarchiePackage
-                                        //{
-                                        //    HierarchieRequest = HierarchieRequest.Invite
-                                        //};
-                                        //hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
+                                        HierarchiePackage hierarchie = new HierarchiePackage
+                                        {
+                                            HierarchieRequest = HierarchieRequest.Invite,
+                                            invite = package.kaEvents[0],
+                                            login = member.name,
+                                            destinationID = member.serverID
+                                           
+                                        };
+                                        
 
-                                        //Package sendPackage = new Package(hierarchie);
-                                        //Package recievePackage;
-                                        //recievePackage = Send(sendPackage, ServerConfig.root);
+                                        Package sendPackage = new Package(hierarchie);
+                                        Package recievePackage;
+                                        recievePackage = Send(sendPackage, ServerConfig.root);
 
-                                        //if (recievePackage != null)
-                                        //{
-                                        //    if (recievePackage.hierarchie.)
-                                        //    {
-
-                                        //    }
-                                        //    else
-                                        //    {
-
-                                        //    }
-                                        //}
-                                        //else
-                                        //{
-
-                                        //}
-
-                                        //    switch (recievePackage.hierarchie.HierarchieAnswer)
-                                        //    {
-                                        //    case HierarchieAnswer.Failure:
-                                        //    writeResult(Request.Failure, InviteFail);
-                                        //    break;
-                                        //    }
-
+                                        if (recievePackage != null)
+                                        {
+                                            switch (recievePackage.hierarchie.Answer)
+                                            {
+                                                
+                                                 case P2PAnswer.Success:
+                                                    writeResult(Request.Success, InviteSuccess);
+                                                    break;
+                                                case P2PAnswer.Failure:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                                default:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                        writeResult(Request.Error, Error);
+                                        }
                                         break;
                                 }
                             }
