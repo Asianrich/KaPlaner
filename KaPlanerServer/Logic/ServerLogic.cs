@@ -446,7 +446,6 @@ namespace KaPlanerServer.Logic
                                         {
                                             switch (recievePackage.hierarchie.HierarchieAnswer)
                                             {
-                                                
                                                 case HierarchieAnswer.Success:
                                                     writeResult(Request.Success, InviteSuccess);
                                                     break;
@@ -460,7 +459,7 @@ namespace KaPlanerServer.Logic
                                         }
                                         else
                                         {
-                                        writeResult(Request.Error, Error);
+                                            writeResult(Request.Error, Error);
                                         }
                                         break;
                                 }
