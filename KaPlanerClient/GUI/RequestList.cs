@@ -172,7 +172,7 @@ namespace KaPlaner.GUI
             int index = LV_Dates.FocusedItem.Index;
             try
             {
-                clientLogic.answerInvite(ListEvents[index], false);
+                clientLogic.AnswerInvite(ListEvents[index], false);
             }
             catch(Exception)
             {
@@ -185,7 +185,7 @@ namespace KaPlaner.GUI
             int index = LV_Dates.FocusedItem.Index;
             try
             {
-                clientLogic.answerInvite(ListEvents[index], true);
+                clientLogic.AnswerInvite(ListEvents[index], true);
             }
             catch (Exception)
             {

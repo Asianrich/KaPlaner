@@ -157,7 +157,7 @@ namespace KaPlaner.GUI
 
                     FocusEvent.members = users;
 
-                    clientLogic.sendInvites(FocusEvent);
+                    clientLogic.SendInvites(FocusEvent);
                 }
             }
             catch (Exception ex)

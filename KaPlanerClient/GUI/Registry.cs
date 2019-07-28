@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 {
     public partial class Wdw_registrierung : Form
     {
-        IClientLogic clientLogic;
+        readonly IClientLogic clientLogic;
 
         private RichTextBox rTB_passwort_bestaetigen;
         private Label lbl_registrierung;
@@ -171,24 +171,28 @@ namespace WindowsFormsApp1
             try
             {
                 User user = new User(rTB_benutzername.Text, rTB_passwort.Text);
-                if (clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
+                switch(clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
                 {
-                    user = clientLogic.GetUser();
-                    MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
-                    + Environment.NewLine + "Username: " + user.name
-                    + Environment.NewLine + "Passwort: "+ user.password
-                    + Environment.NewLine +"ServerID: " + user.serverID);
+                    case Request.Success:
+                        user = clientLogic.GetUser();
+                        MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
+                        + Environment.NewLine + "Username: " + user.name
+                        + Environment.NewLine + "Passwort: "+ user.password
+                        + Environment.NewLine +"ServerID: " + user.serverID);
                     
-                    Form open_calendar = new wdw_calendar(true);
-                    open_calendar.Show();
-                    Close();
-
-                }
-                else
-                {
-                    rTB_benutzername.Text = "";
-                    rTB_passwort.Text = "";
-                    rTB_passwort_bestaetigen.Text = "";
+                        Form open_calendar = new wdw_calendar(true);
+                        open_calendar.Show();
+                        Close();
+                        break;
+                    case Request.UserExistent:
+                        MessageBox.Show("Nutzer existiert bereits." + Environment.NewLine + "Bitte wählen Sie einen anderen Nutzernamen.");
+                        Close();
+                        break;
+                    default:
+                        rTB_benutzername.Text = "";
+                        rTB_passwort.Text = "";
+                        rTB_passwort_bestaetigen.Text = "";
+                        break;
                 }
             }
             catch (Exception ex)

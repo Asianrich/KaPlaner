@@ -57,7 +57,7 @@ namespace WindowsFormsApp1
             else
             {
                 kaEvents = clientLogic.GetEventList();
-                invites = clientLogic.getInvites();
+                invites = clientLogic.GetInvites();
                 BTN_manual_update.Visible = true;
                 BTN_manual_update.Enabled = true;
                 BT_Request.Visible = true;

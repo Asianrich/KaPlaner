@@ -16,21 +16,21 @@ namespace KaPlaner.Logic
         User GetUser();
         bool LoginLocal(User user);
 
-        bool LoginRemote(User user);
+        Request LoginRemote(User user);
 
         bool RegisterLocal(User user, string password_bestaetigen);
 
-        bool RegisterRemote(User user, string password_bestaetigen);
+        Request RegisterRemote(User user, string password_bestaetigen);
 
         void SaveLocal(KaEvent kaEvent);
 
         KaEvent SaveRemote(KaEvent kaEvent);
 
-        void sendInvites(KaEvent kaEvent);
+        void SendInvites(KaEvent kaEvent);
 
-        void answerInvite(KaEvent kaEvent, bool choice);
+        void AnswerInvite(KaEvent kaEvent, bool choice);
 
-        List<KaEvent> getInvites();
+        List<KaEvent> GetInvites();
         List<KaEvent> LoadEventsLocal(DateTime month);
 
         List<KaEvent> LoadEventsRemote(DateTime month);

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using KaObjects.Storage;
 using KaPlaner.Networking;
 using KaObjects;
@@ -25,7 +21,7 @@ namespace KaPlaner.Logic
         public List<KaEvent> eventList = new List<KaEvent>();
         public List<KaEvent> inviteList = new List<KaEvent>();
 
-        public List<KaEvent> getInvites()
+        public List<KaEvent> GetInvites()
         {
             return inviteList;
         }
@@ -87,7 +83,7 @@ namespace KaPlaner.Logic
 
 
 
-        public void sendInvites(KaEvent kaEvent)
+        public void SendInvites(KaEvent kaEvent)
         {
 
             Package package = new Package
@@ -109,7 +105,7 @@ namespace KaPlaner.Logic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool LoginRemote(User user)
+        public Request LoginRemote(User user)
         {
             currentUser = user;
 
@@ -118,7 +114,7 @@ namespace KaPlaner.Logic
 
             returnPackage = clientConnection.Start(loginPackage);
 
-            if (returnPackage.request == Request.changeServer)
+            if (returnPackage.request == Request.ChangeServer)
             {
                 clientConnection.ChangeIP(returnPackage.sourceServer);
                 loginPackage.serverSwitched = true;
@@ -134,7 +130,7 @@ namespace KaPlaner.Logic
                 inviteList = returnPackage.invites;
             }
 
-            return RequestResolve(returnPackage);
+            return returnPackage.request;
         }
 
         /// <summary>
@@ -167,7 +163,7 @@ namespace KaPlaner.Logic
         /// <param name="password"></param>
         /// <param name="passwordConfirm"></param>
         /// <returns></returns>
-        public bool RegisterRemote(User user, string passwordConfirm)
+        public Request RegisterRemote(User user, string passwordConfirm)
         {
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm)
@@ -177,23 +173,14 @@ namespace KaPlaner.Logic
             clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
-            if (returnPackage.request == Request.changeServer)
+            if (returnPackage.request == Request.ChangeServer)
             {
                 clientConnection.ChangeIP(returnPackage.sourceServer);
                 registerPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(registerPackage);
             }
 
-            if (RequestResolve(returnPackage))
-            {
-                currentUser = returnPackage.user;
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return returnPackage.request;
         }
 
         /// <summary>
@@ -231,29 +218,14 @@ namespace KaPlaner.Logic
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Determines wether a Request was a success or not
-        /// It's possible to increase its power
-        /// </summary>
-        /// <param name="package"></param>
-        /// <returns></returns>
-        bool RequestResolve(Package package)
-        {
-
-            if (package.request == Request.Success)
-                return true;
-            else
-                return false;
-        }
-
-        public void answerInvite(KaEvent kaEvent, bool choice)
+        public void AnswerInvite(KaEvent kaEvent, bool choice)
         {
             Package package = new Package
             {
                 kaEvents = new List<KaEvent>(),
                 user = currentUser,
                 answerInvite = choice,
-                request = Request.answerInvite
+                request = Request.AnswerInvite
             };
             package.kaEvents.Add(kaEvent);
             clientConnection.Start(package);

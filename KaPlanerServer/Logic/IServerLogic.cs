@@ -12,6 +12,6 @@ namespace KaPlanerServer.Logic
     {
         Package ResolvePackage(Package package);
         void Settings();
-        Package resolving(Package package);
+        Package Resolving(Package package);
     }
 }

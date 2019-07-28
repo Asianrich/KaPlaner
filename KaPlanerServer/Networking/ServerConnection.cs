@@ -181,7 +181,7 @@ namespace KaPlanerServer.Networking
 
                         Package userPackage = DeSerialize<Package>(content.Split(state.delimiter, StringSplitOptions.None)[0]);
 
-                        userPackage = serverLogic.resolving(userPackage);
+                        userPackage = serverLogic.Resolving(userPackage);
 
                         //Sende Antwort
                         Send(state.workSocket, userPackage);

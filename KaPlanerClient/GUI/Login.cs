@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
 {
     public partial class Wdw_login : Form
     {
-        IClientLogic clientLogic = ClientActivator.clientLogic;
+        readonly IClientLogic clientLogic = ClientActivator.clientLogic;
 
         private Label lbl_login;
         private Label lbl_log_benutzername;
@@ -194,18 +194,19 @@ namespace WindowsFormsApp1
                 {
                     if (Int32.TryParse(tb_log_ID.Text, out int result))
                     {
-                        if (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text, result)))
+                        switch (clientLogic.LoginRemote(new User(tb_log_benutzername.Text, tb_log_passwort.Text, result)))
                         {
-                            Form open_calendar = new wdw_calendar(true);
-                            open_calendar.Show();
-                            tb_log_benutzername.Text = "";
-                            tb_log_passwort.Text = "";
+                            case Request.Success:
+                                Form open_calendar = new wdw_calendar(true);
+                                open_calendar.Show();
+                                tb_log_benutzername.Text = "";
+                                tb_log_passwort.Text = "";
+                                break;
 
-                        }
-                        else
-                        {
-                            tb_log_benutzername.Text = "";
-                            tb_log_passwort.Text = "";
+                            default:
+                                tb_log_benutzername.Text = "";
+                                tb_log_passwort.Text = "";
+                                break;
                         }
                     }
                     else

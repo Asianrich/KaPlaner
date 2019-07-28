@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using KaObjects;
 using KaObjects.Storage;
 using System.Net;
@@ -18,6 +17,7 @@ namespace KaPlanerServer.Logic
         public static readonly string RegisterRequest = "Registry Requested.";
         public static readonly string RegisterSuccess = "Registry Successful.";
         public static readonly string RegisterFail = "Registry Failed.";
+        static readonly string UserExistent = "User exists already!";
         static readonly string SaveRequest = "Save Requested.";
         static readonly string SaveSuccess = "Save Success.";
         static readonly string SaveFail = "Save Failed.";
@@ -102,7 +102,7 @@ namespace KaPlanerServer.Logic
         /// </summary>
         /// <param name="package"></param>
         /// <returns></returns>
-        public Package resolving(Package package)
+        public Package Resolving(Package package)
         {
             //Muss ich das Paket abaendern oder nicht?
             //bool isResolving = false;
@@ -173,7 +173,7 @@ namespace KaPlanerServer.Logic
                                 {
                                     case HierarchieAnswer.Success:
                                         package.sourceServer = hierarchie.destinationAdress;
-                                        writeResult(Request.changeServer, ChangeServer);
+                                        writeResult(Request.ChangeServer, ChangeServer);
                                         break;
 
                                     case HierarchieAnswer.Failure:
@@ -208,7 +208,7 @@ namespace KaPlanerServer.Logic
                                     {
                                         case P2PAnswer.Success:
                                             package.sourceServer = recievePackage.p2p.lastIP;
-                                            writeResult(Request.changeServer, ChangeServer);
+                                            writeResult(Request.ChangeServer, ChangeServer);
                                             break;
                                         case P2PAnswer.Failure:
                                             writeResult(Request.Failure, LoginFail);
@@ -240,7 +240,7 @@ namespace KaPlanerServer.Logic
                                 {
                                     case P2PAnswer.Success:
                                         package.sourceServer = p2p.lastIP;
-                                        writeResult(Request.changeServer, ChangeServer);
+                                        writeResult(Request.ChangeServer, ChangeServer);
                                         break;
                                     case P2PAnswer.Failure:
                                         writeResult(Request.Failure, LoginFail);
@@ -272,7 +272,7 @@ namespace KaPlanerServer.Logic
                                     {
                                         case HierarchieAnswer.Success:
                                             package.sourceServer = hierarchie.destinationAdress;
-                                            writeResult(Request.changeServer, ChangeServer);
+                                            writeResult(Request.ChangeServer, ChangeServer);
                                             break;
 
                                         case HierarchieAnswer.Failure:
@@ -325,7 +325,10 @@ namespace KaPlanerServer.Logic
                                 hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
 
                                 //P2P Teil
-                                P2PPackage p2p = new P2PPackage
+                                //ConnectP2P(P2PRequest.NewUser, package.user.name, writeResult);
+
+                                //P2P Teil
+                                P2PPackage p2p = new P2PPackage(package.user.name)
                                 {
                                     P2Prequest = P2PRequest.NewUser
                                 };
@@ -337,17 +340,26 @@ namespace KaPlanerServer.Logic
 
                                 if(recievePackage != null)
                                 {
-                                    if (recievePackage.hierarchie.anzUser < p2p.anzUser)
-                                        package.sourceServer = hierarchie.destinationAdress;
-                                    else
-                                        package.sourceServer = recievePackage.p2p.lastIP;
+                                    switch (recievePackage.p2p.P2PAnswer)
+                                    {
+                                        case P2PAnswer.Success:
+                                            if (recievePackage.hierarchie.anzUser < p2p.anzUser)
+                                                package.sourceServer = hierarchie.destinationAdress;
+                                            else
+                                                package.sourceServer = recievePackage.p2p.lastIP;
+                                            writeResult(Request.ChangeServer, ChangeServer);
+                                            break;
+                                        ///user already exists
+                                        case P2PAnswer.Visited:
+                                            writeResult(Request.UserExistent, UserExistent);
+                                            break;
+                                    }
                                 }
                                 else
                                 {
                                     package.sourceServer = hierarchie.destinationAdress;
+                                    writeResult(Request.ChangeServer, ChangeServer);
                                 }
-
-                                writeResult(Request.changeServer, ChangeServer);
                             }
                             else if (ServerConfig.structure == Structure.P2P)
                             {
@@ -357,6 +369,13 @@ namespace KaPlanerServer.Logic
                                     P2Prequest = P2PRequest.NewUser
                                 };
                                 p2p = P2PLogic.ResolveP2P(p2p);
+
+                                ///user is already existent
+                                if(p2p.P2PAnswer == P2PAnswer.Visited)
+                                {
+                                    writeResult(Request.UserExistent, UserExistent);
+                                    break;
+                                }
 
                                 //Hierarchie Teil
                                 HierarchiePackage hierarchie = new HierarchiePackage
@@ -380,7 +399,7 @@ namespace KaPlanerServer.Logic
                                     package.sourceServer = p2p.lastIP;
                                 }
                             }
-                            writeResult(Request.changeServer, "ChangeServer");
+                            writeResult(Request.ChangeServer, "ChangeServer");
                         }
                     }
                     catch (Exception e)
@@ -591,7 +610,7 @@ namespace KaPlanerServer.Logic
                     }
                     break;
 
-                case Request.answerInvite:
+                case Request.AnswerInvite:
                     //TODO für P2P und Hierarchisch
                     database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
                     break;
@@ -667,11 +686,10 @@ namespace KaPlanerServer.Logic
         /// Diese Methode dient zur Anbindung der P2P Topology an die Hierarchische.
         /// Es wird ein entsprechendes Paket in das hierarchische Netz gesendet.
         /// </summary>
-        /// <param name="hierarchieAnswer"></param>
         /// <param name="p2pRequest"></param>
         /// <param name="username"></param>
         /// <param name="kaEvent"></param>
-        /// <param name="writeResult"></param>
+        /// <param name="writeResult">übergebe die Methode writeResult</param>
         void ConnectP2P(P2PRequest p2pRequest, string username, KaEvent kaEvent, Action<Request,string> writeResult)
         {
                 //P2P Teil
@@ -704,7 +722,6 @@ namespace KaPlanerServer.Logic
                 {
                     writeResult(Request.Error, Error);
                 }
-            
         }
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using KaObjects;
 using KaPlanerServer.Data;
 
@@ -140,11 +138,21 @@ namespace KaPlanerServer.Logic
                         case P2PRequest.RegisterServer:
                             //1. Nimm Server in neighbours auf. (Falls noch nicht existent)
                             if (!ServerConfig.neighbours.Exists(x => x.ToString() == package.GetSource()))
+                            {
                                 ServerConfig.neighbours.Add(IPAddress.Parse(package.GetSource()));
-                            package.P2PAnswer = P2PAnswer.Success;
+                                package.P2PAnswer = P2PAnswer.Success;
+                            }
+                            else
+                                package.P2PAnswer = P2PAnswer.Failure;
                             break;
 
                         case P2PRequest.NewUser:
+                            //0. Existiert der User?
+                            if (ServerLogic.database.UserExist(package.GetUsername()))
+                            {
+                                package.P2PAnswer = P2PAnswer.Visited;
+                                break;
+                            }
                             //1. Anzahl User
                             int anzUser = ServerLogic.database.getUserCount();
                             if (package.anzUser == P2PPackage.AnzUserInit || package.anzUser > anzUser)
