@@ -78,16 +78,20 @@ namespace KaObjects
         public Package(Request request, KaEvent kaEvent)
         {
             this.request = request;
-            this.kaEvents = new List<KaEvent>();
-            this.kaEvents.Add(kaEvent);
+            this.kaEvents = new List<KaEvent>
+            {
+                kaEvent
+            };
         }
 
         public Package(Request request, User user, KaEvent kaEvent)
         {
             this.user = user;
             this.request = request;
-            this.kaEvents = new List<KaEvent>();
-            this.kaEvents.Add(kaEvent);
+            this.kaEvents = new List<KaEvent>
+            {
+                kaEvent
+            };
         }
 
         public Package(P2PPackage p2PPackage)
