@@ -29,6 +29,7 @@ namespace KaPlanerServer.Logic
         static readonly string InviteFail = "Invite Failed.";
         static readonly string TestRequest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
+        static readonly string Error = "An Error occurred.";
 
         //Connection String ... in VS config auslagern?
         static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
@@ -368,24 +369,36 @@ namespace KaPlanerServer.Logic
                                         break;
                                     default:
                                         //P2P Teil
-                                        //P2PPackage p2p = new P2PPackage
-                                        //{
-                                        //    P2Prequest = P2PRequest.Invite,
-                                        //    invite = package.kaEvents[0],
-                                        //    login = member.name,
-                                        //    packageID = member.serverID
+                                        P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
+                                        {
+                                            P2Prequest = P2PRequest.Invite,
+                                        };
 
-                                        //};
-                                        //P2PLogic.ResolveP2P(p2p);
+                                        //Sende Teil
+                                        Package sendPackage = new Package(p2p);
+                                        Package recievePackage;
+                                        recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
 
-                                        //switch (p2p.P2PAnswer)
-                                        //{
-                                        //    case P2PAnswer.Failure:
-                                        //        writeResult(Request.Failure, InviteFail);
-                                        //        break;
-                                        //}
-                                        //writeResult(Request.Failure, InviteFail);
-                                        //break;
+                                        if (recievePackage != null)
+                                        {
+                                            switch (recievePackage.p2p.P2PAnswer)
+                                            {
+                                                case P2PAnswer.Success:
+                                                    writeResult(Request.Success, InviteSuccess);
+                                                    break;
+                                                case P2PAnswer.Failure:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                                default:
+                                                    writeResult(Request.Failure, InviteFail);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            writeResult(Request.Error, Error);
+                                        }
+                                        break;
                                 }
                             }
                         }
@@ -455,8 +468,8 @@ namespace KaPlanerServer.Logic
                                         //    writeResult(Request.Failure, InviteFail);
                                         //    break;
                                         //    }
-                               
-                                        
+
+                                        break;
                                 }
                             }
                         }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -13,7 +10,7 @@ namespace KaObjects
     /// Enum list of possible Requests
     /// Every  additional Request should be added here
     /// </summary>
-    public enum Request { Test = -1, Failure, Success, Login, Register, Invite, Save, Load, Delete, changeServer, answerInvite }; // Success and Failure are responses from the server
+    public enum Request { Test = -1, Error, Failure, Success, Login, Register, Invite, Save, Load, Delete, changeServer, answerInvite }; // Success and Failure are responses from the server
 
 
     [Serializable, XmlRoot("Package")]
