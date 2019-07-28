@@ -436,19 +436,23 @@ namespace KaPlanerServer.Logic
                                          * switch(recvPackage.hierarchie.Answer)
                                          */
 
-                                        //HierarchiePackage hierarchie = new HierarchiePackage
-                                        //{
-                                        //    HierarchieRequest = HierarchieRequest.Invite
-                                        //};
-                                        //hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
+                                        HierarchiePackage hierarchie = new HierarchiePackage
+                                        {
+                                            HierarchieRequest = HierarchieRequest.Invite,
+                                            invite = package.kaEvents[0],
+                                            login = member.name,
+                                            destinationID = member.serverID
+                                           
+                                        };
+                                        
 
-                                        //Package sendPackage = new Package(hierarchie);
-                                        //Package recievePackage;
-                                        //recievePackage = Send(sendPackage, ServerConfig.root);
+                                        Package sendPackage = new Package(hierarchie);
+                                        Package recievePackage;
+                                        recievePackage = Send(sendPackage, ServerConfig.root);
 
-                                        //if (recievePackage != null)
-                                        //{
-                                        //    if (recievePackage.hierarchie.)
+                                        if (recievePackage != null)
+                                        {
+                                            if (recievePackage.hierarchie.Answer)
                                         //    {
 
                                         //    }
