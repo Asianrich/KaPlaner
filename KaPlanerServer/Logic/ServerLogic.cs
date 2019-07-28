@@ -30,6 +30,7 @@ namespace KaPlanerServer.Logic
         static readonly string TestRequest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
         static readonly string Error = "An Error occurred.";
+        static readonly string ChangeServer = "Switching Server...";
 
         //Connection String ... in VS config auslagern?
         static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
@@ -156,78 +157,145 @@ namespace KaPlanerServer.Logic
                     {
                         if (ServerConfig.structure == Structure.HIERARCHY)
                         {
-                            //Hierarchie Login
-                            HierarchiePackage hierarchie = new HierarchiePackage
+                            ///if serverID > 0 => Hierarchy
+                            if (package.user.serverID > 0)
                             {
-                                HierarchieRequest = HierarchieRequest.UserLogin,
-                                login = package.user.name,
-                                destinationID = package.user.serverID
-                            };
-                            hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
+                                //Hierarchie Login
+                                HierarchiePackage hierarchie = new HierarchiePackage
+                                {
+                                    HierarchieRequest = HierarchieRequest.UserLogin,
+                                    login = package.user.name,
+                                    destinationID = package.user.serverID
+                                };
+                                hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
 
-                            switch (hierarchie.HierarchieAnswer)
-                            {
-                                case HierarchieAnswer.Success:
-                                    package.sourceServer = hierarchie.destinationAdress;
-                                    writeResult(Request.changeServer, "ChangeServer");
-                                    break;
+                                switch (hierarchie.HierarchieAnswer)
+                                {
+                                    case HierarchieAnswer.Success:
+                                        package.sourceServer = hierarchie.destinationAdress;
+                                        writeResult(Request.changeServer, ChangeServer);
+                                        break;
 
-                                default:
-                                    //P2P Teil
-                                    P2PPackage p2p = new P2PPackage(package.user.name)
-                                    {
-                                        P2Prequest = P2PRequest.Login
-                                    };
+                                    case HierarchieAnswer.Failure:
+                                        writeResult(Request.Failure, LoginFail);
+                                        break;
 
-                                    //Sende Teil
-                                    Package sendPackage = new Package(p2p);
-                                    Package recievePackage;
-                                    recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
-
-                                    if (recievePackage != null)
-                                    {
-                                        switch (recievePackage.p2p.P2PAnswer)
-                                        {
-                                            case P2PAnswer.Success:
-                                                writeResult(Request.Success, LoginSuccess);
-                                                break;
-                                            case P2PAnswer.Failure:
-                                                writeResult(Request.Failure, LoginFail);
-                                                break;
-                                            default:
-                                                writeResult(Request.Failure, LoginFail);
-                                                break;
-                                        }
-                                    }
-                                    else
-                                    {
+                                    case HierarchieAnswer.Error:
                                         writeResult(Request.Error, Error);
-                                    }
-                                    break;
+                                        break;
+                                    default:
+                                        writeResult(Request.Failure, Error);
+                                        break;
+                                }
                             }
+                            ///else => Send to P2P
+                            else
+                            {
+                                //P2P Teil
+                                P2PPackage p2p = new P2PPackage(package.user.name)
+                                {
+                                    P2Prequest = P2PRequest.Login
+                                };
 
+                                //Sende Teil
+                                Package sendPackage = new Package(p2p);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+
+                                if (recievePackage != null)
+                                {
+                                    switch (recievePackage.p2p.P2PAnswer)
+                                    {
+                                        case P2PAnswer.Success:
+                                            package.sourceServer = recievePackage.p2p.lastIP;
+                                            writeResult(Request.changeServer, ChangeServer);
+                                            break;
+                                        case P2PAnswer.Failure:
+                                            writeResult(Request.Failure, LoginFail);
+                                            break;
+                                        default:
+                                            writeResult(Request.Failure, LoginFail);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    writeResult(Request.Error, Error);
+                                }
+                            }
                         }
                         else if (ServerConfig.structure == Structure.P2P)
                         {
-                            //P2PLogic fürs Login
-                            P2PPackage p2p = new P2PPackage(package.user.name)
+                            ///if serverID == 0 => P2P
+                            if (package.user.serverID == 0)
                             {
-                                P2Prequest = P2PRequest.Login
-                            };
-                            p2p = P2PLogic.ResolveP2P(p2p);
-                            if (p2p.P2PAnswer == P2PAnswer.Success)
-                            {
-                                package.sourceServer = p2p.lastIP;
-                                writeResult(Request.changeServer, "ChangeServer");
+                                //P2P Teil
+                                P2PPackage p2p = new P2PPackage(package.user.name)
+                                {
+                                    P2Prequest = P2PRequest.Login
+                                };
+                                p2p = P2PLogic.ResolveP2P(p2p);
+
+                                switch (p2p.P2PAnswer)
+                                {
+                                    case P2PAnswer.Success:
+                                        package.sourceServer = p2p.lastIP;
+                                        writeResult(Request.changeServer, ChangeServer);
+                                        break;
+                                    case P2PAnswer.Failure:
+                                        writeResult(Request.Failure, LoginFail);
+                                        break;
+                                    default:
+                                        writeResult(Request.Failure, LoginFail);
+                                        break;
+                                }
                             }
+                            ///else =>  Send to Hierarchy
                             else
                             {
-                                writeResult(Request.Failure, LoginFail);
+                                //Hierarchie Login
+                                HierarchiePackage hierarchie = new HierarchiePackage
+                                {
+                                    HierarchieRequest = HierarchieRequest.UserLogin,
+                                    login = package.user.name,
+                                    destinationID = package.user.serverID
+                                };
+
+                                //Sende Teil
+                                Package sendPackage = new Package(hierarchie);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, ServerConfig.root);
+
+                                if (recievePackage != null)
+                                {
+                                    switch (hierarchie.HierarchieAnswer)
+                                    {
+                                        case HierarchieAnswer.Success:
+                                            package.sourceServer = hierarchie.destinationAdress;
+                                            writeResult(Request.changeServer, ChangeServer);
+                                            break;
+
+                                        case HierarchieAnswer.Failure:
+                                            writeResult(Request.Failure, LoginFail);
+                                            break;
+
+                                        case HierarchieAnswer.Error:
+                                            writeResult(Request.Error, Error);
+                                            break;
+                                        default:
+                                            writeResult(Request.Failure, Error);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    writeResult(Request.Error, Error);
+                                }
                             }
                         }
-                        writeResult(Request.changeServer, "ChangeServer");
                     }
                     break;
+
                 /// In case of Register Request try to login to the server database and set Request accordingly
                 case Request.Register:
                     Console.WriteLine(RegisterRequest);
@@ -279,7 +347,7 @@ namespace KaPlanerServer.Logic
                                     package.sourceServer = hierarchie.destinationAdress;
                                 }
 
-                                writeResult(Request.changeServer, "ChangeServer");
+                                writeResult(Request.changeServer, ChangeServer);
                             }
                             else if (ServerConfig.structure == Structure.P2P)
                             {
@@ -359,6 +427,7 @@ namespace KaPlanerServer.Logic
                 case Request.Test:
                     Console.WriteLine(TestRequest);
                     break;
+
                 case Request.Invite:
                     //Prüfung ServerID
                     Console.WriteLine(InviteRequest);
@@ -375,6 +444,7 @@ namespace KaPlanerServer.Logic
 
                         foreach (User member in list)
                         {
+                            ///member is user in current server
                             if (member.serverID == ServerConfig.serverID)
                             {
                                 if (database.UserExist(member.name))
@@ -383,7 +453,8 @@ namespace KaPlanerServer.Logic
                                     writeResult(Request.Success, InviteSuccess);
                                 }
                             }
-                            else
+                            ///member is user in hierarchy topology
+                            else if(member.serverID > 0)
                             {
                                 HierarchiePackage hierarchie = new HierarchiePackage
                                 {
@@ -399,38 +470,45 @@ namespace KaPlanerServer.Logic
                                     case HierarchieAnswer.Success:
                                         writeResult(Request.Success, InviteSuccess);
                                         break;
-                                    default:
-                                        //P2P Teil
-                                        P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
-                                        {
-                                            P2Prequest = P2PRequest.Invite
-                                        };
-
-                                        //Sende Teil
-                                        Package sendPackage = new Package(p2p);
-                                        Package recievePackage;
-                                        recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
-
-                                        if (recievePackage != null)
-                                        {
-                                            switch (recievePackage.p2p.P2PAnswer)
-                                            {
-                                                case P2PAnswer.Success:
-                                                    writeResult(Request.Success, InviteSuccess);
-                                                    break;
-                                                case P2PAnswer.Failure:
-                                                    writeResult(Request.Failure, InviteFail);
-                                                    break;
-                                                default:
-                                                    writeResult(Request.Failure, InviteFail);
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            writeResult(Request.Error, Error);
-                                        }
+                                    case HierarchieAnswer.Failure:
+                                        writeResult(Request.Failure, InviteFail);
                                         break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            ///member is user in p2p topology
+                            else
+                            {
+                                //P2P Teil
+                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
+                                {
+                                    P2Prequest = P2PRequest.Invite
+                                };
+
+                                //Sende Teil
+                                Package sendPackage = new Package(p2p);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+
+                                if (recievePackage != null)
+                                {
+                                    switch (recievePackage.p2p.P2PAnswer)
+                                    {
+                                        case P2PAnswer.Success:
+                                            writeResult(Request.Success, InviteSuccess);
+                                            break;
+                                        case P2PAnswer.Failure:
+                                            writeResult(Request.Failure, InviteFail);
+                                            break;
+                                        default:
+                                            writeResult(Request.Failure, InviteFail);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    writeResult(Request.Error, Error);
                                 }
                             }
                         }
@@ -442,69 +520,81 @@ namespace KaPlanerServer.Logic
 
                         foreach (User member in list)
                         {
-                            if (database.UserExist(member.name))
+                            ///member is user in p2p topology
+                            if (member.serverID == 0)
                             {
-                                database.SaveInvites(member.name, package.kaEvents[0]);
-                                writeResult(Request.Success, InviteSuccess);
+                                if (database.UserExist(member.name))
+                                {
+                                    database.SaveInvites(member.name, package.kaEvents[0]);
+                                    writeResult(Request.Success, InviteSuccess);
+                                }
+                                else
+                                {
+                                    P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
+                                    {
+                                        P2Prequest = P2PRequest.Invite
+                                    };
+                                    p2p = P2PLogic.ResolveP2P(p2p);
+
+                                    switch (p2p.P2PAnswer)
+                                    {
+                                        case P2PAnswer.Success:
+                                            writeResult(Request.Success, InviteSuccess);
+                                            break;
+                                        case P2PAnswer.Failure:
+                                            writeResult(Request.Failure, InviteFail);
+                                            break;
+                                        default:
+                                            writeResult(Request.Error, Error);
+                                            break;
+                                    }
+                                }
                             }
+                            ///member is user in hierarchy topology
                             else
                             {
-                                P2PPackage p2p = new P2PPackage(member.name, package.kaEvents[0])
+                                //Hierarchie Teil
+                                HierarchiePackage hierarchie = new HierarchiePackage
                                 {
-                                    P2Prequest = P2PRequest.Invite
+                                    HierarchieRequest = HierarchieRequest.Invite,
+                                    invite = package.kaEvents[0],
+                                    login = member.name,
+                                    destinationID = member.serverID
                                 };
-                                p2p = P2PLogic.ResolveP2P(p2p);
 
-                                switch (p2p.P2PAnswer)
+                                //SendeTeil
+                                Package sendPackage = new Package(hierarchie);
+                                Package recievePackage;
+                                recievePackage = Send(sendPackage, ServerConfig.root);
+
+                                if (recievePackage != null)
                                 {
-                                    case P2PAnswer.Success:
-                                        writeResult(Request.Success, InviteSuccess);
-                                        break;
-                                    default:
-                                        //Hierarchie Teil
-                                        HierarchiePackage hierarchie = new HierarchiePackage
-                                        {
-                                            HierarchieRequest = HierarchieRequest.Invite,
-                                            invite = package.kaEvents[0],
-                                            login = member.name,
-                                            destinationID = member.serverID
-                                        };
-                                        
-                                        //SendeTeil
-                                        Package sendPackage = new Package(hierarchie);
-                                        Package recievePackage;
-                                        recievePackage = Send(sendPackage, ServerConfig.root);
-
-                                        if (recievePackage != null)
-                                        {
-                                            switch (recievePackage.hierarchie.HierarchieAnswer)
-                                            {
-                                                case HierarchieAnswer.Success:
-                                                    writeResult(Request.Success, InviteSuccess);
-                                                    break;
-                                                case HierarchieAnswer.Failure:
-                                                    writeResult(Request.Failure, InviteFail);
-                                                    break;
-                                                default:
-                                                    writeResult(Request.Failure, InviteFail);
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            writeResult(Request.Error, Error);
-                                        }
-                                        break;
+                                    switch (recievePackage.hierarchie.HierarchieAnswer)
+                                    {
+                                        case HierarchieAnswer.Success:
+                                            writeResult(Request.Success, InviteSuccess);
+                                            break;
+                                        case HierarchieAnswer.Failure:
+                                            writeResult(Request.Failure, InviteFail);
+                                            break;
+                                        default:
+                                            writeResult(Request.Failure, InviteFail);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    writeResult(Request.Error, Error);
                                 }
                             }
                         }
                     }
                     break;
+
                 case Request.answerInvite:
                     //TODO für P2P und Hierarchisch
                     database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
                     break;
-
 
                 default:
                     Console.WriteLine(RequestUnknown);
@@ -571,6 +661,50 @@ namespace KaPlanerServer.Logic
             }
 
             return receive;
+        }
+
+        /// <summary>
+        /// Diese Methode dient zur Anbindung der P2P Topology an die Hierarchische.
+        /// Es wird ein entsprechendes Paket in das hierarchische Netz gesendet.
+        /// </summary>
+        /// <param name="hierarchieAnswer"></param>
+        /// <param name="p2pRequest"></param>
+        /// <param name="username"></param>
+        /// <param name="kaEvent"></param>
+        /// <param name="writeResult"></param>
+        void ConnectP2P(P2PRequest p2pRequest, string username, KaEvent kaEvent, Action<Request,string> writeResult)
+        {
+                //P2P Teil
+                P2PPackage p2p = new P2PPackage(username, kaEvent)
+                {
+                    P2Prequest = p2pRequest
+                };
+
+                //Sende Teil
+                Package sendPackage = new Package(p2p);
+                Package recievePackage;
+                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+
+                if (recievePackage != null)
+                {
+                    switch (recievePackage.p2p.P2PAnswer)
+                    {
+                        case P2PAnswer.Success:
+                            writeResult(Request.Success, InviteSuccess);
+                            break;
+                        case P2PAnswer.Failure:
+                            writeResult(Request.Failure, InviteFail);
+                            break;
+                        default:
+                            writeResult(Request.Failure, InviteFail);
+                            break;
+                    }
+                }
+                else
+                {
+                    writeResult(Request.Error, Error);
+                }
+            
         }
     }
 }
