@@ -1,4 +1,5 @@
 ﻿using KaObjects;
+using KaObjects.Storage;
 using KaPlanerServer.Data;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace KaPlanerServer.Logic
 {
     class StateEintrag
     {
+
         private readonly ManualResetEvent allDone = new ManualResetEvent(false);
         private int counter = 0;
 
@@ -169,10 +171,22 @@ namespace KaPlanerServer.Logic
                     }
                     else
                     {
-                        //Schau erstmal nach ob der User existiert
-                        if (ServerLogic.database.UserExist(package.login))
+                        //TO FIX: Schau erstmal nach ob der User existiert
+                        //Connection String ... in VS config auslagern?
+                        string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
+                        Database database = new Database(connectionString);
+
+                        if(database.UserExist(package.invite.owner.ToString()))
                         {
-                            ServerLogic.database.SaveInvites(package.login, package.invite);
+                            if (ServerLogic.database.UserExist(package.login))
+                            {
+                                ServerLogic.database.SaveInvites(package.login, package.invite);
+                            }
+                        }
+                        else
+                        {
+                            // TO FIX: User existiert nicht?
+                        
                         }
                     }
                     break;
