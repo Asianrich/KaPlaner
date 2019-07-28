@@ -31,7 +31,7 @@ namespace KaPlanerServer.Data
         /// Dieser Server
         /// </summary>
         public static IPAddress host;
-        private static List<Guid> packageIDs = new List<Guid>();
+        private static readonly List<Guid> packageIDs = new List<Guid>();
         public static Structure structure = 0;
 
         static readonly object _object = new object();

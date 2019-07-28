@@ -324,6 +324,12 @@ namespace KaPlanerServer.Logic
                                 };
                                 hierarchie = HierarchyLogic.ResolveHierarchie(hierarchie);
 
+                                if (hierarchie.HierarchieAnswer == HierarchieAnswer.UserExistent)
+                                {
+                                    writeResult(Request.UserExistent, UserExistent);
+                                    break;
+                                }
+
                                 //P2P Teil
                                 //ConnectP2P(P2PRequest.NewUser, package.user.name, writeResult);
 
@@ -353,12 +359,15 @@ namespace KaPlanerServer.Logic
                                         case P2PAnswer.Visited:
                                             writeResult(Request.UserExistent, UserExistent);
                                             break;
+                                        default:
+                                            package.sourceServer = hierarchie.destinationAdress;
+                                            writeResult(Request.ChangeServer, ChangeServer);
+                                            break;
                                     }
                                 }
                                 else
                                 {
                                     package.sourceServer = hierarchie.destinationAdress;
-                                    writeResult(Request.ChangeServer, ChangeServer);
                                 }
                             }
                             else if (ServerConfig.structure == Structure.P2P)
@@ -389,17 +398,32 @@ namespace KaPlanerServer.Logic
                                 recievePackage = Send(sendPackage, ServerConfig.root);
                                 if (recievePackage != null)
                                 {
-                                    if (p2p.anzUser < recievePackage.hierarchie.anzUser)
-                                        package.sourceServer = p2p.lastIP;
-                                    else
-                                        package.sourceServer = recievePackage.hierarchie.destinationAdress;
+                                    switch (recievePackage.hierarchie.HierarchieAnswer)
+                                    {
+                                        case HierarchieAnswer.Success:
+                                            if (p2p.anzUser < recievePackage.hierarchie.anzUser)
+                                                package.sourceServer = p2p.lastIP;
+                                            else
+                                                package.sourceServer = recievePackage.hierarchie.destinationAdress;
+                                            writeResult(Request.ChangeServer, RegisterSuccess);
+                                            break;
+                                        ///user already exists
+                                        case HierarchieAnswer.UserExistent:
+                                            writeResult(Request.UserExistent, UserExistent);
+                                            break;
+                                        default:
+                                            package.sourceServer = p2p.lastIP;
+                                            writeResult(Request.ChangeServer, ChangeServer);
+                                            break;
+                                    }
+
                                 }
                                 else
                                 {
                                     package.sourceServer = p2p.lastIP;
+                                    writeResult(Request.ChangeServer, ChangeServer);
                                 }
                             }
-                            writeResult(Request.ChangeServer, "ChangeServer");
                         }
                     }
                     catch (Exception e)

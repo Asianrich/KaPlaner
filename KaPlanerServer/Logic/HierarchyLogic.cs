@@ -1,5 +1,4 @@
 ﻿using KaObjects;
-using KaObjects.Storage;
 using KaPlanerServer.Data;
 using System;
 using System.Collections.Generic;
@@ -169,16 +168,9 @@ namespace KaPlanerServer.Logic
                     else
                     {
                         //TO FIX: Schau erstmal nach ob der User existiert
-                        //Connection String ... in VS config auslagern?
-                        string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
-                        Database database = new Database(connectionString);
-
-                        if(database.UserExist(package.invite.owner.ToString()))
+                        if (ServerLogic.database.UserExist(package.login))
                         {
-                            if (ServerLogic.database.UserExist(package.login))
-                            {
-                                ServerLogic.database.SaveInvites(package.login, package.invite);
-                            }
+                            ServerLogic.database.SaveInvites(package.login, package.invite);
                         }
                         else
                         {
@@ -273,7 +265,12 @@ namespace KaPlanerServer.Logic
                 case HierarchieRequest.RegisterUser:
                     int anzUser = ServerLogic.database.getUserCount();
                     //überprüfen ob USERNAME schon existiert!
-                    if (anzConnection > 0)
+                    if (ServerLogic.database.UserExist(package.login))
+                    {
+                        package.HierarchieAnswer = HierarchieAnswer.UserExistent;
+                        break;
+                    }
+                    else if (anzConnection > 0)
                     {
                         //Eigene Send funktion machen
                         //Soll parallel ablaufen
@@ -311,6 +308,7 @@ namespace KaPlanerServer.Logic
                     package.destinationID = id;
                     package.destinationAdress = ip;
                     package.anzUser = anzUser;
+                    package.HierarchieAnswer = HierarchieAnswer.Success;
                     break;
 
                 case HierarchieRequest.UserLogin:

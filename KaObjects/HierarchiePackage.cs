@@ -4,12 +4,12 @@ using System.Xml.Serialization;
 namespace KaObjects
 {
     public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin}
-    public enum HierarchieAnswer { Success, Failure, Error}
+    public enum HierarchieAnswer { Success, Failure, UserExistent, Error}
     [Serializable]
     public class HierarchiePackage
     {
 
-        public HierarchieAnswer HierarchieAnswer;
+        public HierarchieAnswer HierarchieAnswer = HierarchieAnswer.Failure;
         public HierarchieRequest HierarchieRequest;
         private Guid packageID; //Package ID? braucht man das? just in case
         public KaEvent invite; // Später anschauen
