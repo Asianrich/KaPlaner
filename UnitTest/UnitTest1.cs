@@ -138,7 +138,7 @@ namespace UnitTest
         {
             int testSeverID = 2;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            testdb.getServer(testSeverID);
+            testdb.GetServer(testSeverID);
         }
 
 
@@ -146,7 +146,7 @@ namespace UnitTest
         public void CheckGetServerCount()
         {
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            int count = testdb.getServerCount();
+            int count = testdb.GetServerCount();
             Console.WriteLine(count);
         }
 
@@ -178,7 +178,7 @@ namespace UnitTest
 
             User testUser = new User("Mustermann, Max", "passwort123", 10);
             Database testDatabase = new Database(connectionString);
-            bool check = testDatabase.login(testUser);
+            bool check = testDatabase.Login(testUser);
             Console.WriteLine(check.ToString());
         }
 
@@ -233,7 +233,7 @@ namespace UnitTest
             User testUser = new User("Mustermann, Maja", "passwort123", 101);
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
-            _ = testdb.read(testUser.name);
+            _ = testdb.Read(testUser.name);
         }
 
         [TestMethod]

@@ -15,8 +15,7 @@ namespace KaObjects.Storage
 {
     public class Database : IDatabase
     {
-
-        string connectionString;
+        readonly string connectionString;
 
         public Database(string connectionString)
         {
@@ -28,7 +27,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool login(User user)
+        public bool Login(User user)
         {
             if (String.IsNullOrEmpty(user.password) || String.IsNullOrEmpty(user.name))
             {
@@ -41,14 +40,15 @@ namespace KaObjects.Storage
                 con.Open();
 
                 //Pruefen ob der Benutzer existiert
-                string exist = "SELECT Benutzername FROM Registry WHERE Benutzername = 'yxc' AND Passwort = 'yxc'";
-                exist = String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}' AND Passwort = '{1}'", user.name, user.password);
+                //string exist = "SELECT Benutzername FROM Registry WHERE Benutzername = 'yxc' AND Passwort = 'yxc'";
+                string exist = String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}' AND Passwort = '{1}'", user.name, user.password);
                 SqlCommand cmd = new SqlCommand(exist, con);
                 cmd.Parameters.AddWithValue("@username", user.name);
                 cmd.Parameters.AddWithValue("@password", user.password);
                 Console.WriteLine("Received {0} {1}", user.name, user.password);
 
                 SqlDataReader reader = cmd.ExecuteReader();
+                cmd.Dispose();
                 if (reader.Read())
                 {
                     Console.WriteLine(reader.GetSqlValue(0) + "test" + reader.GetSqlString(0));
@@ -69,7 +69,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="TerminID"></param>
         /// <returns></returns>
-        public bool registerUser(User user, string password_bestaetigen)
+        public bool RegisterUser(User user, string password_bestaetigen)
         {
             if (String.IsNullOrEmpty(user.name) || String.IsNullOrEmpty(user.password) || String.IsNullOrEmpty(password_bestaetigen))
             {
@@ -86,10 +86,11 @@ namespace KaObjects.Storage
                 SqlCommand cmd_exist = new SqlCommand(exist, con);
                 cmd_exist.Parameters.AddWithValue("@username", user.name);
                 SqlDataReader reader_exists = cmd_exist.ExecuteReader();
+                cmd_exist.Dispose();
 
                 if (reader_exists.Read())
                 {
-                    MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));
+                    MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));               
                     return false;
                 }
                 else
@@ -105,6 +106,7 @@ namespace KaObjects.Storage
                     cmd_insert.Parameters.AddWithValue("@password", user.password);
 
                     int test = cmd_insert.ExecuteNonQuery();
+                    cmd_insert.Dispose();
                     Console.WriteLine("Rows affected {0}", test);
 
                     con.Close();
@@ -147,6 +149,7 @@ namespace KaObjects.Storage
             Console.WriteLine(cmd_insert.CommandText);//debugging  
 
             int id = (int)cmd_insert.ExecuteScalar();
+            cmd_insert.Dispose();
 
             kaEvent.TerminID = id;
             con.Close();
@@ -165,8 +168,10 @@ namespace KaObjects.Storage
             con.Open();
 
 #pragma warning disable CS0219 // The variable 'select' is assigned but its value is never used
-            string select = "SELECT * FROM calendar WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
+            //string select = "SELECT * FROM calendar WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
 #pragma warning restore CS0219 // The variable 'select' is assigned but its value is never used
+
+            con.Close();
 
             return null; //kaEvents
         }
@@ -179,7 +184,7 @@ namespace KaObjects.Storage
         /// Gibt die Termine des Benutzers in einer Liste  
         /// mit KaEvent-Objekten zurueck.
         /// </returns>
-        public List<KaEvent> read(string owner)
+        public List<KaEvent> Read(string owner)
         {
             List<KaEvent> ka = new List<KaEvent>();
 
@@ -188,13 +193,14 @@ namespace KaObjects.Storage
             con.Open();
 
             //Pruefen ob der Benutzer existiert
-            string exist = "SELECT * FROM calendar Where username =";
-            exist = String.Format("SELECT * FROM calendar where Benutzername = '{0}'", owner);
+            //string exist = "SELECT * FROM calendar Where username =";
+            string exist = String.Format("SELECT * FROM calendar where Benutzername = '{0}'", owner);
 
             SqlCommand com = new SqlCommand(exist, con);
 
             KaEvent temp = new KaEvent();
             SqlDataReader reader = com.ExecuteReader();
+            com.Dispose();
 
             if (reader.HasRows)
             {
@@ -239,6 +245,7 @@ namespace KaObjects.Storage
 
             cmd_delete.ExecuteNonQuery();
             MessageBox.Show("Termin wurde erfolgreich geloescht");
+            cmd_delete.Dispose();
 
             con.Close();
         }
@@ -250,7 +257,7 @@ namespace KaObjects.Storage
         /// <param name="ip"></param>
         /// <param name="id"></param>
         /// <returns>Kein Rueckgabewert. (void)</returns>
-        public void newServerEntry(string ip, int id)
+        public void NewServerEntry(string ip, int id)
         {
             //TODO UnitTests
 
@@ -265,6 +272,7 @@ namespace KaObjects.Storage
             cmd_insert.Parameters.AddWithValue("@ip", ip);
 
             cmd_insert.ExecuteNonQuery();
+            cmd_insert.Dispose();
             con.Close();
 
         }
@@ -285,8 +293,8 @@ namespace KaObjects.Storage
             string checkServer = String.Format("SELECT ServerID FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand checkCommand = new SqlCommand(checkServer, con);
-
             SqlDataReader reader = checkCommand.ExecuteReader();
+            checkCommand.Dispose();
 
             bool result = false;
 
@@ -318,9 +326,8 @@ namespace KaObjects.Storage
             string checkUser = String.Format("SELECT Benutzername FROM Registry WHERE Benutzername = '{0}'", user);
 
             SqlCommand checkCommand = new SqlCommand(checkUser, con);
-
             SqlDataReader reader = checkCommand.ExecuteReader();
-
+            checkCommand.Dispose();
 
             bool read = false;
             if (reader.Read())
@@ -348,8 +355,8 @@ namespace KaObjects.Storage
             int read = 0;
 
             SqlCommand checkCommand = new SqlCommand(Check, con);
-
             SqlDataReader reader = checkCommand.ExecuteReader();
+            checkCommand.Dispose();
 
             if (reader.Read())
             {
@@ -378,6 +385,7 @@ namespace KaObjects.Storage
                 string exist = string.Format("Select * from calendar where TerminID = {0} AND Benutzername = '{1}'", kaEvent.TerminID, kaEvent.owner.name);
                 SqlCommand exist_com = new SqlCommand(exist, con);
                 SqlDataReader read = exist_com.ExecuteReader();
+                exist_com.Dispose();
                 if (!read.Read())
                 {
                     SaveEvent(kaEvent);
@@ -395,10 +403,7 @@ namespace KaObjects.Storage
                 //saveEventCommand.Parameters.AddWithValue("@User", user);
 
                 saveEventCommand.ExecuteNonQuery();
-
-
-
-
+                saveEventCommand.Dispose();
             }
 
             con.Close();
@@ -429,8 +434,9 @@ namespace KaObjects.Storage
             string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE [User] = '{0}'", user);
 
             SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
-
             SqlDataReader reader = readEventCommand.ExecuteReader();
+            readEventCommand.Dispose();
+
             List<int> id = new List<int>();
             if(reader.HasRows)
             {
@@ -450,6 +456,7 @@ namespace KaObjects.Storage
                 con.Open();
                 SqlCommand read = new SqlCommand(readDates, con);
                 SqlDataReader reader2 = read.ExecuteReader();
+                read.Dispose();
 
                 if (reader2.Read())
                 {
@@ -502,7 +509,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="ServerID"></param>
         /// <returns>IP-Adresse des gesuchten Servers</returns>
-        public string getServer(int ServerID)
+        public string GetServer(int ServerID)
         {
             string read = "";
             SqlConnection con = new SqlConnection(connectionString);
@@ -511,8 +518,9 @@ namespace KaObjects.Storage
             string readID = String.Format("SELECT IPAdresse FROM Serverlist WHERE ServerID = '{0}'", ServerID);
 
             SqlCommand readCommand = new SqlCommand(readID, con);
-
             SqlDataReader reader = readCommand.ExecuteReader();
+            readCommand.Dispose();
+
             if (reader.Read())
             {
                 read = reader.GetString(0);
@@ -527,7 +535,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param >Kein Uebergabeparameter</param>
         /// <returns>Anzahl User pro Server</returns>
-        public int getUserCount()
+        public int GetUserCount()
         {
             int anzahl = 0;
             try
@@ -538,8 +546,8 @@ namespace KaObjects.Storage
                 string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM Registry");
 
                 SqlCommand readCommand = new SqlCommand(readCount, con);
-
                 SqlDataReader reader = readCommand.ExecuteReader();
+                readCommand.Dispose();
 
                 if (reader.Read())
                 {
@@ -561,7 +569,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param >Kein Uebergabeparameter</param>
         /// <returns>Anzahl Kindserver </returns>
-        public int getServerCount()
+        public int GetServerCount()
         {
             int Count = 0;
             try
@@ -572,8 +580,8 @@ namespace KaObjects.Storage
                 string readCount = String.Format("SELECT COUNT(*) AS ANZ FROM ServerList");
 
                 SqlCommand readCommand = new SqlCommand(readCount, con);
-
                 SqlDataReader reader = readCommand.ExecuteReader();
+                readCommand.Dispose();
 
                 if (reader.Read())
                 {
@@ -594,15 +602,17 @@ namespace KaObjects.Storage
         /// <param name="kaEvent">Den jeweiligen Termin</param>
         /// <param name="user">Der jeweilige eingeladene</param>
         /// <param name="choice">True=Accept, False = Ablehnen</param>
-        public void answerInvite(KaEvent kaEvent, string user, bool choice)
+        public void AnswerInvite(KaEvent kaEvent, string user, bool choice)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
             if (choice)
             {
-                User newOwner = new User();
-                newOwner.name = user;
+                User newOwner = new User
+                {
+                    name = user
+                };
                 kaEvent.owner = newOwner;
 
                 SaveEvent(kaEvent);
@@ -615,6 +625,7 @@ namespace KaObjects.Storage
             SqlCommand delInvite = new SqlCommand(del_Com, con);
 
             delInvite.ExecuteNonQuery();
+            delInvite.Dispose();
             con.Close();
 
 

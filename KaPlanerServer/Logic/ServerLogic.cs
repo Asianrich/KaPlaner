@@ -140,10 +140,10 @@ namespace KaPlanerServer.Logic
                     Console.WriteLine(LoginRequest);
                     if (package.serverSwitched)
                     {
-                        if (database.login(package.user))
+                        if (database.Login(package.user))
                         {
                             List<KaEvent> kaEvents;
-                            kaEvents = database.read(package.user.name);
+                            kaEvents = database.Read(package.user.name);
                             package.kaEvents = kaEvents;
                             package.invites = database.ReadInvites(package.user.name);
                             writeResult(Request.Success, LoginSuccess);
@@ -303,7 +303,7 @@ namespace KaPlanerServer.Logic
                     {
                         if (package.serverSwitched)
                         {
-                            if (database.registerUser(package.user, package.passwordConfirm))
+                            if (database.RegisterUser(package.user, package.passwordConfirm))
                             {
                                 writeResult(Request.Success, RegisterSuccess);
                                 package.user.serverID = ServerConfig.serverID;
@@ -455,7 +455,7 @@ namespace KaPlanerServer.Logic
                     {
                         List<KaEvent> kaEvents;
                         //kaEvents = database.LoadEvents(package.user, package.kaEvents[0].Beginn);
-                        kaEvents = database.read(package.user.name);
+                        kaEvents = database.Read(package.user.name);
                         package.kaEvents = kaEvents;
                         writeResult(Request.Success, LoadSuccess);
                     }
@@ -636,7 +636,7 @@ namespace KaPlanerServer.Logic
 
                 case Request.AnswerInvite:
                     //TODO für P2P und Hierarchisch
-                    database.answerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
+                    database.AnswerInvite(package.kaEvents[0], package.user.name, package.answerInvite);
                     break;
 
                 default:

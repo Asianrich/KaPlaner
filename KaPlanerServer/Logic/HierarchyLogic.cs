@@ -128,7 +128,7 @@ namespace KaPlanerServer.Logic
                         {
                             Console.WriteLine("SourceID: " + receive.hierarchie.sourceID);
                             ServerConfig.serverID = receive.hierarchie.sourceID;
-                            ServerLogic.database.newServerEntry(receive.hierarchie.destinationAdress, receive.hierarchie.destinationID);
+                            ServerLogic.database.NewServerEntry(receive.hierarchie.destinationAdress, receive.hierarchie.destinationID);
                             Console.WriteLine("Adresse: " + receive.hierarchie.destinationAdress);
                             Console.WriteLine("ID: " + receive.hierarchie.destinationID);
                             break;
@@ -153,7 +153,7 @@ namespace KaPlanerServer.Logic
         /// <returns></returns>
         public static HierarchiePackage ResolveHierarchie(HierarchiePackage package)
         {
-            int anzConnection = ServerLogic.database.getServerCount();
+            int anzConnection = ServerLogic.database.GetServerCount();
             string ip = ServerConfig.host.ToString();
             int id = ServerConfig.serverID;
 
@@ -190,9 +190,9 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine("Auf der SUche nach einem passenden Server");
                         StateEintrag stateEintrag = new StateEintrag();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
-                        stateEintrag.SetCounter(ServerLogic.database.getServerCount());
+                        stateEintrag.SetCounter(ServerLogic.database.GetServerCount());
                         int childcount = 0;
-                        for (int i = 0; i < ServerLogic.database.getServerCount(); i++)
+                        for (int i = 0; i < ServerLogic.database.GetServerCount(); i++)
                         {
                             Console.WriteLine("Dieser Server hat Kinder");
                             int childID = ServerConfig.serverID * 10 + 1 - i; //Weil HierarchieID's!
@@ -258,12 +258,12 @@ namespace KaPlanerServer.Logic
 
 
                     package.sourceID = newId;
-                    ServerLogic.database.newServerEntry(package.sourceAdress, newId);
+                    ServerLogic.database.NewServerEntry(package.sourceAdress, newId);
 
 
                     break;
                 case HierarchieRequest.RegisterUser:
-                    int anzUser = ServerLogic.database.getUserCount();
+                    int anzUser = ServerLogic.database.GetUserCount();
                     //überprüfen ob USERNAME schon existiert!
                     if (ServerLogic.database.UserExist(package.login))
                     {
@@ -277,7 +277,7 @@ namespace KaPlanerServer.Logic
                         //sendHierarchie();
                         StateEintrag stateEintrag = new StateEintrag();
                         List<HierarchiePackage> child = new List<HierarchiePackage>();
-                        stateEintrag.SetCounter(ServerLogic.database.getServerCount());
+                        stateEintrag.SetCounter(ServerLogic.database.GetServerCount());
                         for (int i = 0; i < 2; i++)
                         {
                             int childID = (ServerConfig.serverID * 10) + 1 - i; //Weil HierarchieID's!
@@ -369,7 +369,7 @@ namespace KaPlanerServer.Logic
                     addressid = child;
                 }
 
-                return ServerLogic.database.getServer(addressid);
+                return ServerLogic.database.GetServer(addressid);
             }
 
             int GetDigitCount(int number)

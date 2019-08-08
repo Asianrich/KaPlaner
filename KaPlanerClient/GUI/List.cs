@@ -16,12 +16,12 @@ namespace KaPlaner.GUI
 {
     public partial class Wdw_date_list : Form
     {
-        IClientLogic clientLogic = ClientActivator.clientLogic;
-        DateTime date;
+        readonly IClientLogic clientLogic = ClientActivator.clientLogic;
+        readonly DateTime date;
 
-        private List<int> indexes;
+        private readonly List<int> indexes;
         public List<KaEvent> ListEvents;
-        bool isOnline;
+        readonly bool isOnline;
 
         public Wdw_date_list(List<KaEvent> kaEvents, DateTime date, bool isOnline)
         {
@@ -30,10 +30,10 @@ namespace KaPlaner.GUI
             this.date = date;
             indexes = new List<int>();
             ListEvents = kaEvents;
-            update();
+            UpdateEvents();
         }
 
-        public void update()
+        public void UpdateEvents()
         {
             string[] row = new string[5];
             LV_dates.Items.Clear();
@@ -58,7 +58,7 @@ namespace KaPlaner.GUI
         }
 
 
-        public void load(int index)
+        public void LoadEvent(int index)
         {
             bool isNewElement = false;
             KaEvent kaEvent;
@@ -89,7 +89,7 @@ namespace KaPlaner.GUI
             if (isNewElement)
             {
                 ListEvents.Add(kaEvent);
-                update();
+                UpdateEvents();
             }
             else
             {
@@ -103,7 +103,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_dates.FocusedItem.Index;
-                load(indexes[index]);
+                LoadEvent(indexes[index]);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace KaPlaner.GUI
         {
             try
             {
-                load(ListEvents.Count + 1);
+                LoadEvent(ListEvents.Count + 1);
             }
             catch (Exception ex)
             {
@@ -171,7 +171,7 @@ namespace KaPlaner.GUI
             try
             {
                 ListEvents.RemoveAt(indexes[LV_dates.FocusedItem.Index]);
-                update();
+                UpdateEvents();
             }
             catch (Exception ex)
             {

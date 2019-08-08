@@ -15,10 +15,10 @@ namespace KaPlaner.GUI
 {
     public partial class RequestList : Form
     {
-        IClientLogic clientLogic = ClientActivator.clientLogic;
-        private List<int> indexes; //Brauche ich das bei einer Invite liste wenn es woanders steht?
+        readonly IClientLogic clientLogic = ClientActivator.clientLogic;
+        private readonly List<int> indexes; //Brauche ich das bei einer Invite liste wenn es woanders steht?
         public List<KaEvent> ListEvents;
-        private User user;
+        private readonly User user;
         public RequestList(List<KaEvent> kaEvents, User user)
         {
             InitializeComponent();
@@ -26,10 +26,10 @@ namespace KaPlaner.GUI
             this.user = user;
             string[] row = new string[5];
             indexes = new List<int>();
-            update();
+            UpdateEvents();
         }
 
-        public void update()
+        public void UpdateEvents()
         {
             string[] row = new string[5];
             //LV_Dates.Items.Clear();
@@ -91,7 +91,8 @@ namespace KaPlaner.GUI
             }
         }
 
-        private bool invite(string[] list, string username)
+        /*
+        private bool Invite(string[] list, string username)
         {
             foreach(string a in list)
             {
@@ -102,6 +103,7 @@ namespace KaPlaner.GUI
             }
             return false;
         }
+        */
 
         private void BT_Close_Click(object sender, EventArgs e)
         {
@@ -125,7 +127,7 @@ namespace KaPlaner.GUI
             }
         }
 
-        public void load(int index)
+        public void LoadEvent(int index)
         {
             bool isNewElement = false;
             KaEvent kaEvent;

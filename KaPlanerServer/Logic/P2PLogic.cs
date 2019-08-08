@@ -154,7 +154,7 @@ namespace KaPlanerServer.Logic
                                 break;
                             }
                             //1. Anzahl User
-                            int anzUser = ServerLogic.database.getUserCount();
+                            int anzUser = ServerLogic.database.GetUserCount();
                             if (package.anzUser == P2PPackage.AnzUserInit || package.anzUser > anzUser)
                             {// siehe case NewServer
                                 package.anzUser = anzUser;

@@ -9,15 +9,15 @@ namespace KaObjects.Storage
 {
     public interface IDatabase
     {
-        bool login(User user);
+        bool Login(User user);
 
-        bool registerUser(User user, string password_bestaetigen);
+        bool RegisterUser(User user, string password_bestaetigen);
 
         void SaveEvent(KaEvent kaEvent);
 
         List<KaEvent> LoadEvents(User user, DateTime month);
 
-        List<KaEvent> read(string owner);
+        List<KaEvent> Read(string owner);
 
         void Delete_date(int TerminID);
 
@@ -31,18 +31,18 @@ namespace KaObjects.Storage
 
         List<KaEvent> ReadInvites(string user);
 
-        string getServer(int serverID);
+        string GetServer(int serverID);
 
-        int getUserCount();
+        int GetUserCount();
 
-        int getServerCount();
+        int GetServerCount();
 
         //LinkedList<string> GetWellKnownPeers();
     
-        void newServerEntry(string ip, int id);
+        void NewServerEntry(string ip, int id);
 
 
-        void answerInvite(KaEvent kaEvent, string user, bool choice);
+        void AnswerInvite(KaEvent kaEvent, string user, bool choice);
 
 
     }

@@ -42,7 +42,7 @@ namespace KaPlaner.Logic
         public List<KaEvent> LoadEventsLocal(DateTime month)
         {
             //return database.LoadEvents(currentUser, month);
-            return database.read(currentUser.name);
+            return database.Read(currentUser.name);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace KaPlaner.Logic
         public bool LoginLocal(User user)
         {
             currentUser = user;
-            return database.login(currentUser);
+            return database.Login(currentUser);
         }
 
 
@@ -144,7 +144,7 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public bool RegisterLocal(User user, string password_bestaetigen)
         {
-            if (database.registerUser(user, password_bestaetigen))
+            if (database.RegisterUser(user, password_bestaetigen))
             {
                 currentUser = user;
                 return true;
@@ -170,7 +170,7 @@ namespace KaPlaner.Logic
             {
                 serverSwitched = false
             };
-            //clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
+            clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.ChangeServer)
