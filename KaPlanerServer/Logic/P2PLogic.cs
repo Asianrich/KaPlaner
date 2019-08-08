@@ -150,7 +150,7 @@ namespace KaPlanerServer.Logic
                             //0. Existiert der User?
                             if (ServerLogic.database.UserExist(package.GetUsername()))
                             {
-                                package.P2PAnswer = P2PAnswer.Visited;
+                                package.P2PAnswer = P2PAnswer.UserExistent;
                                 break;
                             }
                             //1. Anzahl User
@@ -164,12 +164,12 @@ namespace KaPlanerServer.Logic
                             {
                                 package.lastIP = ServerConfig.host.ToString();
                             }
-                            //2. Test on TTL ????
-                            if (package.DecrementTTL() == 0)
+                            //2. Test on TTL ???? -> Nein! Nicht vereinbar mit nur einem User im gesamten Netz.
+                            /*if (package.DecrementTTL() == 0)
                             {
                                 package.P2PAnswer = P2PAnswer.Timeout;
                                 break;
-                            }
+                            }*/
                             //3. Forking to other servers via flooding
                             returnList = Forward();
                             //Comparing answers
@@ -181,6 +181,7 @@ namespace KaPlanerServer.Logic
                                     package.lastIP = p.lastIP;
                                 }
                             }
+                            package.P2PAnswer = P2PAnswer.Success;
                             break;
                         /*
                         case P2PRequest.RegisterUser:
@@ -222,22 +223,18 @@ namespace KaPlanerServer.Logic
                             if (!ServerLogic.database.UserExist(package.GetUsername())) //2. Wenn nicht gefunden => weiterleiten
                             {
                                 returnList = Forward();
-                                //Falls nur ein return => Success
-                                if (returnList.Count == 1)
+
+                                foreach (P2PPackage p in returnList)
                                 {
-                                    package.P2PAnswer = returnList.First().P2PAnswer;
-                                    package.lastIP = returnList.First().lastIP;
-                                }
-                                else if (returnList.Count > 1)
-                                {
-                                    foreach (P2PPackage p in returnList)
+                                    if (p.P2PAnswer == P2PAnswer.Success)
                                     {
-                                        if (p.P2PAnswer == P2PAnswer.Success)
-                                            package.lastIP = p.lastIP;
+                                        package.P2PAnswer = p.P2PAnswer;
+                                        package.lastIP = p.lastIP;
+                                        break;
                                     }
                                 }
-                                else
-                                    package.P2PAnswer = P2PAnswer.Failure; //Error?
+
+                                package.P2PAnswer = P2PAnswer.Failure; //Error?
                             }
                             else
                             {

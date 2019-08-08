@@ -66,8 +66,8 @@ namespace KaPlanerServer.Data
             if (EntryList.Count == 0) //Check bevor wir falsch indexieren.
                 return default;
             Random random = new Random();
-            //Random Zahl zwischen 0/1 und EntryList.Count
-            return EntryList[random.Next(0, EntryList.Count)];
+            //Random Zahl zwischen 0/1 und EntryList.Count - 1
+            return EntryList[random.Next(0, EntryList.Count-1)];
         }
     }
 }

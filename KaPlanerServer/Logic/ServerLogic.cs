@@ -356,7 +356,7 @@ namespace KaPlanerServer.Logic
                                             writeResult(Request.ChangeServer, ChangeServer);
                                             break;
                                         ///user already exists
-                                        case P2PAnswer.Visited:
+                                        case P2PAnswer.UserExistent:
                                             writeResult(Request.UserExistent, UserExistent);
                                             break;
                                         default:

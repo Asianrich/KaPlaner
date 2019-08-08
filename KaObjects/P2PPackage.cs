@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace KaObjects
 {
     public enum P2PRequest { NewServer, RegisterServer, NewUser, Login, Invite }
-    public enum P2PAnswer { Success, Failure, Error, Visited, Timeout}
+    public enum P2PAnswer { Success, Failure, Error, Visited, Timeout, UserExistent}
     [Serializable]
     public class P2PPackage
     {
