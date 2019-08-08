@@ -302,7 +302,8 @@ namespace KaPlaner.Networking
                         //Hier probleme?
                         client.Close();
                     }
-                    throw ex;
+                    //throw ex;
+                    return null;
                 }
             }
         }

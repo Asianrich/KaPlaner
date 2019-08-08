@@ -170,7 +170,7 @@ namespace KaPlaner.Logic
             {
                 serverSwitched = false
             };
-            clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
+            //clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.ChangeServer)
