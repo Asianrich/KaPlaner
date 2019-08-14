@@ -17,6 +17,9 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using System.Configuration;
+using System.Data.SqlClient;
+
 namespace UnitTest
 {
     [TestClass]
@@ -242,6 +245,19 @@ namespace UnitTest
             int testID = 1;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
             testdb.Delete_date(testID);
+        }
+
+        [TestMethod]
+        public void CheckAppConfig()
+        {
+            int testID = 1;
+            ConnectionStringSettings connectionStringTEST = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
+            SqlConnection con_AppConf = new SqlConnection(connectionStringTEST.ConnectionString);
+
+            int testID2 = 1;
+            Database testdb = new Database(connectionStringTEST.ToString());
+            testdb.Delete_date(testID2);
+
         }
 
         //[TestMethod]
