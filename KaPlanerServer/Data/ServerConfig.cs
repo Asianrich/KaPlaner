@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 
 namespace KaPlanerServer.Data
 {
     public enum Structure {P2P, HIERARCHY}
+
     public static class ServerConfig
-    {
+    {      
         /// <summary>
         /// P2P neighbours
         /// </summary>
@@ -15,8 +17,7 @@ namespace KaPlanerServer.Data
         private static readonly int LIMIT = 10;
         //HIerarchie
         public static IPAddress root = IPAddress.Parse("192.168.0.42"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
-        public static int serverID = 0; // Standardbelegung (0 verweist auf P2P)
-
+        public static int serverID = 0; // Standardbelegung (0 verweist auf P2P) 
 
         //P2P
         public static List<IPAddress> ListofWellKnown = new List<IPAddress>()
