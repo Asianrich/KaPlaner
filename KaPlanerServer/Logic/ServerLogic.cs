@@ -355,7 +355,7 @@ namespace KaPlanerServer.Logic
                                     switch (recievePackage.p2p.P2PAnswer)
                                     {
                                         case P2PAnswer.Success:
-                                            if (recievePackage.hierarchie.anzUser < p2p.anzUser)
+                                            if (hierarchie.anzUser < recievePackage.p2p.anzUser)
                                                 package.sourceServer = hierarchie.destinationAdress;
                                             else
                                                 package.sourceServer = recievePackage.p2p.lastIP;
