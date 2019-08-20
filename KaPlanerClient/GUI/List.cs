@@ -106,7 +106,7 @@ namespace KaPlaner.GUI
             }
             else
             {
-                ListEvents[index - 1] = kaEvent;
+                ListEvents[index] = kaEvent;
             }
         }
 

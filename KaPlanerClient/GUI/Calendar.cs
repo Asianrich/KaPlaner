@@ -289,6 +289,12 @@ namespace WindowsFormsApp1
                 {
                     
                 }
+                foreach(KaEvent ka in form.returnValue)
+                {
+                    kaEvents.Add(ka);
+                }
+
+
             }
         }
     }

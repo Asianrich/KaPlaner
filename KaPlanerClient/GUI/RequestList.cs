@@ -19,6 +19,7 @@ namespace KaPlaner.GUI
         private readonly List<int> indexes; //Brauche ich das bei einer Invite liste wenn es woanders steht?
         public List<KaEvent> ListEvents;
         private readonly User user;
+        public List<KaEvent> returnValue = new List<KaEvent>();
         public RequestList(List<KaEvent> kaEvents, User user)
         {
             InitializeComponent();
@@ -55,7 +56,7 @@ namespace KaPlaner.GUI
             //    }
             //    i++;
             //});
-            
+            LV_Dates.Items.Clear();
             foreach (KaEvent ka in ListEvents)
             {
 
@@ -175,6 +176,8 @@ namespace KaPlaner.GUI
             try
             {
                 clientLogic.AnswerInvite(ListEvents[index], false);
+                ListEvents.RemoveAt(index);
+                UpdateEvents();
             }
             catch(Exception)
             {
@@ -188,6 +191,10 @@ namespace KaPlaner.GUI
             try
             {
                 clientLogic.AnswerInvite(ListEvents[index], true);
+                returnValue.Add(ListEvents[index]);
+                ListEvents.RemoveAt(index);
+                UpdateEvents();
+                
             }
             catch (Exception)
             {
