@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KaObjects.Storage;
 using KaPlaner.Networking;
 using KaObjects;
+using System.Windows.Forms;
 
 namespace KaPlaner.Logic
 {
@@ -119,6 +120,10 @@ namespace KaPlaner.Logic
                 clientConnection.ChangeIP(returnPackage.sourceServer);
                 loginPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(loginPackage);
+            }
+            else
+            {
+                MessageBox.Show("Login fehlgeschlagen!!!");
             }
 
             if (returnPackage.kaEvents != null)
