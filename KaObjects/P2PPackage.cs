@@ -40,12 +40,12 @@ namespace KaObjects
         /// Name des gesuchten Users. Wird für Invites/Logins gebraucht.
         /// </summary>
         [XmlElement]
-        public readonly string Username;
+        public string Username;
         /// <summary>
         /// Wird für Invites gebraucht.
         /// </summary>
         [XmlElement]
-        public readonly KaEvent Invite;
+        public KaEvent Invite;
 
         public string GetUsername()
         {

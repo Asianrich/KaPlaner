@@ -178,6 +178,7 @@ namespace KaPlaner.Logic
                 clientConnection.ChangeIP(returnPackage.sourceServer);
                 registerPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(registerPackage);
+                currentUser = returnPackage.user;
             }
 
             return returnPackage.request;
