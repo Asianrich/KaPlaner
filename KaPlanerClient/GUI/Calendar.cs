@@ -99,7 +99,7 @@ namespace WindowsFormsApp1
                 {
                     var result = form.ShowDialog();
 
-                    kaEvents = form.ListEvents;
+                    kaEvents = form.dates;
 
                 }
 

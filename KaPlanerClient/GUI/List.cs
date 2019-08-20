@@ -19,8 +19,9 @@ namespace KaPlaner.GUI
         readonly IClientLogic clientLogic = ClientActivator.clientLogic;
         readonly DateTime date;
 
-        private readonly List<int> indexes;
-        public List<KaEvent> ListEvents;
+        //private readonly List<int> indexes;
+        public List<KaEvent> ListEvents = new List<KaEvent>();
+        public List<KaEvent> dates = new List<KaEvent>();
         readonly bool isOnline;
 
         public Wdw_date_list(List<KaEvent> kaEvents, DateTime date, bool isOnline)
@@ -28,8 +29,19 @@ namespace KaPlaner.GUI
             InitializeComponent();
             this.isOnline = isOnline;
             this.date = date;
-            indexes = new List<int>();
-            ListEvents = kaEvents;
+            dates = kaEvents;
+            foreach (KaEvent ka in kaEvents)
+            {
+                if (ka.Beginn.ToString("dd/MM/yy") == date.ToString("dd/MM/yy"))
+                {
+                    ListEvents.Add(ka);
+                }
+            }
+
+
+
+            //indexes = new List<int>();
+            //ListEvents = kaEvents;
             UpdateEvents();
         }
 
@@ -37,23 +49,23 @@ namespace KaPlaner.GUI
         {
             string[] row = new string[5];
             LV_dates.Items.Clear();
-            indexes.Clear();
+            //indexes.Clear();
             int i = 0;
             foreach (KaEvent ka in ListEvents)
             {
 
-                if (ka.Beginn.Day == date.Day && ka.Beginn.Year == date.Year && ka.Beginn.Month == date.Month)
-                {
-                    row[0] = ka.Titel;
-                    row[1] = ka.Ort;
-                    row[2] = ka.Beginn.ToString();
-                    row[3] = ka.Ende.ToString();
-                    indexes.Add(i);
-                    ListViewItem lvi = new ListViewItem(row);
+                //if (ka.Beginn.Day == date.Day && ka.Beginn.Year == date.Year && ka.Beginn.Month == date.Month)
+                //{
+                row[0] = ka.Titel;
+                row[1] = ka.Ort;
+                row[2] = ka.Beginn.ToString();
+                row[3] = ka.Ende.ToString();
+                //indexes.Add(i);
+                ListViewItem lvi = new ListViewItem(row);
 
-                    LV_dates.Items.Add(lvi);
-                }
-                i++;
+                LV_dates.Items.Add(lvi);
+                //}
+                //i++;
             }
         }
 
@@ -89,6 +101,7 @@ namespace KaPlaner.GUI
             if (isNewElement)
             {
                 ListEvents.Add(kaEvent);
+                dates.Add(kaEvent);
                 UpdateEvents();
             }
             else
@@ -103,7 +116,7 @@ namespace KaPlaner.GUI
             try
             {
                 int index = LV_dates.FocusedItem.Index;
-                LoadEvent(indexes[index]);
+                LoadEvent(index);
             }
             catch (Exception ex)
             {
@@ -170,7 +183,7 @@ namespace KaPlaner.GUI
         {
             try
             {
-                ListEvents.RemoveAt(indexes[LV_dates.FocusedItem.Index]);
+                ListEvents.RemoveAt(LV_dates.FocusedItem.Index);
                 UpdateEvents();
             }
             catch (Exception ex)

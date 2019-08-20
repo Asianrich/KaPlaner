@@ -374,6 +374,7 @@ namespace KaPlanerServer.Logic
                                 else
                                 {
                                     package.sourceServer = hierarchie.destinationAdress;
+                                    writeResult(Request.ChangeServer, ChangeServer);
                                 }
                             }
                             else if (ServerConfig.structure == Structure.P2P)
