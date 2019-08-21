@@ -113,7 +113,22 @@ namespace KaPlaner.Logic
             Package returnPackage;
             Package loginPackage = new Package(Request.Login, currentUser);
 
-            returnPackage = clientConnection.Start(loginPackage);
+
+            try
+            {
+                returnPackage = clientConnection.Start(loginPackage);
+
+            }
+            catch (Exception ex)
+            {
+                clientConnection.changeP2P();
+                returnPackage = clientConnection.Start(loginPackage);
+
+                if (returnPackage == null)
+                {
+                    throw ex;
+                }
+            }
 
             if (returnPackage.request == Request.ChangeServer)
             {

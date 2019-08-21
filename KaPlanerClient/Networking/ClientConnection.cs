@@ -7,7 +7,7 @@ using KaObjects;
 using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
-
+using System.Collections.Generic;
 namespace KaPlaner.Networking
 {
     public static class Serial
@@ -32,12 +32,25 @@ namespace KaPlaner.Networking
         private static string response;
         IPAddress ip;
 
+        IPAddress root = IPAddress.Parse("192.168.0.42");
+        //P2P
+        public static List<IPAddress> ListofWellKnown = new List<IPAddress>()
+        {//Vorübergehend Hardcoded!!!!!!
+            IPAddress.Parse("192.168.0.3"),
+            //IPAddress.Parse("192.168.0.4"),
+            //IPAddress.Parse("192.168.0.10")
+        };
+
         public ClientConnection()
         {
             //Anfangshost oder sonst wer
-            ip = IPAddress.Parse("192.168.0.8");
+            ip = root;
         }
 
+        public void changeP2P()
+        {
+            ip = ListofWellKnown[0];
+        }
         /// <summary>
         /// Diese Methode versucht eine Socketconnection aufzubauen.
         /// </summary>

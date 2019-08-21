@@ -38,7 +38,7 @@ namespace KaPlaner.Networking
         public ClientConnection()
         {
             //Anfangshost oder sonst wer
-            iPAddress = IPAddress.Parse("192.168.0.6");
+            iPAddress = IPAddress.Parse("192.168.0.42");
         }
 
         public ClientConnection(IPAddress iPAddress)

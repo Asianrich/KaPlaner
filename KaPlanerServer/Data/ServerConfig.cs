@@ -16,13 +16,13 @@ namespace KaPlanerServer.Data
         public static List<IPAddress> neighbours = new List<IPAddress>();
         private static readonly int LIMIT = 10;
         //HIerarchie
-        public static IPAddress root = IPAddress.Parse("192.168.0.8"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
+        public static IPAddress root = IPAddress.Parse("192.168.0.42"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
         public static int serverID = 0; // Standardbelegung (0 verweist auf P2P) 
 
         //P2P
         public static List<IPAddress> ListofWellKnown = new List<IPAddress>()
         {//Vorübergehend Hardcoded!!!!!!
-            IPAddress.Parse("192.168.0.6"),
+            IPAddress.Parse("192.168.0.3"),
             //IPAddress.Parse("192.168.0.4"),
             //IPAddress.Parse("192.168.0.10")
         };
