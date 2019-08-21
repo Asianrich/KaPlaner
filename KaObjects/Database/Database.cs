@@ -52,7 +52,6 @@ namespace KaObjects.Storage
                 if (reader.Read())
                 {
                     Console.WriteLine(reader.GetSqlValue(0) + "test" + reader.GetSqlString(0));
-                    MessageBox.Show("Benutzername und Passwort korrekt!");
                     con.Close();
                     return true;
                 }
