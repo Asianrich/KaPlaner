@@ -59,14 +59,14 @@ namespace KaPlanerServer.Logic
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
                         switch (package.p2p.P2PAnswer)
                         {
-                            case P2PAnswer.Success:
+                            default:
                                 Package registerPackage = new Package
                                 {
                                     p2p = new P2PPackage
                                     {
-                                        P2Prequest = P2PRequest.NewServer
+                                        P2Prequest = P2PRequest.RegisterServer
                                     },
-                                    sourceServer = ServerConfig.host.ToString()
+                                    //sourceServer = ServerConfig.host.ToString()
                                 };
                                 package.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
                                 package = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
@@ -81,9 +81,9 @@ namespace KaPlanerServer.Logic
                                         Console.WriteLine(ServerLogic.RegisterFail);
                                 }
                                 break;
-                            default:
+                            /*default:
                                 Console.WriteLine("No Success.");
-                                break;
+                                break;*/
                         }
                     }
                 }
