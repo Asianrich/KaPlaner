@@ -68,8 +68,8 @@ namespace KaPlanerServer.Logic
                                     },
                                     //sourceServer = ServerConfig.host.ToString()
                                 };
-                                package.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
-                                package = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
+                                registerPackage.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
+                                registerPackage = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
                                 if (package != null)
                                 {
                                     if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
