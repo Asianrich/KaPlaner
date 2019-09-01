@@ -137,6 +137,17 @@ namespace KaObjects.Storage
 
             string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
+
+            /// Termin ändern mit update Statement///
+            /// Beispiel ///
+
+            //IF EXISTS(SELECT* FROM Calendar WHERE titel = 'hallo')
+                //UPDATE Calendar SET titel = 'neu'
+            //ELSE
+            //INSERT INTO Calendar(titel) VALUES('hallo');
+
+
+
             SqlCommand cmd_insert = new SqlCommand(ins3, con);
 
             cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
