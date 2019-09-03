@@ -84,7 +84,7 @@ namespace WindowsFormsApp1
             this.btn_log_senden.Location = new System.Drawing.Point(40, 321);
             this.btn_log_senden.Name = "btn_log_senden";
             this.btn_log_senden.Size = new System.Drawing.Size(90, 30);
-            this.btn_log_senden.TabIndex = 5;
+            this.btn_log_senden.TabIndex = 3;
             this.btn_log_senden.Text = "Senden";
             this.btn_log_senden.UseVisualStyleBackColor = true;
             this.btn_log_senden.Click += new System.EventHandler(this.Btn_log_send_Click);
@@ -95,7 +95,7 @@ namespace WindowsFormsApp1
             this.btn_log_schließen.Location = new System.Drawing.Point(332, 321);
             this.btn_log_schließen.Name = "btn_log_schließen";
             this.btn_log_schließen.Size = new System.Drawing.Size(90, 30);
-            this.btn_log_schließen.TabIndex = 6;
+            this.btn_log_schließen.TabIndex = 5;
             this.btn_log_schließen.Text = "Schließen";
             this.btn_log_schließen.UseVisualStyleBackColor = true;
             this.btn_log_schließen.Click += new System.EventHandler(this.Btn_log_quit_Click);
@@ -106,7 +106,7 @@ namespace WindowsFormsApp1
             this.wdw_registrierung.Location = new System.Drawing.Point(183, 321);
             this.wdw_registrierung.Name = "wdw_registrierung";
             this.wdw_registrierung.Size = new System.Drawing.Size(113, 30);
-            this.wdw_registrierung.TabIndex = 7;
+            this.wdw_registrierung.TabIndex = 4;
             this.wdw_registrierung.Text = "Registrierung";
             this.wdw_registrierung.UseVisualStyleBackColor = true;
             this.wdw_registrierung.Click += new System.EventHandler(this.Wdw_registry_Click);
@@ -117,7 +117,7 @@ namespace WindowsFormsApp1
             this.BTN_offline.Location = new System.Drawing.Point(40, 372);
             this.BTN_offline.Name = "BTN_offline";
             this.BTN_offline.Size = new System.Drawing.Size(382, 30);
-            this.BTN_offline.TabIndex = 8;
+            this.BTN_offline.TabIndex = 6;
             this.BTN_offline.Text = "OFFLINE";
             this.BTN_offline.UseVisualStyleBackColor = true;
             this.BTN_offline.Click += new System.EventHandler(this.BTN_offline_Click);
@@ -127,21 +127,21 @@ namespace WindowsFormsApp1
             this.tb_log_benutzername.Location = new System.Drawing.Point(192, 193);
             this.tb_log_benutzername.Name = "tb_log_benutzername";
             this.tb_log_benutzername.Size = new System.Drawing.Size(230, 26);
-            this.tb_log_benutzername.TabIndex = 9;
+            this.tb_log_benutzername.TabIndex = 0;
             // 
             // tb_log_passwort
             // 
             this.tb_log_passwort.Location = new System.Drawing.Point(192, 225);
             this.tb_log_passwort.Name = "tb_log_passwort";
             this.tb_log_passwort.Size = new System.Drawing.Size(230, 26);
-            this.tb_log_passwort.TabIndex = 10;
+            this.tb_log_passwort.TabIndex = 1;
             // 
             // tb_log_ID
             // 
             this.tb_log_ID.Location = new System.Drawing.Point(192, 257);
             this.tb_log_ID.Name = "tb_log_ID";
             this.tb_log_ID.Size = new System.Drawing.Size(230, 26);
-            this.tb_log_ID.TabIndex = 11;
+            this.tb_log_ID.TabIndex = 2;
             this.tb_log_ID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_log_ID_KeyPress);
             // 
             // lbl_log_ID
@@ -156,7 +156,7 @@ namespace WindowsFormsApp1
             // 
             // Wdw_login
             // 
-            this.ClientSize = new System.Drawing.Size(459, 422);
+            this.ClientSize = new System.Drawing.Size(459, 421);
             this.Controls.Add(this.lbl_log_ID);
             this.Controls.Add(this.tb_log_ID);
             this.Controls.Add(this.tb_log_passwort);

@@ -135,35 +135,60 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+            string exist = String.Format("SELECT TerminID FROM calendar WHERE TerminID = '{0}'", kaEvent.TerminID);
+
+            SqlCommand cmd_exist = new SqlCommand(exist, con);
+ 
+
+            /// Liest in der Datenbank nach einem Termin mit einer bestimmten ID aus 
+            SqlDataReader exist_reader = cmd_exist.ExecuteReader();
 
 
-            /// Termin ändern mit update Statement///
-            /// Beispiel ///
+            if (exist_reader.Read())
+            {
+                string ins3 = String.Format("UPDATE User_Calendar.mdf calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung, Benutzername = @Benutzername WHERE TerminID = @TerminID");
 
-            //IF EXISTS(SELECT* FROM Calendar WHERE titel = 'hallo')
-                //UPDATE Calendar SET titel = 'neu'
-            //ELSE
-            //INSERT INTO Calendar(titel) VALUES('hallo');
+                SqlCommand cmd_update = new SqlCommand(ins3, con);
 
+                cmd_update.Parameters.AddWithValue("@Titel", kaEvent.Titel);
+                cmd_update.Parameters.AddWithValue("@Ort", kaEvent.Ort);
+                cmd_update.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
+                cmd_update.Parameters.AddWithValue("@Ende", kaEvent.Ende);
+                cmd_update.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
+                cmd_update.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
 
+                Console.WriteLine(cmd_update.CommandText); //debugging
 
-            SqlCommand cmd_insert = new SqlCommand(ins3, con);
+                int id = (int)cmd_update.ExecuteScalar();
+                cmd_update.Dispose();
 
-            cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
-            cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);
-            cmd_insert.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
-            cmd_insert.Parameters.AddWithValue("@Ende", kaEvent.Ende);
-            cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
-            cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
+                kaEvent.TerminID = id;
 
-            Console.WriteLine(cmd_insert.CommandText);//debugging  
+                con.Close();
+            }
+            else
+            {
+                string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
-            int id = (int)cmd_insert.ExecuteScalar();
-            cmd_insert.Dispose();
+                SqlCommand cmd_insert = new SqlCommand(ins3, con);
 
-            kaEvent.TerminID = id;
-            con.Close();
+                cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
+                cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);
+                cmd_insert.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
+                cmd_insert.Parameters.AddWithValue("@Ende", kaEvent.Ende);
+                cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
+                cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
+
+                Console.WriteLine(cmd_insert.CommandText); //debugging  
+
+                int id = (int)cmd_insert.ExecuteScalar();
+                cmd_insert.Dispose();
+
+                kaEvent.TerminID = id;
+
+                con.Close();
+            }      
+            
             return; //Können wir überprüfen ob es geklappt hat?
         }
 

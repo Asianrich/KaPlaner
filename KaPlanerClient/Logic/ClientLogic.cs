@@ -6,6 +6,9 @@ using KaPlaner.Networking;
 using KaObjects;
 using System.Windows.Forms;
 
+using System.Configuration;
+using System.Data.SqlClient;
+
 namespace KaPlaner.Logic
 {
     /// <summary>
@@ -15,8 +18,12 @@ namespace KaPlaner.Logic
     public class ClientLogic : IClientLogic
     {
         // TO CHANGE:  Update auf neue Config!
-        static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
+        static ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
+        static readonly string connectionString = AppConnectionString.ConnectionString.ToString();
+
+        //ALT: static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
         readonly IDatabase database = new Database(connectionString);
+
         readonly IClientConnection clientConnection = new ClientConnection();
         public User currentUser; //Sollte auf dem Server verwaltet werden aus Sicherheitsgründen.
 
