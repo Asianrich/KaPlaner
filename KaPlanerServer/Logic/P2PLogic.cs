@@ -230,11 +230,8 @@ namespace KaPlanerServer.Logic
                                     {
                                         package.P2PAnswer = p.P2PAnswer;
                                         package.lastIP = p.lastIP;
-                                        break;
                                     }
                                 }
-
-                                package.P2PAnswer = P2PAnswer.Failure; //Error?
                             }
                             else
                             {
