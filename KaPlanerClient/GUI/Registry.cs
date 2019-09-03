@@ -39,20 +39,18 @@ namespace WindowsFormsApp1
             this.btn_reg_senden = new System.Windows.Forms.Button();
             this.btn_reg_schließen = new System.Windows.Forms.Button();
             this.SuspendLayout();
-
-            /// 
-            /// RTB_passwort_bestaetigen
-            /// 
+            // 
+            // rTB_passwort_bestaetigen
+            // 
             this.rTB_passwort_bestaetigen.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort_bestaetigen.Location = new System.Drawing.Point(256, 273);
             this.rTB_passwort_bestaetigen.Name = "rTB_passwort_bestaetigen";
             this.rTB_passwort_bestaetigen.Size = new System.Drawing.Size(230, 40);
-            this.rTB_passwort_bestaetigen.TabIndex = 0;
+            this.rTB_passwort_bestaetigen.TabIndex = 2;
             this.rTB_passwort_bestaetigen.Text = "";
-
-            /// 
-            /// lbl_registrierung
-            /// 
+            // 
+            // lbl_registrierung
+            // 
             this.lbl_registrierung.AutoSize = true;
             this.lbl_registrierung.Font = new System.Drawing.Font("Arial", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_registrierung.Location = new System.Drawing.Point(134, 46);
@@ -60,30 +58,27 @@ namespace WindowsFormsApp1
             this.lbl_registrierung.Size = new System.Drawing.Size(279, 49);
             this.lbl_registrierung.TabIndex = 1;
             this.lbl_registrierung.Text = "Registrierung";
-
-            /// 
-            /// rTB_passwort
-            /// 
+            // 
+            // rTB_passwort
+            // 
             this.rTB_passwort.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_passwort.Location = new System.Drawing.Point(256, 227);
             this.rTB_passwort.Name = "rTB_passwort";
             this.rTB_passwort.Size = new System.Drawing.Size(230, 40);
-            this.rTB_passwort.TabIndex = 2;
+            this.rTB_passwort.TabIndex = 1;
             this.rTB_passwort.Text = "";
-
-            /// 
-            /// rTB_benutzername
-            /// 
+            // 
+            // rTB_benutzername
+            // 
             this.rTB_benutzername.Font = new System.Drawing.Font("Arial", 14.25F);
             this.rTB_benutzername.Location = new System.Drawing.Point(256, 181);
             this.rTB_benutzername.Name = "rTB_benutzername";
             this.rTB_benutzername.Size = new System.Drawing.Size(230, 40);
-            this.rTB_benutzername.TabIndex = 3;
+            this.rTB_benutzername.TabIndex = 0;
             this.rTB_benutzername.Text = "";
-
-            /// 
-            /// lbl_reg_benutzername
-            /// 
+            // 
+            // lbl_reg_benutzername
+            // 
             this.lbl_reg_benutzername.AutoSize = true;
             this.lbl_reg_benutzername.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_reg_benutzername.Location = new System.Drawing.Point(36, 198);
@@ -91,10 +86,9 @@ namespace WindowsFormsApp1
             this.lbl_reg_benutzername.Size = new System.Drawing.Size(135, 23);
             this.lbl_reg_benutzername.TabIndex = 4;
             this.lbl_reg_benutzername.Text = "Benutzername";
-
-            /// 
-            /// lbl_reg_passwort
-            /// 
+            // 
+            // lbl_reg_passwort
+            // 
             this.lbl_reg_passwort.AutoSize = true;
             this.lbl_reg_passwort.Font = new System.Drawing.Font("Arial", 15F);
             this.lbl_reg_passwort.Location = new System.Drawing.Point(36, 244);
@@ -102,10 +96,9 @@ namespace WindowsFormsApp1
             this.lbl_reg_passwort.Size = new System.Drawing.Size(93, 23);
             this.lbl_reg_passwort.TabIndex = 5;
             this.lbl_reg_passwort.Text = "Passwort";
-
-            /// 
-            /// lbl_reg_passwort_bestaetigen
-            /// 
+            // 
+            // lbl_reg_passwort_bestaetigen
+            // 
             this.lbl_reg_passwort_bestaetigen.AutoSize = true;
             this.lbl_reg_passwort_bestaetigen.Font = new System.Drawing.Font("Arial", 15F);
             this.lbl_reg_passwort_bestaetigen.Location = new System.Drawing.Point(36, 290);
@@ -113,35 +106,32 @@ namespace WindowsFormsApp1
             this.lbl_reg_passwort_bestaetigen.Size = new System.Drawing.Size(201, 23);
             this.lbl_reg_passwort_bestaetigen.TabIndex = 6;
             this.lbl_reg_passwort_bestaetigen.Text = "Passwort bestaetigen";
-
-            /// 
-            /// btn_reg_senden
-            /// 
+            // 
+            // btn_reg_senden
+            // 
             this.btn_reg_senden.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.btn_reg_senden.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btn_reg_senden.Location = new System.Drawing.Point(40, 357);
             this.btn_reg_senden.Name = "btn_reg_senden";
             this.btn_reg_senden.Size = new System.Drawing.Size(100, 30);
-            this.btn_reg_senden.TabIndex = 7;
+            this.btn_reg_senden.TabIndex = 3;
             this.btn_reg_senden.Text = "Senden";
             this.btn_reg_senden.UseVisualStyleBackColor = true;
             this.btn_reg_senden.Click += new System.EventHandler(this.Btn_reg_send_Click);
-
-            /// 
-            /// btn_reg_schließen
-            /// 
+            // 
+            // btn_reg_schließen
+            // 
             this.btn_reg_schließen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_reg_schließen.Location = new System.Drawing.Point(386, 357);
             this.btn_reg_schließen.Name = "btn_reg_schließen";
             this.btn_reg_schließen.Size = new System.Drawing.Size(100, 30);
-            this.btn_reg_schließen.TabIndex = 8;
+            this.btn_reg_schließen.TabIndex = 4;
             this.btn_reg_schließen.Text = "Schließen";
             this.btn_reg_schließen.UseVisualStyleBackColor = true;
             this.btn_reg_schließen.Click += new System.EventHandler(this.Btn_reg_quit_Click);
-
-            /// 
-            /// Wdw_registrierung
-            /// 
+            // 
+            // Wdw_registrierung
+            // 
             this.AccessibleName = "";
             this.ClientSize = new System.Drawing.Size(534, 436);
             this.Controls.Add(this.btn_reg_schließen);
@@ -157,6 +147,7 @@ namespace WindowsFormsApp1
             this.Text = "Registrierung";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private void Btn_reg_send_Click(object sender, EventArgs e)
