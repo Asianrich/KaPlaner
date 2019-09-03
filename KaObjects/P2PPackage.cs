@@ -46,6 +46,16 @@ namespace KaObjects
         /// </summary>
         [XmlElement]
         public KaEvent Invite;
+        /// <summary>
+        /// Dient der Informationsvermittlung im Fehlerfall
+        /// </summary>
+        [XmlElement]
+        public string ErrorMsg;
+        /// <summary>
+        /// Weiterleitung von Excpetions
+        /// </summary>
+        [XmlElement]
+        public Exception Exception;
 
         public string GetUsername()
         {

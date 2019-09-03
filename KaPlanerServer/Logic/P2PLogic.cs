@@ -57,33 +57,28 @@ namespace KaPlanerServer.Logic
                     if (package != null)
                     {
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
-                        switch (package.p2p.P2PAnswer)
+                        if (package.p2p.P2PAnswer == P2PAnswer.Error)
+                            Console.WriteLine(package.p2p.ErrorMsg + package.p2p.Exception.Message);
+
+                        Package registerPackage = new Package
                         {
-                            default:
-                                Package registerPackage = new Package
-                                {
-                                    p2p = new P2PPackage
-                                    {
-                                        P2Prequest = P2PRequest.RegisterServer
-                                    },
-                                    //sourceServer = ServerConfig.host.ToString()
-                                };
-                                registerPackage.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
-                                registerPackage = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
-                                if (package != null)
-                                {
-                                    if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
-                                    {
-                                        ServerConfig.neighbours.Add(IPAddress.Parse(package.p2p.lastIP));
-                                        Console.WriteLine(ServerLogic.RegisterSuccess);
-                                    }
-                                    else
-                                        Console.WriteLine(ServerLogic.RegisterFail);
-                                }
-                                break;
-                            /*default:
-                                Console.WriteLine("No Success.");
-                                break;*/
+                            p2p = new P2PPackage
+                            {
+                                P2Prequest = P2PRequest.RegisterServer
+                            },
+                            sourceServer = ServerConfig.host.ToString()
+                        };
+                        registerPackage.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
+                        registerPackage = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
+                        if (package != null)
+                        {
+                            if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
+                            {
+                                ServerConfig.neighbours.Add(IPAddress.Parse(package.p2p.lastIP));
+                                Console.WriteLine(ServerLogic.RegisterSuccess);
+                            }
+                            else
+                                Console.WriteLine(ServerLogic.RegisterFail);
                         }
                     }
                 }
@@ -127,7 +122,11 @@ namespace KaPlanerServer.Logic
                             //Comparing answers
                             foreach (P2PPackage p in returnList)
                             {
-                                if (package.anzConn >= p.anzConn)
+                                if (p.P2PAnswer == P2PAnswer.Error)
+                                {
+                                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + p.Exception.ToString();
+                                    package.Exception = p.Exception;
+                                } else if (package.anzConn >= p.anzConn)
                                 {
                                     package.anzConn = p.anzConn;
                                     package.lastIP = p.lastIP;
@@ -175,7 +174,14 @@ namespace KaPlanerServer.Logic
                             //Comparing answers
                             foreach (P2PPackage p in returnList)
                             {
-                                if (package.anzUser >= p.anzUser)
+                                if (p.P2PAnswer == P2PAnswer.Error)
+                                {
+                                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + p.Exception.ToString();
+                                    package.Exception = p.Exception;
+                                    package.P2PAnswer = P2PAnswer.Error;
+                                    return package;
+                                }
+                                else if (package.anzUser >= p.anzUser)
                                 {
                                     package.anzUser = p.anzUser;
                                     package.lastIP = p.lastIP;
@@ -250,6 +256,8 @@ namespace KaPlanerServer.Logic
                 {
                     Console.WriteLine(ex.Message);
                     package.P2PAnswer = P2PAnswer.Error;
+                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + ex.ToString();
+                    package.Exception = ex;
                     //throw;
                 }
 
