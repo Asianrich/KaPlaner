@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using KaObjects.Storage;
 using KaPlaner.Networking;
@@ -13,7 +14,7 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        // Connection String muss noch angepasst werden
+        // TO CHANGE:  Update auf neue Config!
         static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
         readonly IDatabase database = new Database(connectionString);
         readonly IClientConnection clientConnection = new ClientConnection();
@@ -21,6 +22,7 @@ namespace KaPlaner.Logic
 
         public List<KaEvent> eventList = new List<KaEvent>();
         public List<KaEvent> inviteList = new List<KaEvent>();
+        private Dictionary<User, IPAddress> UserCache = new Dictionary<User, IPAddress>();
 
         public List<KaEvent> GetInvites()
         {
@@ -108,31 +110,32 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public Request LoginRemote(User user)
         {
+            bool updateUserCache = false;
             currentUser = user;
 
             Package returnPackage;
             Package loginPackage = new Package(Request.Login, currentUser);
 
-
-            try
+            //Falls der Nutzer im Cache vorhanden, wähle die gespeicherte IP
+            if (UserCache.ContainsKey(user))
             {
-                returnPackage = clientConnection.Start(loginPackage);
-
+                updateUserCache = true;
+                clientConnection.ChangeIP(UserCache[user]);
             }
-            catch (Exception ex)
-            {
-                clientConnection.changeP2P();
-                returnPackage = clientConnection.Start(loginPackage);
+            else if (user.serverID == 0)
+                clientConnection.ChangeP2P();
 
-                if (returnPackage == null)
-                {
-                    throw ex;
-                }
-            }
+            returnPackage = clientConnection.Start(loginPackage);
+            if (returnPackage == null)
+                throw new Exception("Client login failed.");
 
             if (returnPackage.request == Request.ChangeServer)
             {
                 clientConnection.ChangeIP(returnPackage.sourceServer);
+                if (updateUserCache)
+                    UserCache.Remove(user);
+                //Füge Nutzer dem Cache hinzu
+                UserCache.Add(user, clientConnection.GetIPAddress());
                 loginPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(loginPackage);
             }
@@ -185,12 +188,15 @@ namespace KaPlaner.Logic
         /// <returns></returns>
         public Request RegisterRemote(User user, string passwordConfirm)
         {
+            if (UserCache.ContainsKey(user))
+                return Request.UserExistent;
+
             Package returnPackage;
             Package registerPackage = new Package(user, passwordConfirm)
             {
                 serverSwitched = false
             };
-            //clientConnection.ChangeIP("192.168.0.3"); // für Root und so muss mans ändern
+
             returnPackage = clientConnection.Start(registerPackage);
 
             if (returnPackage.request == Request.ChangeServer)
@@ -199,6 +205,9 @@ namespace KaPlaner.Logic
                 registerPackage.serverSwitched = true;
                 returnPackage = clientConnection.Start(registerPackage);
                 currentUser = returnPackage.user;
+
+                //Save currentUser in Cache
+                UserCache.Add(currentUser, clientConnection.GetIPAddress());
             }
 
             return returnPackage.request;

@@ -15,11 +15,10 @@ namespace KaPlanerServer.Logic
         /// <param name="isWellKnown"></param>
         public static void P2PSettings(bool isWellKnown)
         {
-            //Durch Jans Parser, Wellknows rausholen und dann die auf Data.ServerConfig.ListofWellKnown eintragen
             if (isWellKnown)
             {
                 //Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
-                foreach (IPAddress ipAddress in ServerConfig.ListofWellKnown)
+                foreach (IPAddress ipAddress in KnownServers.ListofWellKnownPeers)
                 {
                     if (ipAddress.ToString() != ServerConfig.host.ToString())
                     {
@@ -52,7 +51,7 @@ namespace KaPlanerServer.Logic
                         sourceServer = ServerConfig.host.ToString()
                     };
                     package.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
-                    package = ServerLogic.Send(package, ServerConfig.ListofWellKnown[0]);//muss noch randomized werden!!!
+                    package = ServerLogic.Send(package, KnownServers.GetRandomWellKnownPeer());
 
                     if (package != null)
                     {

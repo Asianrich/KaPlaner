@@ -206,7 +206,7 @@ namespace KaPlanerServer.Logic
                                 //Sende Teil
                                 Package sendPackage = new Package(p2p);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+                                recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
 
                                 if (recievePackage != null)
                                 {
@@ -270,7 +270,7 @@ namespace KaPlanerServer.Logic
                                 //Sende Teil
                                 Package sendPackage = new Package(hierarchie);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.root);
+                                recievePackage = Send(sendPackage, KnownServers.Root);
 
                                 if (recievePackage != null)
                                 {
@@ -348,7 +348,7 @@ namespace KaPlanerServer.Logic
                                 //Sende Teil
                                 Package sendPackage = new Package(p2p);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+                                recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
 
                                 if(recievePackage != null)
                                 {
@@ -406,7 +406,7 @@ namespace KaPlanerServer.Logic
                                 //Sende Teil
                                 Package sendPackage = new Package(hierarchie);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.root);
+                                recievePackage = Send(sendPackage, KnownServers.Root);
                                 if (recievePackage != null)
                                 {
                                     switch (recievePackage.hierarchie.HierarchieAnswer)
@@ -543,7 +543,7 @@ namespace KaPlanerServer.Logic
                                 //Sende Teil
                                 Package sendPackage = new Package(p2p);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+                                recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
 
                                 if (recievePackage != null)
                                 {
@@ -619,7 +619,7 @@ namespace KaPlanerServer.Logic
                                 //SendeTeil
                                 Package sendPackage = new Package(hierarchie);
                                 Package recievePackage;
-                                recievePackage = Send(sendPackage, ServerConfig.root);
+                                recievePackage = Send(sendPackage, KnownServers.Root);
 
                                 if (recievePackage != null)
                                 {
@@ -736,7 +736,7 @@ namespace KaPlanerServer.Logic
                 //Sende Teil
                 Package sendPackage = new Package(p2p);
                 Package recievePackage;
-                recievePackage = Send(sendPackage, ServerConfig.GetRandomEntry<IPAddress>(ServerConfig.ListofWellKnown));
+                recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
 
                 if (recievePackage != null)
                 {

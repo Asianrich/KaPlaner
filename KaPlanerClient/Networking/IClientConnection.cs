@@ -6,6 +6,8 @@ namespace KaPlaner.Networking
     {
         Package Start(Package state);
         void ChangeIP(string ipAddress);
-        void changeP2P();
+        void ChangeIP(System.Net.IPAddress iPAddress);
+        void ChangeP2P();
+        System.Net.IPAddress GetIPAddress();
     }
 }

@@ -61,7 +61,7 @@ namespace KaPlanerServer.Logic
             Console.WriteLine("HierarchieSettings");
             if (isRoot)
             {
-                ServerConfig.root = ServerConfig.host;
+                KnownServers.Root = ServerConfig.host; // <- Sollte nur noch in KnownServers geändert werden
                 ServerConfig.serverID = 1;
 
             }
@@ -96,7 +96,7 @@ namespace KaPlanerServer.Logic
                     {
                         Console.WriteLine("Packet ist angekommen");
                         //Logic
-                        ServerConfig.root = address;
+                        KnownServers.Root = address;
                         Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
 
                         //Zu wem muss ich mich verbinden? bzw. Registrieren

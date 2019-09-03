@@ -30,26 +30,19 @@ namespace KaPlaner.Networking
         private static readonly ManualResetEvent receiveDone = new ManualResetEvent(false);
 
         private static string response;
-        IPAddress ip;
+        private IPAddress ip;
 
-        IPAddress root = IPAddress.Parse("192.168.0.42");
-        //P2P
-        public static List<IPAddress> ListofWellKnown = new List<IPAddress>()
-        {//Vorübergehend Hardcoded!!!!!!
-            IPAddress.Parse("192.168.0.3"),
-            //IPAddress.Parse("192.168.0.4"),
-            //IPAddress.Parse("192.168.0.10")
-        };
+        public IPAddress GetIPAddress() { return ip; }
 
         public ClientConnection()
         {
             //Anfangshost oder sonst wer
-            ip = root;
+            ip = KnownServers.Root;
         }
 
-        public void changeP2P()
+        public void ChangeP2P()
         {
-            ip = ListofWellKnown[0];
+            ip = KnownServers.GetRandomWellKnownPeer();
         }
         /// <summary>
         /// Diese Methode versucht eine Socketconnection aufzubauen.
@@ -275,6 +268,15 @@ namespace KaPlaner.Networking
         public void ChangeIP(string ipAddress)
         {
             ip = IPAddress.Parse(ipAddress);
+        }
+
+        /// <summary>
+        /// ändert die Ip-Adresse
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        public void ChangeIP(IPAddress ipAddress)
+        {
+            ip = ipAddress;
         }
 
         static readonly object _send = new object();

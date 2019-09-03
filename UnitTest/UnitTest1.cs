@@ -250,7 +250,7 @@ namespace UnitTest
         [TestMethod]
         public void CheckAppConfig()
         {
-            int testID = 1;
+            //int testID = 1;
             ConnectionStringSettings connectionStringTEST = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
             SqlConnection con_AppConf = new SqlConnection(connectionStringTEST.ConnectionString);
 

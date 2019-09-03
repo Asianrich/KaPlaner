@@ -49,8 +49,7 @@ namespace KaPlaner.GUI
         {
             string[] row = new string[5];
             LV_dates.Items.Clear();
-            //indexes.Clear();
-            int i = 0;
+
             foreach (KaEvent ka in ListEvents)
             {
 

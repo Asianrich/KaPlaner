@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Remoting;
 using KaObjects;
 using System.Xml.Serialization;
 using System.Xml;
@@ -34,12 +30,6 @@ namespace KaPlaner.Networking
 
         private static string response;
         private IPAddress iPAddress;
-
-        public ClientConnection()
-        {
-            //Anfangshost oder sonst wer
-            iPAddress = IPAddress.Parse("192.168.0.42");
-        }
 
         public ClientConnection(IPAddress iPAddress)
         {
@@ -295,7 +285,7 @@ namespace KaPlaner.Networking
                     Disconnect(client);
                     return recObject;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     if (client != null)
                     {
