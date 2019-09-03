@@ -365,6 +365,10 @@ namespace KaPlanerServer.Logic
                                         case P2PAnswer.UserExistent:
                                             writeResult(Request.UserExistent, UserExistent);
                                             break;
+                                        case P2PAnswer.Error:
+                                            Console.WriteLine(recievePackage.p2p.ErrorMsg + "\n" + recievePackage.p2p.Exception.Message);
+                                            writeResult(Request.Error, Error);
+                                            break;
                                         default:
                                             package.sourceServer = hierarchie.destinationAdress;
                                             writeResult(Request.ChangeServer, ChangeServer);
