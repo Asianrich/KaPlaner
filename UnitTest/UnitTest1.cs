@@ -137,11 +137,11 @@ namespace UnitTest
 
 
         [TestMethod]
-        public void CheckGetServer()
+        public void CheckDelete_date()
         {
-            int testSeverID = 2;
+            int testID = 1;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            testdb.GetServer(testSeverID);
+            testdb.Delete_date(testID);
         }
 
 

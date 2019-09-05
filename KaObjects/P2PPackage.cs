@@ -54,8 +54,8 @@ namespace KaObjects
         /// <summary>
         /// Weiterleitung von Excpetions
         /// </summary>
-        [XmlElement]
-        public Exception Exception;
+        //[XmlElement]
+        //public Exception Exception;
 
         public string GetUsername()
         {
