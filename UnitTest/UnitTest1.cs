@@ -240,14 +240,6 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckDelete_date()
-        {
-            int testID = 1;
-            Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            testdb.Delete_date(testID);
-        }
-
-        [TestMethod]
         public void CheckAppConfig()
         {
             //int testID = 1;

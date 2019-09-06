@@ -36,7 +36,7 @@ namespace KaPlanerServer.Logic
         static readonly string ChangeServer = "Switching Server...";
 
         //Connection String ... in VS config auslagern?
-        static ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
+        static readonly ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
         static readonly string connectionString = AppConnectionString.ConnectionString.ToString();
 
         //ALT: static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
@@ -366,7 +366,7 @@ namespace KaPlanerServer.Logic
                                             writeResult(Request.UserExistent, UserExistent);
                                             break;
                                         case P2PAnswer.Error:
-                                            Console.WriteLine(recievePackage.p2p.ErrorMsg + "\n" + recievePackage.p2p.Exception.Message);
+                                            Console.WriteLine(recievePackage.p2p.ErrorMsg);
                                             writeResult(Request.Error, Error);
                                             break;
                                         default:

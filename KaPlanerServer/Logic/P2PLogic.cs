@@ -9,6 +9,8 @@ namespace KaPlanerServer.Logic
 {
     public static class P2PLogic
     {
+        static readonly string ErrorOrigin = "Origin of Error: ";
+
         /// <summary>
         /// Settings für P2PServer. Zugehöriigkeit WellKnownPeers usw.
         /// </summary>
@@ -57,7 +59,7 @@ namespace KaPlanerServer.Logic
                     {
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
                         if (package.p2p.P2PAnswer == P2PAnswer.Error)
-                            Console.WriteLine(package.p2p.ErrorMsg + package.p2p.Exception.Message);
+                            Console.WriteLine(package.p2p.ErrorMsg);
 
                         Package registerPackage = new Package
                         {
@@ -123,8 +125,8 @@ namespace KaPlanerServer.Logic
                             {
                                 if (p.P2PAnswer == P2PAnswer.Error)
                                 {
-                                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + p.Exception.ToString();
-                                    package.Exception = p.Exception;
+                                    package.ErrorMsg = GenerateErrorString();
+                                    /*package.Exception = p.Exception;*/
                                 } else if (package.anzConn >= p.anzConn)
                                 {
                                     package.anzConn = p.anzConn;
@@ -175,8 +177,8 @@ namespace KaPlanerServer.Logic
                             {
                                 if (p.P2PAnswer == P2PAnswer.Error)
                                 {
-                                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + p.Exception.ToString();
-                                    package.Exception = p.Exception;
+                                    package.ErrorMsg = p.ErrorMsg;
+                                    /*package.Exception = p.Exception;*/
                                     package.P2PAnswer = P2PAnswer.Error;
                                     return package;
                                 }
@@ -255,8 +257,8 @@ namespace KaPlanerServer.Logic
                 {
                     Console.WriteLine(ex.Message);
                     package.P2PAnswer = P2PAnswer.Error;
-                    package.ErrorMsg = ServerConfig.host.ToString() + "\n" + ex.ToString();
-                    package.Exception = ex;
+                    package.ErrorMsg = GenerateErrorString(ex);
+                    /*package.Exception = ex;*/
                     //throw;
                 }
 
@@ -288,6 +290,15 @@ namespace KaPlanerServer.Logic
 
                 return returnList;
             }
+        }
+
+        static string GenerateErrorString()
+        {
+            return ErrorOrigin + ServerConfig.host.ToString();
+        }
+        static string GenerateErrorString(Exception exception)
+        {
+            return ErrorOrigin + ServerConfig.host.ToString() + exception.ToString();
         }
     }
 }
