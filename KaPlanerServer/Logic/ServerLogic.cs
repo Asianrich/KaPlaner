@@ -189,6 +189,7 @@ namespace KaPlanerServer.Logic
                                     case HierarchieAnswer.Error:
                                         writeResult(Request.Error, Error);
                                         break;
+
                                     default:
                                         writeResult(Request.Failure, Error);
                                         break;
@@ -288,6 +289,7 @@ namespace KaPlanerServer.Logic
                                         case HierarchieAnswer.Error:
                                             writeResult(Request.Error, Error);
                                             break;
+
                                         default:
                                             writeResult(Request.Failure, Error);
                                             break;
@@ -361,14 +363,17 @@ namespace KaPlanerServer.Logic
                                                 package.sourceServer = recievePackage.p2p.lastIP;
                                             writeResult(Request.ChangeServer, ChangeServer);
                                             break;
+
                                         ///user already exists
                                         case P2PAnswer.UserExistent:
                                             writeResult(Request.UserExistent, UserExistent);
                                             break;
+
                                         case P2PAnswer.Error:
                                             Console.WriteLine(recievePackage.p2p.ErrorMsg);
                                             writeResult(Request.Error, Error);
                                             break;
+
                                         default:
                                             package.sourceServer = hierarchie.destinationAdress;
                                             writeResult(Request.ChangeServer, ChangeServer);
@@ -552,9 +557,11 @@ namespace KaPlanerServer.Logic
                                         case P2PAnswer.Success:
                                             writeResult(Request.Success, InviteSuccess);
                                             break;
+
                                         case P2PAnswer.Failure:
                                             writeResult(Request.Failure, InviteFail);
                                             break;
+
                                         default:
                                             writeResult(Request.Failure, InviteFail);
                                             break;
@@ -595,9 +602,11 @@ namespace KaPlanerServer.Logic
                                         case P2PAnswer.Success:
                                             writeResult(Request.Success, InviteSuccess);
                                             break;
+
                                         case P2PAnswer.Failure:
                                             writeResult(Request.Failure, InviteFail);
                                             break;
+
                                         default:
                                             writeResult(Request.Error, Error);
                                             break;
@@ -628,9 +637,11 @@ namespace KaPlanerServer.Logic
                                         case HierarchieAnswer.Success:
                                             writeResult(Request.Success, InviteSuccess);
                                             break;
+
                                         case HierarchieAnswer.Failure:
                                             writeResult(Request.Failure, InviteFail);
                                             break;
+
                                         default:
                                             writeResult(Request.Failure, InviteFail);
                                             break;
@@ -745,9 +756,11 @@ namespace KaPlanerServer.Logic
                         case P2PAnswer.Success:
                             writeResult(Request.Success, InviteSuccess);
                             break;
+
                         case P2PAnswer.Failure:
                             writeResult(Request.Failure, InviteFail);
                             break;
+
                         default:
                             writeResult(Request.Failure, InviteFail);
                             break;
