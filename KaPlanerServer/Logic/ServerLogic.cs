@@ -15,9 +15,9 @@ namespace KaPlanerServer.Logic
         static readonly string LoginRequest = "Login Requested.";
         static readonly string LoginSuccess = "Login Successful.";
         static readonly string LoginFail = "Login Failed.";
-        public static readonly string RegisterRequest = "Registry Requested.";
-        public static readonly string RegisterSuccess = "Registry Successful.";
-        public static readonly string RegisterFail = "Registry Failed.";
+        static readonly string RegisterRequest = "Registry Requested.";
+        static readonly string RegisterSuccess = "Registry Successful.";
+        static readonly string RegisterFail = "Registry Failed.";
         static readonly string UserExistent = "User exists already!";
         static readonly string SaveRequest = "Save Requested.";
         static readonly string SaveSuccess = "Save Success.";

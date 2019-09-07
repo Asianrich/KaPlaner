@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using KaObjects.Properties;
 
 namespace KaObjects
 {
     public static class KnownServers
     {
         //Hierarchie
-        public static IPAddress Root = IPAddress.Parse("192.168.0.42"); // = new IPAddress(); <--- richtige Root-Adresse eintragen
+        public static IPAddress Root = IPAddress.Parse(Settings.Default.Root);
 
         //P2P
         public static List<IPAddress> ListofWellKnownPeers = new List<IPAddress>()
-        {//Vorübergehend Hardcoded!!!!!!
-            IPAddress.Parse("192.168.0.3"),
-            //IPAddress.Parse("192.168.0.4"),
-            //IPAddress.Parse("192.168.0.10")
+        {
+            IPAddress.Parse(Settings.Default.WellKnownPeer1),
+            //IPAddress.Parse(Settings.Default.WellKnownPeer2),
+            //IPAddress.Parse(Settings.Default.WellKnownPeer3)
         };
 
         /// <summary>

@@ -10,13 +10,70 @@ namespace KaPlanerServer.Logic
     public static class P2PLogic
     {
         static readonly string ErrorOrigin = "Origin of Error: ";
+        static readonly string NewServerFail = "NewServer Request failed.";
+        static readonly string RegisterServerFail = "RegisterServer Request failed.";
+        static readonly string RegisterServerSuccess = "RegisterServer Request succeeded.";
+        static readonly string SendError = "Send returned null.";
+        static readonly string SetupFailed = "All setup attempts to the network failed. Please restart server.";
+        static readonly string SetupIncomplete = "Setup finished incomplete. Connection to the network established with some route.";
+        static readonly string SetupComplete = "Setup successfully finished. Connection to the network established.";
 
+        /// <summary>
+        /// This method enables us to review WellKnown IP addresses and change them if need be.
+        /// </summary>
+        private static bool CheckWellKnownPeers()
+        {
+            Console.WriteLine("Are these well known peers correct? [Y/N]");
+            Console.WriteLine(KnownServers.ListofWellKnownPeers);
+            char answer;
+            do
+            {
+                answer = (char)Console.Read();
+            } while (!"YyJjNn".Contains(answer));
+            if ("Nn".Contains(answer))
+            {
+                Console.WriteLine("Which address needs changing?");
+                int i = 0;
+                foreach (IPAddress iPAddress in KnownServers.ListofWellKnownPeers)
+                {
+                    Console.WriteLine(++i + iPAddress.ToString());
+                }
+
+                while (!ChangeWellKnownPeer(Console.Read()))
+                    Console.WriteLine("Please choose a valid number.");
+            }
+            else
+                return false;
+            return true;
+
+            bool ChangeWellKnownPeer(int i)
+            {
+                if (i < 1 || i > KnownServers.ListofWellKnownPeers.Count)
+                    return false;
+
+                IPAddress newIP;
+
+                do
+                {
+                    Console.WriteLine("Please enter a valid IPv4 address.");
+                } while (!IPAddress.TryParse(Console.ReadLine(), out newIP));
+
+                KnownServers.ListofWellKnownPeers.RemoveAt(i - 1);
+                KnownServers.ListofWellKnownPeers.Insert(i - 1, newIP);
+
+                return true;
+            }
+        }
+        
+        
         /// <summary>
         /// Settings für P2PServer. Zugehöriigkeit WellKnownPeers usw.
         /// </summary>
         /// <param name="isWellKnown"></param>
         public static void P2PSettings(bool isWellKnown)
         {
+            while (CheckWellKnownPeers())
+
             if (isWellKnown)
             {
                 //Data.ServerConfig.ListofWellKnown.Add(Data.ServerConfig.host);
@@ -41,7 +98,7 @@ namespace KaPlanerServer.Logic
                 }
             }
             else
-            {
+            {//This only functions if we have two or more Well Known Peers
                 for (int i = 2; i > 0; i--) //'i' represents number of connections to create.
                 {
                     Package package = new Package
@@ -58,32 +115,65 @@ namespace KaPlanerServer.Logic
                     if (package != null)
                     {
                         //2 Server mit denen ich mich verbinde und bei denen Registriere
-                        if (package.p2p.P2PAnswer == P2PAnswer.Error)
-                            Console.WriteLine(package.p2p.ErrorMsg);
+                        switch (package.p2p.P2PAnswer)
+                        {
+                            case P2PAnswer.Error:
+                                Console.WriteLine(package.p2p.ErrorMsg);
+                                break;
 
-                        Package registerPackage = new Package
-                        {
-                            p2p = new P2PPackage
-                            {
-                                P2Prequest = P2PRequest.RegisterServer
-                            },
-                            sourceServer = ServerConfig.host.ToString()
-                        };
-                        registerPackage.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
-                        registerPackage = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
-                        if (package != null)
-                        {
-                            if (registerPackage.p2p.P2PAnswer == P2PAnswer.Success)
-                            {
-                                ServerConfig.neighbours.Add(IPAddress.Parse(package.p2p.lastIP));
-                                Console.WriteLine(ServerLogic.RegisterSuccess);
-                            }
-                            else
-                                Console.WriteLine(ServerLogic.RegisterFail);
+                            case P2PAnswer.Failure:
+                                Console.WriteLine(NewServerFail);
+                                break;
+
+                            default:
+                                Package registerPackage = new Package
+                                {
+                                    p2p = new P2PPackage
+                                    {
+                                        P2Prequest = P2PRequest.RegisterServer
+                                    },
+                                    sourceServer = ServerConfig.host.ToString()
+                                };
+                                registerPackage.p2p.SetOriginIPAddress(ServerConfig.host.ToString());
+                                registerPackage = ServerLogic.Send(registerPackage, IPAddress.Parse(package.p2p.lastIP));
+
+                                if (registerPackage != null)
+                                {
+                                    switch (registerPackage.p2p.P2PAnswer)
+                                    {
+                                        case P2PAnswer.Success:
+                                            ServerConfig.neighbours.Add(IPAddress.Parse(package.p2p.lastIP));
+                                            Console.WriteLine(RegisterServerSuccess);
+                                            break;
+
+                                        case P2PAnswer.Visited:
+                                            break;
+
+                                        default:
+                                            Console.WriteLine(RegisterServerFail);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine(SendError);
+                                }
+                                break;
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine(SendError);
                     }
                 }
             }
+
+            if (ServerConfig.neighbours.Count == 0)
+                Console.WriteLine(SetupFailed);
+            else if (ServerConfig.neighbours.Count < 2)
+                Console.WriteLine(SetupIncomplete);
+            else
+                Console.WriteLine(SetupComplete);
         }
 
         /// <summary>
@@ -102,15 +192,19 @@ namespace KaPlanerServer.Logic
                     switch (package.P2Prequest)
                     {
                         case P2PRequest.NewServer:
-                            //1. Anzahl Verbindungen (s. neighbours)
-                            if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > ServerConfig.neighbours.Count)
-                            {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
-                                package.anzConn = ServerConfig.neighbours.Count;
-                                package.lastIP = ServerConfig.host.ToString();
-                            }
-                            else if (package.anzConn == ServerConfig.neighbours.Count)
+                            //0. Falls ich ihn noch nicht als Nachbarn habe.
+                            if (!ServerConfig.neighbours.Exists(x => x.ToString() == package.GetSource()))
                             {
-                                package.lastIP = ServerConfig.host.ToString();
+                                //1. Anzahl Verbindungen (s. neighbours)
+                                if (package.anzConn == P2PPackage.AnzConnInit || package.anzConn > ServerConfig.neighbours.Count)
+                                {//Wenn das Paket noch nicht angefasst wurde, oder wir ein mind. genausogutes Angebot haben geht es als Antwort zurück.
+                                    package.anzConn = ServerConfig.neighbours.Count;
+                                    package.lastIP = ServerConfig.host.ToString();
+                                }
+                                else if (package.anzConn == ServerConfig.neighbours.Count)
+                                {
+                                    package.lastIP = ServerConfig.host.ToString();
+                                }
                             }
                             //2. Test on TTL
                             if (package.DecrementTTL() == 0)
@@ -144,7 +238,7 @@ namespace KaPlanerServer.Logic
                                 package.P2PAnswer = P2PAnswer.Success;
                             }
                             else
-                                package.P2PAnswer = P2PAnswer.Failure;
+                                package.P2PAnswer = P2PAnswer.Visited;
                             break;
 
                         case P2PRequest.NewUser:
