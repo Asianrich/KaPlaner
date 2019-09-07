@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using KaObjects;
 using KaPlaner.Logic;
-using KaObjects;
+using System;
+using System.Windows.Forms;
 //using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
@@ -155,15 +155,15 @@ namespace WindowsFormsApp1
             try
             {
                 User user = new User(rTB_benutzername.Text, rTB_passwort.Text);
-                switch(clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
+                switch (clientLogic.RegisterRemote(user, rTB_passwort_bestaetigen.Text))
                 {
                     case Request.Success:
                         user = clientLogic.GetUser();
                         MessageBox.Show("Registrierung erfolgreich-Willkommen" + Environment.NewLine + "Es wurde folgendes eingetragen"
                         + Environment.NewLine + "Username: " + user.name
-                        + Environment.NewLine + "Passwort: "+ user.password
-                        + Environment.NewLine +"ServerID: " + user.serverID);
-                    
+                        + Environment.NewLine + "Passwort: " + user.password
+                        + Environment.NewLine + "ServerID: " + user.serverID);
+
                         Form open_calendar = new wdw_calendar(true);
                         open_calendar.Show();
                         Close();

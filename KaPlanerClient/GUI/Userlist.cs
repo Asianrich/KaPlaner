@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using KaObjects;
 
 namespace KaPlaner.GUI
 {
@@ -60,7 +53,7 @@ namespace KaPlaner.GUI
                 TB_add_user.Text = String.Empty;
 
             }
-            
+
         }
 
         private void BTN_delete_user_Click(object sender, EventArgs e)

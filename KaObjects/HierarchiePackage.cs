@@ -3,8 +3,8 @@ using System.Xml.Serialization;
 
 namespace KaObjects
 {
-    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin}
-    public enum HierarchieAnswer { Success, Failure, UserExistent, Error}
+    public enum HierarchieRequest { NewServer, RegisterServer, RegisterUser, Invite, UserLogin }
+    public enum HierarchieAnswer { Success, Failure, UserExistent, Error }
     [Serializable]
     public class HierarchiePackage
     {

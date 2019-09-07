@@ -1,13 +1,11 @@
-﻿using System;
-using System.Net;
-using System.Collections.Generic;
+﻿using KaObjects;
 using KaObjects.Storage;
 using KaPlaner.Networking;
-using KaObjects;
-using System.Windows.Forms;
-
+using System;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Net;
+using System.Windows.Forms;
 
 namespace KaPlaner.Logic
 {

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using KaObjects;
+﻿using KaObjects;
 using KaObjects.Storage;
-using System.Net;
 using KaPlaner.Networking;
-using System.Threading;
 using KaPlanerServer.Data;
-
+using System;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Net;
+using System.Threading;
 
 namespace KaPlanerServer.Logic
 {
@@ -352,7 +350,7 @@ namespace KaPlanerServer.Logic
                                 Package recievePackage;
                                 recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
 
-                                if(recievePackage != null)
+                                if (recievePackage != null)
                                 {
                                     switch (recievePackage.p2p.P2PAnswer)
                                     {
@@ -396,7 +394,7 @@ namespace KaPlanerServer.Logic
                                 p2p = P2PLogic.ResolveP2P(p2p);
 
                                 ///user is already existent
-                                if(p2p.P2PAnswer == P2PAnswer.Visited)
+                                if (p2p.P2PAnswer == P2PAnswer.Visited)
                                 {
                                     writeResult(Request.UserExistent, UserExistent);
                                     break;
@@ -513,7 +511,7 @@ namespace KaPlanerServer.Logic
                                 }
                             }
                             ///member is user in hierarchy topology
-                            else if(member.serverID > 0)
+                            else if (member.serverID > 0)
                             {
                                 HierarchiePackage hierarchie = new HierarchiePackage
                                 {
@@ -736,40 +734,40 @@ namespace KaPlanerServer.Logic
         /// <param name="username"></param>
         /// <param name="kaEvent"></param>
         /// <param name="writeResult">übergebe die Methode writeResult</param>
-        void ConnectP2P(P2PRequest p2pRequest, string username, KaEvent kaEvent, Action<Request,string> writeResult)
+        void ConnectP2P(P2PRequest p2pRequest, string username, KaEvent kaEvent, Action<Request, string> writeResult)
         {
-                //P2P Teil
-                P2PPackage p2p = new P2PPackage(username, kaEvent)
+            //P2P Teil
+            P2PPackage p2p = new P2PPackage(username, kaEvent)
+            {
+                P2Prequest = p2pRequest
+            };
+
+            //Sende Teil
+            Package sendPackage = new Package(p2p);
+            Package recievePackage;
+            recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
+
+            if (recievePackage != null)
+            {
+                switch (recievePackage.p2p.P2PAnswer)
                 {
-                    P2Prequest = p2pRequest
-                };
+                    case P2PAnswer.Success:
+                        writeResult(Request.Success, InviteSuccess);
+                        break;
 
-                //Sende Teil
-                Package sendPackage = new Package(p2p);
-                Package recievePackage;
-                recievePackage = Send(sendPackage, KnownServers.GetRandomWellKnownPeer());
+                    case P2PAnswer.Failure:
+                        writeResult(Request.Failure, InviteFail);
+                        break;
 
-                if (recievePackage != null)
-                {
-                    switch (recievePackage.p2p.P2PAnswer)
-                    {
-                        case P2PAnswer.Success:
-                            writeResult(Request.Success, InviteSuccess);
-                            break;
-
-                        case P2PAnswer.Failure:
-                            writeResult(Request.Failure, InviteFail);
-                            break;
-
-                        default:
-                            writeResult(Request.Failure, InviteFail);
-                            break;
-                    }
+                    default:
+                        writeResult(Request.Failure, InviteFail);
+                        break;
                 }
-                else
-                {
-                    writeResult(Request.Error, Error);
-                }
+            }
+            else
+            {
+                writeResult(Request.Error, Error);
+            }
         }
     }
 }

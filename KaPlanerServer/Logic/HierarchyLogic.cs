@@ -175,7 +175,7 @@ namespace KaPlanerServer.Logic
                         else
                         {
                             // TO FIX: User existiert nicht?
-                        
+
                         }
                     }
                     break;

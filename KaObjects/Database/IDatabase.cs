@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace KaObjects.Storage
@@ -38,7 +35,7 @@ namespace KaObjects.Storage
         int GetServerCount();
 
         //LinkedList<string> GetWellKnownPeers();
-    
+
         void NewServerEntry(string ip, int id);
 
 

@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Windows.Forms;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlTypes;
 
 
 namespace KaObjects.Storage
@@ -90,7 +83,7 @@ namespace KaObjects.Storage
 
                 if (reader_exists.Read())
                 {
-                    MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));               
+                    MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));
                     return false;
                 }
                 else
@@ -138,7 +131,7 @@ namespace KaObjects.Storage
             string exist = String.Format("SELECT TerminID FROM calendar WHERE TerminID = '{0}'", kaEvent.TerminID);
 
             SqlCommand cmd_exist = new SqlCommand(exist, con);
- 
+
 
             /// Liest in der Datenbank nach einem Termin mit einer bestimmten ID aus 
             SqlDataReader exist_reader = cmd_exist.ExecuteReader();
@@ -187,8 +180,8 @@ namespace KaObjects.Storage
                 kaEvent.TerminID = id;
 
                 con.Close();
-            }      
-            
+            }
+
             return; //Können wir überprüfen ob es geklappt hat?
         }
 
@@ -249,7 +242,7 @@ namespace KaObjects.Storage
                     temp.Ende = reader.GetDateTime(5);
                     temp.Beschreibung = reader.GetString(6);
                     temp.owner = new User(reader.GetString(7));
-                    
+
                     Console.WriteLine(temp.Titel);
                     ka.Add(temp);
 
@@ -475,9 +468,9 @@ namespace KaObjects.Storage
             readEventCommand.Dispose();
 
             List<int> id = new List<int>();
-            if(reader.HasRows)
+            if (reader.HasRows)
             {
-                while(reader.Read())
+                while (reader.Read())
                 {
                     id.Add(reader.GetInt32(0));
                 }
@@ -486,7 +479,7 @@ namespace KaObjects.Storage
             reader.Close();
             con.Close();
 
-            foreach(int termin in id)
+            foreach (int termin in id)
             {
                 string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0}", termin);
                 con = new SqlConnection(connectionString);

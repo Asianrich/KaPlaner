@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using KaObjects;
-using KaPlaner.GUI;
-using WindowsFormsApp1;
+﻿using KaObjects;
 using KaPlaner.Logic;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using WindowsFormsApp1;
 namespace KaPlaner.GUI
 {
     public partial class RequestList : Form
@@ -152,7 +145,7 @@ namespace KaPlaner.GUI
                 }
                 else
                 {
-                    
+
                 }
             }
 
@@ -179,7 +172,7 @@ namespace KaPlaner.GUI
                 ListEvents.RemoveAt(index);
                 UpdateEvents();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Etwas ist schief gelaufen");
             }
@@ -194,7 +187,7 @@ namespace KaPlaner.GUI
                 returnValue.Add(ListEvents[index]);
                 ListEvents.RemoveAt(index);
                 UpdateEvents();
-                
+
             }
             catch (Exception)
             {

@@ -1,9 +1,6 @@
-﻿using System;
+﻿using KaObjects;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using KaObjects;
 
 namespace KaPlaner.Logic
 {

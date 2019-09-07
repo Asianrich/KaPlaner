@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.IO;
 
 namespace KaObjects
 {
@@ -20,7 +14,7 @@ namespace KaObjects
         public string Titel { get; set; }
         public string Ort { get; set; }
         public DateTime Beginn { get; set; }
-        public DateTime Ende { get; set; }  
+        public DateTime Ende { get; set; }
         public string Beschreibung { get; set; }
 
         public KaEvent() { }

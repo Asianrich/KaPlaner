@@ -48,7 +48,7 @@ namespace KaObjects
         /// Antwort FUER DEN CLIENT!
         /// </summary>
         public string sourceServer;
-        
+
         public List<KaEvent> kaEvents;
         public List<KaEvent> invites;
         public Package(Request request, User user)

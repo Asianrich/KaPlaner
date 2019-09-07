@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using KaObjects;
-using WindowsFormsApp1;
+﻿using KaObjects;
 using KaPlaner.Logic;
-using System.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using WindowsFormsApp1;
 
 namespace KaPlaner.GUI
 {

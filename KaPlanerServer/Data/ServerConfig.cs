@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 
 namespace KaPlanerServer.Data
 {
-    public enum Structure {P2P, HIERARCHY}
+    public enum Structure { P2P, HIERARCHY }
 
     public static class ServerConfig
-    {      
+    {
         /// <summary>
         /// P2P neighbours
         /// </summary>
@@ -17,7 +16,7 @@ namespace KaPlanerServer.Data
         private static readonly int LIMIT = 10;
 
         public static int serverID = 0; // Standardbelegung (0 verweist auf P2P) 
-        
+
         /// <summary>
         /// Dieser Server
         /// </summary>

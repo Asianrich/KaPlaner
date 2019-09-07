@@ -1,31 +1,20 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using KaPlaner.Networking;
-using KaObjects;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Threading;
-using System.Runtime;
-using System.IO;
-using KaPlaner;
-using KaPlaner.Logic;
-using WindowsFormsApp1;
-using System.Windows.Forms;
-using KaPlaner.GUI;
+﻿using KaObjects;
 using KaObjects.Storage;
-using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace UnitTest
 {
     [TestClass]
     public class UnitTest1
     {
-         [TestMethod]
+        [TestMethod]
         public void Writer()
         {
             User user = new User("Man", "123");
@@ -60,7 +49,7 @@ namespace UnitTest
             Assert.IsTrue(true);
         }
 
-        
+
 
         [TestMethod]
         public void ListViewTest()

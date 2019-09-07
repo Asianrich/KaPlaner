@@ -1,9 +1,9 @@
-﻿using System;
+﻿using KaObjects;
+using KaPlanerServer.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using KaObjects;
-using KaPlanerServer.Data;
 
 namespace KaPlanerServer.Logic
 {
@@ -127,7 +127,8 @@ namespace KaPlanerServer.Logic
                                 {
                                     package.ErrorMsg = GenerateErrorString();
                                     /*package.Exception = p.Exception;*/
-                                } else if (package.anzConn >= p.anzConn)
+                                }
+                                else if (package.anzConn >= p.anzConn)
                                 {
                                     package.anzConn = p.anzConn;
                                     package.lastIP = p.lastIP;

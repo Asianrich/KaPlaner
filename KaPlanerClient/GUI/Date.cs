@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using KaObjects;
+﻿using KaObjects;
 using KaPlaner.Logic;
+using System;
+using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
@@ -143,17 +136,17 @@ namespace WindowsFormsApp1
         {
             TextBox box = (TextBox)sender;
 
-            if(box.Text == String.Empty)
+            if (box.Text == String.Empty)
             {
                 box.Text = "0";
             }
-            if(Int32.TryParse(box.Text, out int result))
+            if (Int32.TryParse(box.Text, out int result))
             {
-                if(result > 60)
+                if (result > 60)
                 {
                     box.Text = "60";
                 }
-                else if(result < 0)
+                else if (result < 0)
                 {
                     box.Text = "0";
                 }
@@ -274,28 +267,28 @@ namespace WindowsFormsApp1
             minute = Convert.ToInt32(TB_minute_end.Text);
             returnValue.Ende = new DateTime(year, month, day, hour, minute, sec);
 
- /*
-            if (!CB_none.Checked)
-            {
-                year = Convert.ToInt32(TB_repeat_until_year.Text);
-                month = Convert.ToInt32(TB_repeat_until_month.Text);
-                day = Convert.ToInt32(TB_repeat_until_day.Text);
-                minute = 0;
-                returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
-            }
-            else
-            {
-                returnValue.Wiederholen_bis = new DateTime(2019,1,1,1,1,1); //Another cheezy trick just to avoid sql errors
-            }
-*/
+            /*
+                       if (!CB_none.Checked)
+                       {
+                           year = Convert.ToInt32(TB_repeat_until_year.Text);
+                           month = Convert.ToInt32(TB_repeat_until_month.Text);
+                           day = Convert.ToInt32(TB_repeat_until_day.Text);
+                           minute = 0;
+                           returnValue.Wiederholen_bis = new DateTime(year, month, day, hour, minute, sec);
+                       }
+                       else
+                       {
+                           returnValue.Wiederholen_bis = new DateTime(2019,1,1,1,1,1); //Another cheezy trick just to avoid sql errors
+                       }
+           */
         }
 
         //NUD_Priority
-/*        private void NUD_Priority_ValueChanged(object sender, EventArgs e)
-        {
-            returnValue.Prioritaet = Decimal.ToInt32(NUD_Priority.Value);
-        }
-*/
+        /*        private void NUD_Priority_ValueChanged(object sender, EventArgs e)
+                {
+                    returnValue.Prioritaet = Decimal.ToInt32(NUD_Priority.Value);
+                }
+        */
 
         //RTB_description
         private void RTB_description_TextChanged(object sender, EventArgs e)
@@ -311,347 +304,347 @@ namespace WindowsFormsApp1
         /// </summary>
 
         //none
-//        private void CB_none_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_none.Checked == true)
-//            {
-//                pan_frequency.Enabled = false;
-//                pan_constraint.Enabled = false;
-//                pan_weekday.Enabled = false;
-//                pan_which_day.Enabled = false;
-//                lbl_dates_with_actions.Enabled = false;
-//                MC_date_summery.Enabled = false;
+        //        private void CB_none_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_none.Checked == true)
+        //            {
+        //                pan_frequency.Enabled = false;
+        //                pan_constraint.Enabled = false;
+        //                pan_weekday.Enabled = false;
+        //                pan_which_day.Enabled = false;
+        //                lbl_dates_with_actions.Enabled = false;
+        //                MC_date_summery.Enabled = false;
 
-////                returnValue.Haeufigkeit = "keine";
-//            }
-//            else if (CB_none.Checked == false)
-//            {
-//                pan_frequency.Enabled = true;
-//                pan_constraint.Enabled = true;
-//                pan_which_day.Enabled = true;
-//                pan_weekday.Enabled = true;
-//                lbl_dates_with_actions.Enabled = true;
-//                MC_date_summery.Enabled = true;
+        ////                returnValue.Haeufigkeit = "keine";
+        //            }
+        //            else if (CB_none.Checked == false)
+        //            {
+        //                pan_frequency.Enabled = true;
+        //                pan_constraint.Enabled = true;
+        //                pan_which_day.Enabled = true;
+        //                pan_weekday.Enabled = true;
+        //                lbl_dates_with_actions.Enabled = true;
+        //                MC_date_summery.Enabled = true;
 
-////                returnValue.Haeufigkeit = "";
-//            }
-//        }
+        ////                returnValue.Haeufigkeit = "";
+        //            }
+        //        }
 
-//        //dayli
-//        private void CB_dayli_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_dayli.Checked)
-//            {
-//                CB_none.Enabled = false;
-//                CB_weekly.Enabled = false;
-//                CB_monthly.Enabled = false;
-//                CB_yearly.Enabled = false;
-//                TB_number_repetitions.Enabled = true;
-//                pan_constraint.Enabled = true;
-//                pan_weekday.Enabled = true;
-//                pan_which_day.Enabled = false;
+        //        //dayli
+        //        private void CB_dayli_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_dayli.Checked)
+        //            {
+        //                CB_none.Enabled = false;
+        //                CB_weekly.Enabled = false;
+        //                CB_monthly.Enabled = false;
+        //                CB_yearly.Enabled = false;
+        //                TB_number_repetitions.Enabled = true;
+        //                pan_constraint.Enabled = true;
+        //                pan_weekday.Enabled = true;
+        //                pan_which_day.Enabled = false;
 
-////                returnValue.Haeufigkeit = "taeglich";
-//                TB_number_repetitions.Text = "1";
-//            }
-//            else if (CB_dayli.Checked == false)
-//            {
-//                CB_none.Enabled = true;
-//                CB_weekly.Enabled = true;
-//                CB_monthly.Enabled = true;
-//                CB_yearly.Enabled = true;
-//                TB_number_repetitions.Enabled = true;
-//                pan_frequency.Enabled = true;
-//                pan_which_day.Enabled = true;
+        ////                returnValue.Haeufigkeit = "taeglich";
+        //                TB_number_repetitions.Text = "1";
+        //            }
+        //            else if (CB_dayli.Checked == false)
+        //            {
+        //                CB_none.Enabled = true;
+        //                CB_weekly.Enabled = true;
+        //                CB_monthly.Enabled = true;
+        //                CB_yearly.Enabled = true;
+        //                TB_number_repetitions.Enabled = true;
+        //                pan_frequency.Enabled = true;
+        //                pan_which_day.Enabled = true;
 
-////                returnValue.Haeufigkeit = "";
-//                TB_number_repetitions.Text = "0";
-//            }
-//        }
+        ////                returnValue.Haeufigkeit = "";
+        //                TB_number_repetitions.Text = "0";
+        //            }
+        //        }
 
-//        //weekly
-//        private void CB_weekly_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_weekly.Checked)
-//            {
-//                CB_none.Enabled = false;
-//                CB_dayli.Enabled = false;
-//                CB_monthly.Enabled = false;
-//                CB_yearly.Enabled = false;
-//                TB_number_repetitions.Enabled = true;
-//                lbl_times_per.Enabled = false;
-//                pan_which_day.Enabled = false;
-////               returnValue.Haeufigkeit = "woechentlich";
+        //        //weekly
+        //        private void CB_weekly_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_weekly.Checked)
+        //            {
+        //                CB_none.Enabled = false;
+        //                CB_dayli.Enabled = false;
+        //                CB_monthly.Enabled = false;
+        //                CB_yearly.Enabled = false;
+        //                TB_number_repetitions.Enabled = true;
+        //                lbl_times_per.Enabled = false;
+        //                pan_which_day.Enabled = false;
+        ////               returnValue.Haeufigkeit = "woechentlich";
 
-//            }
-//            else if (CB_weekly.Checked == false)
-//            {
-//                CB_none.Enabled = true;
-//                CB_dayli.Enabled = true;
-//                CB_monthly.Enabled = true;
-//                CB_yearly.Enabled = true;
-//                TB_number_repetitions.Enabled = true;
-//                lbl_times_per.Enabled = true;
-//                TB_times_repeat.Enabled = true;
-//                pan_which_day.Enabled = true;
+        //            }
+        //            else if (CB_weekly.Checked == false)
+        //            {
+        //                CB_none.Enabled = true;
+        //                CB_dayli.Enabled = true;
+        //                CB_monthly.Enabled = true;
+        //                CB_yearly.Enabled = true;
+        //                TB_number_repetitions.Enabled = true;
+        //                lbl_times_per.Enabled = true;
+        //                TB_times_repeat.Enabled = true;
+        //                pan_which_day.Enabled = true;
 
-////                returnValue.Haeufigkeit = "";
-//            }
-//        }
+        ////                returnValue.Haeufigkeit = "";
+        //            }
+        //        }
 
-//        //monthly
-//        private void CB_monthly_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_monthly.Checked == true)
-//            {
-//                CB_none.Enabled = false;
-//                CB_dayli.Enabled = false;
-//                CB_weekly.Enabled = false;
-//                CB_yearly.Enabled = false;
-//                TB_number_repetitions.Enabled = true;
-//                lbl_times_per.Enabled = true;
+        //        //monthly
+        //        private void CB_monthly_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_monthly.Checked == true)
+        //            {
+        //                CB_none.Enabled = false;
+        //                CB_dayli.Enabled = false;
+        //                CB_weekly.Enabled = false;
+        //                CB_yearly.Enabled = false;
+        //                TB_number_repetitions.Enabled = true;
+        //                lbl_times_per.Enabled = true;
 
-////                returnValue.Haeufigkeit = "monatlich";
-//            }
-//            else if (CB_monthly.Checked == false)
-//            {
-//                CB_none.Enabled = true;
-//                CB_dayli.Enabled = true;
-//                CB_weekly.Enabled = true;
-//                CB_yearly.Enabled = true;
+        ////                returnValue.Haeufigkeit = "monatlich";
+        //            }
+        //            else if (CB_monthly.Checked == false)
+        //            {
+        //                CB_none.Enabled = true;
+        //                CB_dayli.Enabled = true;
+        //                CB_weekly.Enabled = true;
+        //                CB_yearly.Enabled = true;
 
-////                returnValue.Haeufigkeit = "";
-//            }
-//        }
+        ////                returnValue.Haeufigkeit = "";
+        //            }
+        //        }
 
-//        //yearly
-//        private void CB_yearly_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_yearly.Checked == true)
-//            {
-//                CB_none.Enabled = false;
-//                CB_dayli.Enabled = false;
-//                CB_weekly.Enabled = false;
-//                CB_monthly.Enabled = false;
+        //        //yearly
+        //        private void CB_yearly_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_yearly.Checked == true)
+        //            {
+        //                CB_none.Enabled = false;
+        //                CB_dayli.Enabled = false;
+        //                CB_weekly.Enabled = false;
+        //                CB_monthly.Enabled = false;
 
-////                returnValue.Haeufigkeit = "jaehrlich";
-//            }
-//            else if (CB_yearly.Checked == false)
-//            {
-//                CB_none.Enabled = true;
-//                CB_dayli.Enabled = true;
-//                CB_weekly.Enabled = true;
-//                CB_monthly.Enabled = true;
-//                TB_number_repetitions.Enabled = true;
-//                lbl_times_per.Enabled = true;
+        ////                returnValue.Haeufigkeit = "jaehrlich";
+        //            }
+        //            else if (CB_yearly.Checked == false)
+        //            {
+        //                CB_none.Enabled = true;
+        //                CB_dayli.Enabled = true;
+        //                CB_weekly.Enabled = true;
+        //                CB_monthly.Enabled = true;
+        //                TB_number_repetitions.Enabled = true;
+        //                lbl_times_per.Enabled = true;
 
-//                //returnValue.Haeufigkeit = "";
-//            }
-//        }
+        //                //returnValue.Haeufigkeit = "";
+        //            }
+        //        }
 
-//        /// <summary>
-//        /// TB_number_repetitions
-//        /// The new value will written in the object every time if the value will changed or 0 if the textbox is empty.
-//        /// </summary>
-//        private void TB_number_repetitions_TextChanged(object sender, EventArgs e)
-//        {
-//            if(TB_number_repetitions.Text == "")
-//            {
-////                returnValue.Haeufigkeit_Anzahl = 0;
-//            }
-//            else
-//            {
-////                returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
-//            }
-//        }
+        //        /// <summary>
+        //        /// TB_number_repetitions
+        //        /// The new value will written in the object every time if the value will changed or 0 if the textbox is empty.
+        //        /// </summary>
+        //        private void TB_number_repetitions_TextChanged(object sender, EventArgs e)
+        //        {
+        //            if(TB_number_repetitions.Text == "")
+        //            {
+        ////                returnValue.Haeufigkeit_Anzahl = 0;
+        //            }
+        //            else
+        //            {
+        ////                returnValue.Haeufigkeit_Anzahl = Convert.ToInt32(TB_number_repetitions.Text);
+        //            }
+        //        }
 
         /// <summary>
         /// always repeat
         /// </summary>
-//        private void CB_always_repeat_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_always_repeat.Checked)
-//            {
-//                TB_times_repeat.Enabled = false;
-//                LBL_times_repeat.Enabled = false;
-//                LBL_always_repeat_until.Enabled = false;
-//                TB_repeat_until_day.Enabled = false;
-//                TB_repeat_until_month.Enabled = false;
-//                TB_repeat_until_year.Enabled = false;
+        //        private void CB_always_repeat_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_always_repeat.Checked)
+        //            {
+        //                TB_times_repeat.Enabled = false;
+        //                LBL_times_repeat.Enabled = false;
+        //                LBL_always_repeat_until.Enabled = false;
+        //                TB_repeat_until_day.Enabled = false;
+        //                TB_repeat_until_month.Enabled = false;
+        //                TB_repeat_until_year.Enabled = false;
 
-//                TB_times_repeat.Text = "0";
-////                returnValue.Immer_Wiederholen = 1;
-//            }
-//            else if (CB_always_repeat.Checked == false)
-//            {
-//                TB_times_repeat.Enabled = true;
-//                LBL_times_repeat.Enabled = true;
-//                LBL_always_repeat_until.Enabled = true;
-//                TB_repeat_until_day.Enabled = true;
-//                TB_repeat_until_month.Enabled = true;
-//                TB_repeat_until_year.Enabled = true;
+        //                TB_times_repeat.Text = "0";
+        ////                returnValue.Immer_Wiederholen = 1;
+        //            }
+        //            else if (CB_always_repeat.Checked == false)
+        //            {
+        //                TB_times_repeat.Enabled = true;
+        //                LBL_times_repeat.Enabled = true;
+        //                LBL_always_repeat_until.Enabled = true;
+        //                TB_repeat_until_day.Enabled = true;
+        //                TB_repeat_until_month.Enabled = true;
+        //                TB_repeat_until_year.Enabled = true;
 
-//                TB_times_repeat.Text = "1";
-//  //              returnValue.Immer_Wiederholen = 0;
-//            }
-//        }
+        //                TB_times_repeat.Text = "1";
+        //  //              returnValue.Immer_Wiederholen = 0;
+        //            }
+        //        }
 
-//        //TB_times_repeat
-//        private void TB_times_repeat_TextChanged(object sender, EventArgs e)
-//        {
-//            if(TB_times_repeat.Text == "")
-//            {
-////                returnValue.Wiederholungen = 0;
-//            }
-//            else
-//            {
-////                returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
-//            }
-//        }
+        //        //TB_times_repeat
+        //        private void TB_times_repeat_TextChanged(object sender, EventArgs e)
+        //        {
+        //            if(TB_times_repeat.Text == "")
+        //            {
+        ////                returnValue.Wiederholungen = 0;
+        //            }
+        //            else
+        //            {
+        ////                returnValue.Wiederholungen = Convert.ToInt32(TB_times_repeat.Text);
+        //            }
+        //        }
 
-//        /// CB_always_repeat_CheckedChanged, 
-//        /// CB_mon, CB_die, CB_mit, CB_don, CB_fre, CB_sam, CB_son activate or
-//        /// deactivate the suitable NUD-box. As symbol for the deactivation
-//        /// the functions write the value -1 in the object.
+        //        /// CB_always_repeat_CheckedChanged, 
+        //        /// CB_mon, CB_die, CB_mit, CB_don, CB_fre, CB_sam, CB_son activate or
+        //        /// deactivate the suitable NUD-box. As symbol for the deactivation
+        //        /// the functions write the value -1 in the object.
 
-//        //CB_mon 
-//        private void CB_mon_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_mon.Checked == false)
-//            {
-////                returnValue.XMontag = -1;
-//                NUD_mon.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_mon.Enabled = true;
-//            }
-//        }
+        //        //CB_mon 
+        //        private void CB_mon_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_mon.Checked == false)
+        //            {
+        ////                returnValue.XMontag = -1;
+        //                NUD_mon.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_mon.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_die
-//        private void CB_die_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_die.Checked == false)
-//            {
-////                returnValue.XDienstag = -1;
-//                NUD_tue.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_tue.Enabled = true;
-//            }
-//        }
+        //        //CB_die
+        //        private void CB_die_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_die.Checked == false)
+        //            {
+        ////                returnValue.XDienstag = -1;
+        //                NUD_tue.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_tue.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_mit
-//        private void CB_mit_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_mit.Checked == false)
-//            {
-////                returnValue.XMittwoch = -1;
-//                NUD_wen.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_wen.Enabled = true;
-//            }
-//        }
+        //        //CB_mit
+        //        private void CB_mit_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_mit.Checked == false)
+        //            {
+        ////                returnValue.XMittwoch = -1;
+        //                NUD_wen.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_wen.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_don
-//        private void CB_don_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_don.Checked == false)
-//            {
-////                returnValue.XDonnerstag = -1;
-//                NUD_thu.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_thu.Enabled = true;
-//            }
-//        }
+        //        //CB_don
+        //        private void CB_don_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_don.Checked == false)
+        //            {
+        ////                returnValue.XDonnerstag = -1;
+        //                NUD_thu.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_thu.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_fre
-//        private void CB_fre_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_fre.Checked == false)
-//            {
-////                returnValue.XFreitag = -1;
-//                NUD_fri.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_fri.Enabled = true;
-//            }
-//        }
+        //        //CB_fre
+        //        private void CB_fre_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_fre.Checked == false)
+        //            {
+        ////                returnValue.XFreitag = -1;
+        //                NUD_fri.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_fri.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_sam
-//        private void CB_sam_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_sam.Checked == false)
-//            {
-////                returnValue.XSamstag = -1;
-//                NUD_sat.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_sat.Enabled = true;
-//            }
-//        }
+        //        //CB_sam
+        //        private void CB_sam_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_sam.Checked == false)
+        //            {
+        ////                returnValue.XSamstag = -1;
+        //                NUD_sat.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_sat.Enabled = true;
+        //            }
+        //        }
 
-//        //CB_son
-//        private void CB_son_CheckedChanged(object sender, EventArgs e)
-//        {
-//            if (CB_son.Checked == false)
-//            {
-////                returnValue.XSonntag = -1;
-//                NUD_sun.Enabled = false;
-//            }
-//            else
-//            {
-//                NUD_sun.Enabled = true;
-//            }
-//        }
+        //        //CB_son
+        //        private void CB_son_CheckedChanged(object sender, EventArgs e)
+        //        {
+        //            if (CB_son.Checked == false)
+        //            {
+        ////                returnValue.XSonntag = -1;
+        //                NUD_sun.Enabled = false;
+        //            }
+        //            else
+        //            {
+        //                NUD_sun.Enabled = true;
+        //            }
+        //        }
 
         //NUD_mon
         private void NUD_mon_ValueChanged(object sender, EventArgs e)
         {
-//          returnValue.XMontag = Convert.ToInt32(NUD_mon.Value);
+            //          returnValue.XMontag = Convert.ToInt32(NUD_mon.Value);
         }
 
         //NUD_tue
         private void NUD_tue_ValueChanged(object sender, EventArgs e)
         {
-//            returnValue.XDienstag = Convert.ToInt32(NUD_tue.Value);
+            //            returnValue.XDienstag = Convert.ToInt32(NUD_tue.Value);
         }
 
         //NUD_wen
         private void NUD_wen_ValueChanged(object sender, EventArgs e)
         {
- //           returnValue.XMittwoch = Convert.ToInt32(NUD_wen.Value);
+            //           returnValue.XMittwoch = Convert.ToInt32(NUD_wen.Value);
         }
 
         //NUD_thu
         private void NUD_thu_ValueChanged(object sender, EventArgs e)
         {
-//            returnValue.XDonnerstag = Convert.ToInt32(NUD_thu.Value);
+            //            returnValue.XDonnerstag = Convert.ToInt32(NUD_thu.Value);
         }
 
         //NUD_fri
         private void NUD_fri_ValueChanged(object sender, EventArgs e)
         {
-//            returnValue.XFreitag = Convert.ToInt32(NUD_fri.Value);
+            //            returnValue.XFreitag = Convert.ToInt32(NUD_fri.Value);
         }
 
         //NUD_sat
         private void NUD_sat_ValueChanged(object sender, EventArgs e)
         {
-//            returnValue.XSamstag = Convert.ToInt32(NUD_sat.Value);
+            //            returnValue.XSamstag = Convert.ToInt32(NUD_sat.Value);
         }
 
         //NUD_sun
         private void NUD_sun_ValueChanged(object sender, EventArgs e)
         {
-//            returnValue.XSonntag = Convert.ToInt32(NUD_sun.Value);
+            //            returnValue.XSonntag = Convert.ToInt32(NUD_sun.Value);
         }
 
         //MC_date_summery

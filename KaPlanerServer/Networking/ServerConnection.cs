@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KaObjects;
+using KaPlaner.Networking;
+using KaPlanerServer.Logic;
+using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
-using KaObjects;
-using System.Xml.Serialization;
 using System.Xml;
-using System.IO;
-
-using KaPlanerServer.Logic;
-using KaPlaner.Networking;
+using System.Xml.Serialization;
 
 namespace KaPlanerServer.Networking
 {
 
     //Netztwerkintern. Verschickt die serialisierte Packete
-    
+
     class StateObject
     {
         public Socket workSocket = null;
@@ -226,7 +222,7 @@ namespace KaPlanerServer.Networking
 
                 handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Probleme beim Senden");
                 //handler.Shutdown(SocketShutdown.Both);

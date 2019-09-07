@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using KaObjects;
-using KaPlaner.Logic;
+﻿using KaObjects;
 using KaPlaner.GUI;
+using KaPlaner.Logic;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
@@ -24,7 +18,7 @@ namespace WindowsFormsApp1
         List<KaEvent> kaEvents;
         List<KaEvent> invites;
 
-        
+
 
         DateTime localDate = DateTime.Now;      //current datetime
         int monthcounter = 0;                   //month-counter
@@ -43,7 +37,7 @@ namespace WindowsFormsApp1
 
         public wdw_calendar(bool isOnline)
         {
-            
+
             InitializeComponent();
             this.isOnline = isOnline;
 
@@ -81,7 +75,7 @@ namespace WindowsFormsApp1
             Application.Exit();
         }
 
-        
+
         /// <summary>
         /// open the datelist over the dayli text boxes
         /// </summary>
@@ -93,7 +87,7 @@ namespace WindowsFormsApp1
 
                 Int32.TryParse(trigger.Text, out int day);
 
-                DateTime date = new DateTime(year, monthcounter + 1,day);
+                DateTime date = new DateTime(year, monthcounter + 1, day);
 
                 using (var form = new Wdw_date_list(kaEvents, date, isOnline))
                 {
@@ -287,9 +281,9 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    
+
                 }
-                foreach(KaEvent ka in form.returnValue)
+                foreach (KaEvent ka in form.returnValue)
                 {
                     kaEvents.Add(ka);
                 }
