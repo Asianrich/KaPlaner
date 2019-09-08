@@ -72,7 +72,7 @@ namespace KaPlanerServer.Logic
         /// <param name="isWellKnown"></param>
         public static void P2PSettings(bool isWellKnown)
         {
-            while (CheckWellKnownPeers())
+            while (CheckWellKnownPeers());
 
             if (isWellKnown)
             {
