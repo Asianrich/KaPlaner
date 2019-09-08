@@ -94,7 +94,6 @@ namespace WindowsFormsApp1
                     var result = form.ShowDialog();
 
                     kaEvents = form.dates;
-
                 }
 
             }

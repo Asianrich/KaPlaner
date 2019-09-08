@@ -283,7 +283,6 @@ namespace KaObjects.Storage
             Console.WriteLine(cmd_delete.CommandText); //debugging  
 
             cmd_delete.ExecuteNonQuery();
-            MessageBox.Show("Termin wurde erfolgreich geloescht");
             cmd_delete.Dispose();
 
             con.Close();

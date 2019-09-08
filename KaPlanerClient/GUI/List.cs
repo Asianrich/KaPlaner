@@ -14,7 +14,7 @@ namespace KaPlaner.GUI
 
         //private readonly List<int> indexes;
         public List<KaEvent> ListEvents = new List<KaEvent>();
-        public List<KaEvent> dates = new List<KaEvent>();
+        public List<KaEvent> dates;
         readonly bool isOnline;
 
         public Wdw_date_list(List<KaEvent> kaEvents, DateTime date, bool isOnline)
@@ -23,16 +23,13 @@ namespace KaPlaner.GUI
             this.isOnline = isOnline;
             this.date = date;
             dates = kaEvents;
-            foreach (KaEvent ka in kaEvents)
+            foreach (KaEvent ka in dates)
             {
                 if (ka.Beginn.ToString("dd/MM/yy") == date.ToString("dd/MM/yy"))
                 {
                     ListEvents.Add(ka);
                 }
             }
-
-
-
             //indexes = new List<int>();
             //ListEvents = kaEvents;
             UpdateEvents();
@@ -177,6 +174,7 @@ namespace KaPlaner.GUI
             {
                 clientLogic.DeleteRemote(ListEvents[LV_dates.FocusedItem.Index]);
                 ListEvents.RemoveAt(LV_dates.FocusedItem.Index);
+                dates.RemoveAt(LV_dates.FocusedItem.Index);
                 UpdateEvents();
             }
             catch (Exception ex)
