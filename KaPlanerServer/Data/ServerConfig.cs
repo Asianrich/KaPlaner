@@ -10,6 +10,11 @@ namespace KaPlanerServer.Data
     public static class ServerConfig
     {
         /// <summary>
+        /// connectionString für Datenbank
+        /// </summary>
+        public static readonly string connectionString = Properties.Settings.Default.ConnectionString;
+
+        /// <summary>
         /// P2P neighbours
         /// </summary>
         public static List<IPAddress> neighbours = new List<IPAddress>();
