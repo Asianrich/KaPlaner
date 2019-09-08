@@ -278,6 +278,10 @@ namespace KaObjects.Storage
 
             SqlCommand cmd_delete = new SqlCommand(delete, con);
 
+            cmd_delete.Parameters.AddWithValue("@TerminID", TerminID);
+
+            Console.WriteLine(cmd_delete.CommandText); //debugging  
+
             cmd_delete.ExecuteNonQuery();
             MessageBox.Show("Termin wurde erfolgreich geloescht");
             cmd_delete.Dispose();
