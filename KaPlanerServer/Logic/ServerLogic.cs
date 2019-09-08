@@ -33,12 +33,11 @@ namespace KaPlanerServer.Logic
         static readonly string Error = "An Error occurred.";
         static readonly string ChangeServer = "Switching Server...";
 
-        //Connection String ... in VS config auslagern?
-        static readonly ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
-        static readonly string connectionString = AppConnectionString.ConnectionString.ToString();
+        //static readonly ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
+        //static readonly string connectionString = AppConnectionString.ConnectionString.ToString();
 
         //ALT: static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
-        public static IDatabase database = new Database(connectionString);
+        public static IDatabase database = new Database(ServerConfig.connectionString);
 
         /// <summary>
         /// Einstellungen fuer den Server wird abgefragt!!!!
