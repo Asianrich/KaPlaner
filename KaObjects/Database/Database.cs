@@ -273,7 +273,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string delete = ("DELETE * FROM calendar WHERE TerminID = @TerminID");
+            string delete = ("DELETE FROM calendar WHERE TerminID = @TerminID");
             //DecoderReplacementFallback Datenbank;
 
             SqlCommand cmd_delete = new SqlCommand(delete, con);

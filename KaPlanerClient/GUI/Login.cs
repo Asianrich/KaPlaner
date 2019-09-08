@@ -226,7 +226,6 @@ namespace WindowsFormsApp1
             {
                 Form open_registry = new Wdw_registrierung(clientLogic);
                 open_registry.Show();
-                open_registry.Dispose();
             }
             catch (Exception ex)
             {
