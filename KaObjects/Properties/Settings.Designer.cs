@@ -25,7 +25,7 @@ namespace KaObjects.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.93.241")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.93.9")]
         public string Root {
             get {
                 return ((string)(this["Root"]));
@@ -34,7 +34,7 @@ namespace KaObjects.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.93.9")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.93.241")]
         public string WellKnownPeer1 {
             get {
                 return ((string)(this["WellKnownPeer1"]));
