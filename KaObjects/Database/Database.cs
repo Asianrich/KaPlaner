@@ -153,6 +153,7 @@ namespace KaObjects.Storage
                 cmd_update.Parameters.AddWithValue("@Ende", kaEvent.Ende);
                 cmd_update.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
                 cmd_update.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
+                cmd_update.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
 
                 Console.WriteLine(cmd_update.CommandText); //debugging
 
