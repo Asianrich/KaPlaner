@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="Root" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">192.168.0.42</Value>
+      <Value Profile="(Default)">192.168.0.6</Value>
     </Setting>
     <Setting Name="WellKnownPeer1" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">192.168.0.3</Value>
+      <Value Profile="(Default)">192.168.0.11</Value>
     </Setting>
     <Setting Name="WellKnownPeer2" Type="System.String" Scope="Application">
       <Value Profile="(Default)">192.168.0.4</Value>

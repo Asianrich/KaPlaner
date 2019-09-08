@@ -276,7 +276,7 @@ namespace KaPlaner.Networking
 
                     Receive(client);
                     Console.WriteLine("Waiting");
-                    if (!receiveDone.WaitOne(3000))
+                    if (!receiveDone.WaitOne(30000))
                     {
                         throw new Exception("Keine Antwort vom Server");
                     }
