@@ -15,9 +15,7 @@ namespace KaPlaner.Logic
     /// </summary>
     public class ClientLogic : IClientLogic
     {
-        // TO CHANGE:  Update auf neue Config!
-        static ConnectionStringSettings AppConnectionString = ConfigurationManager.ConnectionStrings["User_Calendar.mdf"];
-        static readonly string connectionString = AppConnectionString.ConnectionString.ToString();
+        static readonly string connectionString = Properties.Settings.Default.ConnectionString;
 
         //ALT: static readonly string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True";
         readonly IDatabase database = new Database(connectionString);
@@ -231,7 +229,7 @@ namespace KaPlaner.Logic
 
         /// <summary>
         /// Speichern des mitgelieferten Events in der Remote Datenbank
-        /// Benutzt das Datenbankinterface
+        /// Benutzt das ClientConnectionInterface
         /// </summary>
         /// <param name="kaEvent"></param>
         public KaEvent SaveRemote(KaEvent kaEvent)
@@ -240,8 +238,19 @@ namespace KaPlaner.Logic
 
             Package savePackage = new Package(Request.Save, kaEvent);
 
-            Package returnpackage = clientConnection.Start(savePackage);
-            return returnpackage.kaEvents[0];
+            Package returnPackage = clientConnection.Start(savePackage);
+            return returnPackage.kaEvents[0];
+        }
+
+        /// <summary>
+        /// Löschen des mitgelieferten Events in der Remote Datenbank
+        /// Benutzt das Datenbankinterface
+        /// </summary>
+        /// <param name="kaEvent"></param>
+        public void DeleteRemote(KaEvent kaEvent)
+        {
+            Package deletePackage = new Package(Request.Delete, kaEvent);
+            clientConnection.Start(deletePackage);
         }
 
         /// <summary>

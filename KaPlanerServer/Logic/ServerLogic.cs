@@ -22,6 +22,9 @@ namespace KaPlanerServer.Logic
         static readonly string SaveRequest = "Save Requested.";
         static readonly string SaveSuccess = "Save Success.";
         static readonly string SaveFail = "Save Failed.";
+        static readonly string DeleteRequest = "Delete Requested.";
+        static readonly string DeleteSuccess = "Delete Success.";
+        static readonly string DeleteFail = "Delete Failed.";
         static readonly string LoadRequest = "Load Requested.";
         static readonly string LoadSuccess = "Load Success.";
         static readonly string LoadFail = "Load Failed.";
@@ -459,6 +462,21 @@ namespace KaPlanerServer.Logic
                         Console.WriteLine(e.GetType().FullName);
                         Console.WriteLine(e.Message);
                         writeResult(Request.Failure, SaveFail);
+                    }
+                    break;
+
+                case Request.Delete:
+                    Console.WriteLine(DeleteRequest);
+                    try
+                    {
+                        database.DeleteEvent(package.kaEvents[0].TerminID);
+                        writeResult(Request.Success, DeleteSuccess);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.GetType().FullName);
+                        Console.WriteLine(e.Message);
+                        writeResult(Request.Failure, DeleteFail);
                     }
                     break;
 

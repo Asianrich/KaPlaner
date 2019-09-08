@@ -137,7 +137,7 @@ namespace KaObjects.Storage
 
             /// Liest in der Datenbank nach einem Termin mit einer bestimmten ID aus 
             SqlDataReader exist_reader = cmd_exist.ExecuteReader();
-
+            cmd_exist.Dispose();
 
             if (exist_reader.Read())
             {
@@ -268,7 +268,7 @@ namespace KaObjects.Storage
         /// </summary>
         /// <param name="TerminID"></param>
         /// <returns>Kein Rueckgabewert. (void)</returns>
-        public void Delete_date(int TerminID)
+        public void DeleteEvent(int TerminID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();

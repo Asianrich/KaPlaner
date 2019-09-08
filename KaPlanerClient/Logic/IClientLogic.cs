@@ -23,6 +23,8 @@ namespace KaPlaner.Logic
 
         KaEvent SaveRemote(KaEvent kaEvent);
 
+        void DeleteRemote(KaEvent kaEvent);
+
         void SendInvites(KaEvent kaEvent);
 
         void AnswerInvite(KaEvent kaEvent, bool choice);

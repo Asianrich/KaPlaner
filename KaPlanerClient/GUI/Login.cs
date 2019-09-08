@@ -226,12 +226,12 @@ namespace WindowsFormsApp1
             {
                 Form open_registry = new Wdw_registrierung(clientLogic);
                 open_registry.Show();
+                open_registry.Dispose();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void BTN_offline_Click(object sender, EventArgs e)

@@ -16,7 +16,7 @@ namespace KaObjects.Storage
 
         List<KaEvent> Read(string owner);
 
-        void Delete_date(int TerminID);
+        void DeleteEvent(int TerminID);
 
         bool ServerExist(int ServerID);
 

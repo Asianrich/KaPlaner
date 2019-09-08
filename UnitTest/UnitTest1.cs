@@ -130,7 +130,7 @@ namespace UnitTest
         {
             int testID = 1;
             Database testdb = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
-            testdb.Delete_date(testID);
+            testdb.DeleteEvent(testID);
         }
 
 
@@ -237,7 +237,7 @@ namespace UnitTest
 
             int testID2 = 1;
             Database testdb = new Database(connectionStringTEST.ToString());
-            testdb.Delete_date(testID2);
+            testdb.DeleteEvent(testID2);
 
         }
 

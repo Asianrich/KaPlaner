@@ -175,6 +175,7 @@ namespace KaPlaner.GUI
         {
             try
             {
+                clientLogic.DeleteRemote(ListEvents[LV_dates.FocusedItem.Index]);
                 ListEvents.RemoveAt(LV_dates.FocusedItem.Index);
                 UpdateEvents();
             }
