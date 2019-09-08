@@ -24,7 +24,7 @@ namespace KaPlanerServer.Logic
         private static bool CheckWellKnownPeers()
         {
             Console.WriteLine("Are these well known peers correct? [Y/N]");
-            Console.WriteLine(KnownServers.ListofWellKnownPeers);
+            Console.WriteLine(string.Join("\n", KnownServers.ListofWellKnownPeers));
             char answer;
             do
             {
