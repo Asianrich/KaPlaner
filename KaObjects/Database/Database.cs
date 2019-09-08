@@ -83,6 +83,8 @@ namespace KaObjects.Storage
 
                 if (reader_exists.Read())
                 {
+                    reader_exists.Close();
+                    con.Close();
                     MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));
                     return false;
                 }
@@ -139,6 +141,8 @@ namespace KaObjects.Storage
 
             if (exist_reader.Read())
             {
+                exist_reader.Close();
+
                 string ins3 = String.Format("UPDATE User_Calendar.mdf calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung, Benutzername = @Benutzername WHERE TerminID = @TerminID");
 
                 SqlCommand cmd_update = new SqlCommand(ins3, con);
@@ -161,6 +165,8 @@ namespace KaObjects.Storage
             }
             else
             {
+                exist_reader.Close();
+
                 string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
                 SqlCommand cmd_insert = new SqlCommand(ins3, con);
