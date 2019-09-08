@@ -143,7 +143,7 @@ namespace KaObjects.Storage
             {
                 exist_reader.Close();
 
-                string ins3 = String.Format("UPDATE User_Calendar.mdf calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung, Benutzername = @Benutzername WHERE TerminID = @TerminID");
+                string ins3 = String.Format("UPDATE calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung, Benutzername = @Benutzername WHERE TerminID = @TerminID");
 
                 SqlCommand cmd_update = new SqlCommand(ins3, con);
 
@@ -167,7 +167,7 @@ namespace KaObjects.Storage
             {
                 exist_reader.Close();
 
-                string ins3 = String.Format("INSERT INTO Calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+                string ins3 = String.Format("INSERT INTO calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
                 SqlCommand cmd_insert = new SqlCommand(ins3, con);
 
