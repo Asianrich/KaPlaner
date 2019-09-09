@@ -31,6 +31,7 @@ namespace KaPlanerServer.Logic
         static readonly string InviteRequest = "Invite Requested.";
         static readonly string InviteSuccess = "Invite Success.";
         static readonly string InviteFail = "Invite Failed.";
+        static readonly string UserNotFound = "User not found.";
         static readonly string TestRequest = "Test requested.";
         static readonly string RequestUnknown = "Unknown Request.";
         static readonly string Error = "An Error occurred.";
@@ -526,6 +527,8 @@ namespace KaPlanerServer.Logic
                                     database.SaveInvites(member.name, package.kaEvents[0]);
                                     writeResult(Request.Success, InviteSuccess);
                                 }
+                                else
+                                    writeResult(Request.Failure, UserNotFound);
                             }
                             ///member is user in hierarchy topology
                             else if (member.serverID > 0)

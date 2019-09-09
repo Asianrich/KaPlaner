@@ -14,7 +14,7 @@ namespace KaObjects
         public static List<IPAddress> ListofWellKnownPeers = new List<IPAddress>()
         {
             IPAddress.Parse(Settings.Default.WellKnownPeer1),
-            //IPAddress.Parse(Settings.Default.WellKnownPeer2),
+            IPAddress.Parse(Settings.Default.WellKnownPeer2),
             //IPAddress.Parse(Settings.Default.WellKnownPeer3)
         };
 
