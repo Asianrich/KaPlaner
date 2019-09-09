@@ -155,9 +155,9 @@ namespace KaObjects.Storage
                 cmd_update.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
                 cmd_update.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
 
-                Console.WriteLine(cmd_update.Parameters); //debugging
+                Console.WriteLine(string.Join("; ", cmd_update.Parameters)); //debugging
                 Console.WriteLine("Rows affected {0}.", cmd_update.ExecuteNonQuery());
-                Console.WriteLine(cmd_update); //debugging
+                Console.WriteLine(cmd_update.CommandText); //debugging
                 cmd_update.Dispose();
 
                 con.Close();
@@ -177,9 +177,9 @@ namespace KaObjects.Storage
                 cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
                 cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
 
-                Console.WriteLine(cmd_insert.Parameters); //debugging
+                Console.WriteLine(string.Join("; ", cmd_insert.Parameters)); //debugging
                 Console.WriteLine("Rows affected {0}.", cmd_insert.ExecuteNonQuery());
-                Console.WriteLine(cmd_insert); //debugging
+                Console.WriteLine(cmd_insert.CommandText); //debugging
                 cmd_insert.Dispose();
 
                 con.Close();
