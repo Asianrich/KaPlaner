@@ -130,7 +130,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string exist = String.Format("SELECT TerminID FROM calendar WHERE TerminID = '{0}'", kaEvent.TerminID);
+            string exist = String.Format("SELECT TerminID FROM calendar WHERE TerminID = {0} AND Benutzername = '{1}'", kaEvent.TerminID, kaEvent.owner.name);
 
             SqlCommand cmd_exist = new SqlCommand(exist, con);
 
@@ -143,7 +143,7 @@ namespace KaObjects.Storage
             {
                 exist_reader.Close();
 
-                string ins3 = String.Format("UPDATE calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung, Benutzername = @Benutzername WHERE TerminID = @TerminID");
+                string ins3 = "UPDATE calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung WHERE TerminID = @TerminID AND Benutzername = @Benutzername";
 
                 SqlCommand cmd_update = new SqlCommand(ins3, con);
 
@@ -155,12 +155,10 @@ namespace KaObjects.Storage
                 cmd_update.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
                 cmd_update.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
 
-                Console.WriteLine(cmd_update.CommandText); //debugging
-
-                int id = (int)cmd_update.ExecuteScalar();
+                Console.WriteLine(cmd_update.Parameters); //debugging
+                Console.WriteLine("Rows affected {0}.", cmd_update.ExecuteNonQuery());
+                Console.WriteLine(cmd_update); //debugging
                 cmd_update.Dispose();
-
-                kaEvent.TerminID = id;
 
                 con.Close();
             }
@@ -168,7 +166,7 @@ namespace KaObjects.Storage
             {
                 exist_reader.Close();
 
-                string ins3 = String.Format("INSERT INTO calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) Output Inserted.TerminID VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+                string ins3 = String.Format("INSERT INTO calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
 
                 SqlCommand cmd_insert = new SqlCommand(ins3, con);
 
@@ -179,12 +177,10 @@ namespace KaObjects.Storage
                 cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
                 cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
 
-                Console.WriteLine(cmd_insert.CommandText); //debugging  
-
-                int id = (int)cmd_insert.ExecuteScalar();
+                Console.WriteLine(cmd_insert.Parameters); //debugging
+                Console.WriteLine("Rows affected {0}.", cmd_insert.ExecuteNonQuery());
+                Console.WriteLine(cmd_insert); //debugging
                 cmd_insert.Dispose();
-
-                kaEvent.TerminID = id;
 
                 con.Close();
             }
@@ -203,9 +199,7 @@ namespace KaObjects.Storage
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-#pragma warning disable CS0219 // The variable 'select' is assigned but its value is never used
             //string select = "SELECT * FROM calendar WHERE @Beginn ";// Select auf Tabelle des Nutzers (alle Events eines Monats)
-#pragma warning restore CS0219 // The variable 'select' is assigned but its value is never used
 
             con.Close();
 
@@ -415,32 +409,24 @@ namespace KaObjects.Storage
         /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
         /// <param name="TerminID">ID des behandelten Termins</param>
         /// <returns>Keine Rueckgabewerte</returns>
-        public void SaveInvites(string user, KaEvent kaEvent)
+        public void SaveInvites(string username, KaEvent kaEvent)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            if (UserExist(user))
+            if (UserExist(username))
             {
-                string exist = string.Format("Select * from calendar where TerminID = {0} AND Benutzername = '{1}'", kaEvent.TerminID, kaEvent.owner.name);
-                SqlCommand exist_com = new SqlCommand(exist, con);
-                SqlDataReader read = exist_com.ExecuteReader();
-                exist_com.Dispose();
-                if (!read.Read())
-                {
-                    SaveEvent(kaEvent);
-                }
+                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, [User]) VALUES ({0}, '{1}')", kaEvent.TerminID, kaEvent.owner.name);
+
+                kaEvent.owner.name = username;
+                SaveEvent(kaEvent);
+             
                 con.Close();
 
                 con = new SqlConnection(connectionString);
                 con.Open();
 
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, [User]) VALUES ({0}, '{1}')", kaEvent.TerminID, user);
-
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
-
-                //saveEventCommand.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
-                //saveEventCommand.Parameters.AddWithValue("@User", user);
 
                 saveEventCommand.ExecuteNonQuery();
                 saveEventCommand.Dispose();
@@ -448,13 +434,6 @@ namespace KaObjects.Storage
 
             con.Close();
         }
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -491,7 +470,7 @@ namespace KaObjects.Storage
 
             foreach (int termin in id)
             {
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0}", termin);
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0} AND Benutzername = {1}", termin, user);
                 con = new SqlConnection(connectionString);
                 con.Open();
                 SqlCommand read = new SqlCommand(readDates, con);
