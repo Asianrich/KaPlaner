@@ -68,7 +68,6 @@ namespace KaPlanerServer.Logic
             }
             else
             {
-                string read;
                 while (true)
                 {
                     Console.WriteLine("Stimmt die Adresse von Root? [Y/N]");
