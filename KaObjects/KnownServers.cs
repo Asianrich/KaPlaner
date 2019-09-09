@@ -15,7 +15,7 @@ namespace KaObjects
         {
             IPAddress.Parse(Settings.Default.WellKnownPeer1),
             IPAddress.Parse(Settings.Default.WellKnownPeer2),
-            //IPAddress.Parse(Settings.Default.WellKnownPeer3)
+            IPAddress.Parse(Settings.Default.WellKnownPeer3)
         };
 
         /// <summary>

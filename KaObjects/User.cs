@@ -51,5 +51,20 @@ namespace KaObjects
             this.name = name;
         }
 
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+                return false;
+            else
+            {
+                User u = (User)obj;
+                return u.name == name && u.serverID == serverID;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return name.GetHashCode() + serverID.GetHashCode();
+        }
     }
 }

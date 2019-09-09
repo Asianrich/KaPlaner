@@ -43,7 +43,7 @@ namespace KaPlaner.Networking
                 IPEndPoint remoteEP = new IPEndPoint(iPAddress, 11000);
                 Socket client = new Socket(iPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-                if (!connectDone.WaitOne(10000))
+                if (!connectDone.WaitOne(5000))
                 {
                     throw new Exception("Konnte keine Verbindung aufbauen nach 10 Sekunden");
                 }
@@ -276,7 +276,7 @@ namespace KaPlaner.Networking
 
                     Receive(client);
                     Console.WriteLine("Waiting");
-                    if (!receiveDone.WaitOne(30000))
+                    if (!receiveDone.WaitOne(15000))
                     {
                         throw new Exception("Keine Antwort vom Server");
                     }

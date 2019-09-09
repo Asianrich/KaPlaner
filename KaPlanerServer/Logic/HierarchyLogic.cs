@@ -3,6 +3,7 @@ using KaPlanerServer.Data;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using System.Threading;
 
 namespace KaPlanerServer.Logic
@@ -70,8 +71,21 @@ namespace KaPlanerServer.Logic
                 string read;
                 while (true)
                 {
-                    Console.WriteLine("Bitte geben sie Adresse von Root ein");
-                    read = Console.ReadLine();
+                    Console.WriteLine("Stimmt die Adresse von Root? [Y/N]");
+                    Console.WriteLine(KnownServers.Root);
+                    char answer;
+                    do
+                    {
+                        answer = (char)Console.Read();
+                    } while (!"YyJjNn".Contains(answer));
+                    if ("Nn".Contains(answer))
+                    {
+                        do
+                        {
+                            Console.WriteLine("Bitte eine valide IPv4 Adresse für Root angeben.");
+                        } while (!IPAddress.TryParse(Console.ReadLine(), out KnownServers.Root));
+                    }
+                    //read = Console.ReadLine();
 
                     Package package = new Package
                     {
@@ -81,22 +95,12 @@ namespace KaPlanerServer.Logic
                     };
                     package.hierarchie.HierarchieRequest = HierarchieRequest.NewServer;
 
-                    if (IPAddress.TryParse(read, out IPAddress address))
-                    {
-                        package = ServerLogic.Send(package, address);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Etwas ist schief gelaufen in der IP-Adresse eingabe");
-                    }
-
-
+                    package = ServerLogic.Send(package, KnownServers.Root);
 
                     if (package != null)
                     {
                         Console.WriteLine("Packet ist angekommen");
                         //Logic
-                        KnownServers.Root = address;
                         Console.WriteLine("Adresse: " + package.hierarchie.destinationAdress);
 
                         //Zu wem muss ich mich verbinden? bzw. Registrieren

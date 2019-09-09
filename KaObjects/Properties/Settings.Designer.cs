@@ -43,7 +43,7 @@ namespace KaObjects.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.2")]
         public string WellKnownPeer2 {
             get {
                 return ((string)(this["WellKnownPeer2"]));
@@ -52,7 +52,7 @@ namespace KaObjects.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.3")]
         public string WellKnownPeer3 {
             get {
                 return ((string)(this["WellKnownPeer3"]));

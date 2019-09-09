@@ -470,7 +470,7 @@ namespace KaObjects.Storage
 
             foreach (int termin in id)
             {
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0} AND Benutzername = {1}", termin, user);
+                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0} AND [Benutzername] = {1}", termin, user);
                 con = new SqlConnection(connectionString);
                 con.Open();
                 SqlCommand read = new SqlCommand(readDates, con);
