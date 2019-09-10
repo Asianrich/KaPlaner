@@ -172,6 +172,7 @@ namespace KaPlanerServer.Logic
                         if (ServerLogic.database.UserExist(package.login))
                         {
                             ServerLogic.database.SaveInvites(package.login, package.invite);
+                            package.HierarchieAnswer = HierarchieAnswer.Success;
                         }
                         else
                         {
