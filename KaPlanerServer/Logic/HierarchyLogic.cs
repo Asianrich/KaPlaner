@@ -125,7 +125,6 @@ namespace KaPlanerServer.Logic
                                 Console.WriteLine(ex);
                             }
                         }
-                        //Datenbankeintrag
                         if (receive != null)
                         {
                             Console.WriteLine("SourceID: " + receive.hierarchie.sourceID);
