@@ -62,9 +62,8 @@ namespace KaPlanerServer.Logic
             Console.WriteLine("HierarchieSettings");
             if (isRoot)
             {
-                KnownServers.Root = ServerConfig.host; // <- Sollte nur noch in KnownServers geändert werden
+                ServerConfig.host = KnownServers.Root; // <- Sollte nur noch in KnownServers geändert werden
                 ServerConfig.serverID = 1;
-
             }
             else
             {
