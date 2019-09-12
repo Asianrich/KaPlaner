@@ -152,7 +152,14 @@ namespace KaPlanerServer.Logic
                             List<KaEvent> kaEvents;
                             kaEvents = database.Read(package.user.name);
                             package.kaEvents = kaEvents;
-                            package.invites = database.ReadInvites(package.user.name);
+                            try
+                            {
+                                package.invites = database.ReadInvites(package.user.name);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("ReadInvites failed.\n{0}\n{1}", ex.Message, ex.StackTrace);
+                            }
                             writeResult(Request.Success, LoginSuccess);
                         }
                         else
@@ -515,9 +522,7 @@ namespace KaPlanerServer.Logic
                          * Wenn mehrere User eingetragen wird, hat der Server eine lange Anschreibezeit
                          * */
 
-                        List<User> list = package.kaEvents[0].members;
-
-                        foreach (User member in list)
+                        foreach (User member in package.kaEvents[0].members)
                         {
                             ///member is user in current server
                             if (member.serverID == ServerConfig.serverID)

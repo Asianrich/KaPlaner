@@ -8,8 +8,16 @@ namespace KaObjects.Storage
 {
     public class Database : IDatabase
     {
+        /// <summary>
+        /// Hilfsklasse um die Datenbanktabellen ähnlich eines Enums zu übergeben.
+        /// </summary>
+        static class DatabaseTable
+        {
+            public static readonly string Calendar = "calendar";
+            public static readonly string Invites = "Invites";
+        }
         readonly string connectionString;
-
+        
         public Database(string connectionString)
         {
             this.connectionString = connectionString;
@@ -66,7 +74,7 @@ namespace KaObjects.Storage
         {
             if (String.IsNullOrEmpty(user.name) || String.IsNullOrEmpty(user.password) || String.IsNullOrEmpty(password_bestaetigen))
             {
-                MessageBox.Show("Die Felder fuer das Passwort duerfen nicht leer sein.");
+                //MessageBox.Show("Die Felder fuer das Passwort duerfen nicht leer sein.");
                 return false;
             }
             else if (String.Equals(user.password, password_bestaetigen))
@@ -75,23 +83,14 @@ namespace KaObjects.Storage
                 con.Open();
 
                 //Pruefen ob der Benutzer schon existiert
-                string exist = "SELECT Benutzername FROM Registry WHERE EXISTS(SELECT * FROM Registry WHERE Benutzername = @username);";
-                SqlCommand cmd_exist = new SqlCommand(exist, con);
-                cmd_exist.Parameters.AddWithValue("@username", user.name);
-                SqlDataReader reader_exists = cmd_exist.ExecuteReader();
-                cmd_exist.Dispose();
-
-                if (reader_exists.Read())
+                if (UserExist(user.name))
                 {
-                    reader_exists.Close();
                     con.Close();
-                    MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));
+                    //MessageBox.Show(String.Format("Benutzername {0} existiert bereits.", user.name));
                     return false;
                 }
                 else
                 {
-                    reader_exists.Close();
-
                     con.Close();
 
                     con.Open();
@@ -110,82 +109,123 @@ namespace KaObjects.Storage
             }
             else
             {
-                MessageBox.Show("Die von Ihnen eingegebenen Passwoerter sind nicht identisch.");
+                //MessageBox.Show("Die von Ihnen eingegebenen Passwoerter sind nicht identisch.");
                 return false;
             }
         }
 
 
         /// <summary>
-        /// Termine in Datenbank speichern 
+        /// Speichert Termine in der calendar Tabelle.
         /// </summary>
-        /// <param name="TerminID"></param>
-        /// <returns></returns>
+        /// <param name="kaEvent">Das zu speichernde Event</param>
         public void SaveEvent(KaEvent kaEvent)
         {
+            Save(kaEvent, DatabaseTable.Calendar);
+        }
 
-            // TOFIX: Zur Überprüfung ob Memberliste leer ist, die Methode
-            // CheckMemberList hier aufrufen
+        /// <summary>
+        /// Speichert Termin in der Invites Tabelle.
+        /// Gibt InviteID zurück.
+        /// </summary>
+        /// <param name="kaEvent">Das zu speichernde Event</param>
+        /// <returns>TerminID des Invites bei Erfolg</returns>
+        public int SaveInvite(KaEvent kaEvent)
+        {
+            Save(kaEvent, DatabaseTable.Invites);
 
+            return GetInviteID();
+
+            int GetInviteID()
+            {
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                sqlConnection.Open();
+
+                string commandString = String.Format("SELECT InviteID FROM Invites WHERE Benutzername = '{0}' AND PastID = {1}", kaEvent.owner.name, kaEvent.TerminID);
+
+                SqlCommand sqlCommand = new SqlCommand(commandString, sqlConnection);
+                SqlDataReader readInviteID = sqlCommand.ExecuteReader();
+                sqlCommand.Dispose();
+
+                int inviteID;
+
+                if (readInviteID.Read())
+                    inviteID = readInviteID.GetInt32(0);
+                else
+                    inviteID = 0;
+
+                readInviteID.Close();
+                sqlConnection.Close();
+
+                return inviteID;
+            }
+        }
+
+        /// <summary>
+        /// Speichert Event in der angegebenen Tabelle.
+        /// </summary>
+        /// <param name="kaEvent">Das zu speichernde Event</param>
+        /// <param name="table">Die zu benutzende Tabelle</param>
+        private void Save(KaEvent kaEvent, string table)
+        {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string exist = String.Format("SELECT TerminID FROM calendar WHERE TerminID = {0} AND Benutzername = '{1}'", kaEvent.TerminID, kaEvent.owner.name);
+            string commandString;
+            string exist;
 
+            //Gibt es die TerminID bereits?
+            if(table == DatabaseTable.Invites)
+                exist = String.Format("SELECT InviteID FROM {0} WHERE PastID = {1} AND Benutzername = '{2}'", table, kaEvent.TerminID, kaEvent.owner.name);
+            else
+                exist = String.Format("SELECT TerminID FROM {0} WHERE TerminID = {1}", table, kaEvent.TerminID);
             SqlCommand cmd_exist = new SqlCommand(exist, con);
 
-
-            /// Liest in der Datenbank nach einem Termin mit einer bestimmten ID aus 
             SqlDataReader exist_reader = cmd_exist.ExecuteReader();
             cmd_exist.Dispose();
 
+            //Update falls bereits existent
             if (exist_reader.Read())
             {
-                exist_reader.Close();
-
-                string ins3 = "UPDATE calendar SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung WHERE TerminID = @TerminID AND Benutzername = @Benutzername";
-
-                SqlCommand cmd_update = new SqlCommand(ins3, con);
-
-                cmd_update.Parameters.AddWithValue("@Titel", kaEvent.Titel);
-                cmd_update.Parameters.AddWithValue("@Ort", kaEvent.Ort);
-                cmd_update.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
-                cmd_update.Parameters.AddWithValue("@Ende", kaEvent.Ende);
-                cmd_update.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
-                cmd_update.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
-                cmd_update.Parameters.AddWithValue("@TerminID", kaEvent.TerminID);
-
-                Console.WriteLine(string.Join("; ", cmd_update.Parameters)); //debugging
-                Console.WriteLine("Rows affected {0}.", cmd_update.ExecuteNonQuery());
-                Console.WriteLine(cmd_update.CommandText); //debugging
-                cmd_update.Dispose();
-
-                con.Close();
+                if(table == DatabaseTable.Invites)
+                    commandString = String.Format("UPDATE {0} SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung WHERE Benutzername = '{1}' AND PastID = {2}", table, kaEvent.owner.name, kaEvent.TerminID);
+                else
+                    commandString = String.Format("UPDATE {0} SET Titel = @Titel, Ort = @Ort, Beginn = @Beginn, Ende = @Ende, Beschreibung = @Beschreibung WHERE TerminID = {1}", table, kaEvent.TerminID);
             }
+            //Insert falls nicht
             else
             {
-                exist_reader.Close();
+                if(table == DatabaseTable.Invites)
+                    commandString = String.Format("INSERT INTO {0} (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername, PastID) VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, '{1}', {2})", table, kaEvent.owner.name, kaEvent.TerminID);
+                else
+                    commandString = String.Format("INSERT INTO {0} (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, '{1}')", table, kaEvent.owner.name);
+            }
+            exist_reader.Close();
 
-                string ins3 = String.Format("INSERT INTO calendar (Titel, Ort, Beginn, Ende, Beschreibung, Benutzername) VALUES (@Titel, @Ort, @Beginn, @Ende, @Beschreibung, @Benutzername)", kaEvent.owner.name);
+            SqlCommand SqlCommand = new SqlCommand(commandString, con);
 
-                SqlCommand cmd_insert = new SqlCommand(ins3, con);
+            AddParameters(SqlCommand);
+            DebugExecute(SqlCommand);
 
-                cmd_insert.Parameters.AddWithValue("@Titel", kaEvent.Titel);
-                cmd_insert.Parameters.AddWithValue("@Ort", kaEvent.Ort);
-                cmd_insert.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
-                cmd_insert.Parameters.AddWithValue("@Ende", kaEvent.Ende);
-                cmd_insert.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
-                cmd_insert.Parameters.AddWithValue("@Benutzername", kaEvent.owner.name);
+            SqlCommand.Dispose();
 
-                Console.WriteLine(string.Join("; ", cmd_insert.Parameters)); //debugging
-                Console.WriteLine("Rows affected {0}.", cmd_insert.ExecuteNonQuery());
-                Console.WriteLine(cmd_insert.CommandText); //debugging
-                cmd_insert.Dispose();
+            con.Close();
 
-                con.Close();
+            ///Fügt die immergleichen Parameter in den SQL Befehl ein.
+            void AddParameters(SqlCommand sqlCommand)
+            {
+                sqlCommand.Parameters.AddWithValue("@Titel", kaEvent.Titel);
+                sqlCommand.Parameters.AddWithValue("@Ort", kaEvent.Ort);
+                sqlCommand.Parameters.AddWithValue("@Beginn", kaEvent.Beginn);
+                sqlCommand.Parameters.AddWithValue("@Ende", kaEvent.Ende);
+                sqlCommand.Parameters.AddWithValue("@Beschreibung", kaEvent.Beschreibung);
             }
 
-            return; //Können wir überprüfen ob es geklappt hat?
+            void DebugExecute(SqlCommand sqlCommand)
+            {
+                Console.WriteLine("Rows affected {0}.", sqlCommand.ExecuteNonQuery());
+                Console.WriteLine(sqlCommand.CommandText); //debugging
+            }
         }
 
 
@@ -374,18 +414,18 @@ namespace KaObjects.Storage
 
 
         /// <summary>
-        /// Prueft ob MemberListe leer ist
+        /// Prueft ob InviteList leer ist
         /// </summary>
         /// <param>Keine Uebergabeparameter</param>
         /// <returns>
         /// Die Anzahl der Eintraege in der Tabelle Memberlist.
         /// </returns>
-        public int CheckMemberList()
+        public int CheckInviteList()
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
 
-            string Check = string.Format("SELECT COUNT(TerminID) FROM Memberlist");
+            string Check = string.Format("SELECT COUNT(InviteID) FROM InviteList");
             int read = 0;
 
             SqlCommand checkCommand = new SqlCommand(Check, con);
@@ -404,43 +444,46 @@ namespace KaObjects.Storage
 
 
         /// <summary>
-        /// Speichert Mitglieder eines Termins in der Memberlist
+        /// Speichert das gesendete Event in der Invites Tabelle der Datenbank.
+        /// Die InviteList wird mit den Verknüpfungen befüllt.
         /// </summary>
-        /// <param name="member">Liste von Beteiligten an einem Bestimmten Termin</param>
-        /// <param name="TerminID">ID des behandelten Termins</param>
-        /// <returns>Keine Rueckgabewerte</returns>
+        /// <param name="username">Der Name des eingeladenen Nutzers</param>
+        /// <param name="kaEvent">Das Event zu dem eingeladen wird</param>
         public void SaveInvites(string username, KaEvent kaEvent)
         {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-
+            //Wenn es den eingeladenen Nutzer in der Datenbank gibt.
             if (UserExist(username))
             {
-                string saveEvent = string.Format("INSERT INTO Memberlist(TerminID, [User]) VALUES ({0}, '{1}')", kaEvent.TerminID, kaEvent.owner.name);
+                SqlConnection con = new SqlConnection(connectionString);
+                con.Open();
 
-                kaEvent.owner.name = username;
-                SaveEvent(kaEvent);
-             
+                //Das Event (Alter Nutzer) in der Invites Tabelle speichern.
+                int inviteID = SaveInvite(kaEvent);
+
+                //Referenz auf den neuen Nutzer in der InviteList vermerken.
+                string saveEvent = string.Format("INSERT INTO InviteList(InviteID, [Invitee]) VALUES ({0}, '{1}')", inviteID, username);
+
                 con.Close();
-
                 con = new SqlConnection(connectionString);
                 con.Open();
 
                 SqlCommand saveEventCommand = new SqlCommand(saveEvent, con);
 
-                saveEventCommand.ExecuteNonQuery();
-                saveEventCommand.Dispose();
-            }
+                Console.WriteLine(string.Join("; ", saveEventCommand.Parameters)); //debugging
+                Console.WriteLine("Rows affected {0}.", saveEventCommand.ExecuteNonQuery());
+                Console.WriteLine(saveEventCommand.CommandText); //debugging
 
-            con.Close();
+                saveEventCommand.Dispose();
+                con.Close();
+            }
         }
 
 
         /// <summary>
-        /// Liest die Termine von dem ausgewaehlten Mitglied aus der Memberlist
+        /// Liest die Invites von dem ausgewaehlten Nutzer aus der Invites Tabelle
         /// und gibt sie zurueck.
         /// </summary>
-        /// <param name="user">ID des behandelten Termins</param>
+        /// <param name="user">Name des Nutzers dessen Einladungen wir erhalten wollen.</param>
         /// <returns>Liste von KaEvent-Objekten</returns>
         public List<KaEvent> ReadInvites(string user)
         {
@@ -450,7 +493,7 @@ namespace KaObjects.Storage
             List<KaEvent> invites = new List<KaEvent>();
 
             //Liest alle TerminIDs fuer einen bestimmten User aus der Memberlist aus.
-            string readInvitation = string.Format("SELECT TerminID FROM Memberlist WHERE [User] = '{0}'", user);
+            string readInvitation = string.Format("SELECT InviteID FROM InviteList WHERE [Invitee] = '{0}'", user);
 
             SqlCommand readEventCommand = new SqlCommand(readInvitation, con);
             SqlDataReader reader = readEventCommand.ExecuteReader();
@@ -470,7 +513,7 @@ namespace KaObjects.Storage
 
             foreach (int termin in id)
             {
-                string readDates = string.Format("SELECT * FROM calendar WHERE TerminID = {0} AND [Benutzername] = {1}", termin, user);
+                string readDates = string.Format("SELECT * FROM Invites WHERE InviteID = {0}", termin);
                 con = new SqlConnection(connectionString);
                 con.Open();
                 SqlCommand read = new SqlCommand(readDates, con);
@@ -481,14 +524,12 @@ namespace KaObjects.Storage
                 {
                     invites.Add(new KaEvent()
                     {
-                        TerminID = reader2.GetInt32(0),
                         Titel = reader2.GetString(1),
                         Ort = reader2.GetString(2),
                         Beginn = reader2.GetDateTime(4),
                         Ende = reader2.GetDateTime(5),
                         Beschreibung = reader2.GetString(6),
-                        owner = new User(reader2.GetString(7))
-
+                        owner = new User(user)
                     });
                 }
 
@@ -625,29 +666,25 @@ namespace KaObjects.Storage
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
+            string del_Com = String.Format("DELETE FROM Invites WHERE InviteID = {0}", kaEvent.TerminID);
 
             if (choice)
             {
-                User newOwner = new User
-                {
-                    name = user
-                };
-                kaEvent.owner = newOwner;
+                kaEvent.owner.name = user;
 
                 SaveEvent(kaEvent);
-                //Dann aus der EInladungsliste löschen
 
+                SqlCommand delSave = new SqlCommand(del_Com, con);
+                delSave.ExecuteNonQuery();
+                delSave.Dispose();
             }
 
-            string del_Com = String.Format("Delete from memberlist where TerminID = {0} AND [User] = '{0}'", kaEvent.TerminID, user);
-
+            del_Com = String.Format("DELETE FROM InviteList WHERE InviteID = {0}", kaEvent.TerminID);
             SqlCommand delInvite = new SqlCommand(del_Com, con);
-
             delInvite.ExecuteNonQuery();
+
             delInvite.Dispose();
             con.Close();
-
-
         }
 
         //public LinkedList<string> GetWellKnownPeers()

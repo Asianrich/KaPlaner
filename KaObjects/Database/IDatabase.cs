@@ -22,7 +22,7 @@ namespace KaObjects.Storage
 
         bool UserExist(string user);
 
-        int CheckMemberList();
+        int CheckInviteList();
 
         void SaveInvites(string user, KaEvent kaEvent);
 

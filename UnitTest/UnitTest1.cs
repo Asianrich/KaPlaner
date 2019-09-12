@@ -96,7 +96,7 @@ namespace UnitTest
         {
             Database test = new Database("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Data\\User_Calendar.mdf;Integrated Security = True");
 
-            int i = test.CheckMemberList();
+            int i = test.CheckInviteList();
 
             Console.WriteLine("Listeneintraege: {0}", i);
         }
